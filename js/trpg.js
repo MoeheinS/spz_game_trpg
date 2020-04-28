@@ -190,11 +190,13 @@ document.addEventListener("keydown", function(e){
 Events.on(engine, 'afterUpdate', function(event) {
   if( game_state == 'movement' && mouseConstraint.body){
     let movingEnt = mouseConstraint.body;
-    debug_travelDistance = Math.hypot((movingEnt.custom.startPoint.x - movingEnt.position.x) ,(movingEnt.custom.startPoint.y - movingEnt.position.y));
-    if(debug_travelDistance < movingEnt.custom.maxMove){
-      debug_travelDistance_color = 'green';
-    }else{
-      debug_travelDistance_color = 'red';
+    if( movingEnt.custom ){
+      debug_travelDistance = Math.hypot((movingEnt.custom.startPoint.x - movingEnt.position.x) ,(movingEnt.custom.startPoint.y - movingEnt.position.y));
+      if(debug_travelDistance < movingEnt.custom.maxMove){
+        debug_travelDistance_color = 'green';
+      }else{
+        debug_travelDistance_color = 'red';
+      }
     }
   }
 });
@@ -203,17 +205,18 @@ Events.on(mouseConstraint, "startdrag", function(event) {
   console.log(event);
   let movingEnt = event.body;
   game_state = 'movement';
-
-  var bods = Composite.allBodies(world);
-  for( bod of bods ){
-    if(bod.id != movingEnt.id){
-      console.log(`${movingEnt.id} moving, sleep ${bod.id}`);
-      var rope = Constraint.create({ 
-        pointA: {x: bod.position.x, y: bod.position.y}, 
-        bodyB: bod, 
-        stiffness: 0.95
-      });
-      World.add(world, rope);
+  if( movingEnt.custom ){
+    var bods = Composite.allBodies(world);
+    for( bod of bods ){
+      if(bod.id != movingEnt.id){
+        console.log(`${movingEnt.id} moving, sleep ${bod.id}`);
+        var rope = Constraint.create({ 
+          pointA: {x: bod.position.x, y: bod.position.y}, 
+          bodyB: bod, 
+          stiffness: 0.95
+        });
+        World.add(world, rope);
+      }
     }
   }
 });
@@ -221,11 +224,13 @@ Events.on(mouseConstraint, "startdrag", function(event) {
 Events.on(mouseConstraint, "enddrag", function(event) {
   console.log(event);
   let movingEnt = event.body;
-  if(debug_travelDistance < movingEnt.custom.maxMove){
-    //startPoint =  { x: event.body.position.x, y: event.body.position.y};
-    //event.body.custom.maxMove = event.body.custom.maxMove - debug_travelDistance;
-  }else{
-    Body.setPosition(movingEnt, movingEnt.custom.startPoint);
+  if( movingEnt.custom ){
+    if(debug_travelDistance < movingEnt.custom.maxMove){
+      //startPoint =  { x: event.body.position.x, y: event.body.position.y};
+      //event.body.custom.maxMove = event.body.custom.maxMove - debug_travelDistance;
+    }else{
+      Body.setPosition(movingEnt, movingEnt.custom.startPoint);
+    }
   }
   var ropes = Composite.allConstraints(world);
   for( rope of ropes ){
@@ -291,10 +296,12 @@ function render_debug(game_debug, ctx){
 
 function render_moveRange(ctx, mouseConstraint){
   let movingEnt = mouseConstraint.body;
-  if(debug_travelDistance < movingEnt.custom.maxMove){
-    ctx.fillStyle = debug_travelDistance_color;
-    ctx.beginPath();
-    ctx.arc(movingEnt.position.x, movingEnt.position.y, movingEnt.custom.maxMove - debug_travelDistance + GRID_SIZE*0.5, 0, Math.PI * 2, true); // Outer circle
-    ctx.stroke();
+  if( movingEnt.custom ){
+    if(debug_travelDistance < movingEnt.custom.maxMove){
+      ctx.fillStyle = debug_travelDistance_color;
+      ctx.beginPath();
+      ctx.arc(movingEnt.position.x, movingEnt.position.y, movingEnt.custom.maxMove - debug_travelDistance + GRID_SIZE*0.5, 0, Math.PI * 2, true); // Outer circle
+      ctx.stroke();
+    }
   }
 }
