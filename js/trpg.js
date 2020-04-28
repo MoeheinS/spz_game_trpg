@@ -11,9 +11,9 @@ console.log('%cUo Poko game','color:#ff0000;font-family:Comic Sans MS;');
 /*
 *   Constants and settings
 */
-let game_state = 'running';
+let game_state = 'idle';
 let game_debug = true;
-let game_phase = 'debug';
+let game_phase = 'player';
 
 //const COLOR_STACKED = '#795548';
 const COLOR_SHIFT = [
@@ -80,7 +80,7 @@ Render.lookAt(render, {
 });
 
 world.gravity.y = 0;
-engine.enableSleeping = true;
+engine.enableSleeping = false;
 
 /*
 *   Actual physics objects
@@ -126,23 +126,42 @@ World.add(world, [
 ]);
 
 var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*0.5, {
-  label: 'character',
+  label: 'ally',
   frictionAir: 1,
   custom: {
     baseMove: GRID_SIZE*4,
-    maxMove: GRID_SIZE*4
+    maxMove: GRID_SIZE*4,
+    startPoint: { 
+      x: GRID_SIZE*4, 
+      y: GRID_SIZE*2 
+    }
   },
   render: {
     fillStyle: 'fuchsia'
   }
 });
 World.add(world, test_character);
-test_character.custom.anchor = test_character.position;
-
-var startPoint = { x: GRID_SIZE*4, y: GRID_SIZE*2 };
 
 debug_travelDistance = 0;
 debug_travelDistance_color = 'green';
+
+var test_obstacle_pillar = buildCircle(GRID_SIZE*6, GRID_SIZE*6, GRID_SIZE*0.5, {
+  label: 'obstacle',
+  frictionAir: 1,
+  custom: {
+    baseMove: GRID_SIZE*4,
+    maxMove: GRID_SIZE*4,
+    startPoint: { 
+      x: GRID_SIZE*6, 
+      y: GRID_SIZE*6 
+    }
+  },
+  render: {
+    fillStyle: 'grey'
+  }
+});
+World.add(world, test_obstacle_pillar);
+
 
 /*
 *   Functions
@@ -155,6 +174,7 @@ document.addEventListener("keydown", function(e){
       break;
     case 'r':
       test_character.custom.maxMove = test_character.custom.baseMove;
+      test_character.custom.startPoint =  { x: test_character.position.x, y: test_character.position.y};
       break;
     default:
       console.log(e.key);
@@ -166,25 +186,54 @@ document.addEventListener("keydown", function(e){
 *   Lifecycle events
 */
 //Events.on(engine, 'beforeUpdate', function(event) {});
+// TODO & render: turn starting position
 Events.on(engine, 'afterUpdate', function(event) {
-  // see if there's a Matter method for doing this?
-  debug_travelDistance = Math.hypot((startPoint.x - test_character.position.x) ,(startPoint.y - test_character.position.y));
-  if(debug_travelDistance < test_character.custom.maxMove){
-    debug_travelDistance_color = 'green';
-  }else{
-    debug_travelDistance_color = 'red';
+  if( game_state == 'movement' && mouseConstraint.body){
+    let movingEnt = mouseConstraint.body;
+    debug_travelDistance = Math.hypot((movingEnt.custom.startPoint.x - movingEnt.position.x) ,(movingEnt.custom.startPoint.y - movingEnt.position.y));
+    if(debug_travelDistance < movingEnt.custom.maxMove){
+      debug_travelDistance_color = 'green';
+    }else{
+      debug_travelDistance_color = 'red';
+    }
+  }
+});
+
+Events.on(mouseConstraint, "startdrag", function(event) {
+  console.log(event);
+  let movingEnt = event.body;
+  game_state = 'movement';
+
+  var bods = Composite.allBodies(world);
+  for( bod of bods ){
+    if(bod.id != movingEnt.id){
+      console.log(`${movingEnt.id} moving, sleep ${bod.id}`);
+      var rope = Constraint.create({ 
+        pointA: {x: bod.position.x, y: bod.position.y}, 
+        bodyB: bod, 
+        stiffness: 0.95
+      });
+      World.add(world, rope);
+    }
   }
 });
 
 Events.on(mouseConstraint, "enddrag", function(event) {
   console.log(event);
-  if(debug_travelDistance < test_character.custom.maxMove){
-    //startPoint =  { x: event.mouse.mouseupPosition.x, y: event.mouse.mouseupPosition.y};
-    startPoint =  { x: event.body.position.x, y: event.body.position.y};
-    event.body.custom.maxMove = test_character.custom.maxMove - debug_travelDistance;
+  let movingEnt = event.body;
+  if(debug_travelDistance < movingEnt.custom.maxMove){
+    //startPoint =  { x: event.body.position.x, y: event.body.position.y};
+    //event.body.custom.maxMove = event.body.custom.maxMove - debug_travelDistance;
   }else{
-    Body.setPosition(test_character, startPoint);
+    Body.setPosition(movingEnt, movingEnt.custom.startPoint);
   }
+  var ropes = Composite.allConstraints(world);
+  for( rope of ropes ){
+    if( rope.label != "Mouse Constraint" ){
+      World.remove(world, rope, true);
+    }
+  }
+  game_state = 'idle';
 });
 
 //Events.on(engine, 'collisionStart', function(event) {});
@@ -222,7 +271,7 @@ function render_debug(game_debug, ctx){
     ctx.fillStyle = '#ffffff';
     var bods = Composite.allBodies(world);
     for( bod of bods ){
-      ctx.fillText(`vel:${bod.velocity.x.toFixed(2)};${bod.velocity.y.toFixed(2)}`, bod.position.x, bod.position.y-12);
+      ctx.fillText(`id:${bod.id}`, bod.position.x, bod.position.y-12);
       ctx.fillText(bod.label, bod.position.x, bod.position.y);
       ctx.fillText('slp:'+bod.isSleeping, bod.position.x, bod.position.y+12);
       ctx.fillText('stt:'+bod.isStatic, bod.position.x, bod.position.y+24);
@@ -230,14 +279,22 @@ function render_debug(game_debug, ctx){
     ctx.fillStyle = debug_travelDistance_color;
     ctx.fillText('dist:'+Math.floor(debug_travelDistance / GRID_SIZE), test_character.position.x, test_character.position.y+48);
     ctx.fillText('moveRemain:'+Math.floor(test_character.custom.maxMove / GRID_SIZE), test_character.position.x, test_character.position.y+60);
+    
+    //ctx.fillText('x', startPoint.x, startPoint.y);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(test_character.custom.startPoint.x, test_character.custom.startPoint.y, (GRID_SIZE*4.5), 0, Math.PI * 2, true); // Outer circle
+    ctx.stroke();
   }
 }
 
 function render_moveRange(ctx, mouseConstraint){
-  var movingEnt = mouseConstraint.body.position;
-  if(debug_travelDistance < test_character.custom.maxMove){
+  let movingEnt = mouseConstraint.body;
+  if(debug_travelDistance < movingEnt.custom.maxMove){
+    ctx.fillStyle = debug_travelDistance_color;
     ctx.beginPath();
-    ctx.arc(movingEnt.x, movingEnt.y, test_character.custom.maxMove - debug_travelDistance + GRID_SIZE*0.5, 0, Math.PI * 2, true); // Outer circle
+    ctx.arc(movingEnt.position.x, movingEnt.position.y, movingEnt.custom.maxMove - debug_travelDistance + GRID_SIZE*0.5, 0, Math.PI * 2, true); // Outer circle
     ctx.stroke();
   }
 }
