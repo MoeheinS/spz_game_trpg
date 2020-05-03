@@ -262,6 +262,10 @@ Events.on(engine, 'afterUpdate', function(event) {
 Events.on(mouseConstraint, "startdrag", function(event) {
   console.log(event);
   let movingEnt = event.body;
+  
+  World.remove(world, movingEnt, true);
+  World.add(world, movingEnt);
+
   game_state = 'movement';
   if( movingEnt.custom ){
     var bods = Composite.allBodies(world);
