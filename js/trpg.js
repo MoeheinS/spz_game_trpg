@@ -125,50 +125,6 @@ World.add(world, [
   w_right
 ]);
 
-var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*0.5, {
-  label: 'ally',
-  frictionAir: 1,
-  custom: {
-    baseMove: GRID_SIZE*4,
-    maxMove: GRID_SIZE*4,
-    startPoint: { 
-      x: GRID_SIZE*4, 
-      y: GRID_SIZE*2 
-    }
-  },
-  render: {
-    fillStyle: 'fuchsia',
-    sprite: {
-      texture: './assets/kamui.gif',
-      xScale: 2,
-      yScale: 2
-    }
-  }
-});
-World.add(world, test_character);
-
-var test_character = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*2), GRID_SIZE*0.5, {
-  label: 'ally',
-  frictionAir: 1,
-  custom: {
-    baseMove: GRID_SIZE*4,
-    maxMove: GRID_SIZE*4,
-    startPoint: { 
-      x: reWi-(GRID_SIZE*4),
-      y: reHi-(GRID_SIZE*2)
-    }
-  },
-  render: {
-    fillStyle: 'fuchsia',
-    sprite: {
-      texture: './assets/kamui.gif',
-      xScale: 2,
-      yScale: 2
-    }
-  }
-});
-World.add(world, test_character);
-
 debug_travelDistance = 0;
 debug_travelDistance_color = 'green';
 
@@ -213,6 +169,50 @@ var test_obstacle_shape = buildCircle(GRID_SIZE*6, GRID_SIZE*7, GRID_SIZE*0.5, {
   }
 });
 World.add(world, test_obstacle_shape);
+
+var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*0.5, {
+  label: 'ally',
+  frictionAir: 1,
+  custom: {
+    baseMove: GRID_SIZE*4,
+    maxMove: GRID_SIZE*4,
+    startPoint: { 
+      x: GRID_SIZE*4, 
+      y: GRID_SIZE*2 
+    }
+  },
+  render: {
+    fillStyle: 'fuchsia',
+    sprite: {
+      texture: './assets/kamui.gif',
+      xScale: 2,
+      yScale: 2
+    }
+  }
+});
+World.add(world, test_character);
+
+var test_character2 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*2), GRID_SIZE*0.5, {
+  label: 'ally',
+  frictionAir: 1,
+  custom: {
+    baseMove: GRID_SIZE*4,
+    maxMove: GRID_SIZE*4,
+    startPoint: { 
+      x: reWi-(GRID_SIZE*4),
+      y: reHi-(GRID_SIZE*2)
+    }
+  },
+  render: {
+    fillStyle: 'fuchsia',
+    sprite: {
+      texture: './assets/kamui.gif',
+      xScale: 2,
+      yScale: 2
+    }
+  }
+});
+World.add(world, test_character2);
 
 //Composite.scale(world, 0.5, 0.5, {x: 0, y: 0});
 
