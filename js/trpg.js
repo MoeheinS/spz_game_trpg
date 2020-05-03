@@ -137,7 +137,34 @@ var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*0.5, {
     }
   },
   render: {
-    fillStyle: 'fuchsia'
+    fillStyle: 'fuchsia',
+    sprite: {
+      texture: './assets/kamui.gif',
+      xScale: 2,
+      yScale: 2
+    }
+  }
+});
+World.add(world, test_character);
+
+var test_character = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*2), GRID_SIZE*0.5, {
+  label: 'ally',
+  frictionAir: 1,
+  custom: {
+    baseMove: GRID_SIZE*4,
+    maxMove: GRID_SIZE*4,
+    startPoint: { 
+      x: reWi-(GRID_SIZE*4),
+      y: reHi-(GRID_SIZE*2)
+    }
+  },
+  render: {
+    fillStyle: 'fuchsia',
+    sprite: {
+      texture: './assets/kamui.gif',
+      xScale: 2,
+      yScale: 2
+    }
   }
 });
 World.add(world, test_character);
@@ -154,14 +181,40 @@ var test_obstacle_pillar = buildCircle(GRID_SIZE*6, GRID_SIZE*6, GRID_SIZE*0.5, 
     startPoint: { 
       x: GRID_SIZE*6, 
       y: GRID_SIZE*6 
-    }
+    },
+    render: 'sprite'
   },
   render: {
-    fillStyle: 'grey'
+    fillStyle: 'grey',
+    sprite: {
+      texture: './assets/Wall_04.png'
+    }
   }
 });
 World.add(world, test_obstacle_pillar);
 
+var test_obstacle_shape = buildCircle(GRID_SIZE*6, GRID_SIZE*7, GRID_SIZE*0.5, {
+  label: 'shape',
+  frictionAir: 1,
+  custom: {
+    baseMove: GRID_SIZE*4,
+    maxMove: GRID_SIZE*4,
+    startPoint: { 
+      x: GRID_SIZE*6, 
+      y: GRID_SIZE*7 
+    },
+    render: 'shape'
+  },
+  render: {
+    fillStyle: 'grey',
+    sprite: {
+      //texture: './assets/Wall_04.png'
+    }
+  }
+});
+World.add(world, test_obstacle_shape);
+
+//Composite.scale(world, 0.5, 0.5, {x: 0, y: 0});
 
 /*
 *   Functions
@@ -173,8 +226,13 @@ document.addEventListener("keydown", function(e){
       game_debug = !game_debug;
       break;
     case 'r':
-      test_character.custom.maxMove = test_character.custom.baseMove;
-      test_character.custom.startPoint =  { x: test_character.position.x, y: test_character.position.y};
+      var bods = Composite.allBodies(world);
+      for( bod of bods ){
+        if(bod.custom && bod.custom.startPoint){
+          bod.custom.maxMove = bod.custom.baseMove;
+          bod.custom.startPoint =  { x: bod.position.x, y: bod.position.y};
+        }
+      }
       break;
     default:
       console.log(e.key);
@@ -233,11 +291,13 @@ Events.on(mouseConstraint, "enddrag", function(event) {
     }
   }
   var ropes = Composite.allConstraints(world);
-  for( rope of ropes ){
-    if( rope.label != "Mouse Constraint" ){
-      World.remove(world, rope, true);
+  window.setTimeout(function(){
+    for( rope of ropes ){
+      if( rope.label != "Mouse Constraint" ){
+        World.remove(world, rope, true);
+      }
     }
-  }
+  },200);
   game_state = 'idle';
 });
 
@@ -263,6 +323,15 @@ Events.on(render, 'afterRender', function() {
     //debug state rendering
     render_debug(game_debug, render.context);
 
+    var bods = Composite.allBodies(world);
+    for( bod of bods ){
+      if( bod.custom && bod.custom.render){
+        if( bod.custom.render == 'shape' ){
+          render_shape(ctx, bod);
+        }
+      }
+    }
+
     if (mouseConstraint.body && mouseConstraint.mouse.button === 0){
       render_moveRange(ctx, mouseConstraint);
     }
@@ -280,17 +349,19 @@ function render_debug(game_debug, ctx){
       ctx.fillText(bod.label, bod.position.x, bod.position.y);
       ctx.fillText('slp:'+bod.isSleeping, bod.position.x, bod.position.y+12);
       ctx.fillText('stt:'+bod.isStatic, bod.position.x, bod.position.y+24);
-    }
-    ctx.fillStyle = debug_travelDistance_color;
-    ctx.fillText('dist:'+Math.floor(debug_travelDistance / GRID_SIZE), test_character.position.x, test_character.position.y+48);
-    ctx.fillText('moveRemain:'+Math.floor(test_character.custom.maxMove / GRID_SIZE), test_character.position.x, test_character.position.y+60);
-    
-    //ctx.fillText('x', startPoint.x, startPoint.y);
 
-    ctx.fillStyle = '#ffffff';
-    ctx.beginPath();
-    ctx.arc(test_character.custom.startPoint.x, test_character.custom.startPoint.y, (GRID_SIZE*4.5), 0, Math.PI * 2, true); // Outer circle
-    ctx.stroke();
+      if( bod.custom && bod.custom.maxMove ){
+        ctx.fillStyle = debug_travelDistance_color;
+        ctx.fillText('dist:'+Math.floor(debug_travelDistance / GRID_SIZE), bod.position.x, bod.position.y+48);
+        ctx.fillText('moveRemain:'+Math.floor(bod.custom.maxMove / GRID_SIZE), bod.position.x, bod.position.y+60);
+
+        ctx.fillStyle = '#00ff0022';
+        ctx.beginPath();
+        ctx.arc(bod.custom.startPoint.x, bod.custom.startPoint.y, bod.custom.maxMove+(GRID_SIZE*0.5), 0, Math.PI * 2, true); // Outer circle
+        ctx.stroke();
+        ctx.moveTo(bod.position.x, bod.position.y);
+      }
+    }
   }
 }
 
@@ -298,10 +369,14 @@ function render_moveRange(ctx, mouseConstraint){
   let movingEnt = mouseConstraint.body;
   if( movingEnt.custom ){
     if(debug_travelDistance < movingEnt.custom.maxMove){
-      ctx.fillStyle = debug_travelDistance_color;
+      ctx.strokeStyle = debug_travelDistance_color;
       ctx.beginPath();
       ctx.arc(movingEnt.position.x, movingEnt.position.y, movingEnt.custom.maxMove - debug_travelDistance + GRID_SIZE*0.5, 0, Math.PI * 2, true); // Outer circle
       ctx.stroke();
     }
   }
+}
+
+function render_shape(ctx, o){
+  // render graphics by means of a shape
 }
