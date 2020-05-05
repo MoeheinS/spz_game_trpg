@@ -162,7 +162,9 @@ var test_obstacle_pillar = buildCircle(GRID_SIZE*6, GRID_SIZE*6, GRID_SIZE*0.5, 
   render: {
     fillStyle: 'grey',
     sprite: {
-      texture: './assets/Wall_04.png'
+      texture: './assets/Wall_04.png',
+      xScale: 0.75,
+      yScale: 0.75
     }
   }
 });
@@ -183,11 +185,15 @@ var test_obstacle_shape = buildCircle(GRID_SIZE*6, GRID_SIZE*7, GRID_SIZE*0.5, {
   render: {
     fillStyle: 'grey',
     sprite: {
-      //texture: './assets/Wall_04.png'
+      texture: './assets/Cannon_06.png',
+      xScale: 0.55,
+      yScale: 0.55
     }
   }
 });
 World.add(world, test_obstacle_shape);
+
+// ==================================
 
 var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*0.5, {
   label: 'ally',
@@ -203,9 +209,9 @@ var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*0.5, {
   render: {
     fillStyle: 'fuchsia',
     sprite: {
-      texture: './assets/kamui.gif',
-      xScale: 2,
-      yScale: 2
+      texture: './assets/3382.png',
+      xScale: 0.25,
+      yScale: 0.25
     }
   }
 });
@@ -225,13 +231,41 @@ var test_character2 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*2), GRID_S
   render: {
     fillStyle: 'fuchsia',
     sprite: {
-      texture: './assets/kamui.gif',
-      xScale: 2,
-      yScale: 2
+      texture: './assets/3096.png',
+      xScale: 0.14,
+      yScale: 0.14
     }
   }
 });
 World.add(world, test_character2);
+
+var test_character3 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*4), GRID_SIZE*0.5, {
+  label: 'ally',
+  frictionAir: 1,
+  custom: {
+    baseMove: GRID_SIZE*4,
+    maxMove: GRID_SIZE*4,
+    startPoint: { 
+      x: reWi-(GRID_SIZE*4),
+      y: reHi-(GRID_SIZE*4)
+    }
+  },
+  render: {
+    fillStyle: 'fuchsia',
+    sprite: {
+      texture: './assets/3096.png',
+      xScale: 0.14,
+      yScale: 0.14
+    }
+  }
+});
+World.add(world, test_character3);
+
+var allies_Array = [
+  test_character,
+  test_character2,
+  test_character3
+];
 
 //Composite.scale(world, 0.5, 0.5, {x: 0, y: 0});
 
@@ -263,7 +297,12 @@ document.addEventListener("keydown", function(e){
 *   Lifecycle events
 */
 //Events.on(engine, 'beforeUpdate', function(event) {});
+
+//Events.on(engine, "collisionActive", function(event) {});
+//all pairs colliding in the current tick
+
 // TODO & render: turn starting position
+// Fired after engine update and all collision events
 Events.on(engine, 'afterUpdate', function(event) {
   if( game_state == 'movement' && mouseConstraint.body){
     let movingEnt = mouseConstraint.body;
@@ -340,7 +379,7 @@ Events.on(engine, 'beforeTick', function() {
   // mouse wheel controls zoom
   var scaleFactor = mouse.wheelDelta * -0.1;
   if (scaleFactor !== 0) {
-      if ((scaleFactor < 0 && boundsScale.x >= 0.6) || (scaleFactor > 0 && boundsScale.x <= 1.4)) {
+      if ((scaleFactor < 0 && boundsScale.x >= 0.6) || (scaleFactor > 0 && boundsScale.x <= 1.2)) {
           boundsScaleTarget += scaleFactor;
       }
   }
@@ -417,6 +456,7 @@ Events.on(render, 'afterRender', function() {
     //debug state rendering
     render_debug(game_debug, render.context);
 
+    /*
     var bods = Composite.allBodies(world);
     for( bod of bods ){
       if( bod.custom && bod.custom.render){
@@ -425,10 +465,16 @@ Events.on(render, 'afterRender', function() {
         }
       }
     }
+    */
 
     if (mouseConstraint.body && mouseConstraint.mouse.button === 0){
       render_moveRange(ctx, mouseConstraint);
+      if( mouseConstraint.body.label == 'ally' ){
+        ray_tb(ctx, mouseConstraint);
+      }
     }
+
+    ray_fov(ctx);
 
   Render.endViewTransform(render);
 });
@@ -473,4 +519,74 @@ function render_moveRange(ctx, mouseConstraint){
 
 function render_shape(ctx, o){
   // render graphics by means of a shape
+  // we can use this to add shape animations to a primitive
+  /*
+  var time = engine.timing.timestamp;
+
+  Composite.translate(stack, {
+      x: Math.sin(time * 0.001) * 2,
+      y: 0
+  });
+  */
+}
+
+function ray_tb(ctx, o){
+  // draw lines between allies, change color if there's enemies intersecting
+  // also draw the other cardinal directions, see who intersects with that
+  let movingEnt = o.body;
+  var bods = Composite.allBodies(world);
+  for( bod of bods ){
+    if( bod.label == 'ally' && bod.id != movingEnt.id ){
+      var collisions = Query.ray(bods, movingEnt.position, bod.position);
+      ctx.beginPath();
+      ctx.moveTo(movingEnt.position.x, movingEnt.position.y);
+      ctx.lineTo(bod.position.x, bod.position.y);
+      if (collisions.length > 2) { // >2 because the mover and the ally are included
+        ray_crossVector(ctx, movingEnt, bod); // ccomment out for normal ray coloring
+        ctx.strokeStyle = '#ffffff';
+      } else {
+        ctx.strokeStyle = '#ff00ff';
+      }
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      
+    }
+  }
+  //allies_Array
+}
+
+function ray_crossVector(ctx, movingEnt, bod){
+  var deltaVector = Vector.sub(movingEnt.position, bod.position);
+  //var normalizedDelta = Vector.normalise(deltaVector);
+  var forceVector = Vector.mult(deltaVector, 1000);
+  
+  var v_behind = Vector.rotateAbout(forceVector, Math.PI*0, movingEnt.position);
+  var v_left = Vector.rotateAbout(forceVector, Math.PI*0.5, movingEnt.position);
+  var v_right = Vector.rotateAbout(forceVector, Math.PI*1.5, movingEnt.position);
+  var v_front = Vector.rotateAbout(forceVector, Math.PI*1, movingEnt.position);
+  var draw_vectors = [
+    v_behind,
+    v_left,
+    v_right,
+    v_front
+  ];
+  for( vec of draw_vectors ){
+    ctx.beginPath();
+    ctx.moveTo(movingEnt.position.x, movingEnt.position.y);
+    ctx.lineTo(vec.x, vec.y);
+    ctx.strokeStyle = '#ffff00';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(bod.position.x, bod.position.y);
+    ctx.lineTo(vec.x, vec.y);
+    ctx.strokeStyle = '#ffff00';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+}
+
+function ray_fov(ctx){
+  // darken what we cannot see
 }
