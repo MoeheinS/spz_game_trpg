@@ -147,28 +147,24 @@ World.add(world, [
 debug_travelDistance = 0;
 debug_travelDistance_color = 'green';
 
-var test_obstacle_pillar = buildCircle(GRID_SIZE*6, GRID_SIZE*6, GRID_SIZE*0.5, {
+var test_obstacle_pillar = Bodies.rectangle(GRID_SIZE*7, GRID_SIZE*10, GRID_SIZE*2, GRID_SIZE*1.5, {
   label: 'obstacle',
   frictionAir: 1,
   custom: {
     baseMove: GRID_SIZE*4,
     maxMove: GRID_SIZE*4,
     startPoint: { 
-      x: GRID_SIZE*6, 
-      y: GRID_SIZE*6 
+      x: GRID_SIZE*7, 
+      y: GRID_SIZE*10 
     },
     render: 'sprite'
   },
   render: {
-    fillStyle: 'grey',
-    sprite: {
-      texture: './assets/Wall_04.png',
-      xScale: 0.75,
-      yScale: 0.75
-    }
+    fillStyle: 'grey'
   }
 });
 World.add(world, test_obstacle_pillar);
+console.log(test_obstacle_pillar);
 
 var test_obstacle_shape = buildCircle(GRID_SIZE*6, GRID_SIZE*7, GRID_SIZE*0.5, {
   label: 'shape',
@@ -186,16 +182,17 @@ var test_obstacle_shape = buildCircle(GRID_SIZE*6, GRID_SIZE*7, GRID_SIZE*0.5, {
     fillStyle: 'grey',
     sprite: {
       texture: './assets/Cannon_06.png',
-      xScale: 0.55,
-      yScale: 0.55
+      xScale: 0.85,
+      yScale: 0.85
     }
   }
 });
 World.add(world, test_obstacle_shape);
+console.log(test_obstacle_shape);
 
 // ==================================
 
-var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*0.5, {
+var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*1, {
   label: 'ally',
   frictionAir: 1,
   custom: {
@@ -204,42 +201,34 @@ var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*0.5, {
     startPoint: { 
       x: GRID_SIZE*4, 
       y: GRID_SIZE*2 
-    }
+    },
+    sprite: './assets/3382.png'
   },
   render: {
-    fillStyle: 'fuchsia',
-    sprite: {
-      texture: './assets/3382.png',
-      xScale: 0.25,
-      yScale: 0.25
-    }
+    fillStyle: 'fuchsia'
   }
 });
 World.add(world, test_character);
 
-var test_character2 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*2), GRID_SIZE*0.5, {
+var test_character2 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*12), GRID_SIZE*1, {
   label: 'ally',
   frictionAir: 1,
   custom: {
-    baseMove: GRID_SIZE*4,
-    maxMove: GRID_SIZE*4,
+    baseMove: GRID_SIZE*14,
+    maxMove: GRID_SIZE*14,
     startPoint: { 
       x: reWi-(GRID_SIZE*4),
-      y: reHi-(GRID_SIZE*2)
-    }
+      y: reHi-(GRID_SIZE*12)
+    },
+    sprite: './assets/3096.png'
   },
   render: {
-    fillStyle: 'fuchsia',
-    sprite: {
-      texture: './assets/3096.png',
-      xScale: 0.14,
-      yScale: 0.14
-    }
+    fillStyle: 'fuchsia'
   }
 });
 World.add(world, test_character2);
 
-var test_character3 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*4), GRID_SIZE*0.5, {
+var test_character3 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*4), GRID_SIZE*1, {
   label: 'ally',
   frictionAir: 1,
   custom: {
@@ -248,24 +237,34 @@ var test_character3 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*4), GRID_S
     startPoint: { 
       x: reWi-(GRID_SIZE*4),
       y: reHi-(GRID_SIZE*4)
-    }
+    },
+    sprite: './assets/2681.png'
   },
   render: {
-    fillStyle: 'fuchsia',
-    sprite: {
-      texture: './assets/3096.png',
-      xScale: 0.14,
-      yScale: 0.14
-    }
+    fillStyle: 'fuchsia'
   }
 });
 World.add(world, test_character3);
 
-var allies_Array = [
-  test_character,
-  test_character2,
-  test_character3
-];
+
+
+// Sensor grid; for raycasting
+
+// make primitive groups, so I don't have to loop over ALL the objects every time i need something
+// this also lets me ignore checks for properties
+var allies_Array = [];
+var obstacles_Array = [];
+
+var bods = Composite.allBodies(world);
+for( bod of bods ){
+  if(bod.label == 'ally'){
+    allies_Array.push(bod);
+  }else if(bod.label == 'shape' || bod.label == 'obstacle'){
+    obstacles_Array.push(bod);
+  }
+}
+console.log(allies_Array);
+console.log(obstacles_Array);
 
 //Composite.scale(world, 0.5, 0.5, {x: 0, y: 0});
 
@@ -474,10 +473,25 @@ Events.on(render, 'afterRender', function() {
       }
     }
 
-    ray_fov(ctx);
+    //ray_fov(ctx);
+
+    draw_Graphics(ctx, allies_Array);
 
   Render.endViewTransform(render);
 });
+
+function draw_Graphics(ctx, a){
+  for( i of a ){
+    let img = new Image();
+    img.src = i.custom.sprite;
+    var ix = i.bounds.min.x;
+    var iy = i.bounds.min.y;
+    var ixs = Math.abs(i.bounds.max.x - i.bounds.min.x);
+    var iys = Math.abs(i.bounds.max.y - i.bounds.min.y);
+    //ctx.drawImage(img,ix,iy);
+    ctx.drawImage(img,ix,iy,ixs,iys);
+  }
+}
 
 function render_debug(game_debug, ctx){
   if(game_debug){
@@ -584,9 +598,103 @@ function ray_crossVector(ctx, movingEnt, bod){
     ctx.strokeStyle = '#ffff00';
     ctx.lineWidth = 2;
     ctx.stroke();
+
+    //this seems to be grabbing the cardinal me-too's.
+    //TODO draw rects or something to denote target / pincer / chain
+    var bods = Composite.allBodies(world);
+    var collisions = Query.ray(bods, movingEnt.position, vec);
+    ctx.beginPath();
+    ctx.moveTo(movingEnt.position.x, movingEnt.position.y);
+    ctx.lineTo(vec.x, vec.y);
+    if (collisions.length > 2) { // >2 because the mover and the ally are included
+      ctx.strokeStyle = '#ffffff';
+    } else {
+      ctx.strokeStyle = '#ff00ff';
+    }
+    ctx.lineWidth = 1;
+    ctx.stroke();
   }
 }
 
 function ray_fov(ctx){
   // darken what we cannot see
+  var bods = Composite.allBodies(world);
+  for( bod of bods ){
+    if( bod.label == 'ally'){
+      for( o_bod of bods ){
+        if( o_bod.label != 'ally' && o_bod.label != 'wall' && o_bod.id != bod.id ){
+          
+            var deltaVector = Vector.sub(bod.position, {x: o_bod.bounds.min.x, y: o_bod.bounds.min.y});
+            var forceVector = Vector.mult(deltaVector, -1000);
+            ctx.beginPath();
+            ctx.moveTo(o_bod.bounds.min.x, o_bod.bounds.min.y);
+            ctx.lineTo(forceVector.x, forceVector.y);
+            ctx.strokeStyle = '#ff0f00';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(bod.position.x, bod.position.y);
+          ctx.lineTo(o_bod.bounds.min.x, o_bod.bounds.min.y);
+          ctx.strokeStyle = '#0f00ff33';
+          ctx.lineWidth = 3;
+          ctx.stroke();
+
+            var deltaVector = Vector.sub(bod.position, {x: o_bod.bounds.min.x, y: o_bod.bounds.max.y});
+            var forceVector = Vector.mult(deltaVector, -1000);
+            ctx.beginPath();
+            ctx.moveTo(o_bod.bounds.min.x, o_bod.bounds.max.y);
+            ctx.lineTo(forceVector.x, forceVector.y);
+            ctx.strokeStyle = '#ff0f00';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(bod.position.x, bod.position.y);
+          ctx.lineTo(o_bod.bounds.min.x, o_bod.bounds.max.y);
+          ctx.strokeStyle = '#0f00ff33';
+          ctx.lineWidth = 3;
+          ctx.stroke();
+
+            var deltaVector = Vector.sub(bod.position, {x: o_bod.bounds.max.x, y: o_bod.bounds.min.y});
+            var forceVector = Vector.mult(deltaVector, -1000);
+            ctx.beginPath();
+            ctx.moveTo(o_bod.bounds.max.x, o_bod.bounds.min.y);
+            ctx.lineTo(forceVector.x, forceVector.y);
+            ctx.strokeStyle = '#ff0f00';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(bod.position.x, bod.position.y);
+          ctx.lineTo(o_bod.bounds.max.x, o_bod.bounds.min.y);
+          ctx.strokeStyle = '#0f00ff33';
+          ctx.lineWidth = 3;
+          ctx.stroke();
+
+            var deltaVector = Vector.sub(bod.position, {x: o_bod.bounds.max.x, y: o_bod.bounds.max.y});
+            var forceVector = Vector.mult(deltaVector, -1000);
+            ctx.beginPath();
+            ctx.moveTo(o_bod.bounds.max.x, o_bod.bounds.max.y);
+            ctx.lineTo(forceVector.x, forceVector.y);
+            ctx.strokeStyle = '#ff0f00';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(bod.position.x, bod.position.y);
+          ctx.lineTo(o_bod.bounds.max.x, o_bod.bounds.max.y);
+          ctx.strokeStyle = '#0f00ff33';
+          ctx.lineWidth = 3;
+          ctx.stroke();
+              /*
+              var collisions = Query.ray(bods, {x: o_bod.bounds.max.x, y: o_bod.bounds.max.y}, {x: forceVector.x, y: forceVector.y});
+              for( col of collisions ){
+                ctx.fillText('x', col.normal.x, col.normal.y);
+              }*/
+        }
+      }
+      /*
+      var deltaVector = Vector.sub(bod.position, {x: bod.position.x+reWi, y: bod.position.y+reHi});
+      var forceVector = Vector.mult(deltaVector, 1000);
+      var v_behind = Vector.rotateAbout(forceVector, Math.PI*0, bod.position);
+      */
+    }
+  }
 }
