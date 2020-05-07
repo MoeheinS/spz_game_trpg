@@ -166,7 +166,7 @@ var test_obstacle_pillar = Bodies.rectangle(GRID_SIZE*7, GRID_SIZE*10, GRID_SIZE
 World.add(world, test_obstacle_pillar);
 console.log(test_obstacle_pillar);
 
-var test_obstacle_shape = buildCircle(GRID_SIZE*6, GRID_SIZE*7, GRID_SIZE*0.5, {
+var test_obstacle_shape = Bodies.rectangle(GRID_SIZE*6, GRID_SIZE*7, GRID_SIZE*1.5, GRID_SIZE*1.5, {
   label: 'shape',
   frictionAir: 1,
   custom: {
@@ -473,7 +473,7 @@ Events.on(render, 'afterRender', function() {
       }
     }
 
-    //ray_fov(ctx);
+    ray_fov(ctx);
 
     draw_Graphics(ctx, allies_Array);
 
@@ -617,84 +617,5 @@ function ray_crossVector(ctx, movingEnt, bod){
 }
 
 function ray_fov(ctx){
-  // darken what we cannot see
-  var bods = Composite.allBodies(world);
-  for( bod of bods ){
-    if( bod.label == 'ally'){
-      for( o_bod of bods ){
-        if( o_bod.label != 'ally' && o_bod.label != 'wall' && o_bod.id != bod.id ){
-          
-            var deltaVector = Vector.sub(bod.position, {x: o_bod.bounds.min.x, y: o_bod.bounds.min.y});
-            var forceVector = Vector.mult(deltaVector, -1000);
-            ctx.beginPath();
-            ctx.moveTo(o_bod.bounds.min.x, o_bod.bounds.min.y);
-            ctx.lineTo(forceVector.x, forceVector.y);
-            ctx.strokeStyle = '#ff0f00';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(bod.position.x, bod.position.y);
-          ctx.lineTo(o_bod.bounds.min.x, o_bod.bounds.min.y);
-          ctx.strokeStyle = '#0f00ff33';
-          ctx.lineWidth = 3;
-          ctx.stroke();
-
-            var deltaVector = Vector.sub(bod.position, {x: o_bod.bounds.min.x, y: o_bod.bounds.max.y});
-            var forceVector = Vector.mult(deltaVector, -1000);
-            ctx.beginPath();
-            ctx.moveTo(o_bod.bounds.min.x, o_bod.bounds.max.y);
-            ctx.lineTo(forceVector.x, forceVector.y);
-            ctx.strokeStyle = '#ff0f00';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(bod.position.x, bod.position.y);
-          ctx.lineTo(o_bod.bounds.min.x, o_bod.bounds.max.y);
-          ctx.strokeStyle = '#0f00ff33';
-          ctx.lineWidth = 3;
-          ctx.stroke();
-
-            var deltaVector = Vector.sub(bod.position, {x: o_bod.bounds.max.x, y: o_bod.bounds.min.y});
-            var forceVector = Vector.mult(deltaVector, -1000);
-            ctx.beginPath();
-            ctx.moveTo(o_bod.bounds.max.x, o_bod.bounds.min.y);
-            ctx.lineTo(forceVector.x, forceVector.y);
-            ctx.strokeStyle = '#ff0f00';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(bod.position.x, bod.position.y);
-          ctx.lineTo(o_bod.bounds.max.x, o_bod.bounds.min.y);
-          ctx.strokeStyle = '#0f00ff33';
-          ctx.lineWidth = 3;
-          ctx.stroke();
-
-            var deltaVector = Vector.sub(bod.position, {x: o_bod.bounds.max.x, y: o_bod.bounds.max.y});
-            var forceVector = Vector.mult(deltaVector, -1000);
-            ctx.beginPath();
-            ctx.moveTo(o_bod.bounds.max.x, o_bod.bounds.max.y);
-            ctx.lineTo(forceVector.x, forceVector.y);
-            ctx.strokeStyle = '#ff0f00';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(bod.position.x, bod.position.y);
-          ctx.lineTo(o_bod.bounds.max.x, o_bod.bounds.max.y);
-          ctx.strokeStyle = '#0f00ff33';
-          ctx.lineWidth = 3;
-          ctx.stroke();
-              /*
-              var collisions = Query.ray(bods, {x: o_bod.bounds.max.x, y: o_bod.bounds.max.y}, {x: forceVector.x, y: forceVector.y});
-              for( col of collisions ){
-                ctx.fillText('x', col.normal.x, col.normal.y);
-              }*/
-        }
-      }
-      /*
-      var deltaVector = Vector.sub(bod.position, {x: bod.position.x+reWi, y: bod.position.y+reHi});
-      var forceVector = Vector.mult(deltaVector, 1000);
-      var v_behind = Vector.rotateAbout(forceVector, Math.PI*0, bod.position);
-      */
-    }
-  }
+  // stub
 }
