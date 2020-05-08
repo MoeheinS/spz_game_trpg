@@ -568,6 +568,19 @@ function ray_crossVector(ctx, movingEnt, bod){
   }
 }
 
+// Plot segments per FoV blocking shape
+var segments = [];
+
+for( let o of obstacles_Array ){
+  //skip 0 and the last vertex; we'll push those manually
+  segments.push({a:{x:o.vertices[0].x,y:o.vertices[0].y}, b:{x:o.vertices[1].x,y:o.vertices[1].y}});
+  for( i=1; i<o.vertices.length-1; i++ ){
+    segments.push({a:{x:o.vertices[i].x,y:o.vertices[i].y}, b:{x:o.vertices[i+1].x,y:o.vertices[i+1].y}});
+  }
+  segments.push({a:{x:o.vertices[i].x,y:o.vertices[i].y}, b:{x:o.vertices[0].x,y:o.vertices[0].y}});
+}
+console.warn(segments);
+
 function ray_fov(ctx){
   /*
     Object vertices go clockwise. Therefore I can deduce segments per vertex pair
