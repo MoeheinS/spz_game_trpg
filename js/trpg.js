@@ -379,27 +379,12 @@ Events.on(render, 'afterRender', function() {
   var ctx = render.context;
 
   Render.startViewTransform(render);
-
-    //draw_BG(ctx);
+  ctx.clearRect(0, 0, reWi, reHi);
 
     ctx.font = '16px alber';
     ctx.textAlign = 'center';
     ctx.fillStyle = '#ffffff';
     ctx.fillText('v0.0.1', 100, 20);
-
-    //debug state rendering
-    render_debug(game_debug, render.context);
-
-    /*
-    var bods = Composite.allBodies(world);
-    for( bod of bods ){
-      if( bod.custom && bod.custom.render){
-        if( bod.custom.render == 'shape' ){
-          render_shape(ctx, bod);
-        }
-      }
-    }
-    */
 
     if (mouseConstraint.body && mouseConstraint.mouse.button === 0){
       render_moveRange(ctx, mouseConstraint);
@@ -417,14 +402,11 @@ Events.on(render, 'afterRender', function() {
 
     //draw mouse cq custom cursor
 
+    //debug state rendering
+    render_debug(game_debug, render.context);
+
   Render.endViewTransform(render);
 });
-
-function draw_BG(ctx){
-  let img = new Image();
-  img.src = './assets/map.jpg';
-  ctx.drawImage(img,0,0,reWi,reHi);
-}
 
 function draw_Shapes(ctx, a){
   for( i of a ){
@@ -448,7 +430,6 @@ function draw_Graphics(ctx, a){
     var iy = i.bounds.min.y;
     var ixs = Math.abs(i.bounds.max.x - i.bounds.min.x);
     var iys = Math.abs(i.bounds.max.y - i.bounds.min.y);
-    //ctx.drawImage(img,ix,iy);
     ctx.drawImage(img,ix,iy,ixs,iys);
   }
 }
@@ -469,7 +450,7 @@ function render_debug(game_debug, ctx){
         ctx.fillText('dist:'+Math.floor(debug_travelDistance / GRID_SIZE), bod.position.x, bod.position.y+48);
         ctx.fillText('moveRemain:'+Math.floor(bod.custom.maxMove / GRID_SIZE), bod.position.x, bod.position.y+60);
 
-        ctx.fillStyle = '#00ff0022';
+        ctx.fillStyle = '#00ff00';
         ctx.beginPath();
         ctx.arc(bod.custom.startPoint.x, bod.custom.startPoint.y, bod.custom.maxMove+(GRID_SIZE*0.5), 0, Math.PI * 2, true); // Outer circle
         ctx.stroke();
@@ -489,19 +470,6 @@ function render_moveRange(ctx, mouseConstraint){
       ctx.stroke();
     }
   }
-}
-
-function render_shape(ctx, o){
-  // render graphics by means of a shape
-  // we can use this to add shape animations to a primitive
-  /*
-  var time = engine.timing.timestamp;
-
-  Composite.translate(stack, {
-      x: Math.sin(time * 0.001) * 2,
-      y: 0
-  });
-  */
 }
 
 function ray_tb(ctx, o){
