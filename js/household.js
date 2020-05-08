@@ -85,3 +85,12 @@ for(var i = 45; i < 90; i++) {
   World.add(world, a);
 }
 */
+
+// return width calculated from bounds
+function wbb(bounds) {
+  return Math.abs(bounds.max.x - bounds.min.x);
+}
+// return height calculated from bounds
+function hbb(bounds) {
+  return Math.abs(bounds.max.y - bounds.min.y);
+}
