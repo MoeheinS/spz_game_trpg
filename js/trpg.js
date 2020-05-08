@@ -15,6 +15,9 @@ let game_state = 'idle';
 let game_debug = true;
 let game_phase = 'player';
 
+let background_img = new Image();
+background_img.src = './assets/map.jpg';
+
 //const COLOR_STACKED = '#795548';
 const COLOR_SHIFT = [
   '#7f7f7f',//grey
@@ -49,7 +52,8 @@ var render = Render.create({
         showCollisions: true,
         showVelocity: true,
         hasBounds: true,
-        background: '#004444'
+        //background: '#004444',
+        background: '#202124'
     }
 });
 Render.run(render);
@@ -376,7 +380,7 @@ Events.on(render, 'afterRender', function() {
 
   Render.startViewTransform(render);
 
-    draw_BG(ctx);
+    //draw_BG(ctx);
 
     ctx.font = '16px alber';
     ctx.textAlign = 'center';
@@ -404,7 +408,9 @@ Events.on(render, 'afterRender', function() {
       }
     }
 
-    ray_fov(ctx);
+    for( caster of allies_Array ){
+      ray_fov(ctx, caster);
+    }
 
     draw_Shapes(ctx, obstacles_Array);
     draw_Graphics(ctx, allies_Array);
@@ -568,20 +574,7 @@ function ray_crossVector(ctx, movingEnt, bod){
   }
 }
 
-// Plot segments per FoV blocking shape
-var segments = [];
-
-for( let o of obstacles_Array ){
-  //skip 0 and the last vertex; we'll push those manually
-  segments.push({a:{x:o.vertices[0].x,y:o.vertices[0].y}, b:{x:o.vertices[1].x,y:o.vertices[1].y}});
-  for( i=1; i<o.vertices.length-1; i++ ){
-    segments.push({a:{x:o.vertices[i].x,y:o.vertices[i].y}, b:{x:o.vertices[i+1].x,y:o.vertices[i+1].y}});
-  }
-  segments.push({a:{x:o.vertices[i].x,y:o.vertices[i].y}, b:{x:o.vertices[0].x,y:o.vertices[0].y}});
-}
-console.warn(segments);
-
-function ray_fov(ctx){
+function ray_fov(ctx, caster){
   /*
     Object vertices go clockwise. Therefore I can deduce segments per vertex pair
     Per ally / raycaster, cast a ray towards every unique vertex (of LoS breaking objects)
@@ -590,8 +583,94 @@ function ray_fov(ctx){
     Sort intersect points by ray angle and draw a polygon by connecting the dots going clockwise
     Repeat ^ per ally and overlap the visibility polygons
   */
-  ctx.globalCompositeOperation = "destination-atop";
-  ctx.fillStyle = '#ff0000';
-  ctx.fillRect(0,0,reWi*0.5,reHi);
-  ctx.globalCompositeOperation = "source-over"; // the default
+
+  // Plot segments per FoV blocking shape
+  var segments = [];
+  for( let o of obstacles_Array ){
+    //skip 0 and the last vertex; we'll push those manually
+    segments.push({a:{x:o.vertices[0].x,y:o.vertices[0].y}, b:{x:o.vertices[1].x,y:o.vertices[1].y}});
+    for( i=1; i<o.vertices.length-1; i++ ){
+      segments.push({a:{x:o.vertices[i].x,y:o.vertices[i].y}, b:{x:o.vertices[i+1].x,y:o.vertices[i+1].y}});
+    }
+    segments.push({a:{x:o.vertices[i].x,y:o.vertices[i].y}, b:{x:o.vertices[0].x,y:o.vertices[0].y}});
+  }
+
+  // Get all unique points
+	var points = (function(segments){
+		var a = [];
+    for( seg of segments ){
+      a.push(seg.a,seg.b);
+    }
+		return a;
+	})(segments);
+	var uniquePoints = (function(points){
+		var set = {};
+		return points.filter(function(p){
+			var key = p.x+","+p.y;
+			if(key in set){
+				return false;
+			}else{
+				set[key]=true;
+				return true;
+			}
+		});
+  })(points);
+  
+  // Get all angles
+	var uniqueAngles = [];
+	for(var j=0;j<uniquePoints.length;j++){
+		var uniquePoint = uniquePoints[j];
+		var angle = Math.atan2(uniquePoint.y-caster.position.y,uniquePoint.x-caster.position.x);
+		uniquePoint.angle = angle;
+		uniqueAngles.push(angle-0.00001,angle,angle+0.00001);
+  }
+  
+  // RAYS IN ALL DIRECTIONS
+	var intersects = [];
+	for(var j=0;j<uniqueAngles.length;j++){
+		var angle = uniqueAngles[j];
+
+		// Calculate dx & dy from angle
+		var dx = Math.cos(angle);
+		var dy = Math.sin(angle);
+
+		// Ray from center of screen to caster
+		var ray = {
+			a:{x:caster.position.x,y:caster.position.y},
+			b:{x:caster.position.x+dx,y:caster.position.y+dy}
+		};
+
+		// Find CLOSEST intersection
+		var closestIntersect = null;
+		for(var i=0;i<segments.length;i++){
+			var intersect = getIntersection(ray,segments[i]);
+			if(!intersect) continue;
+			if(!closestIntersect || intersect.param<closestIntersect.param){
+				closestIntersect=intersect;
+			}
+    }
+    
+    // Intersect angle
+		if(!closestIntersect){ continue; }
+		closestIntersect.angle = angle;
+
+		// Add to list of intersects
+		intersects.push(closestIntersect);
+  }
+  
+  // Sort intersects by angle
+	intersects = intersects.sort(function(a,b){
+		return a.angle-b.angle;
+	});
+
+	// DRAW AS A GIANT POLYGON
+  //ctx.fillStyle = "#dd383833";
+  ctx.fillStyle = ctx.createPattern(background_img,'repeat');
+	ctx.beginPath();
+	ctx.moveTo(intersects[0].x,intersects[0].y);
+	for(var i=1;i<intersects.length;i++){
+		var intersect = intersects[i];
+		ctx.lineTo(intersect.x,intersect.y);
+	}
+  ctx.fill();
 }
