@@ -259,7 +259,7 @@ var bods = Composite.allBodies(world);
 for( bod of bods ){
   if(bod.label == 'ally'){
     allies_Array.push(bod);
-  }else if(bod.label == 'shape' || bod.label == 'obstacle'){
+  }else if(bod.label == 'shape' || bod.label == 'obstacle' || bod.label == 'wall'){
     obstacles_Array.push(bod);
   }
 }
@@ -371,81 +371,12 @@ var tutorial = [
   'STUB'
 ];
 
-// use the engine tick event to control our view
-Events.on(engine, 'beforeTick', function() {
-  var translate;
-
-  // mouse wheel controls zoom
-  var scaleFactor = mouse.wheelDelta * -0.1;
-  if (scaleFactor !== 0) {
-      if ((scaleFactor < 0 && boundsScale.x >= 0.6) || (scaleFactor > 0 && boundsScale.x <= 1.2)) {
-          boundsScaleTarget += scaleFactor;
-      }
-  }
-
-  // if scale has changed
-  if (Math.abs(boundsScale.x - boundsScaleTarget) > 0.01) {
-      // smoothly tween scale factor
-      scaleFactor = (boundsScaleTarget - boundsScale.x) * 0.2;
-      boundsScale.x += scaleFactor;
-      boundsScale.y += scaleFactor;
-
-      // scale the render bounds
-      render.bounds.max.x = render.bounds.min.x + render.options.width * boundsScale.x;
-      render.bounds.max.y = render.bounds.min.y + render.options.height * boundsScale.y;
-
-      // translate so zoom is from centre of view
-      translate = {
-          x: render.options.width * scaleFactor * -0.5,
-          y: render.options.height * scaleFactor * -0.5
-      };
-
-      Bounds.translate(render.bounds, translate);
-
-      // update mouse
-      Mouse.setScale(mouse, boundsScale);
-      Mouse.setOffset(mouse, render.bounds.min);
-  }
-
-  // get vector from mouse relative to centre of viewport
-  var deltaCentre = Vector.sub(mouse.absolute, viewportCentre),
-      centreDist = Vector.magnitude(deltaCentre);
-
-  // translate the view if mouse has moved over 50px from the centre of viewport
-  var thresh = 50; //reHi / 6;
-  if (centreDist > thresh && mouseConstraint.mouse.button === 2) {
-      // create a vector to translate the view, allowing the user to control view speed
-      var direction = Vector.normalise(deltaCentre),
-          speed = Math.min(10, Math.pow(centreDist - thresh, 2) * 0.0002);
-
-      translate = Vector.mult(direction, speed);
-
-      // prevent the view moving outside the world bounds
-      if (render.bounds.min.x + translate.x < world.bounds.min.x){
-        translate.x = world.bounds.min.x - render.bounds.min.x;
-      }
-      if (render.bounds.max.x + translate.x > world.bounds.max.x){
-        translate.x = world.bounds.max.x - render.bounds.max.x;
-      }
-      if (render.bounds.min.y + translate.y < world.bounds.min.y){
-        translate.y = world.bounds.min.y - render.bounds.min.y;
-      }
-      if (render.bounds.max.y + translate.y > world.bounds.max.y){
-        translate.y = world.bounds.max.y - render.bounds.max.y;
-      }
-
-      // move the view
-      Bounds.translate(render.bounds, translate);
-
-      // we must update the mouse too
-      Mouse.setOffset(mouse, render.bounds.min);
-  }
-});
-
 Events.on(render, 'afterRender', function() {
   var ctx = render.context;
 
   Render.startViewTransform(render);
+
+    draw_BG(ctx);
 
     ctx.font = '16px alber';
     ctx.textAlign = 'center';
@@ -475,10 +406,31 @@ Events.on(render, 'afterRender', function() {
 
     ray_fov(ctx);
 
+    draw_Shapes(ctx, obstacles_Array);
     draw_Graphics(ctx, allies_Array);
 
   Render.endViewTransform(render);
 });
+
+function draw_BG(ctx){
+  let img = new Image();
+  img.src = './assets/map.jpg';
+  ctx.drawImage(img,0,0,reWi,reHi);
+}
+
+function draw_Shapes(ctx, a){
+  for( i of a ){
+    ctx.beginPath();
+    ctx.moveTo(i.vertices[0].x, i.vertices[0].y);
+    for(v of i.vertices){
+      ctx.lineTo(v.x, v.y);
+    }
+    ctx.lineTo(i.vertices[0].x, i.vertices[0].y);
+    ctx.fillStyle = '#ffffffaa';
+    ctx.lineWidth = 1;
+    ctx.fill();
+  }
+}
 
 function draw_Graphics(ctx, a){
   for( i of a ){
@@ -617,5 +569,16 @@ function ray_crossVector(ctx, movingEnt, bod){
 }
 
 function ray_fov(ctx){
-  // stub
+  /*
+    Object vertices go clockwise. Therefore I can deduce segments per vertex pair
+    Per ally / raycaster, cast a ray towards every unique vertex (of LoS breaking objects)
+    Plus 2 rays offset by +/- 0.00001 rad
+    Get the intersect points
+    Sort intersect points by ray angle and draw a polygon by connecting the dots going clockwise
+    Repeat ^ per ally and overlap the visibility polygons
+  */
+  ctx.globalCompositeOperation = "destination-atop";
+  ctx.fillStyle = '#ff0000';
+  ctx.fillRect(0,0,reWi*0.5,reHi);
+  ctx.globalCompositeOperation = "source-over"; // the default
 }
