@@ -415,6 +415,8 @@ Events.on(render, 'afterRender', function() {
     draw_Shapes(ctx, obstacles_Array);
     draw_Graphics(ctx, allies_Array);
 
+    //draw mouse cq custom cursor
+
   Render.endViewTransform(render);
 });
 
@@ -674,3 +676,8 @@ function ray_fov(ctx, caster){
 	}
   ctx.fill();
 }
+
+// option 1: cast rays from allies to enemies, if the enemy isn't 0th on the collision array, hide them
+// option 2: render enemies before the polygons, using a different globalCompositeOperation
+// ctx.globalCompositeOperation = "destination-atop";
+// ctx.globalCompositeOperation = "source-over";
