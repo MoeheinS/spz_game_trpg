@@ -386,8 +386,6 @@ Events.on(render, 'afterRender', function() {
     ctx.fillText('v0.0.3', 100, -100);
     ctx.fillText(game_state, 100, -80);
 
-    
-
     for( caster of allies_Array ){
       ray_fov(ctx, caster);
     }
@@ -694,7 +692,24 @@ Events.on(mouseConstraint, "mouseup", function(event) {
     mouse_selectArea.max = {x: mouseConstraint.mouse.mouseupPosition.x, y: mouseConstraint.mouse.mouseupPosition.y};
     console.table(mouse_selectArea);
 
-    var selectedBodies = Query.region(allies_Array, mouse_selectArea);
+    var region = {
+      min: {
+        x: 0,
+        y: 0
+      },
+      max: {
+        x: 0,
+        y: 0
+      }
+    };
+    var bound_a = mouse_selectArea.min;
+    var bound_b = mouse_selectArea.max;
+    region.min.x = (bound_a.x <= bound_b.x ? bound_a.x : bound_b.x);
+    region.max.x = (bound_a.x > bound_b.x ? bound_a.x : bound_b.x);
+    region.min.y = (bound_a.y <= bound_b.y ? bound_a.y : bound_b.y);
+    region.max.y = (bound_a.y > bound_b.y ? bound_a.y : bound_b.y);
+
+    var selectedBodies = Query.region(allies_Array, region);
     console.log(selectedBodies);
   }
 });
