@@ -78,7 +78,10 @@ var runner = Runner.create();
 Runner.run(runner, engine);
 
 // add mouse control
-// TODO add collision filtering for the invisible pushers?
+// define our categories (as bit fields, there are up to 32 available)
+var defaultCategory = 0x0001,
+    draggable_true = 0x0002,
+    draggable_false = 0x0004;
 var mouse = Mouse.create(render.canvas),
 mouseConstraint = MouseConstraint.create(engine, {
     mouse: mouse,
@@ -89,6 +92,7 @@ mouseConstraint = MouseConstraint.create(engine, {
         }
     }
 });
+mouseConstraint.collisionFilter.mask = defaultCategory | draggable_true;
 World.add(world, mouseConstraint);
 // keep the mouse in sync with rendering
 render.mouse = mouse;
@@ -110,19 +114,31 @@ Walls, Pillars, Characters
 */
 var w_bot = buildRect(reWi*0.5, reHi+(GRID_SIZE*0.5), reWi, GRID_SIZE, { 
   label: 'wall',
-  isStatic: true
+  isStatic: true,
+  collisionFilter: {
+    category: draggable_false
+  }
 });
 var w_top = buildRect(reWi*0.5, 0-(GRID_SIZE*0.5), reWi, GRID_SIZE, { 
   label: 'wall',
-  isStatic: true
+  isStatic: true,
+  collisionFilter: {
+    category: draggable_false
+  }
 });
 var w_right = buildRect(reWi+(GRID_SIZE*0.5), (reHi*0.5), GRID_SIZE, reHi, {
   label: "wall",
-  isStatic: true
+  isStatic: true,
+  collisionFilter: {
+    category: draggable_false
+  }
 });
 var w_left = buildRect(0-(GRID_SIZE*0.5), reHi*0.5, GRID_SIZE, reHi, {
   label: "wall",
-  isStatic: true
+  isStatic: true,
+  collisionFilter: {
+    category: draggable_false
+  }
 });
 
 // basic world boundary
@@ -139,6 +155,9 @@ debug_travelDistance_color = 'green';
 var test_obstacle_pillar = Bodies.rectangle(reWi*0.5, reHi*0.25, GRID_SIZE*2, GRID_SIZE*1.5, {
   label: 'obstacle',
   frictionAir: 1,
+  collisionFilter: {
+    category: draggable_false
+  },
   custom: {
     baseMove: GRID_SIZE*4,
     maxMove: GRID_SIZE*4,
@@ -154,6 +173,9 @@ World.add(world, test_obstacle_pillar);
 var test_obstacle_shape = Bodies.rectangle(reWi*0.5, GRID_SIZE*9, GRID_SIZE*1.5, GRID_SIZE*7.5, {
   label: 'shape',
   frictionAir: 1,
+  collisionFilter: {
+    category: draggable_false
+  },
   custom: {
     baseMove: GRID_SIZE*4,
     maxMove: GRID_SIZE*4,
@@ -169,8 +191,11 @@ World.add(world, test_obstacle_shape);
 // ==================================
 
 var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*1, {
-  label: 'ally',
+  label: 'enemy',
   frictionAir: 1,
+  collisionFilter: {
+    category: draggable_false
+  },
   custom: {
     baseMove: GRID_SIZE*4,
     maxMove: GRID_SIZE*4,
@@ -178,10 +203,7 @@ var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*1, {
       x: GRID_SIZE*4, 
       y: GRID_SIZE*2 
     },
-    sprite: './assets/3382.png'
-  },
-  render: {
-    fillStyle: 'fuchsia'
+    sprite: './assets/2681.png'
   }
 });
 World.add(world, test_character);
@@ -189,6 +211,9 @@ World.add(world, test_character);
 var test_character2 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*12), GRID_SIZE*1, {
   label: 'ally',
   frictionAir: 1,
+  collisionFilter: {
+    category: draggable_false
+  },
   custom: {
     baseMove: GRID_SIZE*14,
     maxMove: GRID_SIZE*14,
@@ -197,9 +222,6 @@ var test_character2 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*12), GRID_
       y: reHi-(GRID_SIZE*12)
     },
     sprite: './assets/3096.png'
-  },
-  render: {
-    fillStyle: 'fuchsia'
   }
 });
 World.add(world, test_character2);
@@ -207,6 +229,9 @@ World.add(world, test_character2);
 var test_character3 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*4), GRID_SIZE*1, {
   label: 'ally',
   frictionAir: 1,
+  collisionFilter: {
+    category: draggable_false
+  },
   custom: {
     baseMove: GRID_SIZE*4,
     maxMove: GRID_SIZE*4,
@@ -214,10 +239,7 @@ var test_character3 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*4), GRID_S
       x: reWi-(GRID_SIZE*4),
       y: reHi-(GRID_SIZE*4)
     },
-    sprite: './assets/2681.png'
-  },
-  render: {
-    fillStyle: 'fuchsia'
+    sprite: './assets/3382.png'
   }
 });
 World.add(world, test_character3);
@@ -236,6 +258,15 @@ document.addEventListener("keydown", function(e){
         if(bod.custom && bod.custom.startPoint){
           bod.custom.maxMove = bod.custom.baseMove;
           bod.custom.startPoint =  { x: bod.position.x, y: bod.position.y};
+        }
+      }
+      break;
+    case 'f':
+      for( ally of allies_Array ){
+        if( ally.collisionFilter.category == draggable_false ){
+          ally.collisionFilter.category = draggable_true;
+        }else{
+          ally.collisionFilter.category = draggable_false;
         }
       }
       break;
@@ -325,16 +356,20 @@ var tutorial = [
 ];
 
 let allies_Array = [];
+let enemies_Array = [];
 let obstacles_Array = [];
 
 Events.on(render, 'afterRender', function() {
   // make primitive groups, so I don't have to loop over ALL the objects every time i need something
   // this also lets me ignore checks for properties
   allies_Array = [];
+  enemies_Array = [];
   obstacles_Array = [];
   for( bod of Composite.allBodies(world) ){
     if(bod.label == 'ally'){
       allies_Array.push(bod);
+    }else if(bod.label == 'enemy'){
+      enemies_Array.push(bod);
     }else if(bod.label == 'shape' || bod.label == 'obstacle' || bod.label == 'wall'){
       obstacles_Array.push(bod);
     }
@@ -348,15 +383,23 @@ Events.on(render, 'afterRender', function() {
     ctx.font = '16px alber';
     ctx.textAlign = 'center';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText('v0.0.2', 100, -100);
+    ctx.fillText('v0.0.3', 100, -100);
+    ctx.fillText(game_state, 100, -80);
+
+    
 
     for( caster of allies_Array ){
       ray_fov(ctx, caster);
     }
+    draw_Graphics(ctx, enemies_Array, 'source-atop');
 
-    draw_Shapes(ctx, obstacles_Array);
     draw_Graphics(ctx, allies_Array);
+    draw_Shapes(ctx, obstacles_Array);
     //draw mouse cq custom cursor
+
+    if( game_state == 'mouse_select' ){ // && mouseConstraint.mouse.button === 0
+      draw_mouseSelect(ctx);
+    }
 
     //debug state rendering
     render_debug(game_debug, render.context);
@@ -385,7 +428,7 @@ function draw_Shapes(ctx, a){
   }
 }
 
-function draw_Graphics(ctx, a){
+function draw_Graphics(ctx, a, mode){
   for( i of a ){
     let img = new Image();
     img.src = i.custom.sprite;
@@ -393,7 +436,13 @@ function draw_Graphics(ctx, a){
     var iy = i.bounds.min.y;
     var ixs = Math.abs(i.bounds.max.x - i.bounds.min.x);
     var iys = Math.abs(i.bounds.max.y - i.bounds.min.y);
-    ctx.drawImage(img,ix,iy,ixs,iys);
+    if(mode){
+      ctx.globalCompositeOperation = mode;
+      ctx.drawImage(img,ix,iy,ixs,iys);
+      ctx.globalCompositeOperation = 'source-over';
+    }else{
+      ctx.drawImage(img,ix,iy,ixs,iys);
+    }
   }
 }
 
@@ -618,6 +667,80 @@ function ray_fov(ctx, caster){
 
 /*
   add enemy type
+    render before visibility polygons; enemy with globalCompositeOperation to fully darken graphic
+    render after  visibility polygons; ray from allies to enemies; 
+      if it's a CLEAR loS (not counting other allies) enemy normal graphic
+      else skip the normal graphic; this leaves a silhouette that bleeds into the shadows. In theory.
   add mouse select
   hotkey bindings, group forming?
 */
+
+var mouse_selectArea = {};
+
+Events.on(mouseConstraint, "mousedown", function(event) {
+  console.log(event);
+  if( event.mouse.button === 0 ){
+    console.warn('start drag selection area');
+    game_state = 'mouse_select';
+    mouse_selectArea = {};
+    mouse_selectArea.min = {x: mouseConstraint.mouse.mousedownPosition.x, y: mouseConstraint.mouse.mousedownPosition.y};
+  }
+});
+
+Events.on(mouseConstraint, "mouseup", function(event) {
+  if( event.mouse.button === -1 && game_state == 'mouse_select' ){
+    console.warn('end drag selection area');
+    game_state = 'mouse_select_done';
+    mouse_selectArea.max = {x: mouseConstraint.mouse.mouseupPosition.x, y: mouseConstraint.mouse.mouseupPosition.y};
+    console.table(mouse_selectArea);
+
+    var selectedBodies = Query.region(allies_Array, mouse_selectArea);
+    console.log(selectedBodies);
+  }
+});
+
+function draw_mouseSelect(ctx){
+  if( mouse_selectArea.min ){
+    var oldStroke = ctx.strokeStyle;
+    ctx.strokeStyle = 'green';
+    ctx.strokeRect(
+      mouse_selectArea.min.x, 
+      mouse_selectArea.min.y, 
+      mouseConstraint.mouse.position.x-mouse_selectArea.min.x, 
+      mouseConstraint.mouse.position.y-mouse_selectArea.min.y
+    ); 
+    
+    var region = {
+      min: {
+        x: 0,
+        y: 0
+      },
+      max: {
+        x: 0,
+        y: 0
+      }
+    };
+    var bound_a = {
+      x: mouse_selectArea.min.x, 
+      y: mouse_selectArea.min.y 
+    };
+    var bound_b = {
+      x: mouseConstraint.mouse.position.x,
+      y: mouseConstraint.mouse.position.y
+    };
+    region.min.x = (bound_a.x <= bound_b.x ? bound_a.x : bound_b.x);
+    region.max.x = (bound_a.x > bound_b.x ? bound_a.x : bound_b.x);
+    region.min.y = (bound_a.y <= bound_b.y ? bound_a.y : bound_b.y);
+    region.max.y = (bound_a.y > bound_b.y ? bound_a.y : bound_b.y);
+      
+    let selectedBodies = Query.region(allies_Array, region);
+    if( selectedBodies.length > 0 ){
+      for( bod of selectedBodies ){
+        // placeholder box to denote they're about to be selected
+        ctx.strokeRect(bod.bounds.min.x, bod.bounds.min.y, bod.bounds.max.x-bod.bounds.min.x, bod.bounds.max.y-bod.bounds.min.y); 
+      }
+    }
+
+    ctx.strokeStyle = oldStroke;
+  }
+}
