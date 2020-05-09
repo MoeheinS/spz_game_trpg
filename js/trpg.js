@@ -1,4 +1,4 @@
-console.log('%cUo Poko game','color:#ff0000;font-family:Comic Sans MS;');
+console.log('%cTRPG','color:#ff0000;font-family:Comic Sans MS;');
 
 /*  Table of Contents
 *   Constants and settings
@@ -14,9 +14,6 @@ console.log('%cUo Poko game','color:#ff0000;font-family:Comic Sans MS;');
 let game_state = 'idle';
 let game_debug = true;
 let game_phase = 'player';
-
-let background_img = new Image();
-background_img.src = './assets/map.jpg';
 
 //const COLOR_STACKED = '#795548';
 const COLOR_SHIFT = [
@@ -70,8 +67,8 @@ world.bounds.max.x = render.options.width * 1.25;
 world.bounds.max.y = render.options.height * 1.25;
 
 // keep track of current bounds scale (view zoom)
-var boundsScaleTarget = 1,
-boundsScale = {
+var boundsScaleTarget = 1;
+var boundsScale = {
     x: 1,
     y: 1
 };
@@ -111,33 +108,21 @@ engine.enableSleeping = false;
 /*
 Walls, Pillars, Characters
 */
-var w_bot = buildRect(reWi*0.5, reHi, reWi, GRID_SIZE, { 
+var w_bot = buildRect(reWi*0.5, reHi+(GRID_SIZE*0.5), reWi, GRID_SIZE, { 
   label: 'wall',
-  isStatic: true,
-  render: {
-    //fillStyle: 'transparent'
-  }
+  isStatic: true
 });
-var w_top = buildRect(reWi*0.5, 0, reWi, GRID_SIZE, { 
+var w_top = buildRect(reWi*0.5, 0-(GRID_SIZE*0.5), reWi, GRID_SIZE, { 
   label: 'wall',
-  isStatic: true,
-  render: {
-    //fillStyle: 'transparent'
-  }
+  isStatic: true
 });
-var w_right = buildRect(reWi, reHi*0.5, GRID_SIZE, reHi, {
+var w_right = buildRect(reWi+(GRID_SIZE*0.5), (reHi*0.5), GRID_SIZE, reHi, {
   label: "wall",
-  isStatic: true,
-  render: {
-    //fillStyle: 'transparent'
-  }
+  isStatic: true
 });
-var w_left = buildRect(0, reHi*0.5, GRID_SIZE, reHi, {
+var w_left = buildRect(0-(GRID_SIZE*0.5), reHi*0.5, GRID_SIZE, reHi, {
   label: "wall",
-  isStatic: true,
-  render: {
-    //fillStyle: 'transparent'
-  }
+  isStatic: true
 });
 
 // basic world boundary
@@ -151,48 +136,35 @@ World.add(world, [
 debug_travelDistance = 0;
 debug_travelDistance_color = 'green';
 
-var test_obstacle_pillar = Bodies.rectangle(GRID_SIZE*7, GRID_SIZE*10, GRID_SIZE*2, GRID_SIZE*1.5, {
+var test_obstacle_pillar = Bodies.rectangle(reWi*0.5, reHi*0.25, GRID_SIZE*2, GRID_SIZE*1.5, {
   label: 'obstacle',
   frictionAir: 1,
   custom: {
     baseMove: GRID_SIZE*4,
     maxMove: GRID_SIZE*4,
     startPoint: { 
-      x: GRID_SIZE*7, 
-      y: GRID_SIZE*10 
+      x: reWi*0.5, 
+      y: reHi*0.25
     },
     render: 'sprite'
-  },
-  render: {
-    fillStyle: 'grey'
   }
 });
 World.add(world, test_obstacle_pillar);
-console.log(test_obstacle_pillar);
 
-var test_obstacle_shape = Bodies.rectangle(GRID_SIZE*6, GRID_SIZE*7, GRID_SIZE*1.5, GRID_SIZE*1.5, {
+var test_obstacle_shape = Bodies.rectangle(reWi*0.5, GRID_SIZE*9, GRID_SIZE*1.5, GRID_SIZE*7.5, {
   label: 'shape',
   frictionAir: 1,
   custom: {
     baseMove: GRID_SIZE*4,
     maxMove: GRID_SIZE*4,
     startPoint: { 
-      x: GRID_SIZE*6, 
-      y: GRID_SIZE*7 
+      x: reWi*0.5, 
+      y: GRID_SIZE*9 
     },
     render: 'shape'
-  },
-  render: {
-    fillStyle: 'grey',
-    sprite: {
-      texture: './assets/Cannon_06.png',
-      xScale: 0.85,
-      yScale: 0.85
-    }
   }
 });
 World.add(world, test_obstacle_shape);
-console.log(test_obstacle_shape);
 
 // ==================================
 
@@ -250,32 +222,9 @@ var test_character3 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*4), GRID_S
 });
 World.add(world, test_character3);
 
-
-
-// Sensor grid; for raycasting
-
-// make primitive groups, so I don't have to loop over ALL the objects every time i need something
-// this also lets me ignore checks for properties
-var allies_Array = [];
-var obstacles_Array = [];
-
-var bods = Composite.allBodies(world);
-for( bod of bods ){
-  if(bod.label == 'ally'){
-    allies_Array.push(bod);
-  }else if(bod.label == 'shape' || bod.label == 'obstacle' || bod.label == 'wall'){
-    obstacles_Array.push(bod);
-  }
-}
-console.log(allies_Array);
-console.log(obstacles_Array);
-
-//Composite.scale(world, 0.5, 0.5, {x: 0, y: 0});
-
 /*
 *   Functions
 */
-// keydown to move curver brick, keyup to launch orb?
 document.addEventListener("keydown", function(e){
   switch (e.key) {
     case 'd':
@@ -375,23 +324,31 @@ var tutorial = [
   'STUB'
 ];
 
+let allies_Array = [];
+let obstacles_Array = [];
+
 Events.on(render, 'afterRender', function() {
+  // make primitive groups, so I don't have to loop over ALL the objects every time i need something
+  // this also lets me ignore checks for properties
+  allies_Array = [];
+  obstacles_Array = [];
+  for( bod of Composite.allBodies(world) ){
+    if(bod.label == 'ally'){
+      allies_Array.push(bod);
+    }else if(bod.label == 'shape' || bod.label == 'obstacle' || bod.label == 'wall'){
+      obstacles_Array.push(bod);
+    }
+  }
+
   var ctx = render.context;
+  ctx.clearRect(0, 0, reWi, reHi);
 
   Render.startViewTransform(render);
-  ctx.clearRect(0, 0, reWi, reHi);
 
     ctx.font = '16px alber';
     ctx.textAlign = 'center';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText('v0.0.1', 100, 20);
-
-    if (mouseConstraint.body && mouseConstraint.mouse.button === 0){
-      render_moveRange(ctx, mouseConstraint);
-      if( mouseConstraint.body.label == 'ally' ){
-        ray_tb(ctx, mouseConstraint);
-      }
-    }
+    ctx.fillText('v0.0.2', 100, -100);
 
     for( caster of allies_Array ){
       ray_fov(ctx, caster);
@@ -399,11 +356,17 @@ Events.on(render, 'afterRender', function() {
 
     draw_Shapes(ctx, obstacles_Array);
     draw_Graphics(ctx, allies_Array);
-
     //draw mouse cq custom cursor
 
     //debug state rendering
     render_debug(game_debug, render.context);
+    // experimental
+    if (mouseConstraint.body && mouseConstraint.mouse.button === 0){
+      render_moveRange(ctx, mouseConstraint);
+      if( mouseConstraint.body.label == 'ally' ){
+        ray_tb(ctx, mouseConstraint);
+      }
+    }
 
   Render.endViewTransform(render);
 });
@@ -416,7 +379,7 @@ function draw_Shapes(ctx, a){
       ctx.lineTo(v.x, v.y);
     }
     ctx.lineTo(i.vertices[0].x, i.vertices[0].y);
-    ctx.fillStyle = '#ffffffaa';
+    ctx.fillStyle = '#ffffff';
     ctx.lineWidth = 1;
     ctx.fill();
   }
@@ -476,10 +439,9 @@ function ray_tb(ctx, o){
   // draw lines between allies, change color if there's enemies intersecting
   // also draw the other cardinal directions, see who intersects with that
   let movingEnt = o.body;
-  var bods = Composite.allBodies(world);
-  for( bod of bods ){
-    if( bod.label == 'ally' && bod.id != movingEnt.id ){
-      var collisions = Query.ray(bods, movingEnt.position, bod.position);
+  for( bod of allies_Array ){
+    if( bod.id != movingEnt.id ){
+      var collisions = Query.ray(Composite.allBodies(world), movingEnt.position, bod.position);
       ctx.beginPath();
       ctx.moveTo(movingEnt.position.x, movingEnt.position.y);
       ctx.lineTo(bod.position.x, bod.position.y);
@@ -491,10 +453,8 @@ function ray_tb(ctx, o){
       }
       ctx.lineWidth = 1;
       ctx.stroke();
-      
     }
   }
-  //allies_Array
 }
 
 function ray_crossVector(ctx, movingEnt, bod){
@@ -544,6 +504,7 @@ function ray_crossVector(ctx, movingEnt, bod){
   }
 }
 
+// eventually move this to household, or a fov file
 function ray_fov(ctx, caster){
   /*
     Object vertices go clockwise. Therefore I can deduce segments per vertex pair
@@ -635,7 +596,7 @@ function ray_fov(ctx, caster){
 
 	// DRAW AS A GIANT POLYGON
   //ctx.fillStyle = "#dd383833";
-  ctx.fillStyle = ctx.createPattern(background_img,'repeat');
+  ctx.fillStyle = '#dee1e6';
 	ctx.beginPath();
 	ctx.moveTo(intersects[0].x,intersects[0].y);
 	for(var i=1;i<intersects.length;i++){
