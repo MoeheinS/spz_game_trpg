@@ -594,9 +594,14 @@ function ray_fov(ctx, caster){
 		return a.angle-b.angle;
 	});
 
-	// DRAW AS A GIANT POLYGON
-  //ctx.fillStyle = "#dd383833";
+  // DRAW AS A GIANT POLYGON
   ctx.fillStyle = '#dee1e6';
+  // experimental: currect "active" selection renders polygon LAST, and in a different color
+  if (mouseConstraint.body && mouseConstraint.mouse.button === 0){
+    if( mouseConstraint.body.id == caster.id ){
+      ctx.fillStyle = "#dd3838cc";
+    }
+  }
 	ctx.beginPath();
 	ctx.moveTo(intersects[0].x,intersects[0].y);
 	for(var i=1;i<intersects.length;i++){
@@ -610,3 +615,9 @@ function ray_fov(ctx, caster){
 // option 2: render enemies before the polygons, using a different globalCompositeOperation
 // ctx.globalCompositeOperation = "destination-atop";
 // ctx.globalCompositeOperation = "source-over";
+
+/*
+  add enemy type
+  add mouse select
+  hotkey bindings, group forming?
+*/
