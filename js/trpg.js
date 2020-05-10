@@ -2,7 +2,6 @@ console.log('%cTRPG','color:#ff0000;font-family:Comic Sans MS;');
 
 /*  Table of Contents
 *   Constants and settings
-*   Actual physics objects
 *   Functions
 *   Lifecycle events
 *   Rendering
@@ -61,7 +60,6 @@ var render = Render.create({
         showCollisions: true,
         showVelocity: true,
         hasBounds: true,
-        //background: '#004444',
         background: RENDER_SHADOWCOLOR
     }
 });
@@ -94,6 +92,7 @@ Runner.run(runner, engine);
 var defaultCategory = 0x0001,
     draggable_true = 0x0002,
     draggable_false = 0x0004;
+
 var mouse = Mouse.create(render.canvas),
 mouseConstraint = MouseConstraint.create(engine, {
     mouse: mouse,
@@ -118,107 +117,9 @@ Render.lookAt(render, {
 world.gravity.y = 0;
 engine.enableSleeping = false;
 
-/*
-*   Actual physics objects
-*/
-/*
-Walls, Pillars, Characters
-*/
-var w_bot = buildRect(reWi*0.5, reHi+(GRID_SIZE*0.5), reWi, GRID_SIZE, { 
-  label: 'wall',
-  isStatic: true,
-  collisionFilter: {
-    category: draggable_false
-  }
-});
-var w_top = buildRect(reWi*0.5, 0-(GRID_SIZE*0.5), reWi, GRID_SIZE, { 
-  label: 'wall',
-  isStatic: true,
-  collisionFilter: {
-    category: draggable_false
-  }
-});
-var w_right = buildRect(reWi+(GRID_SIZE*0.5), (reHi*0.5), GRID_SIZE, reHi, {
-  label: "wall",
-  isStatic: true,
-  collisionFilter: {
-    category: draggable_false
-  }
-});
-var w_left = buildRect(0-(GRID_SIZE*0.5), reHi*0.5, GRID_SIZE, reHi, {
-  label: "wall",
-  isStatic: true,
-  collisionFilter: {
-    category: draggable_false
-  }
-});
-
-// basic world boundary
-World.add(world, [
-  w_bot,
-  w_top,
-  w_left,
-  w_right
-]);
-
+// TODO roll this into the traveling objects
 debug_travelDistance = 0;
 debug_travelDistance_color = 'green';
-
-var test_obstacle_pillar = Bodies.rectangle(reWi*0.5, reHi*0.25, GRID_SIZE*2, GRID_SIZE*1.5, {
-  label: 'obstacle',
-  frictionAir: 1,
-  collisionFilter: {
-    category: draggable_false
-  },
-  custom: {
-    baseMove: GRID_SIZE*4,
-    maxMove: GRID_SIZE*4,
-    startPoint: { 
-      x: reWi*0.5, 
-      y: reHi*0.25
-    },
-    render: 'sprite'
-  }
-});
-World.add(world, test_obstacle_pillar);
-
-var test_obstacle_shape = Bodies.rectangle(reWi*0.5, GRID_SIZE*9, GRID_SIZE*1.5, GRID_SIZE*7.5, {
-  label: 'shape',
-  frictionAir: 1,
-  collisionFilter: {
-    category: draggable_false
-  },
-  custom: {
-    baseMove: GRID_SIZE*4,
-    maxMove: GRID_SIZE*4,
-    startPoint: { 
-      x: reWi*0.5, 
-      y: GRID_SIZE*9 
-    },
-    render: 'shape'
-  }
-});
-World.add(world, test_obstacle_shape);
-
-// ==================================
-
-var test_enemy = Bodies.rectangle(GRID_SIZE*4, GRID_SIZE*2, 80, 88, {
-  label: 'enemy',
-  frictionAir: 1,
-  collisionFilter: {
-    category: draggable_false
-  },
-  custom: {
-    baseMove: GRID_SIZE*4,
-    maxMove: GRID_SIZE*4,
-    startPoint: { 
-      x: GRID_SIZE*4, 
-      y: GRID_SIZE*2 
-    },
-    sprite: './assets/smt/suika.png'
-  }
-});
-World.add(world, test_enemy);
 
 /*
 *   Functions
@@ -252,6 +153,36 @@ document.addEventListener("keydown", function(e){
   }
 });
 
+function heartbeat_animations(){
+  anim_tick++;
+  if( anim_tick >= anim_timing ){
+    anim_tick = 0;
+    console.log('tick');
+    for( bod of Composite.allBodies(world) ){
+      if( bod.custom && bod.custom.animation ){
+        bod.custom.animation = cycleArray(bod.custom.animation);
+      }
+    }
+  }
+}
+
+function group_Entities() {
+  // make primitive groups, so I don't have to loop over ALL the objects every time i need something
+  // this also lets me ignore checks for properties
+  allies_Array = [];
+  enemies_Array = [];
+  obstacles_Array = [];
+  for( bod of Composite.allBodies(world) ){
+    if(bod.label == 'ally'){
+      allies_Array.push(bod);
+    }else if(bod.label == 'enemy'){
+      enemies_Array.push(bod);
+    }else if(bod.label == 'shape' || bod.label == 'obstacle' || bod.label == 'wall'){
+      obstacles_Array.push(bod);
+    }
+  }
+}
+
 /*
 *   Lifecycle events
 */
@@ -279,37 +210,10 @@ Events.on(engine, 'afterUpdate', function(event) {
 /*
 *   Rendering
 */
-var tutorial = [
-  'STUB'
-];
-
 Events.on(render, 'afterRender', function() {
 
-  anim_tick++;
-  if( anim_tick >= anim_timing ){
-    anim_tick = 0;
-    console.log('tick');
-    for( bod of Composite.allBodies(world) ){
-      if( bod.custom && bod.custom.animation ){
-        bod.custom.animation = cycleArray(bod.custom.animation);
-      }
-    }
-  }
-
-  // make primitive groups, so I don't have to loop over ALL the objects every time i need something
-  // this also lets me ignore checks for properties
-  allies_Array = [];
-  enemies_Array = [];
-  obstacles_Array = [];
-  for( bod of Composite.allBodies(world) ){
-    if(bod.label == 'ally'){
-      allies_Array.push(bod);
-    }else if(bod.label == 'enemy'){
-      enemies_Array.push(bod);
-    }else if(bod.label == 'shape' || bod.label == 'obstacle' || bod.label == 'wall'){
-      obstacles_Array.push(bod);
-    }
-  }
+  heartbeat_animations();
+  group_Entities();
 
   var ctx = render.context;
   ctx.clearRect(0, 0, reWi, reHi);
@@ -343,13 +247,8 @@ Events.on(render, 'afterRender', function() {
   Render.endViewTransform(render);
 });
 
-// option 1: cast rays from allies to enemies, if the enemy isn't 0th on the collision array, hide them
-// option 2: render enemies before the polygons, using a different globalCompositeOperation
-// ctx.globalCompositeOperation = "destination-atop";
-// ctx.globalCompositeOperation = "source-over";
-
 /*
-  add enemy type
+  option:
     render before visibility polygons; enemy with globalCompositeOperation to fully darken graphic
     render after  visibility polygons; ray from allies to enemies; 
       if it's a CLEAR loS (not counting other allies) enemy normal graphic

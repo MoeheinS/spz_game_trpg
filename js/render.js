@@ -72,6 +72,7 @@ function draw_Graphics(ctx, a, mode){
 
 // render UI elements, per actor
 function draw_UI(ctx, a){
+  return;
   let saveStyle = ctx.strokeStyle;
   let saveFill = ctx.fillStyle;
   let saveWidth = ctx.lineWidth;
@@ -80,7 +81,7 @@ function draw_UI(ctx, a){
     let i_h = hbb(i.bounds);
     let radius = (i_w >= i_h ? i_w : i_h);
     ctx.strokeStyle = RENDER_SHADOWCOLOR;
-    ctx.lineWidth = '6';
+    ctx.lineWidth = '4';
     ctx.beginPath();
     ctx.arc(i.position.x, i.position.y, radius*0.75, 0, Math.PI * 2, true); // Outer circle
     ctx.stroke();
@@ -88,7 +89,7 @@ function draw_UI(ctx, a){
     ctx.strokeStyle = 'green';
     ctx.lineWidth = '3';
     ctx.beginPath();
-    ctx.arc(i.position.x, i.position.y, radius*0.75, 0, Math.PI * 2, true); // Outer circle
+    ctx.arc(i.position.x, i.position.y, radius*0.75+1, 0, Math.PI * 2, true); // Outer circle
     ctx.stroke();
 
     ctx.strokeStyle = RENDER_SHADOWCOLOR;
