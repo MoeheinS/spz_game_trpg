@@ -15,7 +15,7 @@ let game_state = 'idle';
 let game_debug = true;
 let game_phase = 'player';
 
-let anim_timing = 30;
+let anim_timing = 25;
 let anim_tick = 0;
 
 //const COLOR_STACKED = '#795548';
@@ -29,6 +29,9 @@ const COLOR_SHIFT = [
   '#00ffff',//aqua
   '#ffffff'//white
 ];
+
+const RENDER_FILLCOLOR = '#bebec0';//'#dee1e6';
+const RENDER_ACTIVE_FILLCOLOR = '#dd3838cc';
 
 // create engine
 var engine = Engine.create(),
@@ -211,42 +214,6 @@ var test_character = buildCircle(GRID_SIZE*4, GRID_SIZE*2, GRID_SIZE*1, {
 });
 World.add(world, test_character);
 
-var test_character2 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*12), GRID_SIZE*1, {
-  label: 'ally',
-  frictionAir: 1,
-  collisionFilter: {
-    category: draggable_false
-  },
-  custom: {
-    baseMove: GRID_SIZE*14,
-    maxMove: GRID_SIZE*14,
-    startPoint: { 
-      x: reWi-(GRID_SIZE*4),
-      y: reHi-(GRID_SIZE*12)
-    },
-    sprite: './assets/3096.png'
-  }
-});
-World.add(world, test_character2);
-
-var test_character3 = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*4), GRID_SIZE*1, {
-  label: 'ally',
-  frictionAir: 1,
-  collisionFilter: {
-    category: draggable_false
-  },
-  custom: {
-    baseMove: GRID_SIZE*4,
-    maxMove: GRID_SIZE*4,
-    startPoint: { 
-      x: reWi-(GRID_SIZE*4),
-      y: reHi-(GRID_SIZE*4)
-    },
-    sprite: './assets/3382.png'
-  }
-});
-World.add(world, test_character3);
-
 /*
 *   Functions
 */
@@ -368,6 +335,11 @@ Events.on(render, 'afterRender', function() {
   if( anim_tick >= anim_timing ){
     anim_tick = 0;
     console.log('tick');
+    for( bod of Composite.allBodies(world) ){
+      if( bod.custom && bod.custom.animation ){
+        bod.custom.animation = cycleArray(bod.custom.animation);
+      }
+    }
   }
 
   // make primitive groups, so I don't have to loop over ALL the objects every time i need something
@@ -439,7 +411,11 @@ function draw_Shapes(ctx, a){
 function draw_Graphics(ctx, a, mode){
   for( i of a ){
     let img = new Image();
-    img.src = i.custom.sprite;
+    if( i.custom.animation ){
+      img.src = i.custom.animation[0];
+    }else{
+      img.src = i.custom.sprite;  
+    }
     var ix = i.bounds.min.x;
     var iy = i.bounds.min.y;
     var ixs = Math.abs(i.bounds.max.x - i.bounds.min.x);
@@ -559,113 +535,6 @@ function ray_crossVector(ctx, movingEnt, bod){
     ctx.lineWidth = 1;
     ctx.stroke();
   }
-}
-
-// eventually move this to household, or a fov file
-function ray_fov(ctx, caster){
-  /*
-    Object vertices go clockwise. Therefore I can deduce segments per vertex pair
-    Per ally / raycaster, cast a ray towards every unique vertex (of LoS breaking objects)
-    Plus 2 rays offset by +/- 0.00001 rad
-    Get the intersect points
-    Sort intersect points by ray angle and draw a polygon by connecting the dots going clockwise
-    Repeat ^ per ally and overlap the visibility polygons
-  */
-
-  // Plot segments per FoV blocking shape
-  var segments = [];
-  for( let o of obstacles_Array ){
-    //skip 0 and the last vertex; we'll push those manually
-    segments.push({a:{x:o.vertices[0].x,y:o.vertices[0].y}, b:{x:o.vertices[1].x,y:o.vertices[1].y}});
-    for( i=1; i<o.vertices.length-1; i++ ){
-      segments.push({a:{x:o.vertices[i].x,y:o.vertices[i].y}, b:{x:o.vertices[i+1].x,y:o.vertices[i+1].y}});
-    }
-    segments.push({a:{x:o.vertices[i].x,y:o.vertices[i].y}, b:{x:o.vertices[0].x,y:o.vertices[0].y}});
-  }
-
-  // Get all unique points
-	var points = (function(segments){
-		var a = [];
-    for( seg of segments ){
-      a.push(seg.a,seg.b);
-    }
-		return a;
-	})(segments);
-	var uniquePoints = (function(points){
-		var set = {};
-		return points.filter(function(p){
-			var key = p.x+","+p.y;
-			if(key in set){
-				return false;
-			}else{
-				set[key]=true;
-				return true;
-			}
-		});
-  })(points);
-  
-  // Get all angles
-	var uniqueAngles = [];
-	for(var j=0;j<uniquePoints.length;j++){
-		var uniquePoint = uniquePoints[j];
-		var angle = Math.atan2(uniquePoint.y-caster.position.y,uniquePoint.x-caster.position.x);
-		uniquePoint.angle = angle;
-		uniqueAngles.push(angle-0.00001,angle,angle+0.00001);
-  }
-  
-  // RAYS IN ALL DIRECTIONS
-	var intersects = [];
-	for(var j=0;j<uniqueAngles.length;j++){
-		var angle = uniqueAngles[j];
-
-		// Calculate dx & dy from angle
-		var dx = Math.cos(angle);
-		var dy = Math.sin(angle);
-
-		// Ray from center of screen to caster
-		var ray = {
-			a:{x:caster.position.x,y:caster.position.y},
-			b:{x:caster.position.x+dx,y:caster.position.y+dy}
-		};
-
-		// Find CLOSEST intersection
-		var closestIntersect = null;
-		for(var i=0;i<segments.length;i++){
-			var intersect = getIntersection(ray,segments[i]);
-			if(!intersect) continue;
-			if(!closestIntersect || intersect.param<closestIntersect.param){
-				closestIntersect=intersect;
-			}
-    }
-    
-    // Intersect angle
-		if(!closestIntersect){ continue; }
-		closestIntersect.angle = angle;
-
-		// Add to list of intersects
-		intersects.push(closestIntersect);
-  }
-  
-  // Sort intersects by angle
-	intersects = intersects.sort(function(a,b){
-		return a.angle-b.angle;
-	});
-
-  // DRAW AS A GIANT POLYGON
-  ctx.fillStyle = '#dee1e6';
-  // experimental: currect "active" selection renders polygon LAST, and in a different color
-  if (mouseConstraint.body && mouseConstraint.mouse.button === 0){
-    if( mouseConstraint.body.id == caster.id ){
-      ctx.fillStyle = "#dd3838cc";
-    }
-  }
-	ctx.beginPath();
-	ctx.moveTo(intersects[0].x,intersects[0].y);
-	for(var i=1;i<intersects.length;i++){
-		var intersect = intersects[i];
-		ctx.lineTo(intersect.x,intersect.y);
-	}
-  ctx.fill();
 }
 
 // option 1: cast rays from allies to enemies, if the enemy isn't 0th on the collision array, hide them
