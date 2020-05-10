@@ -5,8 +5,8 @@ var test_ally1 = Bodies.rectangle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*12), 72, 6
     category: draggable_false
   },
   custom: {
-    baseMove: GRID_SIZE*14,
-    maxMove: GRID_SIZE*14,
+    baseMove: GRID_SIZE*5,
+    maxMove: GRID_SIZE*5,
     startPoint: { 
       x: reWi-(GRID_SIZE*4),
       y: reHi-(GRID_SIZE*12)
@@ -24,8 +24,8 @@ var test_ally2 = Bodies.rectangle(reWi-(GRID_SIZE*5), reHi-(GRID_SIZE*13), 62, 6
     category: draggable_false
   },
   custom: {
-    baseMove: GRID_SIZE*14,
-    maxMove: GRID_SIZE*14,
+    baseMove: GRID_SIZE*5,
+    maxMove: GRID_SIZE*5,
     startPoint: { 
       x: reWi-(GRID_SIZE*5),
       y: reHi-(GRID_SIZE*13)
@@ -43,8 +43,8 @@ var test_ally3 = Bodies.rectangle(reWi-(GRID_SIZE*5), reHi-(GRID_SIZE*12), 51, 7
     category: draggable_false
   },
   custom: {
-    baseMove: GRID_SIZE*14,
-    maxMove: GRID_SIZE*14,
+    baseMove: GRID_SIZE*5,
+    maxMove: GRID_SIZE*5,
     startPoint: { 
       x: reWi-(GRID_SIZE*5),
       y: reHi-(GRID_SIZE*13)
