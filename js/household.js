@@ -137,3 +137,16 @@ function getIntersection(ray,segment){
 		param: T1
 	};
 }
+
+//var crab = ["1",2,3,4,5,6];
+function cycleArray(a, lofi) { 
+  console.table(a);
+  if(lofi){ //last-out-first-in
+    a.unshift(a.pop());
+    return a;
+  }else{ //first-out-last-in
+    a.push(a[0]);
+    a.shift();
+    return a;
+  }
+}
