@@ -37,6 +37,7 @@ const COLOR_SHIFT = [
 const RENDER_FILLCOLOR = '#bebec0';//'#dee1e6';
 const RENDER_ACTIVE_FILLCOLOR = '#dd3838cc';
 const RENDER_SHADOWCOLOR = '#202124';
+const RENDER_TERRAINCOLOR = '#ffffff';
 
 // create engine
 var engine = Engine.create(),
@@ -194,7 +195,7 @@ function group_Entities() {
 // TODO & render: turn starting position
 // Fired after engine update and all collision events
 Events.on(engine, 'afterUpdate', function(event) {
-  if( game_state == 'movement' && mouseConstraint.body){
+  if( ( game_state == 'movement' || game_state == 'mouse_select' ) && mouseConstraint.body){
     let movingEnt = mouseConstraint.body;
     if( movingEnt.custom ){
       debug_travelDistance = Math.hypot((movingEnt.custom.startPoint.x - movingEnt.position.x) ,(movingEnt.custom.startPoint.y - movingEnt.position.y));
@@ -233,6 +234,7 @@ Events.on(render, 'afterRender', function() {
     if( game_state == 'mouse_select' ){ // && mouseConstraint.mouse.button === 0
       draw_mouseSelect(ctx);
     }
+    render_rangefinder(ctx, mouseConstraint, null, 'red');
 
     //debug state rendering
     render_debug(game_debug, render.context);
@@ -257,3 +259,4 @@ Events.on(render, 'afterRender', function() {
 */
 
 // Query.region(mouse, bounds) for all allies, to draw moveRange (disagonal striped fill)
+// TODO write reset function for fillStyle, strokeStyle etc...

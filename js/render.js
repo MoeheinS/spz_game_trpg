@@ -21,10 +21,13 @@ function render_debug(game_debug, ctx){
         ctx.fillText('dist:'+Math.floor(debug_travelDistance / GRID_SIZE), bod.position.x, bod.position.y+48);
         ctx.fillText('moveRemain:'+Math.floor(bod.custom.maxMove / GRID_SIZE), bod.position.x, bod.position.y+60);
 
-        ctx.fillStyle = '#00ff00';
+        ctx.fillStyle = RENDER_SHADOWCOLOR;
         ctx.beginPath();
+        ctx.setLineDash([8, 12]);
+        ctx.strokeStyle = RENDER_SHADOWCOLOR;
         ctx.arc(bod.custom.startPoint.x, bod.custom.startPoint.y, bod.custom.maxMove+(GRID_SIZE*0.5), 0, Math.PI * 2, true); // Outer circle
         ctx.stroke();
+        ctx.setLineDash([]);
         ctx.moveTo(bod.position.x, bod.position.y);
       }
     }
@@ -41,7 +44,7 @@ function draw_Shapes(ctx, a){
       ctx.lineTo(v.x, v.y);
     }
     ctx.lineTo(i.vertices[0].x, i.vertices[0].y);
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = RENDER_TERRAINCOLOR;
     ctx.lineWidth = 1;
     ctx.fill();
   }
@@ -110,14 +113,66 @@ function draw_UI(ctx, a){
   ctx.lineWidth = saveWidth;
 }
 
+function render_rangefinder(ctx, mouseConstraint, a, color_override){
+  let saveFill = ctx.strokeStyle;
+  let distance_max = (GRID_SIZE * 5.5);
+  ctx.strokeStyle = RENDER_SHADOWCOLOR;
+  if(allies_Array.length){
+    //for development
+    a = allies_Array[0];
+  
+    let vx = mouseConstraint.mouse.position.x - a.position.x;   // get the line as vector
+    let vy = mouseConstraint.mouse.position.y - a.position.y;
+    let len = Math.hypot(vx, vy);
+    let nx = vx / len; // normalize vector
+    let ny = vy / len; // pixel long. This sets the scale
+
+    ctx.beginPath();
+    // TODO save const RENDER_DASHSTYLE = [8,12];
+    ctx.setLineDash([12, 3, 3]); //dash, empty
+    
+    ctx.moveTo(a.position.x, a.position.y);
+    // end line early by subtracting vector * pixel units
+    if( len < distance_max ){
+      ctx.lineTo(mouseConstraint.mouse.position.x - nx*10, mouseConstraint.mouse.position.y - ny*10);
+    }else{
+      ctx.strokeStyle = color_override || RENDER_SHADOWCOLOR;
+      ctx.lineTo(mouseConstraint.mouse.position.x - nx*10, mouseConstraint.mouse.position.y - ny*10);
+    }
+    
+
+    
+
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.save();
+      ctx.beginPath();
+      // MAXIMUM MATH to draw a perpendicular line. And I end up just setting lineWidth to T H I C C...
+      ctx.lineWidth = 20;
+      if( len < distance_max ){
+        ctx.moveTo(mouseConstraint.mouse.position.x - nx*10, mouseConstraint.mouse.position.y - ny*10);
+        ctx.lineTo(mouseConstraint.mouse.position.x - nx*(10+1), mouseConstraint.mouse.position.y - ny*(10+1));
+      }else{ // too far!
+        ctx.moveTo(a.position.x + nx*(distance_max-10), a.position.y + ny*(distance_max-10));
+        ctx.lineTo(a.position.x + nx*(distance_max+1-10), a.position.y + ny*(distance_max+1-10));
+      }
+      ctx.stroke();
+    ctx.restore();
+  }
+  ctx.strokeStyle = saveFill;
+}
+
 function render_moveRange(ctx, mouseConstraint){
   let movingEnt = mouseConstraint.body;
   if( movingEnt.custom ){
     if(debug_travelDistance < movingEnt.custom.maxMove){
-      ctx.strokeStyle = debug_travelDistance_color;
+      ctx.strokeStyle = RENDER_SHADOWCOLOR;//debug_travelDistance_color;
       ctx.beginPath();
+      ctx.setLineDash([8, 12]); //dash, empty
       ctx.arc(movingEnt.position.x, movingEnt.position.y, movingEnt.custom.maxMove - debug_travelDistance + GRID_SIZE*0.5, 0, Math.PI * 2, true); // Outer circle
       ctx.stroke();
+      ctx.setLineDash([]);
     }
   }
 }
