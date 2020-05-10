@@ -15,6 +15,9 @@ let game_state = 'idle';
 let game_debug = true;
 let game_phase = 'player';
 
+let anim_timing = 30;
+let anim_tick = 0;
+
 //const COLOR_STACKED = '#795548';
 const COLOR_SHIFT = [
   '#7f7f7f',//grey
@@ -360,6 +363,13 @@ let enemies_Array = [];
 let obstacles_Array = [];
 
 Events.on(render, 'afterRender', function() {
+
+  anim_tick++;
+  if( anim_tick >= anim_timing ){
+    anim_tick = 0;
+    console.log('tick');
+  }
+
   // make primitive groups, so I don't have to loop over ALL the objects every time i need something
   // this also lets me ignore checks for properties
   allies_Array = [];
@@ -759,3 +769,5 @@ function draw_mouseSelect(ctx){
     ctx.strokeStyle = oldStroke;
   }
 }
+
+// Query.region(mouse, bounds) for all allies, to draw moveRange (disagonal striped fill)
