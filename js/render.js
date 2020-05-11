@@ -7,6 +7,11 @@ function render_debug(game_debug, ctx){
     ctx.fillStyle = '#ffffff';
     ctx.fillText('v0.0.3', 100, -100);
     ctx.fillText(game_state, 100, -80);
+    ctx.fillText('hold rclick and move to pan camera', 100, -120);
+    ctx.fillText('mousewheel to zoom', 100, -140);
+    ctx.fillText('press f to toggle free-drag', 100, -160);
+    ctx.fillText('press r to reset allowed movement range', 100, -180);
+    ctx.fillText('press d to toggle debug info', 100, -200);
 
     ctx.font = '10px alber';
     var bods = Composite.allBodies(world);
