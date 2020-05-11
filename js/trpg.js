@@ -21,6 +21,7 @@ let mouse_selectArea = {};
 let allies_Array = [];
 let enemies_Array = [];
 let obstacles_Array = [];
+let nonAllies_Array = [];
 
 //const COLOR_STACKED = '#795548';
 const COLOR_SHIFT = [
@@ -38,6 +39,9 @@ const RENDER_FILLCOLOR = '#bebec0';//'#dee1e6';
 const RENDER_ACTIVE_FILLCOLOR = '#dd3838cc';
 const RENDER_SHADOWCOLOR = '#202124';
 const RENDER_TERRAINCOLOR = '#ffffff';
+const RENDER_UI_GREEN = '#319d59';
+const RENDER_UI_RED = '#f85f4a';
+const RENDER_UI_BLUE = '#00b9fb';
 
 // create engine
 var engine = Engine.create(),
@@ -173,13 +177,16 @@ function group_Entities() {
   allies_Array = [];
   enemies_Array = [];
   obstacles_Array = [];
+  nonAllies_Array = [];
   for( bod of Composite.allBodies(world) ){
     if(bod.label == 'ally'){
       allies_Array.push(bod);
     }else if(bod.label == 'enemy'){
       enemies_Array.push(bod);
+      nonAllies_Array.push(bod);
     }else if(bod.label == 'shape' || bod.label == 'obstacle' || bod.label == 'wall'){
       obstacles_Array.push(bod);
+      nonAllies_Array.push(bod);
     }
   }
 }
@@ -217,6 +224,9 @@ Events.on(render, 'afterRender', function() {
   group_Entities();
 
   var ctx = render.context;
+  ctx.strokeStyle = RENDER_SHADOWCOLOR;
+  ctx.fillStyle = RENDER_TERRAINCOLOR;
+  ctx.lineWidth = 2;
   ctx.clearRect(0, 0, reWi, reHi);
 
   Render.startViewTransform(render);
