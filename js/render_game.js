@@ -89,23 +89,76 @@ function ray_tb(ctx, o){
       if (collisions_direct.length > 0 && collisions_direct.length == collisions_incObstacles.length ) {
         ctx.strokeStyle = RENDER_UI_BLUE;
 
+        ctx.beginPath();
+        ctx.arc(movingEnt.position.x, movingEnt.position.y, 3, 0, Math.PI * 2, true);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(bod.position.x, bod.position.y, 3, 0, Math.PI * 2, true);
+        ctx.stroke();
+
         ctx.font = '16px alber';
         ctx.textAlign = 'center';
         ctx.fillStyle = RENDER_UI_BLUE;
+
+        // start of fancy flanking rendering
+        let vx = movingEnt.position.x - bod.position.x;   // get the line as vector
+        let vy = movingEnt.position.y - bod.position.y;
+        let len = Math.hypot(vx, vy);
+        let nx = vx / len; // normalize vector
+        let ny = vy / len; // pixel long. This sets the scale
+        for( hit of collisions_direct ){
+          ctx.fillText('[ flanked ]', hit.body.position.x, hit.body.bounds.max.y+16);
+
+          let t1_vx = movingEnt.position.x - hit.body.position.x;   // get the line as vector
+          let t1_vy = movingEnt.position.y - hit.body.position.y;
+          let t1_len = Math.hypot(t1_vx, t1_vy);
+
+          ctx.beginPath();
+          ctx.moveTo(movingEnt.position.x, movingEnt.position.y);
+          ctx.lineTo(movingEnt.position.x - nx*(t1_len-GRID_SIZE), movingEnt.position.y - ny*(t1_len-GRID_SIZE));
+          ctx.stroke();
+          ctx.lineWidth = 20;
+          ctx.beginPath();
+          ctx.moveTo(movingEnt.position.x - nx*(t1_len-GRID_SIZE), movingEnt.position.y - ny*(t1_len-GRID_SIZE));
+          ctx.lineTo(movingEnt.position.x - nx*(t1_len-GRID_SIZE+2), movingEnt.position.y - ny*(t1_len-GRID_SIZE+2));
+          ctx.stroke();
+          ctx.lineWidth = 2;
+
+          let t2_vx = bod.position.x - hit.body.position.x;   // get the line as vector
+          let t2_vy = bod.position.y - hit.body.position.y;
+          let t2_len = Math.hypot(t2_vx, t2_vy);
+
+          ctx.beginPath();
+          ctx.moveTo(bod.position.x, bod.position.y);
+          ctx.lineTo(bod.position.x + nx*(t2_len-GRID_SIZE), bod.position.y + ny*(t2_len-GRID_SIZE));
+          ctx.stroke();
+          ctx.lineWidth = 20;
+          ctx.beginPath();
+          ctx.moveTo(bod.position.x + nx*(t2_len-GRID_SIZE), bod.position.y + ny*(t2_len-GRID_SIZE));
+          ctx.lineTo(bod.position.x + nx*(t2_len-GRID_SIZE+2), bod.position.y + ny*(t2_len-GRID_SIZE+2));
+          ctx.stroke();
+          ctx.lineWidth = 2;
+        }
+        // end of fancy flanking rendering
+
+        // uncomment this for simple flanking rendering
+        /*
         for( hit of collisions_direct ){
           ctx.fillText('[ flanked ]', hit.body.position.x, hit.body.bounds.max.y+16);
         }
-
         ctx.beginPath();
         ctx.moveTo(movingEnt.position.x, movingEnt.position.y);
         ctx.lineTo(bod.position.x, bod.position.y);
         ctx.stroke();
+        */
       }
     }
     ctx.restore();
   }
 }
 
+// TODO clean up
 function draw_mouseSelect(ctx){
   if( mouse_selectArea.min ){
     var oldStroke = ctx.strokeStyle;
