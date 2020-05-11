@@ -16,19 +16,22 @@ function render_debug(game_debug, ctx){
       ctx.fillText('slp:'+bod.isSleeping, bod.position.x, bod.position.y+12);
       ctx.fillText('stt:'+bod.isStatic, bod.position.x, bod.position.y+24);
 
-      if( bod.custom && bod.custom.maxMove ){
+      if( bod.custom && bod.custom.maxMove && ( bod.label == 'ally' )){
+        ctx.save();
+
         ctx.fillStyle = debug_travelDistance_color;
         ctx.fillText('dist:'+Math.floor(debug_travelDistance / GRID_SIZE), bod.position.x, bod.position.y+48);
         ctx.fillText('moveRemain:'+Math.floor(bod.custom.maxMove / GRID_SIZE), bod.position.x, bod.position.y+60);
 
-        ctx.fillStyle = RENDER_SHADOWCOLOR;
         ctx.beginPath();
         ctx.setLineDash([8, 12]);
         ctx.strokeStyle = RENDER_SHADOWCOLOR;
+        ctx.lineWidth = 2;
         ctx.arc(bod.custom.startPoint.x, bod.custom.startPoint.y, bod.custom.maxMove+(GRID_SIZE*0.5), 0, Math.PI * 2, true); // Outer circle
         ctx.stroke();
         ctx.setLineDash([]);
-        ctx.moveTo(bod.position.x, bod.position.y);
+
+        ctx.restore();
       }
     }
   }
@@ -129,7 +132,7 @@ function render_rangefinder(ctx, mouseConstraint, a, color_override){
 
     ctx.beginPath();
     // TODO save const RENDER_DASHSTYLE = [8,12];
-    ctx.setLineDash([12, 3, 3]); //dash, empty
+    ctx.setLineDash([12, 24]); //dash, empty
     
     ctx.moveTo(a.position.x, a.position.y);
     // end line early by subtracting vector * pixel units
@@ -139,10 +142,6 @@ function render_rangefinder(ctx, mouseConstraint, a, color_override){
       ctx.strokeStyle = color_override || RENDER_SHADOWCOLOR;
       ctx.lineTo(mouseConstraint.mouse.position.x - nx*10, mouseConstraint.mouse.position.y - ny*10);
     }
-    
-
-    
-
     ctx.stroke();
     ctx.setLineDash([]);
 
@@ -167,12 +166,15 @@ function render_moveRange(ctx, mouseConstraint){
   let movingEnt = mouseConstraint.body;
   if( movingEnt.custom ){
     if(debug_travelDistance < movingEnt.custom.maxMove){
-      ctx.strokeStyle = RENDER_SHADOWCOLOR;//debug_travelDistance_color;
+      ctx.save();
+      ctx.strokeStyle = RENDER_TERRAINCOLOR;
+      ctx.lineWidth = 2;//debug_travelDistance_color;
       ctx.beginPath();
-      ctx.setLineDash([8, 12]); //dash, empty
+      ctx.setLineDash([12, 24]); //dash, empty
       ctx.arc(movingEnt.position.x, movingEnt.position.y, movingEnt.custom.maxMove - debug_travelDistance + GRID_SIZE*0.5, 0, Math.PI * 2, true); // Outer circle
       ctx.stroke();
       ctx.setLineDash([]);
+      ctx.restore();
     }
   }
 }

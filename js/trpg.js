@@ -224,6 +224,7 @@ Events.on(render, 'afterRender', function() {
     for( caster of allies_Array ){
       ray_fov(ctx, caster);
     }
+    render_debug(game_debug, render.context);
     draw_Graphics(ctx, enemies_Array, 'source-atop');
 
     draw_Shapes(ctx, obstacles_Array);
@@ -237,7 +238,7 @@ Events.on(render, 'afterRender', function() {
     render_rangefinder(ctx, mouseConstraint, null, 'red');
 
     //debug state rendering
-    render_debug(game_debug, render.context);
+    //render_debug(game_debug, render.context);
     // experimental
     if (mouseConstraint.body && mouseConstraint.mouse.button === 0){
       render_moveRange(ctx, mouseConstraint);
