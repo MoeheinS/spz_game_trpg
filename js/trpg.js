@@ -13,6 +13,7 @@ console.log('%cTRPG','color:#ff0000;font-family:Comic Sans MS;');
 let game_state = 'idle';
 let game_debug = true;
 let game_phase = 'player';
+let game_shift = false;
 
 let anim_timing = 25;
 let anim_tick = 0;
@@ -152,8 +153,22 @@ document.addEventListener("keydown", function(e){
         }
       }
       break;
+    case 'Shift':
+      if( !game_shift ){
+        game_shift = true;
+      }
+      break;
     default:
       console.log(e.key);
+      break;
+  }
+});
+document.addEventListener("keyup", function(e){
+  switch (e.key) {
+    case 'Shift':
+      game_shift = false;
+      break;
+    default:
       break;
   }
 });

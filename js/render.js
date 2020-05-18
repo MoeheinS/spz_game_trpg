@@ -12,6 +12,7 @@ function render_debug(game_debug, ctx){
     ctx.fillText('press f to toggle free-drag', 100, -160);
     ctx.fillText('press r to reset allowed movement range', 100, -180);
     ctx.fillText('press d to toggle debug info', 100, -200);
+    ctx.fillText('hold shift and rclick to rotate the screen', 100, -220);
 
     ctx.font = '10px alber';
     var bods = Composite.allBodies(world);
