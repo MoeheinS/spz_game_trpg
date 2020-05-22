@@ -204,6 +204,11 @@ function group_Entities() {
       nonAllies_Array.push(bod);
     }
   }
+  
+  allies_Array = sortByY(allies_Array);
+  enemies_Array = sortByY(enemies_Array);
+  obstacles_Array = sortByY(obstacles_Array);
+  nonAllies_Array = sortByY(nonAllies_Array);
 }
 
 /*
@@ -245,6 +250,8 @@ Events.on(render, 'afterRender', function() {
   ctx.clearRect(0, 0, reWi, reHi);
 
   Render.startViewTransform(render);
+
+    //var sortedBodies = sortByY(Composite.allBodies(world));
 
     for( caster of allies_Array ){
       ray_fov(ctx, caster);

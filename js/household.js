@@ -256,3 +256,16 @@ function cycleArray(a, lofi) {
     return a;
   }
 }
+
+// Sort bodies by y-position
+function sortByY(bods) {
+	bods = bods.sort(function(a,b){
+    try{
+      return a.position.y-b.position.y;
+    }catch(err){
+      console.warn('renderOrder error');
+      return 0;
+    }
+  });
+  return bods;
+}
