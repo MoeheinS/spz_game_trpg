@@ -68,7 +68,7 @@ function draw_Graphics(ctx, a, mode){
       img.src = i.custom.graphics.sprite;  
     }
     var ix = i.position.x - (i.custom.graphics.sprite_dim.x/2);
-    var iy = i.bounds.min.y;
+    var iy = i.bounds.max.y - (i.custom.graphics.sprite_dim.y);
     var ixs = i.custom.graphics.sprite_dim.x;
     var iys = i.custom.graphics.sprite_dim.y;
     if(mode){

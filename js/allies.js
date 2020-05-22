@@ -1,4 +1,6 @@
-var test_ally1 = Bodies.rectangle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*12), 72, 64, {
+// 64 is a magic number. GRID_SIZE is 60ish and based on viewport. 
+// I could decide to set GRID_SIZE based on static pixels in the future
+var test_ally1 = Bodies.rectangle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*12), 64, 64, {
   label: 'ally',
   frictionAir: 1,
   collisionFilter: {
@@ -23,7 +25,7 @@ var test_ally1 = Bodies.rectangle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*12), 72, 6
 });
 World.add(world, test_ally1);
 
-var test_ally2 = Bodies.rectangle(reWi-(GRID_SIZE*5), reHi-(GRID_SIZE*13), 62, 64, {
+var test_ally2 = Bodies.rectangle(reWi-(GRID_SIZE*5), reHi-(GRID_SIZE*13), 64, 64, {
   label: 'ally',
   frictionAir: 1,
   collisionFilter: {
@@ -48,7 +50,7 @@ var test_ally2 = Bodies.rectangle(reWi-(GRID_SIZE*5), reHi-(GRID_SIZE*13), 62, 6
 });
 World.add(world, test_ally2);
 
-var test_ally3 = Bodies.rectangle(reWi-(GRID_SIZE*5), reHi-(GRID_SIZE*12), 51, 79, {
+var test_ally3 = Bodies.rectangle(reWi-(GRID_SIZE*5), reHi-(GRID_SIZE*12), 64, 64, {
   label: 'ally',
   frictionAir: 1,
   collisionFilter: {
