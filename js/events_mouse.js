@@ -1,9 +1,13 @@
+// this entire file can be overhauled
+// TODO: While dragging set collision mask
+// TODO: On release if collision 0 velocities?
 Events.on(mouseConstraint, "startdrag", function(event) {
   console.log(event);
   let movingEnt = event.body;
   
-  World.remove(world, movingEnt, true);
-  World.add(world, movingEnt);
+  // deprecated due to y-sorting bodies
+  //World.remove(world, movingEnt, true);
+  //World.add(world, movingEnt);
 
   game_state = 'movement';
   if( movingEnt.custom ){
