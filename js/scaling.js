@@ -10,6 +10,9 @@ Events.on(engine, 'beforeTick', function() {
       }
   }
 
+  // if zoomed in, disable smoothing, once zoomed out enable it. To preserve pixel art
+  render.context.imageSmoothingEnabled = (boundsScaleTarget >= 1) ? true : false;
+
   // if scale has changed
   if (Math.abs(boundsScale.x - boundsScaleTarget) > 0.01) {
       // smoothly tween scale factor
