@@ -179,8 +179,9 @@ function heartbeat_animations(){
     anim_tick = 0;
     console.log('tick');
     for( bod of Composite.allBodies(world) ){
-      if( bod.custom && bod.custom.animation ){
-        bod.custom.animation = cycleArray(bod.custom.animation);
+      // bruh. Is there a better way other than try catch?
+      if( bod.custom && bod.custom.graphics && bod.custom.graphics.animation ){
+        bod.custom.graphics.animation = cycleArray(bod.custom.graphics.animation);
       }
     }
   }

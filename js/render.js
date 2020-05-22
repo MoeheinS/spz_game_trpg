@@ -62,21 +62,23 @@ function draw_Graphics(ctx, a, mode){
   ctx.save();
   for( i of a ){
     let img = new Image();
-    if( i.custom.animation ){
-      img.src = i.custom.animation[0];
+    if( i.custom.graphics.animation ){
+      img.src = i.custom.graphics.animation[0];
     }else{
-      img.src = i.custom.sprite;  
+      img.src = i.custom.graphics.sprite;  
     }
-    var ix = i.bounds.min.x;
+    var ix = i.position.x - (i.custom.graphics.sprite_dim.x/2);
     var iy = i.bounds.min.y;
-    var ixs = Math.abs(i.bounds.max.x - i.bounds.min.x);
-    var iys = Math.abs(i.bounds.max.y - i.bounds.min.y);
+    var ixs = i.custom.graphics.sprite_dim.x;
+    var iys = i.custom.graphics.sprite_dim.y;
     if(mode){
       ctx.globalCompositeOperation = mode;
+      // what, where, where, width, height
       ctx.drawImage(img,ix,iy,ixs,iys);
       // probably unnecessary with save and restore, but just in case
       ctx.globalCompositeOperation = 'source-over';
     }else{
+      // what, where, where, width, height
       ctx.drawImage(img,ix,iy,ixs,iys);
     }
   }

@@ -11,7 +11,13 @@ var test_enemy = Bodies.rectangle(GRID_SIZE*4, GRID_SIZE*2, 80, 88, {
       x: GRID_SIZE*4, 
       y: GRID_SIZE*2 
     },
-    sprite: './assets/smt/suika.png'
+    graphics: {
+      sprite: './assets/smt/suika.png',
+      sprite_dim: {
+        x: 80,
+        y: 88
+      }
+    }
   }
 });
 World.add(world, test_enemy);
