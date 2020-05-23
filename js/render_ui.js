@@ -5,6 +5,13 @@ let game_state = 'idle';
 let game_debug = true;
 let game_phase = 'player';
 let game_shift = false;
+let game_cursor = 'default';
+/*
+  default
+  invalid
+  select
+*/
+let game_selection = [];
 
 let anim_timing = 25;
 let anim_tick = 0;
@@ -42,10 +49,10 @@ function render_ui(ctx){
   // beyond placeholder
   /*
     This is the layer where I want to render UI and static elements that don't scale
-    Since the data that feeds this is mostly seperate from the physics engine I can move the consts here...?
   */
-  ctx.strokeStyle = 'red';
-  ctx.strokeRect(2, 2, 4, 4);
+  if( game_selection.length ){
+    draw_UI_portrait(ctx, game_selection, 4, 4, 40, 40);
+  }
 
   ctx.restore();
 }
@@ -57,7 +64,6 @@ function render_cursor(ctx){
   /*
     Context sensitive cursor, color and shape based on action
   */
-
   ctx.beginPath();
   ctx.strokeStyle = RENDER_TERRAINCOLOR;
   ctx.strokeRect(mouse.absolute.x, mouse.absolute.y, 7, 7);
@@ -74,5 +80,95 @@ function render_cursor(ctx){
   ctx.arc(mouse.absolute.x+7, mouse.absolute.y+7, 3, 0, Math.PI * 2, true);
   ctx.stroke();
 
+  switch (game_cursor) {
+    case 'invalid':
+      // draw an X
+      ctx.strokeStyle = RENDER_UI_RED;
+      ctx.lineWidth = 20;
+      // ugly as sin, and rotate() is a PITA. Just get a sprite or SVG...
+      ctx.translate(7, 7);
+      ctx.beginPath();
+      ctx.moveTo(mouse.absolute.x, mouse.absolute.y-2);
+      ctx.lineTo(mouse.absolute.x, mouse.absolute.y+2);
+      ctx.stroke();
+      break;
+    default:
+      // stub
+      break;
+  }
+
   ctx.restore();
+}
+
+function draw_UI_portrait(ctx, a, xp, yp, wp, hp){
+  ctx.save();
+  let x_offset = xp;
+  let uixs = sortByDim(a);
+  for( i of a ){
+    let img = new Image();
+    if( i.custom.graphics.animation ){
+      img.src = i.custom.graphics.animation[0];
+    }else{
+      img.src = i.custom.graphics.sprite;  
+    }
+    var ix = x_offset;
+    x_offset += xp + uixs;
+    var iy = yp;
+    var ixs = i.custom.graphics.sprite_dim.x;
+    var iys = i.custom.graphics.sprite_dim.y;
+
+    ctx.save();
+    ctx.beginPath();
+    // x, y, width, height ; ixs twice for squares
+    ctx.rect(ix, iy, uixs, uixs);
+    ctx.clip();
+    ctx.fillStyle = RENDER_UI_GREEN;
+    ctx.fill();
+    // what, where, where, width, height
+    ctx.drawImage(img,ix,iy,ixs,iys);
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+// STUB========================================================================
+
+// render UI elements, per actor
+function draw_UI(ctx, a){
+  return;
+  let saveStyle = ctx.strokeStyle;
+  let saveFill = ctx.fillStyle;
+  let saveWidth = ctx.lineWidth;
+  for( i of a ){
+    let i_w = wbb(i.bounds);
+    let i_h = hbb(i.bounds);
+    let radius = (i_w >= i_h ? i_w : i_h);
+    ctx.strokeStyle = RENDER_SHADOWCOLOR;
+    ctx.lineWidth = '4';
+    ctx.beginPath();
+    ctx.arc(i.position.x, i.position.y, radius*0.75, 0, Math.PI * 2, true); // Outer circle
+    ctx.stroke();
+
+    ctx.strokeStyle = 'green';
+    ctx.lineWidth = '3';
+    ctx.beginPath();
+    ctx.arc(i.position.x, i.position.y, radius*0.75+1, 0, Math.PI * 2, true); // Outer circle
+    ctx.stroke();
+
+    ctx.strokeStyle = RENDER_SHADOWCOLOR;
+    ctx.fillStyle = RENDER_FILLCOLOR;
+    ctx.lineWidth = '1';
+    let box_w = 30;
+    let box_h = 16;
+    ctx.fillRect(i.position.x-(box_w*0.5), i.position.y-(radius*0.75)-(box_h*0.3), box_w, box_h);
+    ctx.strokeRect(i.position.x-(box_w*0.5), i.position.y-(radius*0.75)-(box_h*0.3), box_w, box_h);
+
+    ctx.font = '12px alber';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = RENDER_SHADOWCOLOR;
+    ctx.fillText('100', i.position.x-(box_w*0.5)+4, i.position.y-(radius*0.75)-(box_h*0.3)+box_h-4);
+  }
+  ctx.strokeStyle = saveStyle;
+  ctx.fillStyle = saveFill;
+  ctx.lineWidth = saveWidth;
 }

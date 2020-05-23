@@ -269,3 +269,24 @@ function sortByY(bods) {
   });
   return bods;
 }
+
+// get the lesser dimension of the largest from amongst the selection's x and y's
+function sortByDim(bods) {
+	bods_by_x = bods.sort(function(a,b){
+    try{
+      return a.custom.graphics.sprite_dim.x-b.custom.graphics.sprite_dim.x;
+    }catch(err){
+      console.warn('sortByDimension_x error');
+      return 0;
+    }
+  });
+  bods_by_y = bods.sort(function(a,b){
+    try{
+      return a.custom.graphics.sprite_dim.y-b.custom.graphics.sprite_dim.y;
+    }catch(err){
+      console.warn('sortByDimension_y error');
+      return 0;
+    }
+  });
+  return (bods_by_x[0].custom.graphics.sprite_dim.x <= bods_by_y[0].custom.graphics.sprite_dim.y) ? bods_by_x[0].custom.graphics.sprite_dim.x : bods_by_y[0].custom.graphics.sprite_dim.y;
+}
