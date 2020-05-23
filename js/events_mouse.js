@@ -4,10 +4,6 @@
 Events.on(mouseConstraint, "startdrag", function(event) {
   console.log(event);
   let movingEnt = event.body;
-  
-  // deprecated due to y-sorting bodies
-  //World.remove(world, movingEnt, true);
-  //World.add(world, movingEnt);
 
   game_state = 'movement';
   if( movingEnt.custom ){
@@ -50,18 +46,27 @@ Events.on(mouseConstraint, "enddrag", function(event) {
 
 Events.on(mouseConstraint, "mousedown", function(event) {
   console.log(event);
-  if( event.mouse.button === 0 ){
-    console.warn('start drag selection area');
-    game_state = 'mouse_select';
-    mouse_selectArea = {};
-    mouse_selectArea.min = {x: mouseConstraint.mouse.mousedownPosition.x, y: mouseConstraint.mouse.mousedownPosition.y};
+  if( event.mouse.button === 0){
+    if(game_shift){
+      console.warn('start drag selection area');
+      game_cursor = 'select';
+      mouse_selectArea = {};
+      mouse_selectArea.min = {x: mouseConstraint.mouse.mousedownPosition.x, y: mouseConstraint.mouse.mousedownPosition.y};
+    }else{
+      // check to see if mouse is on an ally actor at mousedown start
+      if( Query.point(allies_Array, mouseConstraint.mouse.position).length ){
+        game_cursor = 'select';
+        mouse_selectArea = {};
+        mouse_selectArea.min = {x: mouseConstraint.mouse.mousedownPosition.x, y: mouseConstraint.mouse.mousedownPosition.y};
+      }
+    }
   }
 });
 
 Events.on(mouseConstraint, "mouseup", function(event) {
-  if( event.mouse.button === -1 && game_state == 'mouse_select' ){
+  if( event.mouse.button === -1 && game_cursor == 'select' ){
     console.warn('end drag selection area');
-    game_state = 'mouse_select_done';
+    game_cursor = 'default';
     mouse_selectArea.max = {x: mouseConstraint.mouse.mouseupPosition.x, y: mouseConstraint.mouse.mouseupPosition.y};
     console.table(mouse_selectArea);
 
@@ -83,6 +88,7 @@ Events.on(mouseConstraint, "mouseup", function(event) {
     region.max.y = (bound_a.y > bound_b.y ? bound_a.y : bound_b.y);
 
     var selectedBodies = Query.region(allies_Array, region);
-    console.log(selectedBodies);
+    game_selection = selectedBodies;
+    console.log(game_selection);
   }
 });

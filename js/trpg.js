@@ -195,7 +195,7 @@ function group_Entities() {
 // TODO & render: turn starting position
 // Fired after engine update and all collision events
 Events.on(engine, 'afterUpdate', function(event) {
-  if( ( game_state == 'movement' || game_state == 'mouse_select' ) && mouseConstraint.body){
+  if( game_state == 'movement' && mouseConstraint.body){
     let movingEnt = mouseConstraint.body;
     if( movingEnt.custom ){
       debug_travelDistance = Math.hypot((movingEnt.custom.startPoint.x - movingEnt.position.x) ,(movingEnt.custom.startPoint.y - movingEnt.position.y));
@@ -249,7 +249,7 @@ Events.on(render, 'afterRender', function() {
     //draw mouse cq custom cursor
     draw_UI(ctx, allies_Array);
 
-    if( game_state == 'mouse_select' ){ // && mouseConstraint.mouse.button === 0
+    if( game_cursor == 'select' ){ // && mouseConstraint.mouse.button === 0
       draw_mouseSelect(ctx);
     }
     render_rangefinder(ctx, mouseConstraint, null, 'red');
