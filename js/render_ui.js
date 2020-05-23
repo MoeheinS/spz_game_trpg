@@ -51,7 +51,7 @@ function render_ui(ctx){
     This is the layer where I want to render UI and static elements that don't scale
   */
   if( game_selection.length ){
-    draw_UI_portrait(ctx, game_selection, 4, 4, 40, 40);
+    draw_UI_portrait(ctx, game_selection, 4, 4);
   }
 
   ctx.restore();
@@ -100,10 +100,12 @@ function render_cursor(ctx){
   ctx.restore();
 }
 
-function draw_UI_portrait(ctx, a, xp, yp, wp, hp){
+function draw_UI_portrait(ctx, a, xp, yp){
   ctx.save();
   let x_offset = xp;
-  let uixs = sortByDim(a);
+  // you can calculate a mean dimension, but in practice it's 62-64, whereas GRID_SIZE is 67ish, so use that or 64...
+  //let uixs = sortByDim(a);
+  let uixs = GRID_SIZE;
   for( i of a ){
     let img = new Image();
     if( i.custom.graphics.animation ){
