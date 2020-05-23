@@ -51,4 +51,6 @@ html {
 	/*no firefox green*/
 	--col__yellow__ff: #fff208;
 	--col__ochre__ff: #ffbb00;
+
+	cursor: none;
 }

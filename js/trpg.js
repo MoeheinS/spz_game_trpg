@@ -157,8 +157,10 @@ function heartbeat_animations(){
 function group_Entities() {
   // make primitive groups, so I don't have to loop over ALL the objects every time i need something
   // this also lets me ignore checks for properties
+  // in the future maybe use .filter() but for now it's fine
   allies_Array = [];
   enemies_Array = [];
+  actors_Array = [];
   obstacles_Array = [];
   nonAllies_Array = [];
   for( bod of Composite.allBodies(world) ){
@@ -175,6 +177,9 @@ function group_Entities() {
   
   allies_Array = sortByY(allies_Array);
   enemies_Array = sortByY(enemies_Array);
+  actors_Array = allies_Array.concat(enemies_Array);
+  actors_Array = sortByY(actors_Array);
+
   obstacles_Array = sortByY(obstacles_Array);
   nonAllies_Array = sortByY(nonAllies_Array);
 }
@@ -225,10 +230,22 @@ Events.on(render, 'afterRender', function() {
       ray_fov(ctx, caster);
     }
     render_debug(game_debug, render.context);
-    draw_Graphics(ctx, enemies_Array, 'source-atop');
+    // deprec render order
+    //draw_Graphics(ctx, enemies_Array, 'source-atop');
 
     draw_Shapes(ctx, obstacles_Array);
-    draw_Graphics(ctx, allies_Array);
+    // deprec render order
+    //draw_Graphics(ctx, allies_Array);
+
+    // this way enemies also respect y-position overlapping
+    for( actor of actors_Array ){
+      if( actor.label == 'enemy'){
+        draw_Graphics(ctx, [actor], 'source-atop');
+      }else{
+        draw_Graphics(ctx, [actor]);
+      }
+    }
+
     //draw mouse cq custom cursor
     draw_UI(ctx, allies_Array);
 
@@ -251,6 +268,7 @@ Events.on(render, 'afterRender', function() {
 
   // render_ui.js
   render_ui(ctx);
+  render_cursor(ctx);
 });
 
 /*
