@@ -133,6 +133,8 @@ function draw_UI_portrait(ctx, a, xp, yp){
   ctx.restore();
 }
 
+// TODO: Next step; render moverange as arced area for game_selection actors.
+
 // STUB========================================================================
 
 // render UI elements, per actor
