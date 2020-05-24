@@ -14,6 +14,13 @@ function render_debug(game_debug, ctx){
     ctx.fillText('press d to toggle debug info', 100, -200);
     ctx.fillText('hold shift and rclick to rotate the screen', 100, -220);
 
+    // 1 GRID_SIZE square
+    ctx.save();
+    ctx.strokeStyle = RENDER_TERRAINCOLOR;
+    ctx.setLineDash([]);
+    ctx.strokeRect(110, -230, GRID_SIZE, GRID_SIZE);
+    ctx.restore();
+
     ctx.font = '10px alber';
     var bods = Composite.allBodies(world);
     for( bod of bods ){
