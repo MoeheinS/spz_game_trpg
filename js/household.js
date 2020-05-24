@@ -261,7 +261,9 @@ function cycleArray(a, lofi) {
 function sortByY(bods) {
 	bods = bods.sort(function(a,b){
     try{
-      return a.position.y-b.position.y;
+      // return by bounds (lower edge) rather than center point
+      // return a.position.y-b.position.y;
+      return a.bounds.max.y-b.bounds.max.y;
     }catch(err){
       console.warn('renderOrder error');
       return 0;
