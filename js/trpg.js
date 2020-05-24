@@ -44,10 +44,10 @@ var viewportCentre = {
 };
 
 // make the world bounds a little bigger than the render bounds
-world.bounds.min.x = render.options.width * -0.25;
-world.bounds.min.y = render.options.height * -0.25;
-world.bounds.max.x = render.options.width * 1.25;
-world.bounds.max.y = render.options.height * 1.25;
+world.bounds.min.x = render.options.width * -0.5;
+world.bounds.min.y = render.options.height * -0.5;
+world.bounds.max.x = render.options.width * 1.5;
+world.bounds.max.y = render.options.height * 1.5;
 
 // keep track of current bounds scale (view zoom)
 var boundsScaleTarget = 1;
@@ -224,8 +224,7 @@ Events.on(render, 'afterRender', function() {
 
   Render.startViewTransform(render);
 
-    //var sortedBodies = sortByY(Composite.allBodies(world));
-
+    // if this gets expensive later on, we can run it once every X ticks instead of every tick
     for( caster of allies_Array ){
       ray_fov(ctx, caster);
     }
