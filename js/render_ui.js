@@ -12,6 +12,7 @@ let game_cursor = 'default';
   select
 */
 let game_selection = [];
+let game_waypoints = [];
 
 let anim_timing = 25;
 let anim_tick = 0;
@@ -52,6 +53,14 @@ function render_ui(ctx){
   */
   if( game_selection.length ){
     draw_UI_portrait(ctx, game_selection, 4, 4);
+  }
+  for( waypoint of game_waypoints ){
+    ctx.save();
+    ctx.font = '24px alber';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = RENDER_UI_GREEN;
+    ctx.fillText('x', waypoint.x, waypoint.y);
+    ctx.restore();
   }
 
   ctx.restore();

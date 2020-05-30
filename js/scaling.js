@@ -5,6 +5,8 @@ Events.on(engine, 'beforeTick', function() {
   // mouse wheel controls zoom
   var scaleFactor = mouse.wheelDelta * -0.1;
   if (scaleFactor !== 0) {
+      // zooming messes with the waypoint coordinates, so just clear them
+      game_waypoints = [];
       if ((scaleFactor < 0 && boundsScale.x >= 0.6) || (scaleFactor > 0 && boundsScale.x <= 1.2)) {
           boundsScaleTarget += scaleFactor;
       }

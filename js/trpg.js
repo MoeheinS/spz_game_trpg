@@ -120,6 +120,13 @@ document.addEventListener("keydown", function(e){
         }
       }
       break;
+    // start of waypointing
+    case 'm':
+      console.log(mouseConstraint);
+      game_waypoints = [];
+      let coord = {x: mouseConstraint.mouse.absolute.x, y: mouseConstraint.mouse.absolute.y};
+      game_waypoints.push(coord);
+      break;
     case 'Shift':
       if( !game_shift ){
         game_shift = true;
@@ -209,6 +216,12 @@ Events.on(engine, 'afterUpdate', function(event) {
       }else{
         debug_travelDistance_color = 'red';
       }
+    }
+  }
+
+  if( game_waypoints.length ){
+    for( selected of game_selection ){
+      cycle_movement(selected, game_waypoints[0]);
     }
   }
 });
