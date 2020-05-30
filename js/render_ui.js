@@ -138,7 +138,14 @@ function draw_UI_portrait(ctx, a, xp, yp){
 // STUB========================================================================
 
 // render UI elements, per actor
+// hijacked for zoom factor debugging
 function draw_UI(ctx, a){
+  ctx.save();
+  ctx.font = '12px alber';
+  ctx.textAlign = 'right';
+  ctx.fillStyle = 'red';
+  ctx.fillText('zoom:'+boundsScaleTarget.toFixed(2), reWi-20, 20);
+  ctx.restore();
   return;
   let saveStyle = ctx.strokeStyle;
   let saveFill = ctx.fillStyle;
