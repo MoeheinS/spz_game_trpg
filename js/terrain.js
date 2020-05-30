@@ -41,6 +41,7 @@ var test_obstacle_pillar = Bodies.rectangle(reWi*0.5, reHi*0.25, GRID_SIZE*2, GR
   collisionFilter: {
     category: draggable_false
   },
+  isStatic: true,
   custom: {
     baseMove: GRID_SIZE*4,
     maxMove: GRID_SIZE*4,
@@ -59,6 +60,7 @@ var test_obstacle_shape = Bodies.rectangle(reWi*0.5, GRID_SIZE*9, GRID_SIZE*1.5,
   collisionFilter: {
     category: draggable_false
   },
+  isStatic: true,
   custom: {
     baseMove: GRID_SIZE*4,
     maxMove: GRID_SIZE*4,
