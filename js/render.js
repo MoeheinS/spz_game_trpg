@@ -33,6 +33,10 @@ function render_debug(game_debug, ctx){
         ctx.fillStyle = RENDER_UI_GREEN;
         ctx.fillText('move_max:'+Math.floor(bod.custom.baseMove / GRID_SIZE), bod.bounds.min.x-10, bod.bounds.min.y+36);
         ctx.fillText('moved:'+Math.floor(bod.custom.maxMove / GRID_SIZE), bod.bounds.min.x-10, bod.bounds.min.y+48);
+        // for when autonomous movement is added
+        //ctx.fillText('angle:'+bod.angle, bod.bounds.min.x-10, bod.bounds.min.y+60);
+        //ctx.fillText('angularSpeed:'+bod.angularSpeed, bod.bounds.min.x-10, bod.bounds.min.y+72);
+        //ctx.fillText('angularVelocity:'+bod.angularVelocity, bod.bounds.min.x-10, bod.bounds.min.y+84);
 
         ctx.beginPath();
         ctx.arc(bod.custom.startPoint.x, bod.custom.startPoint.y, bod.custom.maxMove+(GRID_SIZE*0.5)+2, 0, Math.PI * 2, true);
@@ -74,19 +78,33 @@ function draw_Graphics(ctx, a, mode){
     }else{
       img.src = i.custom.graphics.sprite;  
     }
-    var ix = i.position.x - (i.custom.graphics.sprite_dim.x/2);
-    var iy = i.bounds.max.y - (i.custom.graphics.sprite_dim.y);
-    var ixs = i.custom.graphics.sprite_dim.x;
-    var iys = i.custom.graphics.sprite_dim.y;
-    if(mode){
-      ctx.globalCompositeOperation = mode;
-      // what, where, where, width, height
-      ctx.drawImage(img,ix,iy,ixs,iys);
-      // probably unnecessary with save and restore, but just in case
-      ctx.globalCompositeOperation = 'source-over';
+    if( i.custom.graphics.sheet ){
+      var ix = i.bounds.min.x;
+      var iy = i.bounds.min.y;
+      var ixs = i.custom.graphics.sprite_dim.x;
+      var iys = i.custom.graphics.sprite_dim.y;
+      var sx = i.custom.graphics.sheet_idle[0].x;
+      var sy = i.custom.graphics.sheet_idle[0].y;
+      var dx = i.bounds.max.x - i.bounds.min.x;
+      var dy = i.bounds.max.y - i.bounds.min.y;
+      // angle, angularSpeed, angularVelocity
+      // TODO: draw the proper image based on direction of body
+      ctx.drawImage(img, sx, sy, ixs, iys, ix, iy, dx, dy);
     }else{
-      // what, where, where, width, height
-      ctx.drawImage(img,ix,iy,ixs,iys);
+      var ix = i.position.x - (i.custom.graphics.sprite_dim.x/2);
+      var iy = i.bounds.max.y - (i.custom.graphics.sprite_dim.y);
+      var ixs = i.custom.graphics.sprite_dim.x;
+      var iys = i.custom.graphics.sprite_dim.y;
+      if(mode){
+        ctx.globalCompositeOperation = mode;
+        // what, where, where, width, height
+        ctx.drawImage(img,ix,iy,ixs,iys);
+        // probably unnecessary with save and restore, but just in case
+        ctx.globalCompositeOperation = 'source-over';
+      }else{
+        // what, where, where, width, height
+        ctx.drawImage(img,ix,iy,ixs,iys);
+      }
     }
   }
   ctx.restore();

@@ -150,6 +150,11 @@ function heartbeat_animations(){
       if( bod.custom && bod.custom.graphics && bod.custom.graphics.animation ){
         bod.custom.graphics.animation = cycleArray(bod.custom.graphics.animation);
       }
+      if( bod.custom && bod.custom.graphics && bod.custom.graphics.sheet ){
+        bod.custom.graphics.sheet_idle = cycleArray(bod.custom.graphics.sheet_idle);
+        bod.custom.graphics.sheet_hori = cycleArray(bod.custom.graphics.sheet_hori);
+        bod.custom.graphics.sheet_back = cycleArray(bod.custom.graphics.sheet_back);
+      }
     }
   }
 }
@@ -243,10 +248,7 @@ Events.on(render, 'afterRender', function() {
       }else{
         draw_Graphics(ctx, [actor]);
       }
-    }
-
-    //draw mouse cq custom cursor
-    draw_UI(ctx, allies_Array);
+    }    
 
     if( game_cursor == 'select' ){ // && mouseConstraint.mouse.button === 0
       draw_mouseSelect(ctx);
@@ -268,6 +270,8 @@ Events.on(render, 'afterRender', function() {
   // render_ui.js
   render_ui(ctx);
   render_cursor(ctx);
+
+  draw_UI(ctx);
 });
 
 /*

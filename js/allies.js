@@ -94,3 +94,52 @@ var test_allyZ = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*4), GRID_SIZE*1
   }
 });
 //World.add(world, test_allyZ);
+
+
+
+// 7422.png
+var spriteSheetCoords = [
+  {
+    "iname": "warrior_human",
+    "idle": [
+      {x: 2, y: 2},
+      {x: 21, y: 2}
+    ],
+    "hori": [
+      {x: 39, y: 2},
+      {x: 58, y: 2}
+    ],
+    "back": [
+      {x: 76, y: 2},
+      {x: 94, y: 2}
+    ]
+  }
+];
+
+var test_allyGB = Bodies.rectangle(reWi-(GRID_SIZE*5), 300, 32, 32, {
+  label: 'ally',
+  frictionAir: 1,
+  collisionFilter: {
+    category: draggable_false
+  },
+  custom: {
+    baseMove: GRID_SIZE*5,
+    maxMove: GRID_SIZE*5,
+    startPoint: { 
+      x: reWi-(GRID_SIZE*5),
+      y: 300
+    },
+    graphics: {
+      sheet: true,
+      sprite: './assets/7422.png',
+      sprite_dim: {
+        x: 16,
+        y: 16
+      },
+      sheet_idle: spriteSheetCoords[0].idle,
+      sheet_hori: spriteSheetCoords[0].hori,
+      sheet_back: spriteSheetCoords[0].back
+    }
+  }
+});
+World.add(world, test_allyGB);
