@@ -171,14 +171,8 @@ function draw_mouseSelect(ctx){
     ); 
     
     var region = {
-      min: {
-        x: 0,
-        y: 0
-      },
-      max: {
-        x: 0,
-        y: 0
-      }
+      min: { x: 0, y: 0 },
+      max: { x: 0, y: 0 }
     };
     var bound_a = {
       x: mouse_selectArea.min.x, 
