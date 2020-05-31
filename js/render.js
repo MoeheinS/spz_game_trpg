@@ -89,6 +89,7 @@ function draw_Graphics(ctx, a, mode){
       var dy = i.bounds.max.y - i.bounds.min.y;
       // angle, angularSpeed, angularVelocity
       // TODO: draw the proper image based on direction of body
+      // also dx and dy fuck up on rotation because the diagonal is wider, so either hardcode 32 or include a unit_dim property
       ctx.drawImage(img, sx, sy, ixs, iys, ix, iy, dx, dy);
     }else{
       var ix = i.position.x - (i.custom.graphics.sprite_dim.x/2);
