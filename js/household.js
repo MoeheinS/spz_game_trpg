@@ -292,3 +292,15 @@ function sortByDim(bods) {
   });
   return (bods_by_x[0].custom.graphics.sprite_dim.x <= bods_by_y[0].custom.graphics.sprite_dim.y) ? bods_by_x[0].custom.graphics.sprite_dim.x : bods_by_y[0].custom.graphics.sprite_dim.y;
 }
+
+// move an actor with position.x/y to vector v.x/v.y, at a speed dependent on its mass or not
+// 0.01 forceI is okay for mass 1-4 objects
+function moveToPoint(a, dv, force, uniform){
+  if(!uniform){
+    force = force * a.mass;
+  }
+  let deltaVector = Vector.sub(dv, a.position);
+  let normalizedDelta = Vector.normalise(deltaVector);
+  let forceVector = Vector.mult(normalizedDelta, force);
+  Body.applyForce(a, a.position, forceVector);
+}
