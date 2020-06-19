@@ -158,11 +158,11 @@ function ray_tb(ctx, o){
   }
 }
 
-// TODO clean up
+//FIXME: clean up, this runs always, but it should only activate in select mode.
 function draw_mouseSelect(ctx){
   if( mouse_selectArea.min ){
     var oldStroke = ctx.strokeStyle;
-    ctx.strokeStyle = 'green';
+    ctx.strokeStyle = RENDER_UI_GREEN;
     ctx.strokeRect(
       mouse_selectArea.min.x, 
       mouse_selectArea.min.y, 
