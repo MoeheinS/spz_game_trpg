@@ -127,6 +127,10 @@ document.addEventListener("keydown", function(e){
       let coord = {x: mouseConstraint.mouse.absolute.x, y: mouseConstraint.mouse.absolute.y};
       game_waypoints.push(coord);
       break;
+    case 's':
+    // clear waypoints
+      game_waypoints = [];
+      break;
     case 'Shift':
       if( !game_shift ){
         game_shift = true;
@@ -253,6 +257,9 @@ Events.on(render, 'afterRender', function() {
     draw_Shapes(ctx, obstacles_Array);
     // deprec render order
     //draw_Graphics(ctx, allies_Array);
+
+    // TODO: draw a grid, check if there's collidables inside
+    grid_pathfind(GRID_SIZE/2, GRID_SIZE/8, ctx);
 
     // this way enemies also respect y-position overlapping
     for( actor of actors_Array ){

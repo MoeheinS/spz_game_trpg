@@ -303,4 +303,46 @@ function moveToPoint(a, dv, force, uniform){
   let normalizedDelta = Vector.normalise(deltaVector);
   let forceVector = Vector.mult(normalizedDelta, force);
   Body.applyForce(a, a.position, forceVector);
+  // This rotates the body, which is a problem for non-square, non-round bodies.
+  // So I need 2-body entities?
+  //Body.setAngle( a, Vector.angle( a.position, dv));
+}
+
+// grid size unit, feathering from edges
+function grid_pathfind(gsu, feather, ctx){
+  ctx.save();
+
+  var max_rows = Math.ceil(reHi / gsu);
+  var max_cols = Math.ceil(reWi / gsu);
+  // console.warn(`rows: ${max_rows},cols: ${max_cols}`);
+
+  for (let g_v = 0; g_v < max_rows; g_v++) {
+    for (let g_h = 0; g_h < max_cols; g_h++) {
+      //console.log(g_v, g_h);
+      
+      var region = {
+        min: {
+          x: 0,
+          y: 0
+        },
+        max: {
+          x: 0,
+          y: 0
+        }
+      };
+      region.min.x = (g_h*gsu)+feather;
+      region.max.x = (g_h*gsu)+gsu-feather;
+      region.min.y = (g_v*gsu)+feather;
+      region.max.y = (g_v*gsu)+gsu-feather;
+
+      let detectedBodies = Query.region(nonAllies_Array, region);
+      ctx.strokeStyle = (detectedBodies.length ? RENDER_UI_RED : RENDER_UI_GREEN);
+      ctx.strokeRect(g_h*gsu, g_v*gsu, gsu, gsu);
+      if(detectedBodies.length){
+        ctx.fillStyle = RENDER_UI_RED+'44';
+        ctx.fillRect(g_h*gsu, g_v*gsu, gsu, gsu);
+      }
+    }
+  }
+  ctx.restore();
 }
