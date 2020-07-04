@@ -34,7 +34,8 @@ function render_debug(game_debug, ctx){
         ctx.fillText('move_max:'+Math.floor(bod.custom.baseMove / GRID_SIZE), bod.bounds.min.x-10, bod.bounds.min.y+36);
         ctx.fillText('moved:'+Math.floor(bod.custom.maxMove / GRID_SIZE), bod.bounds.min.x-10, bod.bounds.min.y+48);
         // for when autonomous movement is added
-        //ctx.fillText('angle:'+bod.angle, bod.bounds.min.x-10, bod.bounds.min.y+60);
+        // This works if moveToPoint() sets body angle
+        //ctx.fillText('angle:'+((180*bod.angle/Math.PI)+180).toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+60);
         //ctx.fillText('angularSpeed:'+bod.angularSpeed, bod.bounds.min.x-10, bod.bounds.min.y+72);
         //ctx.fillText('angularVelocity:'+bod.angularVelocity, bod.bounds.min.x-10, bod.bounds.min.y+84);
 
