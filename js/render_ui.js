@@ -6,6 +6,10 @@ let game_debug = true;
 let game_phase = 'player';
 let game_shift = false;
 let game_cursor = 'default';
+
+let game_debug_flags = { 
+  "grid": false
+};
 /*
   default
   invalid

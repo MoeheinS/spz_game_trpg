@@ -136,6 +136,9 @@ document.addEventListener("keydown", function(e){
         game_shift = true;
       }
       break;
+    case 'g':
+      game_debug_flags.grid = !game_debug_flags.grid;
+      break;
     default:
       console.log(e.key);
       break;
@@ -259,7 +262,9 @@ Events.on(render, 'afterRender', function() {
     //draw_Graphics(ctx, allies_Array);
 
     // TODO: draw a grid, check if there's collidables inside
-    grid_pathfind(GRID_SIZE/2, GRID_SIZE/8, ctx);
+    if(game_debug_flags.grid){ 
+      grid_pathfind(GRID_SIZE/2, GRID_SIZE/8, ctx);
+    }
 
     // this way enemies also respect y-position overlapping
     for( actor of actors_Array ){
