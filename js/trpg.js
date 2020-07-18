@@ -124,6 +124,8 @@ document.addEventListener("keydown", function(e){
     case 'm':
       console.log(mouseConstraint);
       game_waypoints = [];
+      // TODO: mouse.absolute is accurate, but rendering (when zoomed) is only accurate for mouse.position... what even.
+      // I could just fix it by having the waypoint be a body instead of a coordinate, but I want to understand
       let coord = {x: mouseConstraint.mouse.absolute.x, y: mouseConstraint.mouse.absolute.y};
       game_waypoints.push(coord);
       break;
@@ -263,7 +265,10 @@ Events.on(render, 'afterRender', function() {
 
     // TODO: draw a grid, check if there's collidables inside
     if(game_debug_flags.grid){ 
-      grid_pathfind(GRID_SIZE/2, GRID_SIZE/8, ctx);
+      // TODO: separate the calculating of the grid from the drawing of the grid, also move the variables to a higher scope
+      //if(anim_tick == 0){
+        grid_pathfind(GRID_SIZE/2, GRID_SIZE/8, ctx);
+      //}
     }
 
     // this way enemies also respect y-position overlapping

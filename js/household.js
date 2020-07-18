@@ -308,18 +308,27 @@ function moveToPoint(a, dv, force, uniform){
   //Body.setAngle( a, Vector.angle( a.position, dv));
 }
 
+// works off world bounds; performance is still good for now
 // grid size unit, feathering from edges
 function grid_pathfind(gsu, feather, ctx){
   ctx.save();
 
-  var max_rows = Math.ceil(reHi / gsu);
-  var max_cols = Math.ceil(reWi / gsu);
+  var playfield = {x: 0, y: 0};
+      playfield.x = Math.abs(world.bounds.min.x - world.bounds.max.x);
+      playfield.y = Math.abs(world.bounds.min.y - world.bounds.max.y);
+  var max_rows = Math.ceil(playfield.y / gsu);
+  var max_cols = Math.ceil(playfield.x / gsu);
   // console.warn(`rows: ${max_rows},cols: ${max_cols}`);
 
   for (let g_v = 0; g_v < max_rows; g_v++) {
     for (let g_h = 0; g_h < max_cols; g_h++) {
       //console.log(g_v, g_h);
       
+      // region offset
+      let ros = {x:0, y:0};
+      ros.x = world.bounds.min.x+(g_h*gsu);
+      ros.y = world.bounds.min.y+(g_v*gsu);
+
       var region = {
         min: {
           x: 0,
@@ -330,17 +339,17 @@ function grid_pathfind(gsu, feather, ctx){
           y: 0
         }
       };
-      region.min.x = (g_h*gsu)+feather;
-      region.max.x = (g_h*gsu)+gsu-feather;
-      region.min.y = (g_v*gsu)+feather;
-      region.max.y = (g_v*gsu)+gsu-feather;
+      region.min.x = ros.x+feather;
+      region.max.x = ros.x+gsu-feather;
+      region.min.y = ros.y+feather;
+      region.max.y = ros.y+gsu-feather;
 
       let detectedBodies = Query.region(nonAllies_Array, region);
       ctx.strokeStyle = (detectedBodies.length ? RENDER_UI_RED : RENDER_UI_BLUE+'44');
-      ctx.strokeRect(g_h*gsu, g_v*gsu, gsu, gsu);
+      ctx.strokeRect(ros.x, ros.y, gsu, gsu);
       if(detectedBodies.length){
         ctx.fillStyle = RENDER_UI_RED+'44';
-        ctx.fillRect(g_h*gsu, g_v*gsu, gsu, gsu);
+        ctx.fillRect(ros.x, ros.y, gsu, gsu);
       }
     }
   }
