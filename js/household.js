@@ -336,7 +336,7 @@ function grid_pathfind(gsu, feather, ctx){
       region.max.y = (g_v*gsu)+gsu-feather;
 
       let detectedBodies = Query.region(nonAllies_Array, region);
-      ctx.strokeStyle = (detectedBodies.length ? RENDER_UI_RED : RENDER_UI_GREEN);
+      ctx.strokeStyle = (detectedBodies.length ? RENDER_UI_RED : RENDER_UI_BLUE+'44');
       ctx.strokeRect(g_h*gsu, g_v*gsu, gsu, gsu);
       if(detectedBodies.length){
         ctx.fillStyle = RENDER_UI_RED+'44';
