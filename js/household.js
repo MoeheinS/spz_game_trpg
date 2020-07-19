@@ -314,20 +314,24 @@ function grid_pathfind(gsu, feather, ctx){
   ctx.save();
 
   var playfield = {x: 0, y: 0};
-      playfield.x = Math.abs(world.bounds.min.x - world.bounds.max.x);
-      playfield.y = Math.abs(world.bounds.min.y - world.bounds.max.y);
+      playfield.x = reWi; //Math.abs(world.bounds.min.x - world.bounds.max.x);
+      playfield.y = reHi; //Math.abs(world.bounds.min.y - world.bounds.max.y);
   var max_rows = Math.ceil(playfield.y / gsu);
   var max_cols = Math.ceil(playfield.x / gsu);
   // console.warn(`rows: ${max_rows},cols: ${max_cols}`);
 
+  var astar_grid = [];
+
   for (let g_v = 0; g_v < max_rows; g_v++) {
+    var astar_row = [];
+
     for (let g_h = 0; g_h < max_cols; g_h++) {
       //console.log(g_v, g_h);
       
       // region offset
       let ros = {x:0, y:0};
-      ros.x = world.bounds.min.x+(g_h*gsu);
-      ros.y = world.bounds.min.y+(g_v*gsu);
+      ros.x = (g_h*gsu); //world.bounds.min.x+(g_h*gsu);
+      ros.y = (g_v*gsu); //world.bounds.min.y+(g_v*gsu);
 
       var region = {
         min: {
@@ -345,6 +349,9 @@ function grid_pathfind(gsu, feather, ctx){
       region.max.y = ros.y+gsu-feather;
 
       let detectedBodies = Query.region(nonAllies_Array, region);
+      astar_row.push(detectedBodies.length ? 1 : 0);
+
+      // render logic
       ctx.strokeStyle = (detectedBodies.length ? RENDER_UI_RED : RENDER_UI_BLUE+'44');
       ctx.strokeRect(ros.x, ros.y, gsu, gsu);
       if(detectedBodies.length){
@@ -352,6 +359,13 @@ function grid_pathfind(gsu, feather, ctx){
         ctx.fillRect(ros.x, ros.y, gsu, gsu);
       }
     }
+
+    astar_grid.push(astar_row);
   }
+  // FIXME: Ok, looking at the grid, I can see it's overkill to include out-of-bounds areas in the pathfinding... (Also makes returning coordinates harder)
+  //console.log(astar_grid);
+  // TODO: run a function on astar_grid for the AI? technically each body that needs to pathfind should create its own grid, 
+  // with grid cell values being dependent on that body's movement types (ie flying aquatic etc)
+  // each body's grid should also be sized according to the body; no sense trying to pathfind through a chasm you can't fit in
   ctx.restore();
 }
