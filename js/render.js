@@ -51,6 +51,21 @@ function render_debug(game_debug, ctx){
   ctx.restore();
 }
 
+// visualize pathfinding
+function render_debug_path(path, gsu, ctx){
+  ctx.save();
+  ctx.strokeStyle = RENDER_SHADOWCOLOR;
+
+  ctx.beginPath();
+  ctx.moveTo(path[0].x*gsu, path[0].y*gsu);
+  for( step of path ){
+    ctx.lineTo(step.x*gsu, step.y*gsu);
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
 // render shapes from vertices of actors, for terrain
 // in the future add an arg to override fillStyle with an image based pattern?
 function draw_Shapes(ctx, a){

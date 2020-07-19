@@ -8,7 +8,9 @@ let game_shift = false;
 let game_cursor = 'default';
 
 let game_debug_flags = { 
-  "grid": false
+  "grid": false,
+  "path": [],
+  "path_size": 1
 };
 /*
   default

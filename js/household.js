@@ -310,7 +310,7 @@ function moveToPoint(a, dv, force, uniform){
 
 // works off world bounds; performance is still good for now
 // grid size unit, feathering from edges
-function grid_pathfind(gsu, feather, ctx){
+function grid_pathfind(ctx, bod, gsu, feather){
   ctx.save();
 
   var playfield = {x: 0, y: 0};
@@ -348,16 +348,50 @@ function grid_pathfind(gsu, feather, ctx){
       region.min.y = ros.y+feather;
       region.max.y = ros.y+gsu-feather;
 
-      let detectedBodies = Query.region(nonAllies_Array, region);
-      astar_row.push(detectedBodies.length ? 1 : 0);
+      //let detectedBodies = Query.region(nonAllies_Array, region);
+      let detectedBodies = Query.region(Composite.allBodies(world), region);
+      //astar_row.push(detectedBodies.length ? 1 : 0);
+
+      if( detectedBodies.length ){
+        for( dbod of detectedBodies ){
+          if( dbod.id == bod.id ){
+            ctx.strokeStyle = RENDER_UI_GREEN+'44';
+            ctx.strokeRect(ros.x, ros.y, gsu, gsu);
+            ctx.fillStyle = RENDER_UI_GREEN+'44';
+            ctx.fillRect(ros.x, ros.y, gsu, gsu);
+          }else{
+            switch (dbod.label) {
+              case 'ally':
+              case 'enemy':
+                ctx.strokeStyle = RENDER_UI_BLUE+'44';
+                ctx.fillStyle = RENDER_UI_BLUE+'44';
+                break;
+              default:
+                ctx.strokeStyle = RENDER_UI_RED+'44';
+                ctx.fillStyle = RENDER_UI_RED+'44';
+                break;
+            }
+            ctx.strokeRect(ros.x, ros.y, gsu, gsu);
+            ctx.fillRect(ros.x, ros.y, gsu, gsu);
+          }
+        }
+        // outside the for of, because bodies can overlap, leading to non-square arrays
+        astar_row.push(1);
+      }else{
+        ctx.strokeStyle = RENDER_UI_BLUE+'44';
+        ctx.fillStyle = 'transparent';
+        ctx.strokeRect(ros.x, ros.y, gsu, gsu);
+        ctx.fillRect(ros.x, ros.y, gsu, gsu);
+        astar_row.push(0);
+      }
 
       // render logic
-      ctx.strokeStyle = (detectedBodies.length ? RENDER_UI_RED : RENDER_UI_BLUE+'44');
-      ctx.strokeRect(ros.x, ros.y, gsu, gsu);
-      if(detectedBodies.length){
-        ctx.fillStyle = RENDER_UI_RED+'44';
-        ctx.fillRect(ros.x, ros.y, gsu, gsu);
-      }
+      // ctx.strokeStyle = (detectedBodies.length ? RENDER_UI_RED : RENDER_UI_BLUE+'44');
+      // ctx.strokeRect(ros.x, ros.y, gsu, gsu);
+      // if(detectedBodies.length){
+      //   ctx.fillStyle = RENDER_UI_RED+'44';
+      //   ctx.fillRect(ros.x, ros.y, gsu, gsu);
+      // }
     }
 
     astar_grid.push(astar_row);
@@ -367,5 +401,26 @@ function grid_pathfind(gsu, feather, ctx){
   // TODO: run a function on astar_grid for the AI? technically each body that needs to pathfind should create its own grid, 
   // with grid cell values being dependent on that body's movement types (ie flying aquatic etc)
   // each body's grid should also be sized according to the body; no sense trying to pathfind through a chasm you can't fit in
+  grid_astar(ctx, bod, gsu, astar_grid)
+  
   ctx.restore();
+}
+
+// TODO: it finds the path, but I can't draw it within this function. Because easystar is async?
+// so that leaves NOT drawing it, or pushing the points to a higher scoped array, which is drawn instead
+function grid_astar(ctx, bod, gsu, astar_grid){
+  var easystar = new EasyStar.js();
+  easystar.setGrid(astar_grid);
+  easystar.setAcceptableTiles([0]);
+  easystar.findPath(6, 2, 20, 4, function( path ) {
+    //console.log(path);
+    if (path === null) {
+      //console.error("Path was not found.");
+    } else {
+      //console.warn("Path was found. The first Point is " + path[0].x + " " + path[0].y);
+      game_debug_flags.path = path;
+      game_debug_flags.path_size = gsu;
+    }
+  });
+  easystar.calculate();
 }

@@ -267,7 +267,14 @@ Events.on(render, 'afterRender', function() {
     if(game_debug_flags.grid){ 
       // TODO: separate the calculating of the grid from the drawing of the grid, also move the variables to a higher scope
       //if(anim_tick == 0){
-        grid_pathfind(GRID_SIZE/2, GRID_SIZE/8, ctx);
+        for(enemy of enemies_Array){
+          let bod_width = enemy.bounds.max.x - enemy.bounds.min.x;
+          grid_pathfind(ctx, enemy, bod_width/2, bod_width/8);
+          //grid_pathfind(ctx, enemy, GRID_SIZE/2, GRID_SIZE/8);
+        }
+        if(game_debug_flags.path.length){
+          render_debug_path(game_debug_flags.path, game_debug_flags.path_size, ctx)
+        }
       //}
     }
 
