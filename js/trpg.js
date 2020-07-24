@@ -274,7 +274,7 @@ Events.on(render, 'afterRender', function() {
           //grid_pathfind(ctx, enemy, GRID_SIZE/2, GRID_SIZE/8);
         }
         if(game_debug_flags.path.length){
-          render_debug_path(game_debug_flags.path, game_debug_flags.path_size, ctx)
+          render_debug_path(game_debug_flags.path, game_debug_flags.path_size, ctx);
         }
       //}
     }
