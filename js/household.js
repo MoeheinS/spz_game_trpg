@@ -313,9 +313,7 @@ function moveToPoint(a, dv, force, uniform){
 function grid_pathfind(ctx, bod, gsu, feather){
   ctx.save();
 
-  var playfield = {x: 0, y: 0};
-      playfield.x = reWi; //Math.abs(world.bounds.min.x - world.bounds.max.x);
-      playfield.y = reHi; //Math.abs(world.bounds.min.y - world.bounds.max.y);
+  var playfield = new Coordinate(reWi, reHi);
   var max_rows = Math.ceil(playfield.y / gsu);
   var max_cols = Math.ceil(playfield.x / gsu);
   // console.warn(`rows: ${max_rows},cols: ${max_cols}`);
@@ -329,54 +327,44 @@ function grid_pathfind(ctx, bod, gsu, feather){
       //console.log(g_v, g_h);
       
       // region offset
-      let ros = {x:0, y:0};
-      ros.x = (g_h*gsu); //world.bounds.min.x+(g_h*gsu);
-      ros.y = (g_v*gsu); //world.bounds.min.y+(g_v*gsu);
+      let ros = new Coordinate((g_h*gsu), (g_v*gsu));
 
-      var region = {
-        min: {
-          x: 0,
-          y: 0
-        },
-        max: {
-          x: 0,
-          y: 0
-        }
-      };
-      region.min.x = ros.x+feather;
-      region.max.x = ros.x+gsu-feather;
-      region.min.y = ros.y+feather;
-      region.max.y = ros.y+gsu-feather;
+      var region = new Object;
+          region.min = new Coordinate(ros.x+feather, ros.y+feather);
+          region.max = new Coordinate(ros.x+gsu-feather, ros.y+gsu-feather);
 
       //let detectedBodies = Query.region(nonAllies_Array, region);
       let detectedBodies = Query.region(Composite.allBodies(world), region);
-      //astar_row.push(detectedBodies.length ? 1 : 0);
 
       if( detectedBodies.length ){
         for( dbod of detectedBodies ){
-          if( dbod.id == bod.id ){
-            ctx.strokeStyle = RENDER_UI_GREEN+'44';
-            ctx.strokeRect(ros.x, ros.y, gsu, gsu);
-            ctx.fillStyle = RENDER_UI_GREEN+'44';
-            ctx.fillRect(ros.x, ros.y, gsu, gsu);
-          }else{
-            switch (dbod.label) {
-              case 'ally':
-              case 'enemy':
+          var flags = new Object;
+              flags.self = false;
+              flags.other = false;
+          // quick and dirty
+          switch (dbod.label) {
+            case 'ally':
+            case 'enemy':
+              if( dbod.id == bod.id ){
+                ctx.strokeStyle = RENDER_UI_GREEN+'44';
+                ctx.fillStyle = RENDER_UI_GREEN+'44';
+                flags.self = true;
+              }else{
                 ctx.strokeStyle = RENDER_UI_BLUE+'44';
                 ctx.fillStyle = RENDER_UI_BLUE+'44';
-                break;
-              default:
-                ctx.strokeStyle = RENDER_UI_RED+'44';
-                ctx.fillStyle = RENDER_UI_RED+'44';
-                break;
-            }
-            ctx.strokeRect(ros.x, ros.y, gsu, gsu);
-            ctx.fillRect(ros.x, ros.y, gsu, gsu);
+                flags.other = true;
+              }
+              break;
+            default:
+              ctx.strokeStyle = RENDER_UI_RED+'44';
+              ctx.fillStyle = RENDER_UI_RED+'44';
+              break;
           }
+          ctx.strokeRect(ros.x, ros.y, gsu, gsu);
+          ctx.fillRect(ros.x, ros.y, gsu, gsu);
         }
-        // outside the for of, because bodies can overlap, leading to non-square arrays
-        astar_row.push(1);
+        // if detecting self, push 0 so you don't block yourself from moving
+        astar_row.push((flags.self ? 0 : 1));
       }else{
         ctx.strokeStyle = RENDER_UI_BLUE+'44';
         ctx.fillStyle = 'transparent';
@@ -401,18 +389,24 @@ function grid_pathfind(ctx, bod, gsu, feather){
   // TODO: run a function on astar_grid for the AI? technically each body that needs to pathfind should create its own grid, 
   // with grid cell values being dependent on that body's movement types (ie flying aquatic etc)
   // each body's grid should also be sized according to the body; no sense trying to pathfind through a chasm you can't fit in
-  grid_astar(ctx, bod, gsu, astar_grid)
+  var start_pos = new Coordinate(
+    Math.floor(bod.position.x / gsu), 
+    Math.floor(bod.position.y / gsu)
+  ); // find in grid. floor not ceil because array counting
+  var goal_pos = new Coordinate(20, 6); // switch statement for ai logic here
+  grid_astar(ctx, gsu, astar_grid, start_pos, goal_pos);
   
   ctx.restore();
 }
 
 // TODO: it finds the path, but I can't draw it within this function. Because easystar is async?
 // so that leaves NOT drawing it, or pushing the points to a higher scoped array, which is drawn instead
-function grid_astar(ctx, bod, gsu, astar_grid){
+function grid_astar(ctx, gsu, astar_grid, start_pos, goal_pos){
   var easystar = new EasyStar.js();
   easystar.setGrid(astar_grid);
+  easystar.enableDiagonals();
   easystar.setAcceptableTiles([0]);
-  easystar.findPath(6, 2, 20, 4, function( path ) {
+  easystar.findPath(start_pos.x, start_pos.y, goal_pos.x, goal_pos.y, function( path ) {
     //console.log(path);
     if (path === null) {
       //console.error("Path was not found.");
@@ -423,4 +417,11 @@ function grid_astar(ctx, bod, gsu, astar_grid){
     }
   });
   easystar.calculate();
+}
+
+class Coordinate {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
 }
