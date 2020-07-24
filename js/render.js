@@ -57,9 +57,9 @@ function render_debug_path(path, gsu, ctx){
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
 
   ctx.beginPath();
-  ctx.moveTo(path[0].x*gsu, path[0].y*gsu);
+  ctx.moveTo((path[0].x*gsu)+gsu/2, (path[0].y*gsu)+gsu/2);
   for( step of path ){
-    ctx.lineTo(step.x*gsu, step.y*gsu);
+    ctx.lineTo((step.x*gsu)+gsu/2, (step.y*gsu)+gsu/2);
     ctx.stroke();
   }
 
