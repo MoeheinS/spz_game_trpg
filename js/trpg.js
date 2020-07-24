@@ -126,7 +126,8 @@ document.addEventListener("keydown", function(e){
       game_waypoints = [];
       // TODO: mouse.absolute is accurate, but rendering (when zoomed) is only accurate for mouse.position... what even.
       // I could just fix it by having the waypoint be a body instead of a coordinate, but I want to understand
-      let coord = {x: mouseConstraint.mouse.absolute.x, y: mouseConstraint.mouse.absolute.y};
+      // FIXME: it's FUCKED when you move the camera too. Body is the way to go
+      let coord = {x: mouseConstraint.mouse.position.x, y: mouseConstraint.mouse.position.y};
       game_waypoints.push(coord);
       break;
     case 's':
