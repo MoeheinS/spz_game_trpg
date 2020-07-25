@@ -102,21 +102,25 @@ var spriteSheetCoords = [
   {
     "iname": "warrior_human",
     "idle": [
-      {x: 2, y: 2},
-      {x: 21, y: 2}
+      {x: 0, y: 0},
+      {x: 16, y: 0}
     ],
-    "hori": [
-      {x: 39, y: 2},
-      {x: 58, y: 2}
+    "right": [
+      {x: 32, y: 0},
+      {x: 48, y: 0}
     ],
-    "back": [
-      {x: 76, y: 2},
-      {x: 94, y: 2}
+    "up": [
+      {x: 64, y: 0},
+      {x: 80, y: 0}
+    ],
+    "left": [
+      {x: 96, y: 0},
+      {x: 112, y: 0}
     ]
   }
 ];
 
-var test_allyGB = Bodies.rectangle(reWi-(GRID_SIZE*5), 300, 32, 32, {
+var test_allyGB = Bodies.circle(reWi-(GRID_SIZE*5), 300, 16, {
   label: 'ally',
   frictionAir: 1,
   collisionFilter: {
@@ -129,17 +133,19 @@ var test_allyGB = Bodies.rectangle(reWi-(GRID_SIZE*5), 300, 32, 32, {
       x: reWi-(GRID_SIZE*5),
       y: 300
     },
+    shape: 'circle',
     graphics: {
       sheet: true,
-      sprite: './assets/7422.png',
+      sprite: './assets/origin.png',
       sprite_dim: {
         x: 16,
         y: 16
       },
       sheet_idle: spriteSheetCoords[0].idle,
-      sheet_hori: spriteSheetCoords[0].hori,
-      sheet_back: spriteSheetCoords[0].back
+      sheet_left: spriteSheetCoords[0].left,
+      sheet_right: spriteSheetCoords[0].right,
+      sheet_up: spriteSheetCoords[0].up
     }
   }
-});
+}, 10);
 World.add(world, test_allyGB);
