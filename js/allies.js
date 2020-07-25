@@ -120,9 +120,12 @@ var spriteSheetCoords = [
   }
 ];
 
-var test_allyGB = Bodies.circle(reWi-(GRID_SIZE*5), 300, 16, {
+// 8 radius; 16 w/h, then render a 32x32 sprite with the physics body at the foot
+var test_allyGB = Bodies.circle(reWi-(GRID_SIZE*5), 300, 8, {
+//var test_allyGB = Bodies.rectangle(reWi-(GRID_SIZE*5), 300, 16, 16, {
   label: 'ally',
   frictionAir: 1,
+  mass: 2,
   collisionFilter: {
     category: draggable_false
   },
@@ -141,6 +144,7 @@ var test_allyGB = Bodies.circle(reWi-(GRID_SIZE*5), 300, 16, {
         x: 16,
         y: 16
       },
+      // FIXME: hard reference to the array really bit me in the ass here
       sheet_idle: spriteSheetCoords[0].idle,
       sheet_left: spriteSheetCoords[0].left,
       sheet_right: spriteSheetCoords[0].right,
@@ -148,4 +152,36 @@ var test_allyGB = Bodies.circle(reWi-(GRID_SIZE*5), 300, 16, {
     }
   }
 }, 10);
+//});
 World.add(world, test_allyGB);
+
+var test_allyGB2 = Bodies.circle(reWi-(GRID_SIZE*5), 600, 8, {
+  label: 'ally',
+  frictionAir: 1,
+  mass: 2,
+  collisionFilter: {
+    category: draggable_false
+  },
+  custom: {
+    baseMove: GRID_SIZE*5,
+    maxMove: GRID_SIZE*5,
+    startPoint: { 
+      x: reWi-(GRID_SIZE*5),
+      y: 300
+    },
+    shape: 'circle',
+    graphics: {
+      sheet: true,
+      sprite: './assets/origin.png',
+      sprite_dim: {
+        x: 16,
+        y: 16
+      },
+      sheet_idle: [{x: 0, y: 0},{x: 16, y: 0}],
+      sheet_left: [{x: 96, y: 0},{x: 112, y: 0}],
+      sheet_right: [{x: 32, y: 0},{x: 48, y: 0}],
+      sheet_up: [{x: 64, y: 0},{x: 80, y: 0}],
+    }
+  }
+}, 10);
+World.add(world, test_allyGB2);

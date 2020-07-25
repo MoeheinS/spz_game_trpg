@@ -95,12 +95,15 @@ function draw_Graphics(ctx, a, mode){
       img.src = i.custom.graphics.sprite;  
     }
     if( i.custom.graphics.sheet ){
-      var ix = i.bounds.min.x;
-      var iy = i.bounds.min.y;
+      
       var ixs = i.custom.graphics.sprite_dim.x;
       var iys = i.custom.graphics.sprite_dim.y;
       var dx = i.bounds.max.x - i.bounds.min.x;
+          dx = ixs*2;
       var dy = i.bounds.max.y - i.bounds.min.y;
+          dy = iys*2;
+      var ix = i.position.x - ixs;
+      var iy = i.position.y - iys*1.5;
 
       //which direction? as the clock goes, 1 2, 3 4, 5 6, 7 0
       var bod_angle = Math.floor(((180*i.angle/Math.PI)+180)/45);
@@ -129,7 +132,7 @@ function draw_Graphics(ctx, a, mode){
         var sx = i.custom.graphics.sheet_idle[0].x;
         var sy = i.custom.graphics.sheet_idle[0].y;
       }
-
+      // source, source x, y, destination x, y, width x, y
       ctx.drawImage(img, sx, sy, ixs, iys, ix, iy, dx, dy);
     }else{
       var ix = i.position.x - (i.custom.graphics.sprite_dim.x/2);
