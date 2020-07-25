@@ -303,9 +303,12 @@ function moveToPoint(a, dv, force, uniform){
   let normalizedDelta = Vector.normalise(deltaVector);
   let forceVector = Vector.mult(normalizedDelta, force);
   Body.applyForce(a, a.position, forceVector);
+  
   // This rotates the body, which is a problem for non-square, non-round bodies.
-  // So I need 2-body entities?
-  //Body.setAngle( a, Vector.angle( a.position, dv));
+  // FIXME: alternative is to get the movement vector; then you can use non-round bodies...
+  if( a.custom && a.custom.shape ){
+    Body.setAngle( a, Vector.angle( a.position, dv));
+  }
 }
 
 // works off world bounds; performance is still good for now
