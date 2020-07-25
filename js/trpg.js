@@ -169,8 +169,9 @@ function heartbeat_animations(){
       }
       if( bod.custom && bod.custom.graphics && bod.custom.graphics.sheet ){
         bod.custom.graphics.sheet_idle = cycleArray(bod.custom.graphics.sheet_idle);
-        bod.custom.graphics.sheet_hori = cycleArray(bod.custom.graphics.sheet_hori);
-        bod.custom.graphics.sheet_back = cycleArray(bod.custom.graphics.sheet_back);
+        bod.custom.graphics.sheet_right = cycleArray(bod.custom.graphics.sheet_right);
+        bod.custom.graphics.sheet_left = cycleArray(bod.custom.graphics.sheet_left);
+        bod.custom.graphics.sheet_up = cycleArray(bod.custom.graphics.sheet_up);
       }
     }
   }
