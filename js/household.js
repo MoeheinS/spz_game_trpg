@@ -422,6 +422,12 @@ function grid_astar(ctx, gsu, astar_grid, start_pos, goal_pos){
   easystar.calculate();
 }
 
+function getDistance(a, b){
+  let dx = a.x - b.x;
+  let dy = a.y - b.y;
+  return Math.hypot(dx, dy);
+}
+
 class Coordinate {
   constructor(x, y) {
     this.x = x;

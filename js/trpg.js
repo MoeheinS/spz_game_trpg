@@ -240,6 +240,7 @@ Events.on(engine, 'afterUpdate', function(event) {
 /*
 *   Rendering
 */
+let ticker = 0;
 Events.on(render, 'afterRender', function() {
 
   heartbeat_animations();
@@ -311,6 +312,12 @@ Events.on(render, 'afterRender', function() {
   render_cursor(ctx);
 
   draw_UI(ctx);
+  ticker++;
+  if( ticker >= 12 ){
+    ticker = 0;
+    // TODO: 32 should be a global variable
+    turret_acqTarget(test_turret, (test_turret.custom.turret.range*32), ctx);
+  }
 });
 
 /*
