@@ -95,13 +95,15 @@ function draw_Graphics(ctx, a, mode){
       img.src = i.custom.graphics.sprite;  
     }
     if( i.custom.graphics.sheet ){
-      
+      // wiggle wiggle
+      //Body.rotate(i, 0.02);
+
       var ixs = i.custom.graphics.sprite_dim.x;
       var iys = i.custom.graphics.sprite_dim.y;
-      var dx = i.bounds.max.x - i.bounds.min.x;
-          dx = ixs*2;
-      var dy = i.bounds.max.y - i.bounds.min.y;
-          dy = iys*2;
+      var dx = (i.bounds.max.x - i.bounds.min.x) *2;
+          //dx = ixs*2;
+      var dy = (i.bounds.max.y - i.bounds.min.y) *2;
+          //dy = iys*2;
       var ix = i.position.x - ixs;
       var iy = i.position.y - iys*1.5;
 
