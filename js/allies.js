@@ -95,49 +95,6 @@ var test_allyZ = buildCircle(reWi-(GRID_SIZE*4), reHi-(GRID_SIZE*4), GRID_SIZE*1
 });
 //World.add(world, test_allyZ);
 
-
-
-// origin.png
-var spriteSheetCoords = [
-  {
-    "iname": "warrior_human",
-    "idle": [
-      {x: 0, y: 0},
-      {x: 16, y: 0}
-    ],
-    "right": [
-      {x: 32, y: 0},
-      {x: 48, y: 0}
-    ],
-    "up": [
-      {x: 64, y: 0},
-      {x: 80, y: 0}
-    ],
-    "left": [
-      {x: 96, y: 0},
-      {x: 112, y: 0}
-    ]
-  },
-  {
-    "iname": "turret_basic",
-    "idle": [
-      {x: 912, y: 208},
-      {x: 928, y: 208}
-    ],
-    "right": [
-      {x: 912, y: 208},
-      {x: 928, y: 208}
-    ],
-    "up": [
-      {x: 912, y: 208},
-      {x: 928, y: 208}
-    ],
-    "left": [
-      {x: 912, y: 208},
-      {x: 928, y: 208}
-    ]
-  }
-];
 function getSprites(iname, key){
   for( sheet of spriteSheetCoords ){
     if( sheet.iname == iname ){
@@ -206,10 +163,10 @@ var test_allyGB2 = Bodies.circle(reWi-(GRID_SIZE*5), 600, 8, {
         x: 16,
         y: 16
       },
-      sheet_idle: getSprites('warrior_human', 'idle'),
-      sheet_left: getSprites('warrior_human', 'left'),
-      sheet_right: getSprites('warrior_human', 'right'),
-      sheet_up: getSprites('warrior_human', 'up')
+      sheet_idle: getSprites('ratty', 'idle'),
+      sheet_left: getSprites('ratty', 'left'),
+      sheet_right: getSprites('ratty', 'right'),
+      sheet_up: getSprites('ratty', 'up')
     }
   }
 }, 10);
