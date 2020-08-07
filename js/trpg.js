@@ -45,8 +45,8 @@ var viewportCentre = {
 
 // make the world bounds a little bigger than the render bounds
 world.bounds.min.x = render.options.width * -0.5;
-world.bounds.min.y = render.options.height * -0.5;
 world.bounds.max.x = render.options.width * 1.5;
+world.bounds.min.y = render.options.height * -0.5;
 world.bounds.max.y = render.options.height * 1.5;
 
 // keep track of current bounds scale (view zoom)
@@ -323,13 +323,15 @@ Events.on(render, 'afterRender', function() {
       }
     }
 
-  // render_ui.js
-  render_ui();
-  render_cursor();
-
-  draw_UI();
+    // render_ui.js
+    // handles portraits (UI UI) and waypoints (game UI)
+    // FIXME: split in two
+    render_ui();
+    render_cursor();
 
   Render.endViewTransform(render);
+
+  draw_UI();  // zoom level debugging
 });
 
 /*
@@ -343,3 +345,12 @@ Events.on(render, 'afterRender', function() {
 
 // Query.region(mouse, bounds) for all allies, to draw moveRange (disagonal striped fill)
 // TODO write reset function for fillStyle, strokeStyle etc...
+
+// meh
+window.addEventListener('resize', resizeCanvas, false);
+function resizeCanvas() {
+  reWi = pcWidth();
+  reHi = pcHeight();
+  canvas.width = reWi;
+  canvas.height = reHi;
+}
