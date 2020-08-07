@@ -83,18 +83,18 @@ function render_cursor(){
   */
   ctx.beginPath();
   ctx.strokeStyle = RENDER_TERRAINCOLOR;
-  ctx.strokeRect(mouse.absolute.x, mouse.absolute.y, 7, 7);
-  ctx.arc(mouse.absolute.x+7, mouse.absolute.y+7, 7, 0, Math.PI * 2, true);
+  ctx.strokeRect(mouse.position.x, mouse.position.y, 7, 7);
+  ctx.arc(mouse.position.x+7, mouse.position.y+7, 7, 0, Math.PI * 2, true);
   ctx.stroke();
 
   ctx.beginPath();
   ctx.strokeStyle = RENDER_FILLCOLOR;
-  ctx.arc(mouse.absolute.x+7, mouse.absolute.y+7, 5, 0, Math.PI * 2, true);
+  ctx.arc(mouse.position.x+7, mouse.position.y+7, 5, 0, Math.PI * 2, true);
   ctx.stroke();
 
   ctx.beginPath();
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
-  ctx.arc(mouse.absolute.x+7, mouse.absolute.y+7, 3, 0, Math.PI * 2, true);
+  ctx.arc(mouse.position.x+7, mouse.position.y+7, 3, 0, Math.PI * 2, true);
   ctx.stroke();
 
   switch (game_cursor) {
@@ -105,8 +105,8 @@ function render_cursor(){
       // ugly as sin, and rotate() is a PITA. Just get a sprite or SVG...
       ctx.translate(7, 7);
       ctx.beginPath();
-      ctx.moveTo(mouse.absolute.x, mouse.absolute.y-2);
-      ctx.lineTo(mouse.absolute.x, mouse.absolute.y+2);
+      ctx.moveTo(mouse.position.x, mouse.position.y-2);
+      ctx.lineTo(mouse.position.x, mouse.position.y+2);
       ctx.stroke();
       break;
     default:

@@ -323,13 +323,13 @@ Events.on(render, 'afterRender', function() {
       }
     }
 
-  Render.endViewTransform(render);
-
   // render_ui.js
   render_ui();
   render_cursor();
 
   draw_UI();
+
+  Render.endViewTransform(render);
 });
 
 /*
