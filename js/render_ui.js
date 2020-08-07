@@ -50,7 +50,7 @@ const RENDER_UI_GREEN = '#319d59';
 const RENDER_UI_RED = '#f85f4a';
 const RENDER_UI_BLUE = '#00b9fb';
 
-function render_ui(ctx){
+function render_ui(){
   ctx.save();
 
   // beyond placeholder
@@ -58,7 +58,7 @@ function render_ui(ctx){
     This is the layer where I want to render UI and static elements that don't scale
   */
   if( game_selection.length ){
-    draw_UI_portrait(ctx, game_selection, 4, 4);
+    draw_UI_portrait(game_selection, 4, 4);
   }
   for( waypoint of game_waypoints ){
     ctx.save();
@@ -72,7 +72,7 @@ function render_ui(ctx){
   ctx.restore();
 }
 
-function render_cursor(ctx){
+function render_cursor(){
   ctx.save();
 
   // beyond placeholder
@@ -115,7 +115,7 @@ function render_cursor(ctx){
   ctx.restore();
 }
 
-function draw_UI_portrait(ctx, a, xp, yp){
+function draw_UI_portrait(a, xp, yp){
   ctx.save();
   let x_offset = xp;
   // you can calculate a mean dimension, but in practice it's 62-64, whereas GRID_SIZE is 67ish, so use that or 64...
@@ -154,7 +154,7 @@ function draw_UI_portrait(ctx, a, xp, yp){
 
 // render UI elements, per actor
 // hijacked for zoom factor debugging
-function draw_UI(ctx, a){
+function draw_UI(a){
   ctx.save();
   ctx.font = '12px alber';
   ctx.textAlign = 'right';

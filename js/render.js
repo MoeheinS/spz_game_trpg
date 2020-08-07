@@ -1,5 +1,5 @@
 // render arbitrary information to help me debug
-function render_debug(game_debug, ctx){
+function render_debug(game_debug){
   ctx.save();
   if(game_debug){
     ctx.font = '16px alber';
@@ -53,7 +53,7 @@ function render_debug(game_debug, ctx){
 }
 
 // visualize pathfinding
-function render_debug_path(path, gsu, ctx){
+function render_debug_path(path, gsu){
   ctx.save();
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
 
@@ -69,7 +69,7 @@ function render_debug_path(path, gsu, ctx){
 
 // render shapes from vertices of actors, for terrain
 // in the future add an arg to override fillStyle with an image based pattern?
-function draw_Shapes(ctx, a){
+function draw_Shapes(a){
   ctx.save();
   ctx.fillStyle = RENDER_TERRAINCOLOR;
   for( i of a ){
@@ -85,7 +85,7 @@ function draw_Shapes(ctx, a){
 }
 
 // render sprites or animations, per actor, with optional override for globalCompositeOperation
-function draw_Graphics(ctx, a, mode){
+function draw_Graphics(a, mode){
   ctx.save();
   for( i of a ){
     let img = new Image();

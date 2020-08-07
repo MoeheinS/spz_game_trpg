@@ -138,7 +138,7 @@ function getIntersection(ray,segment){
 	};
 }
 
-function ray_fov(ctx, caster){
+function ray_fov(caster){
   /*
     Object vertices go clockwise. Therefore I can deduce segments per vertex pair
     Per ally / raycaster, cast a ray towards every unique vertex (of LoS breaking objects)
@@ -313,7 +313,7 @@ function moveToPoint(a, dv, force, uniform){
 
 // works off world bounds; performance is still good for now
 // grid size unit, feathering from edges
-function grid_pathfind(ctx, bod, gsu, feather){
+function grid_pathfind(bod, gsu, feather){
   ctx.save();
 
   var playfield = new Coordinate(reWi, reHi);
@@ -397,14 +397,14 @@ function grid_pathfind(ctx, bod, gsu, feather){
     Math.floor(bod.position.y / gsu)
   ); // find in grid. floor not ceil because array counting
   var goal_pos = new Coordinate(20, 6); // switch statement for ai logic here
-  grid_astar(ctx, gsu, astar_grid, start_pos, goal_pos);
+  grid_astar(gsu, astar_grid, start_pos, goal_pos);
   
   ctx.restore();
 }
 
 // TODO: it finds the path, but I can't draw it within this function. Because easystar is async?
 // so that leaves NOT drawing it, or pushing the points to a higher scoped array, which is drawn instead
-function grid_astar(ctx, gsu, astar_grid, start_pos, goal_pos){
+function grid_astar(gsu, astar_grid, start_pos, goal_pos){
   var easystar = new EasyStar.js();
   easystar.setGrid(astar_grid);
   easystar.enableDiagonals();

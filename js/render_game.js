@@ -1,5 +1,5 @@
 // plenty of debug values in this one...
-function render_rangefinder(ctx, mouseConstraint, a, color_override){
+function render_rangefinder(mouseConstraint, a, color_override){
   ctx.save();
   let distance_max = (GRID_SIZE * 5.5);
   if(allies_Array.length){
@@ -53,7 +53,7 @@ function render_rangefinder(ctx, mouseConstraint, a, color_override){
   ctx.restore();
 }
 
-function render_moveRange(ctx, mouseConstraint){
+function render_moveRange(mouseConstraint){
   let movingEnt = mouseConstraint.body;
   if( movingEnt.custom ){
     let vx = mouseConstraint.mouse.position.x - movingEnt.custom.startPoint.x;   // get the line as vector
@@ -74,7 +74,7 @@ function render_moveRange(ctx, mouseConstraint){
   }
 }
 
-function ray_tb(ctx, o){
+function ray_tb(o){
   // draw lines between allies, change color if there's enemies intersecting
   let movingEnt = o.body;
   for( bod of allies_Array ){
@@ -159,9 +159,10 @@ function ray_tb(ctx, o){
 }
 
 //FIXME: clean up, this runs always, but it should only activate in select mode.
-function draw_mouseSelect(ctx){
+function draw_mouseSelect(){
   if( mouse_selectArea.min ){
-    var oldStroke = ctx.strokeStyle;
+    ctx.save();
+
     ctx.strokeStyle = RENDER_UI_GREEN;
     ctx.strokeRect(
       mouse_selectArea.min.x, 
@@ -195,6 +196,6 @@ function draw_mouseSelect(ctx){
       }
     }
 
-    ctx.strokeStyle = oldStroke;
+    ctx.restore();
   }
 }

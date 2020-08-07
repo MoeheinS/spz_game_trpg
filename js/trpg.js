@@ -241,12 +241,15 @@ Events.on(engine, 'afterUpdate', function(event) {
 *   Rendering
 */
 let ticker = 0;
+// moved ctx outside of the render loop provided by Matter.js
+var canvas = document.querySelector('canvas');
+var ctx = canvas.getContext('2d');
+
 Events.on(render, 'afterRender', function() {
 
   heartbeat_animations();
   group_Entities();
-
-  var ctx = render.context;
+  //var ctx = render.context;
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
   ctx.fillStyle = RENDER_TERRAINCOLOR;
   ctx.lineWidth = 2;
@@ -256,15 +259,15 @@ Events.on(render, 'afterRender', function() {
 
     // if this gets expensive later on, we can run it once every X ticks instead of every tick
     for( caster of allies_Array ){
-      ray_fov(ctx, caster);
+      ray_fov(caster);
     }
     render_debug(game_debug, render.context);
     // deprec render order
-    //draw_Graphics(ctx, enemies_Array, 'source-atop');
+    //draw_Graphics(enemies_Array, 'source-atop');
 
-    draw_Shapes(ctx, obstacles_Array);
+    draw_Shapes(obstacles_Array);
     // deprec render order
-    //draw_Graphics(ctx, allies_Array);
+    //draw_Graphics(allies_Array);
 
     // TODO: draw a grid, check if there's collidables inside
     if(game_debug_flags.grid){ 
@@ -272,11 +275,11 @@ Events.on(render, 'afterRender', function() {
       //if(anim_tick == 0){
         for(enemy of enemies_Array){
           let bod_width = enemy.bounds.max.x - enemy.bounds.min.x;
-          grid_pathfind(ctx, enemy, bod_width/2, bod_width/8);
-          //grid_pathfind(ctx, enemy, GRID_SIZE/2, GRID_SIZE/8);
+          grid_pathfind(enemy, bod_width/2, bod_width/8);
+          //grid_pathfind(enemy, GRID_SIZE/2, GRID_SIZE/8);
         }
         if(game_debug_flags.path.length){
-          render_debug_path(game_debug_flags.path, game_debug_flags.path_size, ctx);
+          render_debug_path(game_debug_flags.path, game_debug_flags.path_size);
         }
       //}
     }
@@ -284,39 +287,39 @@ Events.on(render, 'afterRender', function() {
     // this way enemies also respect y-position overlapping
     for( actor of actors_Array ){
       if( actor.label == 'enemy'){
-        draw_Graphics(ctx, [actor], 'source-atop');
+        draw_Graphics([actor], 'source-atop');
       }else{
-        draw_Graphics(ctx, [actor]);
+        draw_Graphics([actor]);
       }
     }    
 
     if( game_cursor == 'select' ){ // && mouseConstraint.mouse.button === 0
-      draw_mouseSelect(ctx);
+      draw_mouseSelect();
     }
-    render_rangefinder(ctx, mouseConstraint, null, 'red');
+    render_rangefinder(mouseConstraint, null, 'red');
 
     //debug state rendering
     //render_debug(game_debug, render.context);
     // experimental
     if (mouseConstraint.body && mouseConstraint.mouse.button === 0){
-      render_moveRange(ctx, mouseConstraint);
+      render_moveRange(mouseConstraint);
       if( mouseConstraint.body.label == 'ally' ){
-        ray_tb(ctx, mouseConstraint);
+        ray_tb(mouseConstraint);
       }
     }
 
   Render.endViewTransform(render);
 
   // render_ui.js
-  render_ui(ctx);
-  render_cursor(ctx);
+  render_ui();
+  render_cursor();
 
-  draw_UI(ctx);
+  draw_UI();
   ticker++;
   if( ticker >= 12 ){
     ticker = 0;
     // TODO: 32 should be a global variable
-    turret_acqTarget(test_turret, (test_turret.custom.turret.range*32), ctx);
+    turret_acqTarget(test_turret, (test_turret.custom.turret.range*32));
   }
 });
 

@@ -3,7 +3,7 @@ function cycle_movement(a, w){
     moveToPoint(a, {x: w.x, y: w.y}, 0.01, true);
 }
 
-function turret_acqTarget(a, range, ctx){
+function turret_acqTarget(a, range){
     var nearEnemies = new Array;
     for( e of enemies_Array ){
         let e_dist = getDistance(a.position, e.position);
