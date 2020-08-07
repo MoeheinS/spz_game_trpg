@@ -16,7 +16,9 @@ spriteSheetCoords = [];
 var unitList = [
     ['warrior_human', 0, 0],
     ['turret_basic', 912, 208],
-    ['ratty', 256, 80]
+    ['ratty', 256, 80],
+
+    ['projectile_spinner', 928, 96]
 ]
 
 for( unit of unitList ){
