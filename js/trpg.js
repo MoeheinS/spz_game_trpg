@@ -308,6 +308,21 @@ Events.on(render, 'afterRender', function() {
       }
     }
 
+    // FIXME: clean up someday
+    ticker++;
+    if( ticker >= 120 ){
+      ticker = 0;
+    }
+    if( ticker == 60 ){
+      turret_acqTarget(test_turret, (test_turret.custom.turret.range*32));
+    }
+    if( projectiles_Array.length ){
+      for( p of projectiles_Array ){
+        p.advance();
+        draw_Projectile(p);
+      }
+    }
+
   Render.endViewTransform(render);
 
   // render_ui.js
@@ -315,19 +330,6 @@ Events.on(render, 'afterRender', function() {
   render_cursor();
 
   draw_UI();
-  ticker++;
-  if( ticker >= 120 ){
-    ticker = 0;
-  }
-  if( ticker == 60 ){
-    turret_acqTarget(test_turret, (test_turret.custom.turret.range*32));
-  }
-  if( projectiles_Array.length ){
-    for( p of projectiles_Array ){
-      p.advance();
-      draw_Projectile(p);
-    }
-  }
 });
 
 /*
