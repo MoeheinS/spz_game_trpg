@@ -31,4 +31,7 @@ function turret_atkTarget(a, t){
         so basically have all bullets be virtual  
     */
     console.log(`${a.id} attacking ${t.id}`);
+    projectiles_Array.push(
+        new ProjectileEnt(a.position, t.position, true, 60, t, 40)
+    );
 }
