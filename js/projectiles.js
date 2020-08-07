@@ -20,7 +20,7 @@ class ProjectileEnt {
         this.position.y = startCoords.y;
 
         this.goal = new Object;
-        if(tracking){
+        if(!tracking){
             // hard set the goal coordinates so it moves towards a point
             this.goal.x = goalCoords.x;
             this.goal.y = goalCoords.y;
@@ -35,19 +35,36 @@ class ProjectileEnt {
         this.target = target;
         this.damage = damage;
         this.arcHeight = (arcHeight ? arcHeight : 0);
+
+        this.graphics = {
+            sheet: true,
+            sprite: './assets/origin.png',
+            sprite_dim: {
+                x: 16,
+                y: 16
+            },
+            sheet: getSprites('projectile_spinner', 'idle')
+        };
     }
     advance() { // advance the projectile
         if( this.lifetime >= this.lifetimeMax ){
             // mostly STUB. apply pain? stop rendering this? remove this from something?
             // TODO: if there's an array, remove self from said array
-            //allTheBullets.splice(allTheBullets.indexOf(this), 1);
+            projectiles_Array.splice(projectiles_Array.indexOf(this), 1);
             this.applyPain();
         }else{
             this.lifetime++;
-            let progress = this.lifetime / this.lifetimeMax;
+            let progress = 1 - ( this.lifetime / this.lifetimeMax );
+            // console.warn('goal');
+            // console.table(this.goal);
+            // console.warn('origin');
+            // console.table(this.origin);
 
-            this.position.x = ( this.origin.x - this.goal.x ) * progress;
-            this.position.y = ( this.origin.y - this.goal.y ) * progress;
+            let diff_x = Math.abs( this.origin.x - this.goal.x ) * progress;
+            let diff_y = Math.abs( this.origin.y - this.goal.y ) * progress;
+
+            this.position.x = ( this.goal.x > this.origin.x ? this.goal.x - diff_x : this.goal.x + diff_x );
+            this.position.y = ( this.goal.y > this.origin.y ? this.goal.y - diff_y : this.goal.y + diff_y );
             // TODO: this might be worthwhile, but the ends are too big?
             //this.arcHeight = Math.sin( Math.PI * ( progress - 0.00000001 ) );
         }
@@ -60,8 +77,4 @@ class ProjectileEnt {
 }
 
 // TODO: all of this is test placeholder
-var boo = new ProjectileEnt({x: 0, y: 0}, test_allyGB2.position, true, 10, test_allyGB2, 40);
-
-var allTheBullets = [];
-allTheBullets.push(1);
-allTheBullets.push(boo);
+projectiles_Array.push(new ProjectileEnt(test_turret.position, test_allyGB2.position, true, 60, test_allyGB2, 40));
