@@ -134,7 +134,7 @@ function draw_Graphics(a, mode){
         var sx = i.custom.graphics.sheet_idle[0].x;
         var sy = i.custom.graphics.sheet_idle[0].y;
       }
-      // source, source x, y, destination x, y, width x, y
+      // source, source x, y, width, height, destination x, y, width x, y
       ctx.drawImage(img, sx, sy, ixs, iys, ix, iy, dx, dy);
     }else{
       var ix = i.position.x - (i.custom.graphics.sprite_dim.x/2);
@@ -153,5 +153,32 @@ function draw_Graphics(a, mode){
       }
     }
   }
+  ctx.restore();
+}
+
+function draw_Projectile(i){
+  ctx.save();
+
+  let img = new Image();
+  img.src = i.graphics.sprite;  
+
+  if( i.graphics.sheet ){
+
+    let whichSprite = Math.round( (i.lifetime % 10) / 10 );
+
+    var sx = i.graphics.sheet[whichSprite].x;
+    var sy = i.graphics.sheet[whichSprite].y;
+    var sw = i.graphics.sprite_dim.x;
+    var sh = i.graphics.sprite_dim.y;
+
+    var dw = sw*2;
+    var dh = sh*2;
+    var dx = i.position.x - (dw/2);
+    var dy = i.position.y - (dh/2);
+    
+    // source, source x, y, source width, height, destination x, y, width x, y
+    ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+  }
+
   ctx.restore();
 }
