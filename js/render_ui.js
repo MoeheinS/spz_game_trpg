@@ -30,6 +30,8 @@ let actors_Array = [];
 let obstacles_Array = [];
 let nonAllies_Array = [];
 
+let projectiles_Array = [];
+
 //const COLOR_STACKED = '#795548';
 const COLOR_SHIFT = [
   '#7f7f7f',//grey

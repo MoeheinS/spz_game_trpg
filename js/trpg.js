@@ -316,10 +316,17 @@ Events.on(render, 'afterRender', function() {
 
   draw_UI();
   ticker++;
-  if( ticker >= 12 ){
+  if( ticker >= 120 ){
     ticker = 0;
-    // TODO: 32 should be a global variable
+  }
+  if( ticker == 60 ){
     turret_acqTarget(test_turret, (test_turret.custom.turret.range*32));
+  }
+  if( projectiles_Array.length ){
+    for( p of projectiles_Array ){
+      p.advance();
+      draw_Projectile(p);
+    }
   }
 });
 
