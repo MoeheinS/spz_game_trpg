@@ -25,44 +25,14 @@ for( unit of unitList ){
     spriteSheetCoords.push(new SpriteEnt(unit[0], unit[1], unit[2]));
 }
 
-// origin.png
-// var spriteSheetCoords = [
-//     {
-//       "iname": "warrior_human",
-//       "idle": [
-//         {x: 0, y: 0},
-//         {x: 16, y: 0}
-//       ],
-//       "right": [
-//         {x: 32, y: 0},
-//         {x: 48, y: 0}
-//       ],
-//       "up": [
-//         {x: 64, y: 0},
-//         {x: 80, y: 0}
-//       ],
-//       "left": [
-//         {x: 96, y: 0},
-//         {x: 112, y: 0}
-//       ]
-//     },
-//     {
-//       "iname": "turret_basic",
-//       "idle": [
-//         {x: 912, y: 208},
-//         {x: 928, y: 208}
-//       ],
-//       "right": [
-//         {x: 912, y: 208},
-//         {x: 928, y: 208}
-//       ],
-//       "up": [
-//         {x: 912, y: 208},
-//         {x: 928, y: 208}
-//       ],
-//       "left": [
-//         {x: 912, y: 208},
-//         {x: 928, y: 208}
-//       ]
-//     }
-//   ];
+function getSprites(iname, key){
+    for( sheet of spriteSheetCoords ){
+        if( sheet.iname == iname ){
+            let spriteCoords = [];
+            for( o of sheet[key] ){
+                spriteCoords.push({ x: o.x, y: o.y });
+            }
+            return spriteCoords;
+        }
+    }
+}  
