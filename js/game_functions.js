@@ -36,10 +36,21 @@ function clearField() {
   }
 }
 
-// ideally have a json with units and coordinates
 function populateField(i) {
-  // STUB
-  for( ent of missionlist[i] ){
+  // TODO: expound
+  for( mission of missionList ){
+    if( mission.id == i ){
+      for( e of mission.ents ){
+        switch ( e.spawnType ) {
+          case 'building':
+            console.warn(e.label);
+            break;
+          default:
+            break;
+        }
+      }
+    }
     // function to add ent to world at coords based on its label?  
+    // gonna need some more groundwork for this
   }
 }
