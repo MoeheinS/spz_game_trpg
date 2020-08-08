@@ -317,7 +317,7 @@ function moveToPoint(a, dv, force, uniform){
 function grid_pathfind(bod, gsu, feather){
   ctx.save();
 
-  var playfield = new Coordinate(reWi, reHi);
+  var playfield = new Coordinate(FIELD_SIZE, FIELD_SIZE);
   var max_rows = Math.ceil(playfield.y / gsu);
   var max_cols = Math.ceil(playfield.x / gsu);
   // console.warn(`rows: ${max_rows},cols: ${max_cols}`);
