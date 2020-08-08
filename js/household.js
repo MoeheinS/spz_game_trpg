@@ -138,6 +138,7 @@ function getIntersection(ray,segment){
 	};
 }
 
+// combine with draw_Graphics([actor], 'source-atop');
 function ray_fov(caster){
   /*
     Object vertices go clockwise. Therefore I can deduce segments per vertex pair
