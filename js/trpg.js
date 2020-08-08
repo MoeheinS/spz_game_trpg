@@ -178,7 +178,7 @@ Events.on(render, 'afterRender', function() {
         for(enemy of enemies_Array){
           let bod_width = enemy.bounds.max.x - enemy.bounds.min.x;
           grid_pathfind(enemy, bod_width/2, bod_width/8);
-          //grid_pathfind(enemy, GRID_SIZE/2, GRID_SIZE/8);
+          //grid_pathfind(enemy, GRID_SIZE, GRID_SIZE/8);
         }
         if(game_debug_flags.path.length){
           render_debug_path(game_debug_flags.path, game_debug_flags.path_size);
@@ -212,12 +212,12 @@ Events.on(render, 'afterRender', function() {
     // render_ui.js
     // handles portraits (UI UI) and waypoints (game UI)
     // FIXME: split in two
-    render_ui();
+    render_ui(); // waypoints
     //render_cursor();
 
   Render.endViewTransform(render);
 
-  draw_UI();  // zoom level debugging
+  draw_UI(); // zoom level debugging
 });
 
 /*
