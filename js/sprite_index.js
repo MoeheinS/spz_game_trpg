@@ -19,7 +19,7 @@ var unitList = [
     ['ratty', 256, 80],
 
     ['projectile_spinner', 928, 96]
-]
+];
 
 for( unit of unitList ){
     spriteSheetCoords.push(new SpriteEnt(unit[0], unit[1], unit[2]));

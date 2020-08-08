@@ -293,20 +293,8 @@ Events.on(render, 'afterRender', function() {
       }
     }    
 
-    if( game_cursor == 'select' ){ // && mouseConstraint.mouse.button === 0
-      draw_mouseSelect();
-    }
-    render_rangefinder(mouseConstraint, null, 'red');
-
     //debug state rendering
     //render_debug(game_debug, render.context);
-    // experimental
-    if (mouseConstraint.body && mouseConstraint.mouse.button === 0){
-      render_moveRange(mouseConstraint);
-      if( mouseConstraint.body.label == 'ally' ){
-        ray_tb(mouseConstraint);
-      }
-    }
 
     // FIXME: clean up someday
     ticker++;
