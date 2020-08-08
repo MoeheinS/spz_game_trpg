@@ -7,12 +7,15 @@ function group_Entities() {
   actors_Array = [];
   obstacles_Array = [];
   nonAllies_Array = [];
+  doodads_Array = [];
   for( bod of Composite.allBodies(world) ){
     if(bod.label == 'ally'){
       allies_Array.push(bod);
     }else if(bod.label == 'enemy'){
       enemies_Array.push(bod);
       nonAllies_Array.push(bod);
+    }else if(bod.label == 'doodad'){
+      doodads_Array.push(bod);
     }else if(bod.label == 'shape' || bod.label == 'boundary' || bod.label == 'obstacle' || bod.label == 'wall'){
       obstacles_Array.push(bod);
       nonAllies_Array.push(bod);
@@ -26,6 +29,8 @@ function group_Entities() {
 
   obstacles_Array = sortByY(obstacles_Array);
   nonAllies_Array = sortByY(nonAllies_Array);
+
+  doodads_Array = sortByY(doodads_Array);
 }
 
 function clearField() {

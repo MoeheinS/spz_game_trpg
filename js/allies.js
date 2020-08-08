@@ -38,7 +38,7 @@ class UnitEnt {
           state: 'idle',
 
           graphics: {
-            sheet: true,
+            renderMode: 'sheet_directional',
             sprite: './assets/origin.png',
             sprite_dim: {
               x: 16,
@@ -52,7 +52,7 @@ class UnitEnt {
         }
       }, 10);
       World.add(world, this.body);
-      console.log(this.body.position);
+      //console.log(this.body.position);
       return this.body;
   }
   advance() { 
@@ -66,10 +66,38 @@ class UnitEnt {
     console.log('ow!');
   }
   die() {
-    // STUB
-    // spawn a little tombstone doodad
+    if( this.body.custom.hp_current <= 0 ){
+      ripperoni(this.body);
+      World.remove(world, this.body, true);
+    }
   }
 }
 
 var test_allyGB2 = new UnitEnt( new Coordinate( GRID_SIZE*8, GRID_SIZE*2 ), 'friendlies', 'Ratty' );
 new UnitEnt( new Coordinate( GRID_SIZE*20, GRID_SIZE*2 ), 'friendlies', 'Sling' );
+
+// =======================[ DOODAD ]====================================
+function ripperoni(a){
+  // exploding into hunks of manga meat or gears / bolts would be funny too, but let's stick with this for now
+  let tombstone = Bodies.rectangle(a.position.x, a.position.y, 8, 8, {
+    label: 'doodad',
+    collisionFilter: {
+      category: draggable_false
+    },
+    isStatic: true,
+    isSensor: true,
+    custom: {
+      graphics: {
+        renderMode: 'sheet_static',
+        sprite: './assets/origin.png',
+        sprite_dim: {
+            x: 16,
+            y: 16
+        },
+        sheet_idle: getSprites('tombstone', 'idle') //placeholder
+      }
+    }
+  });
+  World.add(world, tombstone);
+}
+

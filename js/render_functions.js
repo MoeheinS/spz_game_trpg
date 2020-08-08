@@ -89,70 +89,86 @@ function draw_Graphics(a, mode){
   ctx.save();
   for( i of a ){
     let img = new Image();
-    if( i.custom.graphics.animation ){
-      img.src = i.custom.graphics.animation[0];
-    }else{
-      img.src = i.custom.graphics.sprite;  
-    }
-    if( i.custom.graphics.sheet ){
-      // wiggle wiggle
-      //Body.rotate(i, 0.02);
+    img.src = i.custom.graphics.sprite;
 
-      var ixs = i.custom.graphics.sprite_dim.x;
-      var iys = i.custom.graphics.sprite_dim.y;
-      var dx = (i.bounds.max.x - i.bounds.min.x) *2;
-          //dx = ixs*2;
-      var dy = (i.bounds.max.y - i.bounds.min.y) *2;
-          //dy = iys*2;
-      var ix = i.position.x - ixs;
-      var iy = i.position.y - iys*1.5;
+    var ixs = i.custom.graphics.sprite_dim.x;
+    var iys = i.custom.graphics.sprite_dim.y;
 
-      //which direction? as the clock goes, 1 2, 3 4, 5 6, 7 0
-      var bod_angle = Math.floor(((180*i.angle/Math.PI)+180)/45);
-      switch (bod_angle) {
-        case 1:
-        case 2:
-          var sx = i.custom.graphics.sheet_up[0].x;
-          var sy = i.custom.graphics.sheet_up[0].y;
-          break;
-        case 3:
-        case 4:
-          var sx = i.custom.graphics.sheet_right[0].x;
-          var sy = i.custom.graphics.sheet_right[0].y;
-          break;
-        case 7:
-        case 0:
-          var sx = i.custom.graphics.sheet_left[0].x;
-          var sy = i.custom.graphics.sheet_left[0].y;
-          break;
-        default: // 5, 6
+    var dx = (i.bounds.max.x - i.bounds.min.x) *2;
+        //dx = ixs*2;
+    var dy = (i.bounds.max.y - i.bounds.min.y) *2;
+        //dy = iys*2;
+    var ix = i.position.x - ixs;
+    var iy = i.position.y - iys*1.5;
+
+    switch (i.custom.graphics.renderMode) {
+      case 'sheet_directional':
+        // wiggle wiggle
+        //Body.rotate(i, 0.02);
+
+        //which direction? as the clock goes, 1 2, 3 4, 5 6, 7 0
+        var bod_angle = Math.floor(((180*i.angle/Math.PI)+180)/45);
+        switch (bod_angle) {
+          case 1:
+          case 2:
+            var sx = i.custom.graphics.sheet_up[0].x;
+            var sy = i.custom.graphics.sheet_up[0].y;
+            break;
+          case 3:
+          case 4:
+            var sx = i.custom.graphics.sheet_right[0].x;
+            var sy = i.custom.graphics.sheet_right[0].y;
+            break;
+          case 7:
+          case 0:
+            var sx = i.custom.graphics.sheet_left[0].x;
+            var sy = i.custom.graphics.sheet_left[0].y;
+            break;
+          default: // 5, 6
+            var sx = i.custom.graphics.sheet_idle[0].x;
+            var sy = i.custom.graphics.sheet_idle[0].y;
+            break;
+        }
+        if( !Math.floor(i.speed) ){
           var sx = i.custom.graphics.sheet_idle[0].x;
           var sy = i.custom.graphics.sheet_idle[0].y;
-          break;
-      }
-      if( !Math.floor(i.speed) ){
+        }
+        // source, source x, y, width, height, destination x, y, width x, y
+        ctx.drawImage(img, sx, sy, ixs, iys, ix, iy, dx, dy);
+        break;
+      case 'sheet_animation':
+      case 'sheet_static':
         var sx = i.custom.graphics.sheet_idle[0].x;
         var sy = i.custom.graphics.sheet_idle[0].y;
-      }
-      // source, source x, y, width, height, destination x, y, width x, y
-      ctx.drawImage(img, sx, sy, ixs, iys, ix, iy, dx, dy);
-    }else{
-      var ix = i.position.x - (i.custom.graphics.sprite_dim.x/2);
-      var iy = i.bounds.max.y - (i.custom.graphics.sprite_dim.y);
-      var ixs = i.custom.graphics.sprite_dim.x;
-      var iys = i.custom.graphics.sprite_dim.y;
-      if(mode){
-        ctx.globalCompositeOperation = mode;
-        // what, where, where, width, height
-        ctx.drawImage(img,ix,iy,ixs,iys);
-        // probably unnecessary with save and restore, but just in case
-        ctx.globalCompositeOperation = 'source-over';
-      }else{
-        // what, where, where, width, height
-        ctx.drawImage(img,ix,iy,ixs,iys);
-      }
+
+        dx = ixs*2;
+        dy = iys*2;
+
+        // source, source x, y, width, height, destination x, y, width x, y
+        ctx.drawImage(img, sx, sy, ixs, iys, ix, iy, dx, dy);
+        break;
+      default:
+        var ix = i.position.x - (i.custom.graphics.sprite_dim.x/2);
+        var iy = i.bounds.max.y - (i.custom.graphics.sprite_dim.y);
+        var ixs = i.custom.graphics.sprite_dim.x;
+        var iys = i.custom.graphics.sprite_dim.y;
+        if(mode){
+          ctx.globalCompositeOperation = mode;
+          // what, where, where, width, height
+          ctx.drawImage(img,ix,iy,ixs,iys);
+          // probably unnecessary with save and restore, but just in case
+          ctx.globalCompositeOperation = 'source-over';
+        }else{
+          // what, where, where, width, height
+          ctx.drawImage(img,ix,iy,ixs,iys);
+        }
+        break;
     }
   }
+
+  // ctx.fillStyle = '#ff000033';
+  // ctx.fillRect(i.bounds.min.x, i.bounds.min.y, (i.bounds.max.x - i.bounds.min.x), (i.bounds.max.y - i.bounds.min.y));
+
   ctx.restore();
 }
 
@@ -190,14 +206,19 @@ function heartbeat_animations(){
     console.log('tick');
     for( bod of Composite.allBodies(world) ){
       // bruh. Is there a better way other than try catch?
-      if( bod.custom && bod.custom.graphics && bod.custom.graphics.animation ){
-        bod.custom.graphics.animation = cycleArray(bod.custom.graphics.animation);
-      }
-      if( bod.custom && bod.custom.graphics && bod.custom.graphics.sheet ){
-        bod.custom.graphics.sheet_idle = cycleArray(bod.custom.graphics.sheet_idle);
-        bod.custom.graphics.sheet_right = cycleArray(bod.custom.graphics.sheet_right);
-        bod.custom.graphics.sheet_left = cycleArray(bod.custom.graphics.sheet_left);
-        bod.custom.graphics.sheet_up = cycleArray(bod.custom.graphics.sheet_up);
+      if( bod.custom && bod.custom.graphics && bod.custom.graphics.renderMode ){
+        if( bod.custom.graphics.sheet_idle ){
+          bod.custom.graphics.sheet_idle = cycleArray(bod.custom.graphics.sheet_idle);
+        }
+        if( bod.custom.graphics.sheet_right ){
+          bod.custom.graphics.sheet_right = cycleArray(bod.custom.graphics.sheet_right);
+        }
+        if( bod.custom.graphics.sheet_left ){
+          bod.custom.graphics.sheet_left = cycleArray(bod.custom.graphics.sheet_left);
+        }
+        if( bod.custom.graphics.sheet_up ){
+          bod.custom.graphics.sheet_up = cycleArray(bod.custom.graphics.sheet_up);
+        }
       }
     }
   }

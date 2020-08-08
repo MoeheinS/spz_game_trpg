@@ -186,11 +186,14 @@ Events.on(render, 'afterRender', function() {
       //}
     }
 
+    for( doodad of doodads_Array ){
+      draw_Graphics([doodad]);
+    }
     // this way enemies also respect y-position overlapping
     for( actor of actors_Array ){
       draw_Graphics([actor]);
-    }    
-
+    }
+    
     //debug state rendering
     //render_debug(game_debug, render.context);
 

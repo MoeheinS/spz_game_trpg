@@ -17,16 +17,13 @@ var test_turret = Bodies.rectangle(reWi-(GRID_SIZE*7), reHi-(GRID_SIZE*10), 16, 
         y: reHi-(GRID_SIZE*12)
       },
       graphics: {
-        sheet: true,
+        renderMode: 'sheet_animation',
         sprite: './assets/origin.png',
         sprite_dim: {
             x: 16,
             y: 16
         },
-        sheet_idle: getSprites('turret_basic', 'idle'),
-        sheet_left: getSprites('turret_basic', 'idle'),
-        sheet_right: getSprites('turret_basic', 'idle'),
-        sheet_up: getSprites('turret_basic', 'idle')
+        sheet_idle: getSprites('turret_basic', 'idle')
       }
     }
   });

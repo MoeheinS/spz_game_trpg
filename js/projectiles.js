@@ -37,7 +37,7 @@ class ProjectileEnt {
         this.arcHeight = (arcHeight ? arcHeight : 0);
 
         this.graphics = {
-            sheet: true,
+            renderMode: 'sheet_animation',
             sprite: './assets/origin.png',
             sprite_dim: {
                 x: 16,
