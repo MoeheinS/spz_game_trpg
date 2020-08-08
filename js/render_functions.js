@@ -160,7 +160,7 @@ function draw_Projectile(i){
   ctx.save();
 
   let img = new Image();
-  img.src = i.graphics.sprite;  
+  img.src = i.graphics.sprite;
 
   if( i.graphics.sheet ){
 
@@ -181,4 +181,24 @@ function draw_Projectile(i){
   }
 
   ctx.restore();
+}
+
+function heartbeat_animations(){
+  anim_tick++;
+  if( anim_tick >= anim_timing ){
+    anim_tick = 0;
+    console.log('tick');
+    for( bod of Composite.allBodies(world) ){
+      // bruh. Is there a better way other than try catch?
+      if( bod.custom && bod.custom.graphics && bod.custom.graphics.animation ){
+        bod.custom.graphics.animation = cycleArray(bod.custom.graphics.animation);
+      }
+      if( bod.custom && bod.custom.graphics && bod.custom.graphics.sheet ){
+        bod.custom.graphics.sheet_idle = cycleArray(bod.custom.graphics.sheet_idle);
+        bod.custom.graphics.sheet_right = cycleArray(bod.custom.graphics.sheet_right);
+        bod.custom.graphics.sheet_left = cycleArray(bod.custom.graphics.sheet_left);
+        bod.custom.graphics.sheet_up = cycleArray(bod.custom.graphics.sheet_up);
+      }
+    }
+  }
 }

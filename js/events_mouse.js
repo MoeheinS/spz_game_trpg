@@ -24,15 +24,6 @@ Events.on(mouseConstraint, "startdrag", function(event) {
 
 Events.on(mouseConstraint, "enddrag", function(event) {
   console.log(event);
-  let movingEnt = event.body;
-  if( movingEnt.custom ){
-    if(debug_travelDistance < movingEnt.custom.maxMove){
-      //startPoint =  { x: event.body.position.x, y: event.body.position.y};
-      //event.body.custom.maxMove = event.body.custom.maxMove - debug_travelDistance;
-    }else{
-      Body.setPosition(movingEnt, movingEnt.custom.startPoint);
-    }
-  }
   var ropes = Composite.allConstraints(world);
   window.setTimeout(function(){
     for( rope of ropes ){

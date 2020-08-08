@@ -51,3 +51,11 @@ const RENDER_TERRAINCOLOR = '#ffffff';
 const RENDER_UI_GREEN = '#319d59';
 const RENDER_UI_RED = '#f85f4a';
 const RENDER_UI_BLUE = '#00b9fb';
+
+// define our categories (as bit fields, there are up to 32 available)
+var defaultCategory = 0x0001,
+    draggable_true = 0x0002,
+    draggable_false = 0x0004;
+
+const GRID_SIZE = 32;
+const FIELD_SIZE = 40 * GRID_SIZE;

@@ -1,15 +1,4 @@
-console.log('%cTRPG','color:#ff0000;font-family:Comic Sans MS;');
-
-/*  Table of Contents
-*   Engine setup
-*   Functions
-*   Lifecycle events
-*   Rendering
-*/
-
-/*
-*   Engine setup
-*/
+console.log('%cClashlike','color:#ff0000;font-family:Comic Sans MS;');
 
 // create engine
 var engine = Engine.create(),
@@ -19,8 +8,6 @@ var engine = Engine.create(),
 var reWi = pcWidth();
 var reHi = pcHeight();
 console.warn(reWi, reHi);
-
-const GRID_SIZE = reHi/14;
 
 var render = Render.create({
     element: document.querySelector('.container__Matter'),
@@ -44,10 +31,10 @@ var viewportCentre = {
 };
 
 // make the world bounds a little bigger than the render bounds
-world.bounds.min.x = render.options.width * -0.5;
-world.bounds.max.x = render.options.width * 1.5;
-world.bounds.min.y = render.options.height * -0.5;
-world.bounds.max.y = render.options.height * 1.5;
+world.bounds.min.x = FIELD_SIZE * -0.5;
+world.bounds.max.x = FIELD_SIZE * 1.5;
+world.bounds.min.y = FIELD_SIZE * -0.5;
+world.bounds.max.y = FIELD_SIZE * 1.5;
 
 // keep track of current bounds scale (view zoom)
 var boundsScaleTarget = 1;
@@ -61,11 +48,6 @@ var runner = Runner.create();
 Runner.run(runner, engine);
 
 // add mouse control
-// define our categories (as bit fields, there are up to 32 available)
-var defaultCategory = 0x0001,
-    draggable_true = 0x0002,
-    draggable_false = 0x0004;
-
 var mouse = Mouse.create(render.canvas),
 mouseConstraint = MouseConstraint.create(engine, {
     mouse: mouse,
@@ -90,10 +72,6 @@ Render.lookAt(render, {
 world.gravity.y = 0;
 engine.enableSleeping = false;
 
-// TODO roll this into the traveling objects
-debug_travelDistance = 0;
-debug_travelDistance_color = 'green';
-
 /*
 *   Functions
 */
@@ -101,15 +79,6 @@ document.addEventListener("keydown", function(e){
   switch (e.key) {
     case 'd':
       game_debug = !game_debug;
-      break;
-    case 'r':
-      var bods = Composite.allBodies(world);
-      for( bod of bods ){
-        if(bod.custom && bod.custom.startPoint){
-          bod.custom.maxMove = bod.custom.baseMove;
-          bod.custom.startPoint =  { x: bod.position.x, y: bod.position.y};
-        }
-      }
       break;
     case 'f':
       for( ally of allies_Array ){
@@ -157,56 +126,6 @@ document.addEventListener("keyup", function(e){
   }
 });
 
-function heartbeat_animations(){
-  anim_tick++;
-  if( anim_tick >= anim_timing ){
-    anim_tick = 0;
-    console.log('tick');
-    for( bod of Composite.allBodies(world) ){
-      // bruh. Is there a better way other than try catch?
-      if( bod.custom && bod.custom.graphics && bod.custom.graphics.animation ){
-        bod.custom.graphics.animation = cycleArray(bod.custom.graphics.animation);
-      }
-      if( bod.custom && bod.custom.graphics && bod.custom.graphics.sheet ){
-        bod.custom.graphics.sheet_idle = cycleArray(bod.custom.graphics.sheet_idle);
-        bod.custom.graphics.sheet_right = cycleArray(bod.custom.graphics.sheet_right);
-        bod.custom.graphics.sheet_left = cycleArray(bod.custom.graphics.sheet_left);
-        bod.custom.graphics.sheet_up = cycleArray(bod.custom.graphics.sheet_up);
-      }
-    }
-  }
-}
-
-function group_Entities() {
-  // make primitive groups, so I don't have to loop over ALL the objects every time i need something
-  // this also lets me ignore checks for properties
-  // in the future maybe use .filter() but for now it's fine
-  allies_Array = [];
-  enemies_Array = [];
-  actors_Array = [];
-  obstacles_Array = [];
-  nonAllies_Array = [];
-  for( bod of Composite.allBodies(world) ){
-    if(bod.label == 'ally'){
-      allies_Array.push(bod);
-    }else if(bod.label == 'enemy'){
-      enemies_Array.push(bod);
-      nonAllies_Array.push(bod);
-    }else if(bod.label == 'shape' || bod.label == 'obstacle' || bod.label == 'wall'){
-      obstacles_Array.push(bod);
-      nonAllies_Array.push(bod);
-    }
-  }
-  
-  allies_Array = sortByY(allies_Array);
-  enemies_Array = sortByY(enemies_Array);
-  actors_Array = allies_Array.concat(enemies_Array);
-  actors_Array = sortByY(actors_Array);
-
-  obstacles_Array = sortByY(obstacles_Array);
-  nonAllies_Array = sortByY(nonAllies_Array);
-}
-
 /*
 *   Lifecycle events
 */
@@ -215,21 +134,8 @@ function group_Entities() {
 //all pairs colliding in the current tick
 //Events.on(engine, 'collisionStart', function(event) {});
 
-// TODO & render: turn starting position
 // Fired after engine update and all collision events
 Events.on(engine, 'afterUpdate', function(event) {
-  if( game_state == 'movement' && mouseConstraint.body){
-    let movingEnt = mouseConstraint.body;
-    if( movingEnt.custom ){
-      debug_travelDistance = Math.hypot((movingEnt.custom.startPoint.x - movingEnt.position.x) ,(movingEnt.custom.startPoint.y - movingEnt.position.y));
-      if(debug_travelDistance < movingEnt.custom.maxMove){
-        debug_travelDistance_color = 'green';
-      }else{
-        debug_travelDistance_color = 'red';
-      }
-    }
-  }
-
   if( game_waypoints.length ){
     for( selected of game_selection ){
       cycle_movement(selected, game_waypoints[0]);
@@ -257,10 +163,6 @@ Events.on(render, 'afterRender', function() {
 
   Render.startViewTransform(render);
 
-    // if this gets expensive later on, we can run it once every X ticks instead of every tick
-    for( caster of allies_Array ){
-      ray_fov(caster);
-    }
     render_debug(game_debug, render.context);
     // deprec render order
     //draw_Graphics(enemies_Array, 'source-atop');
@@ -286,11 +188,7 @@ Events.on(render, 'afterRender', function() {
 
     // this way enemies also respect y-position overlapping
     for( actor of actors_Array ){
-      if( actor.label == 'enemy'){
-        draw_Graphics([actor], 'source-atop');
-      }else{
-        draw_Graphics([actor]);
-      }
+      draw_Graphics([actor]);
     }    
 
     //debug state rendering
@@ -315,7 +213,7 @@ Events.on(render, 'afterRender', function() {
     // handles portraits (UI UI) and waypoints (game UI)
     // FIXME: split in two
     render_ui();
-    render_cursor();
+    //render_cursor();
 
   Render.endViewTransform(render);
 
