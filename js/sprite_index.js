@@ -13,15 +13,16 @@ class SpriteEnt {
 
 spriteSheetCoords = [];
 
-var unitList = [
+var spriteList = [
     ['warrior_human', 0, 0],
     ['turret_basic', 912, 208],
     ['ratty', 256, 80],
+    ['sling', 128, 560],
 
     ['projectile_spinner', 928, 96]
 ];
 
-for( unit of unitList ){
+for( unit of spriteList ){
     spriteSheetCoords.push(new SpriteEnt(unit[0], unit[1], unit[2]));
 }
 
