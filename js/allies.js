@@ -107,6 +107,18 @@ function unit_acquireTarget(a){
     });
     a.custom.target = nearTargets_byDist[0].target;
     //turret_atkTarget(a, nearTargets_byDist[0].target);
+
+    /*
+     TODO: for each from nearTargets_byDist 
+     grid_pathfind
+     push the result of the astar calc to a "potentialTargets" array
+     as an object; target, distance
+
+     then do the same for walls
+
+     in the main cycle, check if there's anything in potentialTargets
+    */
+
   }else{
     console.warn(`seeking out a wall for ${a.id} instead`);
     return;// return unit_acquireTarget_wall(a);
