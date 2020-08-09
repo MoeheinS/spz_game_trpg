@@ -377,12 +377,12 @@ function grid_pathfind(bod, gsu, feather, exceptID){
     Math.floor(bod.custom.target.position.x / gsu), 
     Math.floor(bod.custom.target.position.y / gsu)
   );
-  grid_astar(gsu, astar_grid, start_pos, goal_pos, unit);
+  grid_astar(astar_grid, start_pos, goal_pos, unit);
 }
 
 // TODO: it finds the path, but I can't draw it within this function. Because easystar is async?
 // so that leaves NOT drawing it, or pushing the points to a higher scoped array, which is drawn instead
-function grid_astar(gsu, astar_grid, start_pos, goal_pos, unit){
+function grid_astar(astar_grid, start_pos, goal_pos, unit){
   var easystar = new EasyStar.js();
   easystar.setGrid(astar_grid);
   easystar.enableDiagonals();

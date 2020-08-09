@@ -109,7 +109,7 @@ function unit_acquireTarget(a){
     //turret_atkTarget(a, nearTargets_byDist[0].target);
   }else{
     console.warn(`seeking out a wall for ${a.id} instead`);
-    return;
+    return;// return unit_acquireTarget_wall(a);
   }
 
   if( nearTargets_byDist.length && nearTargets_byDist[0].distance <= a.custom.attackRange ){
