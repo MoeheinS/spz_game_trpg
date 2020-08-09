@@ -40,7 +40,7 @@ let buildingList = [
           }
         }
         this.body = Bodies.rectangle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), 16, 16, {
-          label: 'ally',
+          label: 'building',
           frictionAir: 1, // magic numbers
           mass: 2,        // magic numbers
           collisionFilter: {
@@ -83,7 +83,7 @@ let buildingList = [
     }
     applyPain() {
       //STUB
-      console.log('ow!');
+      console.log('owie!');
     }
     die() {
       if( this.body.custom.hp_current <= 0 ){

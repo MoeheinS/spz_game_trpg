@@ -81,11 +81,18 @@ document.addEventListener("keydown", function(e){
       game_debug = !game_debug;
       break;
     case 'f':
-      for( ally of allies_Array ){
+      for( ally of units_Array ){
         if( ally.collisionFilter.category == draggable_false ){
           ally.collisionFilter.category = draggable_true;
         }else{
           ally.collisionFilter.category = draggable_false;
+        }
+      }
+      for( b of buildings_all_Array ){
+        if( b.collisionFilter.category == draggable_false ){
+          b.collisionFilter.category = draggable_true;
+        }else{
+          b.collisionFilter.category = draggable_false;
         }
       }
       break;
@@ -103,28 +110,28 @@ document.addEventListener("keydown", function(e){
     // clear waypoints
       game_waypoints = [];
       break;
-    case 'Shift':
-      if( !game_shift ){
-        game_shift = true;
-      }
-      break;
-    case 'g':
-      game_debug_flags.grid = !game_debug_flags.grid;
-      break;
+    // case 'Shift':
+    //   if( !game_shift ){
+    //     game_shift = true;
+    //   }
+    //   break;
+    // case 'g':
+    //   game_debug_flags.grid = !game_debug_flags.grid;
+    //   break;
     default:
       console.log(e.key);
       break;
   }
 });
-document.addEventListener("keyup", function(e){
-  switch (e.key) {
-    case 'Shift':
-      game_shift = false;
-      break;
-    default:
-      break;
-  }
-});
+// document.addEventListener("keyup", function(e){
+//   switch (e.key) {
+//     case 'Shift':
+//       game_shift = false;
+//       break;
+//     default:
+//       break;
+//   }
+// });
 
 /*
 *   Lifecycle events
@@ -153,7 +160,7 @@ var ctx = canvas.getContext('2d');
 
 var groundPattern = new Object;
 groundImg = new Image();
-groundImg.src = './assets/gnd01.png';
+groundImg.src = './assets/gnd02.png';
 groundImg.onload = function(){
     // create pattern
     groundPattern = ctx.createPattern(groundImg, 'repeat'); // Create a pattern with this image, and set it to "repeat".
@@ -176,34 +183,30 @@ Events.on(render, 'afterRender', function() {
     ctx.fillStyle = RENDER_TERRAINCOLOR;
 
     render_debug(game_debug, render.context);
-    // deprec render order
-    //draw_Graphics(enemies_Array, 'source-atop');
-
-    draw_Shapes(obstacles_Array);
-    // deprec render order
-    //draw_Graphics(allies_Array);
 
     // TODO: draw a grid, check if there's collidables inside
     if(game_debug_flags.grid){ 
       // TODO: separate the calculating of the grid from the drawing of the grid, also move the variables to a higher scope
       //if(anim_tick == 0){
-        for(enemy of enemies_Array){
-          let bod_width = enemy.bounds.max.x - enemy.bounds.min.x;
-          grid_pathfind(enemy, bod_width/2, bod_width/8);
-          //grid_pathfind(enemy, GRID_SIZE, GRID_SIZE/8);
-        }
+        // for(enemy of units_Array){
+        //   let bod_width = enemy.bounds.max.x - enemy.bounds.min.x;
+        //   grid_pathfind(enemy, bod_width/2, bod_width/8);
+        // }
         if(game_debug_flags.path.length){
           render_debug_path(game_debug_flags.path, game_debug_flags.path_size);
         }
       //}
     }
 
+    for( bld of buildings_all_Array ){
+      draw_Graphics([bld]);
+    }
     for( doodad of doodads_Array ){
       draw_Graphics([doodad]);
     }
     // this way enemies also respect y-position overlapping
-    for( actor of actors_Array ){
-      draw_Graphics([actor]);
+    for( unit of units_Array ){
+      draw_Graphics([unit]);
     }
     
     //debug state rendering
@@ -215,8 +218,11 @@ Events.on(render, 'afterRender', function() {
       ticker = 0;
     }
     if( ticker == 60 ){
-      turret_acqTarget(test_turret, (test_turret.custom.turret.range*32));
+      for( turret of defenses_Array ){
+        turret_acqTarget(turret, (turret.custom.turret.range*GRID_SIZE));
+      }
     }
+
     if( projectiles_Array.length ){
       for( p of projectiles_Array ){
         p.advance();

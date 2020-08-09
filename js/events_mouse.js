@@ -45,7 +45,7 @@ Events.on(mouseConstraint, "mousedown", function(event) {
       mouse_selectArea.min = {x: mouseConstraint.mouse.mousedownPosition.x, y: mouseConstraint.mouse.mousedownPosition.y};
     }else{
       // check to see if mouse is on an ally actor at mousedown start
-      if( Query.point(allies_Array, mouseConstraint.mouse.position).length ){
+      if( Query.point(units_Array, mouseConstraint.mouse.position).length ){
         game_cursor = 'select';
         mouse_selectArea = {};
         mouse_selectArea.min = {x: mouseConstraint.mouse.mousedownPosition.x, y: mouseConstraint.mouse.mousedownPosition.y};
@@ -78,7 +78,7 @@ Events.on(mouseConstraint, "mouseup", function(event) {
     region.min.y = (bound_a.y <= bound_b.y ? bound_a.y : bound_b.y);
     region.max.y = (bound_a.y > bound_b.y ? bound_a.y : bound_b.y);
 
-    var selectedBodies = Query.region(allies_Array, region);
+    var selectedBodies = Query.region(units_Array, region);
     game_selection = selectedBodies;
     console.log(game_selection);
   }

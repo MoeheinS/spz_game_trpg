@@ -24,11 +24,30 @@ let anim_timing = 25;
 let anim_tick = 0;
 
 let mouse_selectArea = {};
-let allies_Array = [];
-let enemies_Array = [];
-let actors_Array = [];
-let obstacles_Array = [];
-let nonAllies_Array = [];
+
+let units_Array = [];
+let units_ground_Array = [];
+let units_air_Array = [];
+
+let walls_Array = [];
+let buildings_Array = []; // no walls
+let buildings_all_Array = [];
+let defenses_Array = [];
+let economy_Array = [];
+
+let doodads_Array = [];
+
+let group_Index = [
+  units_Array,
+  units_ground_Array,
+  units_air_Array,
+  walls_Array,
+  buildings_Array,
+  buildings_all_Array,
+  defenses_Array,
+  economy_Array,
+  doodads_Array
+];
 
 let projectiles_Array = [];
 

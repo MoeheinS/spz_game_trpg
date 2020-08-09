@@ -5,7 +5,7 @@ function cycle_movement(a, w){
 
 function turret_acqTarget(a, range){
     var nearEnemies = new Array;
-    for( e of enemies_Array ){
+    for( e of units_Array ){
         let e_dist = getDistance(a.position, e.position);
         if( e_dist <= range ){
             nearEnemies.push({"target": e, "distance": 400});

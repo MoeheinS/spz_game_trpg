@@ -2,35 +2,58 @@ function group_Entities() {
   // make primitive groups, so I don't have to loop over ALL the objects every time i need something
   // this also lets me ignore checks for properties
   // in the future maybe use .filter() but for now it's fine
-  allies_Array = [];
-  enemies_Array = [];
-  actors_Array = [];
-  obstacles_Array = [];
-  nonAllies_Array = [];
+
+  units_Array = [];
+  units_ground_Array = [];
+  units_air_Array = [];
+
+  walls_Array = [];
+  buildings_Array = []; // no walls
+  buildings_all_Array = [];
+  defenses_Array = [];
+  economy_Array = [];
+
   doodads_Array = [];
+
   for( bod of Composite.allBodies(world) ){
-    if(bod.label == 'ally'){
-      allies_Array.push(bod);
-    }else if(bod.label == 'enemy'){
-      enemies_Array.push(bod);
-      nonAllies_Array.push(bod);
-    }else if(bod.label == 'doodad'){
-      doodads_Array.push(bod);
-    }else if(bod.label == 'shape' || bod.label == 'boundary' || bod.label == 'obstacle' || bod.label == 'wall'){
-      obstacles_Array.push(bod);
-      nonAllies_Array.push(bod);
+    switch (bod.label) {
+      case 'ally':
+        units_Array.push(bod);
+        if( bod.custom.moveType == 'ground' ){
+          units_ground_Array = [];
+        }
+        if( bod.custom.moveType == 'air' ){
+          units_air_Array = [];
+        }
+        break;
+      case 'building':
+        buildings_all_Array.push(bod);
+        switch (bod.custom.category) {
+          case 'wall':
+            walls_Array.push(bod);
+            break;
+          case 'defense':
+            defenses_Array.push(bod);
+            buildings_Array.push(bod);
+            break;
+          case 'economy':
+            economy_Array.push(bod);
+            buildings_Array.push(bod);
+            break;
+          default:
+            break;
+        }
+        break;
+      case 'doodad':
+        doodads_Array.push(bod);
+      default:
+        break;
     }
   }
-  
-  allies_Array = sortByY(allies_Array);
-  enemies_Array = sortByY(enemies_Array);
-  actors_Array = allies_Array.concat(enemies_Array);
-  actors_Array = sortByY(actors_Array);
 
-  obstacles_Array = sortByY(obstacles_Array);
-  nonAllies_Array = sortByY(nonAllies_Array);
-
-  doodads_Array = sortByY(doodads_Array);
+  for( a of group_Index ){
+    a = sortByY(a);
+  }
 }
 
 function clearField() {
