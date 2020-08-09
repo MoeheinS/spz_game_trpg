@@ -1,30 +1,97 @@
-var test_turret = Bodies.rectangle(reWi-(GRID_SIZE*7), reHi-(GRID_SIZE*10), 16, 16, {
-    label: 'ally',
-    frictionAir: 1,
-    collisionFilter: {
-      category: draggable_false
-    },
-    custom: {
-      faction: 'ally',
-      turret: {
-        range: 10,
-        aType: 'direct'
-      },
-      baseMove: GRID_SIZE*5,
-      maxMove: GRID_SIZE*5,
-      startPoint: { 
-        x: reWi-(GRID_SIZE*4),
-        y: reHi-(GRID_SIZE*12)
-      },
-      graphics: {
-        renderMode: 'sheet_animation',
-        sprite: './assets/origin.png',
-        sprite_dim: {
-            x: 16,
-            y: 16
-        },
-        sheet_idle: getSprites('turret_basic', 'idle')
+let buildingList = [
+  {
+    name: 'Wall',
+    category: 'wall',
+    levels: [
+      { spriteName: 'wall_01', hp: 1125 },
+      { spriteName: 'wall_02', hp: 2800 },
+      { spriteName: 'wall_03', hp: 5805 }
+    ]
+  },
+  {
+    name: 'Turret',
+    category: 'defense',
+    levels: [
+      { spriteName: 'turret_basic', hp: 1650, attackCD: 5400, attackRange: 14, damage: 220, element: false, target: 'ground', attackType: 'single', projectileArt: 'bullet_basic' },
+      { spriteName: 'turret_basic', hp: 1956, attackCD: 5400, attackRange: 17, damage: 286, element: false, target: 'ground', attackType: 'single', projectileArt: 'bullet_basic' },
+      { spriteName: 'turret_basic', hp: 2415, attackCD: 5400, attackRange: 20, damage: 384, element: false, target: 'ground', attackType: 'single', projectileArt: 'bullet_basic' }
+    ]
+  },
+  {
+    name: 'Core',
+    category: 'economy',
+    levels: [
+      { spriteName: 'core', hp: 6000 }
+    ]
+  }
+];
+
+  class BuildingEnt {
+    constructor(
+      unitID,
+      level,
+      spawnCoord
+    ) {
+        let info = new Object;
+        for( let building of buildingList ){
+          if( building.name == unitID ){
+            info = building.levels[level];
+            info.category = building.category;
+          }
+        }
+        this.body = Bodies.rectangle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), 16, 16, {
+          label: 'ally',
+          frictionAir: 1, // magic numbers
+          mass: 2,        // magic numbers
+          collisionFilter: {
+            category: draggable_false
+          },
+          custom: {
+            hp_max: info.hp,
+            hp_current: info.hp,
+            category: info.category,
+
+            turret: {
+              range: (info.attackRange ? info.attackRange : false),
+              attackCD: (info.attackCD ? info.attackCD : false),
+              attackCD_base: (info.attackCD ? 10 : false),
+              damage: (info.damage ? info.damage : false),
+              preferredTarget: (info.target ? info.target : false),
+              aType: (info.attackType ? info.attackType : false),
+            },
+  
+            graphics: {
+              renderMode: 'sheet_animation',
+              sprite: './assets/origin.png',
+              sprite_dim: {
+                x: 16,
+                y: 16
+              },
+              sheet_idle: getSprites(info.spriteName, 'idle'),
+            }
+          }
+        });
+        World.add(world, this.body);
+        //console.log(this.body.position);
+        return this.body;
+    }
+    aimAndFire() { 
+      // STUB
+      /*
+        acquire target, shoot at target
+      */
+    }
+    applyPain() {
+      //STUB
+      console.log('ow!');
+    }
+    die() {
+      if( this.body.custom.hp_current <= 0 ){
+        // TODO: need a ripperoni for buildings
+        ripperoni(this.body);
+        World.remove(world, this.body, true);
       }
     }
-  });
-  World.add(world, test_turret);
+  }
+
+  var test_turret = new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7), (GRID_SIZE*10) ) );
