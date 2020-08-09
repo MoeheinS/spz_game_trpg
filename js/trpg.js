@@ -151,6 +151,14 @@ let ticker = 0;
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 
+var groundPattern = new Object;
+groundImg = new Image();
+groundImg.src = './assets/gnd01.png';
+groundImg.onload = function(){
+    // create pattern
+    groundPattern = ctx.createPattern(groundImg, 'repeat'); // Create a pattern with this image, and set it to "repeat".
+}
+
 Events.on(render, 'afterRender', function() {
 
   heartbeat_animations();
@@ -160,8 +168,12 @@ Events.on(render, 'afterRender', function() {
   ctx.fillStyle = RENDER_TERRAINCOLOR;
   ctx.lineWidth = 2;
   ctx.clearRect(0, 0, reWi, reHi);
-
+  
   Render.startViewTransform(render);
+
+    ctx.fillStyle = groundPattern;
+    ctx.fillRect(0, 0, FIELD_SIZE, FIELD_SIZE);
+    ctx.fillStyle = RENDER_TERRAINCOLOR;
 
     render_debug(game_debug, render.context);
     // deprec render order
