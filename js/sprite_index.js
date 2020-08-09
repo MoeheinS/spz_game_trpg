@@ -28,9 +28,16 @@ spriteSheetCoords = [];
 
 var spriteList = [
     ['warrior_human', 0, 0, '4dir'],
-    ['turret_basic', 912, 208, '4dir'],
     ['ratty', 256, 80, '4dir'],
     ['sling', 128, 560, '4dir'],
+
+    ['turret_basic', 912, 208, '4dir'],
+    ['wall_01', 752, 464, '1dir', 1],
+    ['wall_02', 768, 464, '1dir', 1],
+    ['wall_03', 784, 464, '1dir', 1],
+
+    // obviously not but eh
+    ['core', 864, 304, '1dir', 2],
 
     ['projectile_spinner', 928, 96, '1dir', 2],
     
@@ -41,7 +48,7 @@ for( unit of spriteList ){
     spriteSheetCoords.push(new SpriteEnt(unit[0], unit[1], unit[2], unit[3], unit[4]));
 }
 
-function getSprites(iname, key, steps){
+function getSprites(iname, key){
     for( sheet of spriteSheetCoords ){
         if( sheet.iname == iname ){
             let spriteCoords = [];
@@ -50,8 +57,5 @@ function getSprites(iname, key, steps){
             }
             return spriteCoords;
         }
-        // TODO: someday
-        // if steps, for steps-- grab coords
-        // to grab a series?
     }
 }  

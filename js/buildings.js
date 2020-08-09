@@ -46,6 +46,7 @@ let buildingList = [
           collisionFilter: {
             category: draggable_false
           },
+          isStatic: true,
           custom: {
             hp_max: info.hp,
             hp_current: info.hp,
@@ -94,4 +95,15 @@ let buildingList = [
     }
   }
 
-  var test_turret = new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7), (GRID_SIZE*10) ) );
+  var test_turret = new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7), (GRID_SIZE*20) ) );
+
+  // a circle of walls
+  new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*20) ) );
+  new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*20) ) );
+  new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*20) ) );
+  new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*21) ) );
+  new BuildingEnt( 'Core', 0, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*21) ) );
+  new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*21) ) );
+  new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*22) ) );
+  new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*22) ) );
+  new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*22) ) );
