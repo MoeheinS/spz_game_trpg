@@ -7,7 +7,6 @@ let unitList = [
 class UnitEnt {
   constructor(
       spawnCoord,
-      faction,
       unitID
   ) {
       let info = new Object;
@@ -24,7 +23,6 @@ class UnitEnt {
           category: draggable_false
         },
         custom: {
-          faction: faction,
           shape: 'circle',
 
           hp_max: info.hp,
@@ -35,6 +33,9 @@ class UnitEnt {
           moveType: info.moveType,
           damage: info.damage,
           preferredTarget: info.preferredTarget,
+
+          waypoint: false,
+          target: false,
 
           state: 'idle',
 
@@ -68,8 +69,115 @@ class UnitEnt {
   }
 }
 
-var test_allyGB2 = new UnitEnt( new Coordinate( GRID_SIZE*8, GRID_SIZE*2 ), 'friendlies', 'Ratty' );
-new UnitEnt( new Coordinate( GRID_SIZE*20, GRID_SIZE*2 ), 'friendlies', 'Sling' );
+// target the closest building, according to preference
+function unit_acquireTarget(a){
+  if( a.custom.target && a.custom.target.custom.hp_current <= 0 ){
+    a.custom.target = false;
+    a.custom.state = 'idle';
+  }
+
+  var eligibleTargets = new Array;
+
+  switch (a.custom.preferredTarget) {
+    case 'wall':
+      eligibleTargets = walls_Array;
+      break;
+    case 'defense':
+      eligibleTargets = defenses_Array;
+      break;
+    case 'economy':
+      eligibleTargets = economy_Array;
+      break;
+    case 'any':
+    default:
+      eligibleTargets = buildings_Array;
+      break;
+  }
+  
+  var nearTargets = new Array;
+  var nearTargets_byDist = new Array;
+  for( e of eligibleTargets ){
+    let e_dist = getDistance(a.position, e.position);
+    nearTargets.push({"target": e, "distance": e_dist});
+  }
+  if( nearTargets.length ){
+    // closest target is [0]
+    nearTargets_byDist = nearTargets.sort(function(a,b){
+      return a.distance-b.distance;
+    });
+    a.custom.target = nearTargets_byDist[0].target;
+    //turret_atkTarget(a, nearTargets_byDist[0].target);
+  }else{
+    console.warn(`seeking out a wall for ${a.id} instead`);
+    return;
+  }
+
+  if( nearTargets_byDist.length && nearTargets_byDist[0].distance <= a.custom.attackRange ){
+    a.custom.state = 'attacking';
+  }else{
+    // pathfind
+    console.log('pathfinding!');
+    grid_pathfind(a, GRID_SIZE, GRID_SIZE/8, a.custom.target.id);
+  }
+}
+
+//target the closest wall
+function unit_acquireTarget_wall(a){
+  a.custom.target = false;
+  a.custom.state = 'idle';
+
+  var eligibleTargets = walls_Array;
+
+  var nearTargets = new Array;
+  var nearTargets_byDist = new Array;
+  for( e of eligibleTargets ){
+    let e_dist = getDistance(a.position, e.position);
+    nearTargets.push({"target": e, "distance": e_dist});
+  }
+  if( nearTargets.length ){
+    // closest target is [0]
+    nearTargets_byDist = nearTargets.sort(function(a,b){
+      return a.distance-b.distance;
+    });
+      
+    a.custom.target = nearTargets_byDist[0].target;
+  }else{
+    a.custom.target = false;
+    a.custom.state = 'idle';
+    return;
+  }
+
+  if( nearTargets_byDist.length && nearTargets_byDist[0].distance <= a.custom.attackRange ){
+    a.custom.state = 'attacking';
+  }else{
+    // pathfind
+    console.log('pathfinding to a wall!');
+    grid_pathfind(a, GRID_SIZE, GRID_SIZE/8, a.custom.target.id);
+  }
+}
+
+function unit_attackTarget(a){
+  if( a.custom.target && a.custom.target.custom.hp_current <= 0 ){
+    a.custom.target = false;
+    a.custom.state = 'idle';
+    return;
+  }
+  if( getDistance(a.position, a.custom.target.position) <= a.custom.attackRange ){
+    if( a.custom.attackCD <= 0 ){
+      unit_applyPain(a);
+      a.custom.attackCD = a.custom.attackCD_base;
+    }
+  }else{
+    a.custom.state = 'moving';
+  }
+}
+
+function unit_applyPain(a){
+  console.log('take that, evildoer!');
+}
+
+var test_allyGB2 = new UnitEnt( new Coordinate( GRID_SIZE*8, GRID_SIZE*2 ), 'Ratty' );
+new UnitEnt( new Coordinate( GRID_SIZE*20, GRID_SIZE*2 ), 'Sling' );
 
 // =======================[ DOODAD ]====================================
 function ripperoni(a){

@@ -37,6 +37,8 @@ let economy_Array = [];
 
 let doodads_Array = [];
 
+let render_Array = [];
+
 let group_Index = [
   units_Array,
   units_ground_Array,

@@ -15,10 +15,13 @@ function group_Entities() {
 
   doodads_Array = [];
 
+  render_Array = [];
+
   for( bod of Composite.allBodies(world) ){
     switch (bod.label) {
       case 'ally':
         units_Array.push(bod);
+        render_Array.push(bod);
         if( bod.custom.moveType == 'ground' ){
           units_ground_Array = [];
         }
@@ -31,29 +34,31 @@ function group_Entities() {
         switch (bod.custom.category) {
           case 'wall':
             walls_Array.push(bod);
-            break;
           case 'defense':
             defenses_Array.push(bod);
-            buildings_Array.push(bod);
-            break;
           case 'economy':
             economy_Array.push(bod);
-            buildings_Array.push(bod);
-            break;
           default:
+            buildings_Array.push(bod);
+            render_Array.push(bod);
             break;
         }
         break;
       case 'doodad':
         doodads_Array.push(bod);
+        render_Array.push(bod);
       default:
         break;
     }
   }
 
-  for( a of group_Index ){
-    a = sortByY(a);
-  }
+  units_Array = sortByY(units_Array);
+
+  buildings_all_Array = sortByY(buildings_all_Array);
+
+  doodads_Array = sortByY(doodads_Array);
+
+  render_Array = sortByY(render_Array);
 }
 
 function clearField() {

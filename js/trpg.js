@@ -141,6 +141,8 @@ document.addEventListener("keydown", function(e){
 //all pairs colliding in the current tick
 //Events.on(engine, 'collisionStart', function(event) {});
 
+let ticker = 0;
+
 // Fired after engine update and all collision events
 Events.on(engine, 'afterUpdate', function(event) {
   if( game_waypoints.length ){
@@ -148,12 +150,33 @@ Events.on(engine, 'afterUpdate', function(event) {
       cycle_movement(selected, game_waypoints[0]);
     }
   }
+  //if( ticker == 110 ){
+    for( unit of units_Array ){
+      // also ready up your next attack
+      unit.custom.attackCD--;
+
+      switch (unit.custom.state) {
+        case 'moving':
+          cycle_movement(unit, unit.custom.target.position);
+          break;
+        case 'attacking':
+          unit_attackTarget(unit);
+          break;
+        case 'idle':
+        default:
+          // first check if there's a target in range
+          // if there is, this will set state to attacking
+          unit_acquireTarget(unit);
+          break;
+      }
+    }
+  //}
 });
 
 /*
 *   Rendering
 */
-let ticker = 0;
+
 // moved ctx outside of the render loop provided by Matter.js
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
@@ -184,29 +207,8 @@ Events.on(render, 'afterRender', function() {
 
     render_debug(game_debug, render.context);
 
-    // TODO: draw a grid, check if there's collidables inside
-    if(game_debug_flags.grid){ 
-      // TODO: separate the calculating of the grid from the drawing of the grid, also move the variables to a higher scope
-      //if(anim_tick == 0){
-        // for(enemy of units_Array){
-        //   let bod_width = enemy.bounds.max.x - enemy.bounds.min.x;
-        //   grid_pathfind(enemy, bod_width/2, bod_width/8);
-        // }
-        if(game_debug_flags.path.length){
-          render_debug_path(game_debug_flags.path, game_debug_flags.path_size);
-        }
-      //}
-    }
-
-    for( bld of buildings_all_Array ){
-      draw_Graphics([bld]);
-    }
-    for( doodad of doodads_Array ){
-      draw_Graphics([doodad]);
-    }
-    // this way enemies also respect y-position overlapping
-    for( unit of units_Array ){
-      draw_Graphics([unit]);
+    for( e of render_Array ){
+      draw_Graphics([e]);
     }
     
     //debug state rendering
