@@ -1,7 +1,7 @@
 let unitList = [
   // name, rarity, spriteName, attackCD, moveSpeed, attackRange, damage, preferredTarget, hp
-  {name: 'Ratty', rarity: 'N', spriteName: 'ratty', attackCD: 210, movespeed: 140, attackRange: 1, damage: 54, preferredTarget: 'any', hp: 180, amount: 15},
-  {name: 'Sling', rarity: 'N', spriteName: 'sling', attackCD: 240, movespeed: 110, attackRange: 10, damage: 26, preferredTarget: 'any', hp: 70, amount: 15}
+  {name: 'Ratty', rarity: 'N', spriteName: 'ratty', attackCD: 210, movespeed: 140, moveType: 'ground', attackRange: 1, damage: 54, preferredTarget: 'any', hp: 180, amount: 15},
+  {name: 'Sling', rarity: 'N', spriteName: 'sling', attackCD: 240, movespeed: 110, moveType: 'ground', attackRange: 10, damage: 26, preferredTarget: 'any', hp: 70, amount: 15}
 ];
 
 class UnitEnt {
@@ -32,6 +32,7 @@ class UnitEnt {
           attackRange: info.attackRange,
           attackCD: info.attackCD,
           attackCD_base: 10,
+          moveType: info.moveType,
           damage: info.damage,
           preferredTarget: info.preferredTarget,
 
@@ -64,12 +65,6 @@ class UnitEnt {
   applyPain() {
     //STUB
     console.log('ow!');
-  }
-  die() {
-    if( this.body.custom.hp_current <= 0 ){
-      ripperoni(this.body);
-      World.remove(world, this.body, true);
-    }
   }
 }
 
