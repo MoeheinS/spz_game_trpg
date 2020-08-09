@@ -22,24 +22,21 @@ function render_debug(game_debug){
     ctx.restore();
 
     ctx.font = '10px alber';
+    ctx.fillStyle = RENDER_SHADOWCOLOR;
     var bods = Composite.allBodies(world);
     for( bod of bods ){
       ctx.fillText(`id:${bod.id}`, bod.bounds.min.x-10, bod.bounds.min.y+12);
       ctx.fillText(bod.label, bod.bounds.min.x-10, bod.bounds.min.y+24);
 
-      if( bod.custom && bod.custom.maxMove && ( bod.label == 'ally' )){
-        ctx.save();
-
-        ctx.fillStyle = RENDER_UI_GREEN;
-        ctx.fillText('move_max:'+Math.floor(bod.custom.baseMove / GRID_SIZE), bod.bounds.min.x-10, bod.bounds.min.y+36);
-        ctx.fillText('moved:'+Math.floor(bod.custom.maxMove / GRID_SIZE), bod.bounds.min.x-10, bod.bounds.min.y+48);
+      if( bod.custom && ( bod.label == 'ally' )){
         // for when autonomous movement is added
         // This works if moveToPoint() sets body angle
         //ctx.fillText('angle:'+((180*bod.angle/Math.PI)+180).toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+60);
+
+        ctx.fillText('target:'+bod.custom.target.id, bod.bounds.min.x-10, bod.bounds.min.y+36);
+        ctx.fillText('state:'+bod.custom.state, bod.bounds.min.x-10, bod.bounds.min.y+48);
         ctx.fillText('angle:'+Math.floor(((180*bod.angle/Math.PI)+180)/45), bod.bounds.min.x-10, bod.bounds.min.y+60);
         ctx.fillText('speed:'+bod.speed.toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+72);
-
-        ctx.restore();
       }
     }
   }
