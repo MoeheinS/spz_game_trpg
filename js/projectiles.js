@@ -72,6 +72,13 @@ class ProjectileEnt {
     applyPain() {
         //STUB
         console.log('ow!');
+        this.target.custom.hp_current = this.target.custom.hp_current - this.damage;
+        console.log(`${this.target.custom.hp_current} hp remaining of ${this.target.custom.hp_max}`);
+        if( this.target.custom.hp_current <= 0 ){
+            ripperoni(this.target);
+            World.remove(world, this.target, true);
+        }
+        
     }
 
 }
