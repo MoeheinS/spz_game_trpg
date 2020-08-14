@@ -1,7 +1,14 @@
 console.log('%cClashlike','color:#ff0000;font-family:Comic Sans MS;');
 
+var grid32 = Matter.Grid.create({
+  bucketHeight: 32,
+  bucketWidth: 32
+});
+
 // create engine
-var engine = Engine.create(),
+var engine = Engine.create({
+  broadphase: grid32
+}),
     world = engine.world;
 
 // create renderer
@@ -157,7 +164,7 @@ Events.on(engine, 'afterUpdate', function(event) {
 
       switch (unit.custom.state) {
         case 'moving':
-          cycle_movement(unit, unit.custom.target.position);
+          //cycle_movement(unit, unit.custom.target.position);
           break;
         case 'attacking':
           unit_attackTarget(unit);
