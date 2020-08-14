@@ -15,7 +15,7 @@ class UnitEnt {
           info = unit;
         }
       }
-      this.body = Bodies.circle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.75), 8, {
+      this.body = Bodies.circle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), 8, {
         label: 'ally',
         frictionAir: 1, // magic numbers
         mass: 2,        // magic numbers
