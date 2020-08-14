@@ -107,3 +107,6 @@ let buildingList = [
   new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*22) ) );
   new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*22) ) );
   new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*22) ) );
+
+  new BuildingEnt( 'Core', 0, new Coordinate( (GRID_SIZE*23), (GRID_SIZE*23) ) );
+  new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*24), (GRID_SIZE*23) ) );
