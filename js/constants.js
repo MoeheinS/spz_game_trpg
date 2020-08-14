@@ -79,4 +79,5 @@ var defaultCategory = 0x0001,
     draggable_false = 0x0004;
 
 const GRID_SIZE = 32;
-const FIELD_SIZE = 40 * GRID_SIZE;
+const GRID_LIMIT = 40;
+const FIELD_SIZE = GRID_LIMIT * GRID_SIZE;
