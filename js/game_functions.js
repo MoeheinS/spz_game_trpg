@@ -34,10 +34,18 @@ function group_Entities() {
         switch (bod.custom.category) {
           case 'wall':
             walls_Array.push(bod);
+            render_Array.push(bod);
+            break;
           case 'defense':
             defenses_Array.push(bod);
+            buildings_Array.push(bod);
+            render_Array.push(bod);
+            break;
           case 'economy':
             economy_Array.push(bod);
+            buildings_Array.push(bod);
+            render_Array.push(bod);
+            break;
           default:
             buildings_Array.push(bod);
             render_Array.push(bod);
