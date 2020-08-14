@@ -14,6 +14,14 @@ function render_debug(game_debug){
     ctx.fillText('press d to toggle debug info', 100, -200);
     ctx.fillText('hold shift and rclick to rotate the screen', 100, -220);
 
+    ctx.strokeStyle = RENDER_FILLCOLOR;
+    var gimmeGrid = FIELD_SIZE/GRID_SIZE;
+    for( let hi = 0; hi < gimmeGrid; hi++ ){
+      for( let vi = 0; vi < gimmeGrid; vi++ ){
+      ctx.strokeRect(hi*GRID_SIZE, vi*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+      }
+    }
+
     // 1 GRID_SIZE square
     ctx.save();
     ctx.strokeStyle = RENDER_TERRAINCOLOR;
@@ -37,7 +45,13 @@ function render_debug(game_debug){
         ctx.fillText('state:'+bod.custom.state, bod.bounds.min.x-10, bod.bounds.min.y+48);
         ctx.fillText('angle:'+Math.floor(((180*bod.angle/Math.PI)+180)/45), bod.bounds.min.x-10, bod.bounds.min.y+60);
         ctx.fillText('speed:'+bod.speed.toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+72);
+        if(bod.region){
+          ctx.fillText(`gridPos: ${bod.region.startRow},${bod.region.startCol}`, bod.bounds.min.x-10, bod.bounds.min.y+84);
+        }
       }
+      ctx.fillStyle = RENDER_UI_RED;
+      ctx.fillRect(bod.bounds.min.x, bod.bounds.min.y, wbb(bod.bounds), hbb(bod.bounds));
+      ctx.fillStyle = RENDER_SHADOWCOLOR;
     }
   }
   ctx.restore();
