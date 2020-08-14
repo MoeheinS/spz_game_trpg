@@ -157,27 +157,40 @@ Events.on(engine, 'afterUpdate', function(event) {
       cycle_movement(selected, game_waypoints[0]);
     }
   }
-  //if( ticker == 110 ){
+  // every time the ticker cycle resets
+  if( ticker == 10 ){
     for( unit of units_Array ){
-      // also ready up your next attack
-      unit.custom.attackCD--;
-
-      switch (unit.custom.state) {
-        case 'moving':
-          //cycle_movement(unit, unit.custom.target.position);
-          break;
-        case 'attacking':
-          unit_attackTarget(unit);
-          break;
-        case 'idle':
-        default:
-          // first check if there's a target in range
-          // if there is, this will set state to attacking
-          unit_acquireTarget(unit);
-          break;
-      }
+      unit_sortTargets(unit);
     }
-  //}
+  }
+  if( ticker % 15 == 0 ){
+    for( unit of units_Array ){
+      unit_acquireTarget(unit);
+    }
+  }
+
+  // TODO: rework this all. If unit.custom.target, check range
+  // if out of range, move towards unit.custom.waypoint[0]
+  // if within 10 range of unit.custom.waypoint[0], shift() it
+  for( unit of units_Array ){
+    //unit.custom.attackCD--;
+    switch (unit.custom.state) {
+      case 'ready':
+        cycle_movement(unit, unit.custom.target.position);
+        break;
+      case 'moving':
+        //cycle_movement(unit, unit.custom.target.position);
+        break;
+      case 'attacking':
+        //unit_attackTarget(unit);
+        break;
+      case 'idle':
+      default:
+        // see if you can pathfind to a target
+        //unit_acquireTarget(unit);
+        break;
+    }
+  }
 });
 
 /*
@@ -223,7 +236,7 @@ Events.on(render, 'afterRender', function() {
 
     // FIXME: clean up someday
     ticker++;
-    if( ticker >= 120 ){
+    if( ticker > 119 ){
       ticker = 0;
     }
     if( ticker == 60 ){

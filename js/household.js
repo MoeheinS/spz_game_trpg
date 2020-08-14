@@ -408,6 +408,20 @@ function getDistance(a, b){
   return Math.hypot(dx, dy);
 }
 
+class aStar_grid {
+  constructor() {
+    var aStar_baseGrid = [];
+    for( let hi = 0; hi < GRID_LIMIT; hi++ ){
+      var aStar_baseGrid_row = [];
+      for( let vi = 0; vi < GRID_LIMIT; vi++ ){
+        aStar_baseGrid_row.push(0);
+      }
+      aStar_baseGrid.push(aStar_baseGrid_row);
+    }
+    return aStar_baseGrid;
+  }
+}
+
 class Coordinate {
   constructor(x, y) {
     this.x = x;

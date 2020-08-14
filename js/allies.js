@@ -36,6 +36,7 @@ class UnitEnt {
 
           waypoint: false,
           target: false,
+          targetsArray: false,
 
           state: 'idle',
 
@@ -69,103 +70,166 @@ class UnitEnt {
   }
 }
 
+function unit_sortTargets(a){
+  var nearTargets_byDist_byCategory = new Array;
+  /*
+    sort: 
+    -1: a moves up
+    1: b moves up
+    0: a and b unchanged regarding eachother, but sorted with respect to all different elements
+  */
+
+  // walls_Array
+  var target_walls = new Array;
+
+  for( let b_wall of walls_Array ){
+    let dist = getDistance(a.position, b_wall.position);
+    target_walls.push({"target": b_wall, "distance": dist, "category": b_wall.custom.category});
+  }
+  target_walls = target_walls.sort(function(apple,orange){
+    return apple.distance-orange.distance;
+  });
+
+  // defenses_Array
+  var target_defenses = new Array;
+
+  for( let b_def of defenses_Array ){
+    let dist = getDistance(a.position, b_def.position);
+    target_defenses.push({"target": b_def, "distance": dist, "category": b_def.custom.category});
+  }
+  target_defenses = target_defenses.sort(function(apple,orange){
+    return apple.distance-orange.distance;
+  });
+
+  // economy_Array
+  var target_economy = new Array;
+
+  for( let b_eco of economy_Array ){
+    let dist = getDistance(a.position, b_eco.position);
+    target_economy.push({"target": b_eco, "distance": dist, "category": b_eco.custom.category});
+  }
+  target_economy = target_economy.sort(function(apple,orange){
+    return apple.distance-orange.distance;
+  });
+
+  // buildings_Array
+  var target_buildings = new Array;
+
+  // everything, except walls
+  for( b of buildings_Array ){
+    // hp 0 buildings are not eligible targets, and also don't block pathfinding
+    // but if buildings self-delete and place doodads, this is redundant
+    let dist = getDistance(a.position, b.position);
+    target_buildings.push({"target": b, "distance": dist, "category": b.custom.category});
+  }
+  target_buildings = target_buildings.sort(function(apple,orange){
+    return apple.distance-orange.distance;
+  });
+
+  //===================================[ Done sorting everything? ]===================================
+
+  if( !target_buildings.length ){
+    // do a little victory dance because there's nothing left to destroy, you monster
+    // walls don't count
+    a.custom.state = 'dancing';
+    console.error('No targets to be found');
+  }else{
+    switch (a.custom.preferredTarget) {
+      case 'wall':
+        nearTargets_byDist_byCategory = target_walls.concat(target_buildings);
+        break;
+      case 'defense':
+      // case 'anti-air':
+        nearTargets_byDist_byCategory = target_defenses.concat(target_economy).concat(target_walls);
+        break;
+      case 'economy':
+      // case 'core':
+        nearTargets_byDist_byCategory = target_economy.concat(target_defenses).concat(target_walls);
+        break;
+      case 'any':
+      default:
+        nearTargets_byDist_byCategory = target_buildings.concat(target_walls);
+        break;
+    }
+    //console.warn(`${a.id}, pref ${a.custom.preferredTarget}`);
+    //console.table(nearTargets_byDist_byCategory);
+
+    // save the sorted list of potential targets inside the unit
+    a.custom.targetsArray = nearTargets_byDist_byCategory;
+  }
+
+}
+
 // target the closest building, according to preference
 function unit_acquireTarget(a){
-  if( a.custom.target && a.custom.target.custom.hp_current <= 0 ){
-    a.custom.target = false;
-    a.custom.state = 'idle';
-  }
+  if( a.custom.targetsArray && a.custom.targetsArray.length ){
+    if( a.custom.target ){
+      //console.warn(`${a.id} already targetting ${a.custom.target.id}`);
+    }else{
+      // we shift the topmost off the stack of potentials, making the list shorter
+      var tryTarget = a.custom.targetsArray.shift();
+      console.warn(`searching path from ${a.id} to ${tryTarget.target.id}`);
+      unit_pathfind(a, tryTarget.target.id, tryTarget.target);
 
-  var eligibleTargets = new Array;
-
-  switch (a.custom.preferredTarget) {
-    case 'wall':
-      eligibleTargets = walls_Array;
-      break;
-    case 'defense':
-      eligibleTargets = defenses_Array;
-      break;
-    case 'economy':
-      eligibleTargets = economy_Array;
-      break;
-    case 'any':
-    default:
-      eligibleTargets = buildings_Array;
-      break;
-  }
-  
-  var nearTargets = new Array;
-  var nearTargets_byDist = new Array;
-  for( e of eligibleTargets ){
-    let e_dist = getDistance(a.position, e.position);
-    nearTargets.push({"target": e, "distance": e_dist});
-  }
-  if( nearTargets.length ){
-    // closest target is [0]
-    nearTargets_byDist = nearTargets.sort(function(a,b){
-      return a.distance-b.distance;
-    });
-    a.custom.target = nearTargets_byDist[0].target;
-    //turret_atkTarget(a, nearTargets_byDist[0].target);
-
-    /*
-     TODO: for each from nearTargets_byDist 
-     grid_pathfind
-     push the result of the astar calc to a "potentialTargets" array
-     as an object; target, distance
-
-     then do the same for walls
-
-     in the main cycle, check if there's anything in potentialTargets
-    */
-
+      // for( possible_target of a.custom.targetsArray ){
+      //   //console.warn('commencing target acquisition');
+      //   // hopefully the break will stop the for loop and I won't waste too many cycles on astar
+      //   if( !a.custom.target ){
+      //     console.warn(`searching path from ${a.id} to ${possible_target.target.id}`);
+      //     unit_pathfind(a, possible_target.target.id, possible_target.target);
+      //   }else{
+      //     console.warn(`${a.id} targetting ${a.custom.target.id} as of now`);
+      //     break;
+      //   }
+      //   //console.warn('aborting target acquisition');
+      // }
+    }
   }else{
-    console.warn(`seeking out a wall for ${a.id} instead`);
-    return;// return unit_acquireTarget_wall(a);
-  }
-
-  if( nearTargets_byDist.length && nearTargets_byDist[0].distance <= a.custom.attackRange ){
-    a.custom.state = 'attacking';
-  }else{
-    // pathfind
-    console.log('pathfinding!');
-    grid_pathfind(a, GRID_SIZE, GRID_SIZE/8, a.custom.target.id);
+    console.warn(`${a.id} ran out of targets`);
   }
 }
 
-//target the closest wall
-function unit_acquireTarget_wall(a){
-  a.custom.target = false;
-  a.custom.state = 'idle';
+// works off world bounds; performance is still good for now
+// grid size unit, feathering from edges
+function unit_pathfind(bod, exceptID, exceptBod){
 
-  var eligibleTargets = walls_Array;
+  var astar_grid = new aStar_grid();
 
-  var nearTargets = new Array;
-  var nearTargets_byDist = new Array;
-  for( e of eligibleTargets ){
-    let e_dist = getDistance(a.position, e.position);
-    nearTargets.push({"target": e, "distance": e_dist});
-  }
-  if( nearTargets.length ){
-    // closest target is [0]
-    nearTargets_byDist = nearTargets.sort(function(a,b){
-      return a.distance-b.distance;
-    });
-      
-    a.custom.target = nearTargets_byDist[0].target;
-  }else{
-    a.custom.target = false;
-    a.custom.state = 'idle';
-    return;
+  for( possible_target of bod.custom.targetsArray ){
+    if( possible_target.target.id != exceptID ){
+      for( let hi = possible_target.target.region.startRow; hi < possible_target.target.region.endRow; hi++ ){
+        for( let vi = possible_target.target.region.startCol; vi < possible_target.target.region.endCol; vi++ ){
+          // push a 0 for air cuz they can't be blocked
+          // TODO: might want to make only walls non-blocking for air, but that's future me's problem
+          astar_grid[hi][vi] = ( bod.custom.moveType == 'air' ? 0:1);
+        }
+      }
+    }
   }
 
-  if( nearTargets_byDist.length && nearTargets_byDist[0].distance <= a.custom.attackRange ){
-    a.custom.state = 'attacking';
-  }else{
-    // pathfind
-    console.log('pathfinding to a wall!');
-    grid_pathfind(a, GRID_SIZE, GRID_SIZE/8, a.custom.target.id);
-  }
+  unit_astar( astar_grid, new Coordinate( bod.region.startCol, bod.region.startRow ), new Coordinate( exceptBod.region.startCol, exceptBod.region.startRow ), bod, exceptBod );
+}
+
+function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
+  var easystar = new EasyStar.js();
+  easystar.setGrid(astar_grid);
+  easystar.enableDiagonals();
+  easystar.setAcceptableTiles([0]);
+  easystar.findPath(start_pos.x, start_pos.y, goal_pos.x, goal_pos.y, function( path ) {
+    //console.log(path);
+    if (path === null) {
+      //console.error("Path was not found.");
+      console.warn(`path for ${unit.id} NOT found`);
+    } else {
+      //console.warn("Path was found. The first Point is " + path[0].x + " " + path[0].y);
+      console.warn(`path for ${unit.id} found to ${target.id}`);
+      //unit.custom.state = 'moving';
+      unit.custom.target = target;
+      unit.custom.waypoint = path;
+      unit.custom.state = 'ready';
+    }
+  });
+  easystar.calculate();
 }
 
 function unit_attackTarget(a){
