@@ -39,7 +39,7 @@ let buildingList = [
             info.category = building.category;
           }
         }
-        this.body = Bodies.rectangle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), 16, 16, {
+        this.body = Bodies.rectangle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), 32, 32, {
           label: 'building',
           frictionAir: 1, // magic numbers
           mass: 2,        // magic numbers
