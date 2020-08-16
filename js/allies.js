@@ -58,15 +58,15 @@ class UnitEnt {
       //console.log(this.body.position);
       return this.body;
   }
-  advance() { 
-    // STUB
-    /*
-      acquire target, move to target
-    */
-  }
-  applyPain() {
-    //STUB
-    console.log('ow!');
+  // adding niche properties to bodies?
+  specialProp(prop, prop2) { 
+    switch (prop) {
+      case 'wallkiller':
+        this.body.custom.bonusDamage = {"category": "wall", "amount": prop2};
+        break;
+      default:
+        break;
+    }
   }
 }
 
