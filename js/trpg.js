@@ -256,6 +256,7 @@ Events.on(render, 'afterRender', function() {
     // handles portraits (UI UI) and waypoints (game UI)
     // FIXME: split in two
     render_ui(); // waypoints
+    render_hpBars();
     //render_cursor();
 
   Render.endViewTransform(render);

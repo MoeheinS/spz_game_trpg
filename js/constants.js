@@ -73,6 +73,9 @@ const RENDER_UI_GREEN = '#319d59';
 const RENDER_UI_RED = '#f85f4a';
 const RENDER_UI_BLUE = '#00b9fb';
 
+const UI_ALLY_HP = '#d9ee46';
+const UI_ENEMY_HP = '#f3bb33';
+
 // define our categories (as bit fields, there are up to 32 available)
 var defaultCategory = 0x0001,
     draggable_true = 0x0002,
