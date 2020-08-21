@@ -239,11 +239,15 @@ Events.on(render, 'afterRender', function() {
     if( ticker > 119 ){
       ticker = 0;
     }
-    if( ticker == 60 ){
+    //if( ticker == 60 ){
       for( turret of defenses_Array ){
-        turret_acqTarget(turret, (turret.custom.turret.range*GRID_SIZE));
+        turret.custom.turret.attackCD--;
+        if( turret.custom.turret.attackCD <= 0 ){
+          turret.custom.turret.attackCD = turret.custom.turret.attackCD_base;
+          turret_acqTarget(turret, (turret.custom.turret.range*GRID_SIZE));
+        }
       }
-    }
+    //}
 
     if( projectiles_Array.length ){
       for( p of projectiles_Array ){

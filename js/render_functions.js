@@ -147,6 +147,11 @@ function draw_Graphics(a, mode){
         var sx = i.custom.graphics.sheet_idle[0].x;
         var sy = i.custom.graphics.sheet_idle[0].y;
 
+        if( i.label == 'building' ){
+          //iy = i.position.y - iys;
+          iy = i.bounds.max.y - ( dy/2 ) - ( i.custom.graphics.sprite_offset.y ? i.custom.graphics.sprite_offset.y : 0 );
+        }
+
         dx = ixs*2;
         dy = iys*2;
 
@@ -169,6 +174,15 @@ function draw_Graphics(a, mode){
           ctx.drawImage(img,ix,iy,ixs,iys);
         }
         break;
+    }
+    // specifically for the CORE
+    if( building_CORE ){
+      if( i.id == building_CORE.id ){
+        ctx.font = `${0.5*GRID_SIZE}px comic sans ms`;
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#1880f8';
+        ctx.fillText(i.custom.level+1, i.bounds.min.x+GRID_SIZE, i.bounds.min.y+1.1*GRID_SIZE);
+      }
     }
   }
 

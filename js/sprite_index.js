@@ -32,14 +32,22 @@ var spriteList = [
     ['sling', 128, 560, '4dir'],
 
     ['turret_basic', 80, 464, '1dir', 3],
+    ['turret_rapid', 80, 464, '1dir', 3],
+
     ['wall_01', 16, 416, '1dir', 1],
     ['wall_02', 48, 416, '1dir', 1],
     ['wall_03', 80, 416, '1dir', 1],
 
     // obviously not but eh
-    ['core', 160, 544, '1dir', 2],
+    ['core', 16, 0, '1dir', 1],
+    ['core1', 96, 0, '1dir', 1],
+    ['core2', 176, 0, '1dir', 1],
+    ['core3', 256, 0, '1dir', 1],
+    //['core_evil', 352, 0, '1dir', 1],
 
+    ['projectile_basic', 32, 480, '1dir', 1],
     ['projectile_spinner', 160, 512, '1dir', 4],
+    ['projectile_rapid', 80, 496, '1dir', 2],
     
     ['tombstone', 256, 240, '1dir', 1]
 ];

@@ -7,6 +7,7 @@ class ProjectileEnt {
         lifetimeMax,
         target,
         damage,
+        projectileArt,
         arcHeight
     ) {
         // startCoords and goalCoords are body.position values; object {x: 0, y: 0}
@@ -43,7 +44,7 @@ class ProjectileEnt {
                 x: 16,
                 y: 16
             },
-            sheet: getSprites('projectile_spinner', 'idle')
+            sheet: getSprites(projectileArt, 'idle')
         };
     }
     advance() { // advance the projectile
@@ -111,4 +112,4 @@ function draw_Projectile(i){
 }
 
 // TODO: all of this is test placeholder
-projectiles_Array.push(new ProjectileEnt(test_turret.position, test_allyGB2.position, true, 60, test_allyGB2, 40));
+projectiles_Array.push(new ProjectileEnt(test_turret.position, test_allyGB2.position, true, 60, test_allyGB2, 40, 'projectile_basic'));
