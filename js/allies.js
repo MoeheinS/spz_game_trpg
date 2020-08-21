@@ -268,7 +268,7 @@ function ripperoni(a){
     custom: {
       graphics: {
         renderMode: 'sheet_static',
-        sprite: './assets/origin.png',
+        sprite: './assets/buildings.png',
         sprite_dim: {
             x: 16,
             y: 16

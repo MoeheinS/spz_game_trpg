@@ -38,7 +38,7 @@ class ProjectileEnt {
 
         this.graphics = {
             renderMode: 'sheet_animation',
-            sprite: './assets/origin.png',
+            sprite: './assets/buildings.png',
             sprite_dim: {
                 x: 16,
                 y: 16
@@ -81,6 +81,33 @@ class ProjectileEnt {
         
     }
 
+}
+
+function draw_Projectile(i){
+    ctx.save();
+
+    let img = new Image();
+    img.src = i.graphics.sprite;
+
+    if( i.graphics.sheet ){
+
+        let whichSprite = Math.floor( (i.lifetime % 10) / 10 * i.graphics.sheet.length );
+
+        var sx = i.graphics.sheet[whichSprite].x;
+        var sy = i.graphics.sheet[whichSprite].y;
+        var sw = i.graphics.sprite_dim.x;
+        var sh = i.graphics.sprite_dim.y;
+
+        var dw = sw*2;
+        var dh = sh*2;
+        var dx = i.position.x - (dw/2);
+        var dy = i.position.y - (dh/2);
+        
+        // source, source x, y, source width, height, destination x, y, width x, y
+        ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+    }
+
+    ctx.restore();
 }
 
 // TODO: all of this is test placeholder

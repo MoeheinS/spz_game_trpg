@@ -31,17 +31,17 @@ var spriteList = [
     ['ratty', 256, 80, '4dir'],
     ['sling', 128, 560, '4dir'],
 
-    ['turret_basic', 912, 208, '4dir'],
-    ['wall_01', 752, 464, '1dir', 1],
-    ['wall_02', 768, 464, '1dir', 1],
-    ['wall_03', 784, 464, '1dir', 1],
+    ['turret_basic', 80, 464, '1dir', 3],
+    ['wall_01', 16, 416, '1dir', 1],
+    ['wall_02', 48, 416, '1dir', 1],
+    ['wall_03', 80, 416, '1dir', 1],
 
     // obviously not but eh
-    ['core', 864, 304, '1dir', 2],
+    ['core', 160, 544, '1dir', 2],
 
-    ['projectile_spinner', 928, 96, '1dir', 2],
+    ['projectile_spinner', 160, 512, '1dir', 4],
     
-    ['tombstone', 736, 528, '1dir', 1]
+    ['tombstone', 256, 240, '1dir', 1]
 ];
 
 for( unit of spriteList ){

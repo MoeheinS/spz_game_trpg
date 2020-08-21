@@ -41,6 +41,7 @@ function render_debug(game_debug){
         // This works if moveToPoint() sets body angle
         //ctx.fillText('angle:'+((180*bod.angle/Math.PI)+180).toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+60);
 
+        ctx.fillText('hp:'+bod.custom.hp_current, bod.bounds.min.x-10, bod.bounds.min.y+0);
         ctx.fillText('target:'+bod.custom.target.id, bod.bounds.min.x-10, bod.bounds.min.y+36);
         ctx.fillText('state:'+bod.custom.state, bod.bounds.min.x-10, bod.bounds.min.y+48);
         ctx.fillText('angle:'+Math.floor(((180*bod.angle/Math.PI)+180)/45), bod.bounds.min.x-10, bod.bounds.min.y+60);
@@ -173,33 +174,6 @@ function draw_Graphics(a, mode){
 
   // ctx.fillStyle = '#ff000033';
   // ctx.fillRect(i.bounds.min.x, i.bounds.min.y, (i.bounds.max.x - i.bounds.min.x), (i.bounds.max.y - i.bounds.min.y));
-
-  ctx.restore();
-}
-
-function draw_Projectile(i){
-  ctx.save();
-
-  let img = new Image();
-  img.src = i.graphics.sprite;
-
-  if( i.graphics.sheet ){
-
-    let whichSprite = Math.round( (i.lifetime % 10) / 10 );
-
-    var sx = i.graphics.sheet[whichSprite].x;
-    var sy = i.graphics.sheet[whichSprite].y;
-    var sw = i.graphics.sprite_dim.x;
-    var sh = i.graphics.sprite_dim.y;
-
-    var dw = sw*2;
-    var dh = sh*2;
-    var dx = i.position.x - (dw/2);
-    var dy = i.position.y - (dh/2);
-    
-    // source, source x, y, source width, height, destination x, y, width x, y
-    ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
-  }
 
   ctx.restore();
 }

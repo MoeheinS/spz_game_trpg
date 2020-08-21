@@ -63,7 +63,7 @@ let buildingList = [
   
             graphics: {
               renderMode: 'sheet_animation',
-              sprite: './assets/origin.png',
+              sprite: './assets/buildings.png',
               sprite_dim: {
                 x: 16,
                 y: 16
