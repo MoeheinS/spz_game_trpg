@@ -10,7 +10,8 @@ let game_cursor = 'default';
 let game_debug_flags = { 
   "grid": false,
   "path": [],
-  "path_size": 1
+  "path_size": 1,
+  "grass": false
 };
 /*
   default

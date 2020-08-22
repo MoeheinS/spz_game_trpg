@@ -66,6 +66,49 @@ function render_debug(game_debug){
       ctx.fillRect(bod.bounds.min.x, bod.bounds.min.y, wbb(bod.bounds), hbb(bod.bounds));
       ctx.fillStyle = RENDER_SHADOWCOLOR;
     }
+
+    if( game_debug_flags.grass ){
+      for( let hi = 0; hi < game_debug_flags.grass.length; hi++ ){
+        for( let vi = 0; vi < game_debug_flags.grass[hi].length; vi++ ){
+          ctx.fillStyle = RENDER_SHADOWCOLOR;
+          switch (game_debug_flags.grass[vi][hi]) {
+            case '9':
+              ctx.fillStyle = 'lightgreen';
+              break;
+            case '1':
+              ctx.fillStyle = 'skyblue';
+              break;
+            case '2':
+              ctx.fillStyle = RENDER_UI_GREEN;
+              break;
+            case '3':
+              ctx.fillStyle = RENDER_FILLCOLOR;
+              break;
+            case '4':
+              ctx.fillStyle = RENDER_TERRAINCOLOR;
+              break;
+            case 'A':
+              ctx.fillStyle = 'red';
+              break;
+            case 'B':
+              ctx.fillStyle = 'blue';
+              break;
+            case 'C':
+              ctx.fillStyle = 'green';
+              break;
+            case 'D':
+              ctx.fillStyle = 'yellow';
+              break;
+            case 0:
+            default:
+              break;
+          }
+          ctx.fillRect(hi*GRID_SIZE, vi*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+          ctx.fillStyle = RENDER_SHADOWCOLOR;
+        }
+      }
+    }
+
   }
   ctx.restore();
 }

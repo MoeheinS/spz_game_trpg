@@ -159,6 +159,9 @@ Events.on(engine, 'afterUpdate', function(event) {
   }
   // every time the ticker cycle resets
   if( ticker == 10 ){
+    if( !game_debug_flags.grass ){
+      game_debug_flags.grass = landScape();
+    }
     for( unit of units_Array ){
       unit_sortTargets(unit);
     }
@@ -197,6 +200,13 @@ groundImg.src = './assets/gnd02.png';
 groundImg.onload = function(){
     // create pattern
     groundPattern = ctx.createPattern(groundImg, 'repeat'); // Create a pattern with this image, and set it to "repeat".
+}
+var wastePattern = new Object;
+wasteImg = new Image();
+wasteImg.src = './assets/gnd01.png';
+wasteImg.onload = function(){
+    // create pattern
+    wastePattern = ctx.createPattern(wasteImg, 'repeat'); // Create a pattern with this image, and set it to "repeat".
 }
 
 Events.on(render, 'afterRender', function() {
