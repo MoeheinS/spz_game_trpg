@@ -27,9 +27,9 @@ class SpriteEnt {
 spriteSheetCoords = [];
 
 var spriteList = [
-    ['warrior_human', 0, 0, '4dir'],
-    ['ratty', 256, 80, '4dir'],
-    ['sling', 128, 560, '4dir'],
+    //['warrior_human', 0, 0, '4dir'],
+    ['ratty', 0, 0, '4dir'],
+    ['sling', 0, 16, '4dir'],
 
     ['turret_basic', 80, 464, '1dir', 3],
     ['turret_rapid', 80, 464, '1dir', 3],
@@ -48,8 +48,12 @@ var spriteList = [
     ['projectile_basic', 32, 480, '1dir', 1],
     ['projectile_spinner', 160, 512, '1dir', 4],
     ['projectile_rapid', 80, 496, '1dir', 2],
+
+    ['projectile_unit_sling', 736, 448, '1dir', 1],
+    ['projectile_unit_melee', 752, 448, '1dir', 1],
     
-    ['tombstone', 256, 240, '1dir', 1]
+    ['tombstone', 256, 240, '1dir', 1],
+    ['rubble', 256, 192, '1dir', 1]
 ];
 
 for( unit of spriteList ){
