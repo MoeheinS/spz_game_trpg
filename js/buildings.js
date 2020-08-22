@@ -195,4 +195,5 @@ new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*22) ) );
 new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*22) ) );
 new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*22) ) );
 
-new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*25), (GRID_SIZE*22) ) );
+new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*21) ) );
+//new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*25), (GRID_SIZE*22) ) );
