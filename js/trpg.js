@@ -221,9 +221,11 @@ Events.on(render, 'afterRender', function() {
   
   Render.startViewTransform(render);
 
-    ctx.fillStyle = groundPattern;
+    ctx.fillStyle = wastePattern;
     ctx.fillRect(0, 0, FIELD_SIZE, FIELD_SIZE);
     ctx.fillStyle = RENDER_TERRAINCOLOR;
+
+    render_grass();
 
     render_debug(game_debug, render.context);
 

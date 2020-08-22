@@ -67,48 +67,6 @@ function render_debug(game_debug){
       ctx.fillStyle = RENDER_SHADOWCOLOR;
     }
 
-    if( game_debug_flags.grass ){
-      for( let hi = 0; hi < game_debug_flags.grass.length; hi++ ){
-        for( let vi = 0; vi < game_debug_flags.grass[hi].length; vi++ ){
-          ctx.fillStyle = RENDER_SHADOWCOLOR;
-          switch (game_debug_flags.grass[vi][hi]) {
-            case '9':
-              ctx.fillStyle = 'lightgreen';
-              break;
-            case '1':
-              ctx.fillStyle = 'skyblue';
-              break;
-            case '2':
-              ctx.fillStyle = RENDER_UI_GREEN;
-              break;
-            case '3':
-              ctx.fillStyle = RENDER_FILLCOLOR;
-              break;
-            case '4':
-              ctx.fillStyle = RENDER_TERRAINCOLOR;
-              break;
-            case 'A':
-              ctx.fillStyle = 'red';
-              break;
-            case 'B':
-              ctx.fillStyle = 'blue';
-              break;
-            case 'C':
-              ctx.fillStyle = 'green';
-              break;
-            case 'D':
-              ctx.fillStyle = 'yellow';
-              break;
-            case 0:
-            default:
-              break;
-          }
-          ctx.fillRect(hi*GRID_SIZE, vi*GRID_SIZE, GRID_SIZE, GRID_SIZE);
-          ctx.fillStyle = RENDER_SHADOWCOLOR;
-        }
-      }
-    }
-
   }
   ctx.restore();
 }
@@ -270,4 +228,22 @@ function heartbeat_animations(){
       }
     }
   }
+}
+
+function render_grass(){
+  if( game_debug_flags.grass.length ){
+    for( let hi = 0; hi < 40; hi++ ){
+			for( let vi = 0; vi < 40; vi++ ){
+				if( game_debug_flags.grass[hi][vi] ){
+          ctx.fillStyle = groundPattern;
+          ctx.fillRect( (vi*GRID_SIZE)-GRID_SIZE, (hi*GRID_SIZE)-GRID_SIZE, 3*GRID_SIZE, 3*GRID_SIZE);
+        }
+			}
+		}
+  }
+  // for( bld of buildings_all_Array ){
+  //   ctx.fillStyle = groundPattern;
+  //   ctx.fillRect(bld.bounds.min.x-GRID_SIZE, bld.bounds.min.y-GRID_SIZE, wbb(bld.bounds)+2*GRID_SIZE, hbb(bld.bounds)+2*GRID_SIZE);
+  //   ctx.fillStyle = RENDER_TERRAINCOLOR;
+  // }
 }
