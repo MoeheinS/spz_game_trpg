@@ -38,7 +38,7 @@ let buildingList = [
     dim: {x: GRID_SIZE, y: GRID_SIZE},
     sprite_dim: {x: 16, y: 16},
     levels: [
-      { spriteName: 'turret_rapid', hp: 5250,  attackCD: 10, attackRange: 36, damage: 5/*160*/, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
+      { spriteName: 'turret_rapid', hp: 5250,  attackCD: 10, attackRange: 36, damage: 160, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
       { spriteName: 'turret_rapid', hp: 6750,  attackCD: 10, attackRange: 36, damage: 163, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
       { spriteName: 'turret_rapid', hp: 8750,  attackCD: 10, attackRange: 36, damage: 168, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
       { spriteName: 'turret_rapid', hp: 11750, attackCD: 10, attackRange: 36, damage: 174, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
@@ -128,23 +128,6 @@ class BuildingEnt {
       //console.log(this.body.position);
       return this.body;
   }
-  aimAndFire() { 
-    // STUB
-    /*
-      acquire target, shoot at target
-    */
-  }
-  applyPain() {
-    //STUB
-    console.log('owie!');
-  }
-  die() {
-    if( this.body.custom.hp_current <= 0 ){
-      // TODO: need a ripperoni for buildings
-      ripperoni(this.body);
-      World.remove(world, this.body, true);
-    }
-  }
 }
 
 function turret_acqTarget(a, range){
@@ -152,9 +135,7 @@ function turret_acqTarget(a, range){
   for( e of units_Array ){
       let e_dist = getDistance(a.position, e.position);
       if( e_dist <= range ){
-          nearEnemies.push({"target": e, "distance": 400});
           nearEnemies.push({"target": e, "distance": e_dist});
-          nearEnemies.push({"target": e, "distance": 500});
       }
   }
   if( nearEnemies.length ){
@@ -162,7 +143,6 @@ function turret_acqTarget(a, range){
       nearEnemies_byDist = nearEnemies.sort(function(a,b){
           return a.distance-b.distance;
       });
-      console.log(nearEnemies_byDist[0].distance);
       turret_atkTarget(a, nearEnemies_byDist[0].target);
   }
 }
@@ -178,6 +158,37 @@ function turret_atkTarget(a, t){
     projectiles_Array.push(
         new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, a.custom.turret.damage, a.custom.turret.projectileArt)
     );
+}
+
+// =======================[ DOODAD ]====================================
+function ripperoni_building(a){
+  // exploding into hunks of manga meat or gears / bolts would be funny too, but let's stick with this for now
+  // MAGIC NUMBERS. MAGIC NUMBERS. UP ON THE MOUNTAIN. MAGIC NUMBERS.
+  for( let hi = a.region.startCol; hi < a.region.endCol; hi++ ){
+    for( let vi = a.region.startRow; vi < a.region.endRow; vi++ ){
+      //let rubble = Bodies.rectangle(a.position.x, a.position.y+0.25*GRID_SIZE, GRID_SIZE, GRID_SIZE, {
+      let rubble = Bodies.rectangle(hi*GRID_SIZE+0.5*GRID_SIZE, vi*GRID_SIZE+0.75*GRID_SIZE, GRID_SIZE, GRID_SIZE, {
+        label: 'doodad',
+        collisionFilter: {
+          category: draggable_false
+        },
+        isStatic: true,
+        isSensor: true,
+        custom: {
+          graphics: {
+            renderMode: 'sheet_static',
+            sprite: './assets/buildings.png',
+            sprite_dim: {
+                x: 16,
+                y: 16
+            },
+            sheet_idle: getSprites('rubble', 'idle') //placeholder
+          }
+        }
+      });
+      World.add(world, rubble);
+    }
+  }
 }
 
 var test_turret = new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7), (GRID_SIZE*20) ) );
