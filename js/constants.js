@@ -84,3 +84,5 @@ var defaultCategory = 0x0001,
 const GRID_SIZE = 32;
 const GRID_LIMIT = 40;
 const FIELD_SIZE = GRID_LIMIT * GRID_SIZE;
+
+var building_CORE;
