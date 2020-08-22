@@ -49,6 +49,18 @@ function render_debug(game_debug){
         if(bod.region){
           ctx.fillText(`gridPos: ${bod.region.startRow},${bod.region.startCol}`, bod.bounds.min.x-10, bod.bounds.min.y+84);
         }
+
+        if( bod.custom.target ){
+          ctx.save();
+          ctx.strokeStyle = RENDER_SHADOWCOLOR;
+
+          ctx.beginPath();
+          ctx.moveTo( bod.vertices[0].x, bod.vertices[0].y);
+          ctx.lineTo( bod.custom.target.position.x, bod.custom.target.position.y);
+          ctx.stroke();
+          
+          ctx.restore();
+        }
       }
       ctx.fillStyle = RENDER_UI_RED;
       ctx.fillRect(bod.bounds.min.x, bod.bounds.min.y, wbb(bod.bounds), hbb(bod.bounds));

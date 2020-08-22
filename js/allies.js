@@ -1,7 +1,7 @@
 let unitList = [
   // name, rarity, spriteName, attackCD, moveSpeed, attackRange, damage, preferredTarget, hp
   {name: 'Ratty', rarity: 'N', spriteName: 'ratty', attackCD: 126, movespeed: 140, moveType: 'ground', attackRange: 1, damage: 54, projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 180, amount: 15},
-  {name: 'Sling', rarity: 'N', spriteName: 'sling', attackCD: 144, movespeed: 110, moveType: 'ground', attackRange: 10, damage: 260/*26*/, projectileArt: 'projectile_unit_sling', preferredTarget: 'any', hp: 70, amount: 15}
+  {name: 'Sling', rarity: 'N', spriteName: 'sling', attackCD: 144, movespeed: 110, moveType: 'ground', attackRange: 10, damage: 460/*26*/, projectileArt: 'projectile_unit_sling', preferredTarget: 'any', hp: 70, amount: 15}
 ];
 
 class UnitEnt {
