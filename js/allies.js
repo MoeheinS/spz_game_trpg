@@ -1,7 +1,7 @@
 let unitList = [
   // name, rarity, spriteName, attackCD, moveSpeed, attackRange, damage, preferredTarget, hp
-  {name: 'Ratty', rarity: 'N', spriteName: 'ratty', attackCD: 210, movespeed: 140, moveType: 'ground', attackRange: 1, damage: 54, preferredTarget: 'any', hp: 180, amount: 15},
-  {name: 'Sling', rarity: 'N', spriteName: 'sling', attackCD: 240, movespeed: 110, moveType: 'ground', attackRange: 10, damage: 26, preferredTarget: 'any', hp: 70, amount: 15}
+  {name: 'Ratty', rarity: 'N', spriteName: 'ratty', attackCD: 126, movespeed: 140, moveType: 'ground', attackRange: 1, damage: 54, projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 180, amount: 15},
+  {name: 'Sling', rarity: 'N', spriteName: 'sling', attackCD: 144, movespeed: 110, moveType: 'ground', attackRange: 10, damage: 260/*26*/, projectileArt: 'projectile_unit_sling', preferredTarget: 'any', hp: 70, amount: 15}
 ];
 
 class UnitEnt {
@@ -29,7 +29,7 @@ class UnitEnt {
           hp_current: info.hp,
           attackRange: info.attackRange,
           attackCD: info.attackCD,
-          attackCD_base: 10,
+          attackCD_base: info.attackCD,
           moveType: info.moveType,
           damage: info.damage,
           preferredTarget: info.preferredTarget,
@@ -37,12 +37,15 @@ class UnitEnt {
           waypoint: false,
           target: false,
           targetsArray: false,
+          //turret: {
+            projectileArt: info.projectileArt,
+          //},
 
           state: 'idle',
 
           graphics: {
             renderMode: 'sheet_directional',
-            sprite: './assets/origin.png',
+            sprite: './assets/units.png',
             sprite_dim: {
               x: 16,
               y: 16
@@ -132,7 +135,7 @@ function unit_sortTargets(a){
     // do a little victory dance because there's nothing left to destroy, you monster
     // walls don't count
     a.custom.state = 'dancing';
-    console.error('No targets to be found');
+    //console.error('No targets to be found');
   }else{
     switch (a.custom.preferredTarget) {
       case 'wall':
@@ -201,6 +204,15 @@ function unit_pathfind(bod, exceptID, exceptBod){
 }
 
 function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
+  // for ranged units
+  // TODO: IT APPEARS TO WORK? But needs more testing
+  if( getDistance(unit.position, target.position) <= unit.custom.attackRange*GRID_SIZE ){
+    unit.custom.target = target;
+    unit.custom.waypoint = [target.position];
+    unit.custom.state = 'ready';
+    return;
+  }
+
   var easystar = new EasyStar.js();
   easystar.setGrid(astar_grid);
   easystar.enableDiagonals();
@@ -220,16 +232,35 @@ function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
 }
 
 function unit_attackTarget(a){
+  if( !a.custom.target || Composite.get(world, a.custom.target.id, 'body') == null || Composite.get(world, a.id, 'body') == null ){
+    return;
+  }
   // check if you're within range, in which case, attack and reset attack timer
+  // SOMEBODY TOUCHA MY SPAGHET
   if( getDistance(a.position, a.custom.target.position) <= a.custom.attackRange*GRID_SIZE ){
     if( a.custom.attackCD <= 0 ){
-      unit_applyPain(a);
+      unit_applyPain(a, a.custom.target);
+      a.custom.attackCD = a.custom.attackCD_base;
+    }
+  }else if( getDistance(a.position, a.custom.target.bounds.min) <= a.custom.attackRange*GRID_SIZE ){
+    if( a.custom.attackCD <= 0 ){
+      unit_applyPain(a, a.custom.target);
+      a.custom.attackCD = a.custom.attackCD_base;
+    }
+  }else if( getDistance(a.position, a.custom.target.bounds.max) <= a.custom.attackRange*GRID_SIZE ){
+    if( a.custom.attackCD <= 0 ){
+      unit_applyPain(a, a.custom.target);
       a.custom.attackCD = a.custom.attackCD_base;
     }
   }else{
   // otherwise walk towards the closest waypoint, unless you're close, in which case,
   // shift if off the stack and repeat 
-    let waypoint_raw = {x: ( a.custom.waypoint[0].x*GRID_SIZE )+( 0.5*GRID_SIZE ), y: ( a.custom.waypoint[0].y*GRID_SIZE )+( 0.5*GRID_SIZE )};
+    var waypoint_raw;  
+    if( a.custom.waypoint.length ){
+      waypoint_raw = {x: ( a.custom.waypoint[0].x*GRID_SIZE )+( 0.5*GRID_SIZE ), y: ( a.custom.waypoint[0].y*GRID_SIZE )+( 0.5*GRID_SIZE )};
+    }else{
+      waypoint_raw = a.custom.target.position;
+    }
 
     if( getDistance(a.position, waypoint_raw) <= GRID_SIZE ){
       a.custom.waypoint.shift();
@@ -239,15 +270,26 @@ function unit_attackTarget(a){
   }
 }
 
-function unit_applyPain(a){
-  console.log('take that, evildoer!');
+function unit_applyPain(a, t){
+  console.log(`unit ${a.id} attacking ${t.id}`);
+  let distance = getDistance(a.position, t.position);
+  let distanceDiff = ( distance/( a.custom.attackRange*GRID_SIZE ) ); // percentage of distance travelled already
+
+  let lifetime_adjusted = ( a.custom.attackRange * 10 ) * distanceDiff; // used to be 90
+
+  projectiles_Array.push(
+    new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, a.custom.damage, a.custom.projectileArt)
+  );
 }
 
 var test_allyGB2 = new UnitEnt( new Coordinate( GRID_SIZE*8, GRID_SIZE*2 ), 'Ratty' );
 new UnitEnt( new Coordinate( GRID_SIZE*20, GRID_SIZE*2 ), 'Sling' );
+new UnitEnt( new Coordinate( GRID_SIZE*21, GRID_SIZE*2 ), 'Sling' );
+new UnitEnt( new Coordinate( GRID_SIZE*22, GRID_SIZE*2 ), 'Sling' );
+new UnitEnt( new Coordinate( GRID_SIZE*23, GRID_SIZE*2 ), 'Sling' );
 
 // =======================[ DOODAD ]====================================
-function ripperoni(a){
+function ripperoni_unit(a){
   // exploding into hunks of manga meat or gears / bolts would be funny too, but let's stick with this for now
   let tombstone = Bodies.rectangle(a.position.x, a.position.y, 8, 8, {
     label: 'doodad',
@@ -270,4 +312,3 @@ function ripperoni(a){
   });
   World.add(world, tombstone);
 }
-

@@ -71,17 +71,25 @@ class ProjectileEnt {
         }
     }
     applyPain() {
-        //STUB
-        console.log('ow!');
         this.target.custom.hp_current = this.target.custom.hp_current - this.damage;
         console.log(`${this.target.custom.hp_current} hp remaining of ${this.target.custom.hp_max}`);
-        if( this.target.custom.hp_current <= 0 ){
-            ripperoni(this.target);
+
+        //console.warn( Composite.get(world, this.target.id, 'body') );
+
+        if( this.target.custom.hp_current <= 0 && Composite.get(world, this.target.id, 'body') != null ){
+            switch (this.target.label) {
+                case 'ally':
+                    ripperoni_unit(this.target);    
+                    break;
+                case 'building':
+                    ripperoni_building(this.target);    
+                    break;
+                default:
+                    break;
+            }
             World.remove(world, this.target, true);
         }
-        
     }
-
 }
 
 function draw_Projectile(i){
