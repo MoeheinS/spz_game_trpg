@@ -169,25 +169,15 @@ Events.on(engine, 'afterUpdate', function(event) {
     }
   }
 
-  // TODO: rework this all. If unit.custom.target, check range
-  // if out of range, move towards unit.custom.waypoint[0]
-  // if within 10 range of unit.custom.waypoint[0], shift() it
   for( unit of units_Array ){
-    //unit.custom.attackCD--;
+    unit.custom.attackCD--;
     switch (unit.custom.state) {
       case 'ready':
-        cycle_movement(unit, unit.custom.target.position);
-        break;
-      case 'moving':
         //cycle_movement(unit, unit.custom.target.position);
+        unit_attackTarget(unit);
         break;
-      case 'attacking':
-        //unit_attackTarget(unit);
-        break;
-      case 'idle':
       default:
-        // see if you can pathfind to a target
-        //unit_acquireTarget(unit);
+        // mildly deprecated
         break;
     }
   }
