@@ -5,14 +5,38 @@ function render_ui(){
   /*
     This is the layer where I want to render UI and static elements that don't scale
   */
-  for( waypoint of game_waypoints ){
-    ctx.save();
-    ctx.font = '24px alber';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = RENDER_UI_GREEN;
-    ctx.fillText('x', waypoint.x, waypoint.y);
-    ctx.restore();
+
+  let distanceCheck = true;
+
+  for( bld of buildings_all_Array ){
+    for( b_vrt of bld.vertices ){
+      if( distanceCheck ){
+        distanceCheck = ( getDistance(mouse.position, b_vrt) <= 2*GRID_SIZE ? false : true );
+      }
+    }
+    if( distanceCheck ){
+      distanceCheck = ( getDistance(mouse.position, bld.position) <= 2*GRID_SIZE ? false : true );
+    }
   }
+  for( doo of doodads_Array ){
+    if( doo.label2 == 'rubble' ){
+      for( d_vrt of doo.vertices ){
+        if( distanceCheck ){
+          distanceCheck = ( getDistance(mouse.position, d_vrt) <= 2*GRID_SIZE ? false : true );
+        }
+      }
+    }
+  }
+
+  // ctx.strokeStyle = ( distanceCheck ? RENDER_UI_GREEN : RENDER_UI_RED );
+  // ctx.beginPath();
+  // ctx.arc(mouse.position.x, mouse.position.y, 7, 0, Math.PI * 2, true);
+  // ctx.stroke();
+
+  // ctx.fillStyle = ( distanceCheck ? RENDER_UI_GREEN : RENDER_UI_RED );
+  // ctx.fillRect(mouse.position.x - mouse.position.x % GRID_SIZE , mouse.position.y - mouse.position.y % GRID_SIZE, GRID_SIZE, GRID_SIZE);
+
+  ctx.drawImage(unitsImg, 624, ( distanceCheck ? 64 : 32 ), 32, 32, mouse.position.x - mouse.position.x % GRID_SIZE , mouse.position.y - mouse.position.y % GRID_SIZE, 2*GRID_SIZE, 2*GRID_SIZE);
 
   ctx.restore();
 }

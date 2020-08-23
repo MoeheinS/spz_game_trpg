@@ -117,7 +117,7 @@ class BuildingEnt {
 
           graphics: {
             renderMode: 'sheet_animation',
-            sprite: './assets/buildings.png',
+            sprite: buildingsImg.src,
             sprite_dim: info.sprite_dim,
             sheet_idle: getSprites(info.spriteName, 'idle'),
             sprite_offset: (info.sprite_offset ? info.sprite_offset : false)
@@ -169,6 +169,7 @@ function ripperoni_building(a){
       //let rubble = Bodies.rectangle(a.position.x, a.position.y+0.25*GRID_SIZE, GRID_SIZE, GRID_SIZE, {
       let rubble = Bodies.rectangle(hi*GRID_SIZE+0.5*GRID_SIZE, vi*GRID_SIZE+0.75*GRID_SIZE, GRID_SIZE, GRID_SIZE, {
         label: 'doodad',
+        label2: 'rubble',
         collisionFilter: {
           category: draggable_false
         },
@@ -177,7 +178,7 @@ function ripperoni_building(a){
         custom: {
           graphics: {
             renderMode: 'sheet_static',
-            sprite: './assets/buildings.png',
+            sprite: buildingsImg.src,
             sprite_dim: {
                 x: 16,
                 y: 16

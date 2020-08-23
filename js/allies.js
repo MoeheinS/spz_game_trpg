@@ -45,7 +45,7 @@ class UnitEnt {
 
           graphics: {
             renderMode: 'sheet_directional',
-            sprite: './assets/units.png',
+            sprite: unitsImg.src,
             sprite_dim: {
               x: 16,
               y: 16
@@ -293,6 +293,7 @@ function ripperoni_unit(a){
   // exploding into hunks of manga meat or gears / bolts would be funny too, but let's stick with this for now
   let tombstone = Bodies.rectangle(a.position.x, a.position.y, 8, 8, {
     label: 'doodad',
+    label2: 'tombstone',
     collisionFilter: {
       category: draggable_false
     },
@@ -301,7 +302,7 @@ function ripperoni_unit(a){
     custom: {
       graphics: {
         renderMode: 'sheet_static',
-        sprite: './assets/buildings.png',
+        sprite: buildingsImg.src,
         sprite_dim: {
             x: 16,
             y: 16

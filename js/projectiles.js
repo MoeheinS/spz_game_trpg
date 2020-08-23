@@ -39,7 +39,7 @@ class ProjectileEnt {
 
         this.graphics = {
             renderMode: 'sheet_animation',
-            sprite: './assets/buildings.png',
+            sprite: buildingsImg.src,
             sprite_dim: {
                 x: 16,
                 y: 16

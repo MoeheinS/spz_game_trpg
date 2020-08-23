@@ -194,6 +194,13 @@ Events.on(engine, 'afterUpdate', function(event) {
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 
+var oobPattern = new Object;
+oobImg = new Image();
+oobImg.src = './assets/gnd00.png';
+oobImg.onload = function(){
+    // create pattern
+    oobPattern = ctx.createPattern(oobImg, 'repeat'); // Create a pattern with this image, and set it to "repeat".
+}
 var groundPattern = new Object;
 groundImg = new Image();
 groundImg.src = './assets/gnd02.png';
@@ -208,6 +215,10 @@ wasteImg.onload = function(){
     // create pattern
     wastePattern = ctx.createPattern(wasteImg, 'repeat'); // Create a pattern with this image, and set it to "repeat".
 }
+unitsImg = new Image();
+unitsImg.src = './assets/units.png';
+buildingsImg = new Image();
+buildingsImg.src = './assets/buildings.png';
 
 Events.on(render, 'afterRender', function() {
 
@@ -219,6 +230,10 @@ Events.on(render, 'afterRender', function() {
   ctx.lineWidth = 2;
   ctx.clearRect(0, 0, reWi, reHi);
   
+  ctx.fillStyle = oobPattern;
+  ctx.fillRect(0, 0, reWi, reHi);
+  ctx.fillStyle = RENDER_TERRAINCOLOR;
+
   Render.startViewTransform(render);
 
     ctx.fillStyle = wastePattern;
