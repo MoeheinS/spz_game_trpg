@@ -11,7 +11,8 @@ let game_debug_flags = {
   "grid": false,
   "path": [],
   "path_size": 1,
-  "grass": false
+  "grass": false,
+  "mayDeploy": true
 };
 /*
   default

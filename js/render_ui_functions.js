@@ -28,6 +28,8 @@ function render_ui(){
     }
   }
 
+  game_debug_flags.mayDeploy = distanceCheck;
+
   // ctx.strokeStyle = ( distanceCheck ? RENDER_UI_GREEN : RENDER_UI_RED );
   // ctx.beginPath();
   // ctx.arc(mouse.position.x, mouse.position.y, 7, 0, Math.PI * 2, true);
