@@ -49,7 +49,6 @@ class ProjectileEnt {
     }
     advance() { // advance the projectile
         if( this.lifetime >= this.lifetimeMax ){
-            // mostly STUB. apply pain? stop rendering this? remove this from something?
             // TODO: if there's an array, remove self from said array
             projectiles_Array.splice(projectiles_Array.indexOf(this), 1);
             this.applyPain();
@@ -120,4 +119,4 @@ function draw_Projectile(i){
 }
 
 // TODO: all of this is test placeholder
-projectiles_Array.push(new ProjectileEnt(test_turret.position, test_allyGB2.position, true, 60, test_allyGB2, 40, 'projectile_basic'));
+//projectiles_Array.push(new ProjectileEnt(test_turret.position, test_allyGB2.position, true, 60, test_allyGB2, 40, 'projectile_basic'));
