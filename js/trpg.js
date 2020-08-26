@@ -104,19 +104,16 @@ document.addEventListener("keydown", function(e){
       }
       break;
     // start of waypointing
-    case 'm':
-      console.log(mouseConstraint);
-      game_waypoints = [];
-      // TODO: mouse.absolute is accurate, but rendering (when zoomed) is only accurate for mouse.position... what even.
-      // I could just fix it by having the waypoint be a body instead of a coordinate, but I want to understand
-      // FIXME: it's FUCKED when you move the camera too. Body is the way to go
-      let coord = {x: mouseConstraint.mouse.position.x, y: mouseConstraint.mouse.position.y};
-      game_waypoints.push(coord);
-      break;
-    case 's':
+    // case 'm':
+    //   console.log(mouseConstraint);
+    //   game_waypoints = [];
+    //   let coord = {x: mouseConstraint.mouse.position.x, y: mouseConstraint.mouse.position.y};
+    //   game_waypoints.push(coord);
+    //   break;
+    // case 's':
     // clear waypoints
-      game_waypoints = [];
-      break;
+    //   game_waypoints = [];
+    //   break;
     // case 'Shift':
     //   if( !game_shift ){
     //     game_shift = true;
@@ -222,6 +219,12 @@ buildingsImg.src = './assets/buildings.png';
 
 Events.on(render, 'afterRender', function() {
 
+  // FIXME: clean up someday
+  ticker++;
+  if( ticker > 119 ){
+    ticker = 0;
+  }
+
   heartbeat_animations();
   group_Entities();
   //var ctx = render.context;
@@ -236,9 +239,26 @@ Events.on(render, 'afterRender', function() {
 
   Render.startViewTransform(render);
 
+    // background pattern
+    ctx.fillStyle = oobPattern;
+    ctx.fillRect(-2*reWi, -2*reHi, 5*reWi, 5*reHi);
+    ctx.fillStyle = RENDER_TERRAINCOLOR;
+
     ctx.fillStyle = wastePattern;
     ctx.fillRect(0, 0, FIELD_SIZE, FIELD_SIZE);
     ctx.fillStyle = RENDER_TERRAINCOLOR;
+
+    // particles under everything else (static terrain)
+    if( particles_Array.length ){
+      for( pa of particles_Array ){
+        if( ticker % 15 == 0 ){
+          pa.advance();
+        }
+        if( pa.lifetimeMax == -1 ){
+          draw_Particle(pa);
+        }
+      }
+    }
 
     render_grass();
 
@@ -251,11 +271,6 @@ Events.on(render, 'afterRender', function() {
     //debug state rendering
     //render_debug(game_debug, render.context);
 
-    // FIXME: clean up someday
-    ticker++;
-    if( ticker > 119 ){
-      ticker = 0;
-    }
     //if( ticker == 60 ){
       for( turret of defenses_Array ){
         turret.custom.turret.attackCD--;
@@ -265,6 +280,15 @@ Events.on(render, 'afterRender', function() {
         }
       }
     //}
+
+    // particles on top of everything else (explosions etc)
+    if( particles_Array.length ){
+      for( pa of particles_Array ){
+        if( pa.lifetimeMax != -1 ){
+          draw_Particle(pa);
+        }
+      }
+    }
 
     if( projectiles_Array.length ){
       for( p of projectiles_Array ){

@@ -38,7 +38,7 @@ function render_ui(){
   // ctx.fillStyle = ( distanceCheck ? RENDER_UI_GREEN : RENDER_UI_RED );
   // ctx.fillRect(mouse.position.x - mouse.position.x % GRID_SIZE , mouse.position.y - mouse.position.y % GRID_SIZE, GRID_SIZE, GRID_SIZE);
 
-  ctx.drawImage(unitsImg, 624, ( distanceCheck ? 64 : 32 ), 32, 32, mouse.position.x - mouse.position.x % GRID_SIZE , mouse.position.y - mouse.position.y % GRID_SIZE, 2*GRID_SIZE, 2*GRID_SIZE);
+  ctx.drawImage(unitsImg, 576, ( distanceCheck ? 80 : 32 ), 32, 32, mouse.position.x - mouse.position.x % GRID_SIZE , mouse.position.y - mouse.position.y % GRID_SIZE, 2*GRID_SIZE, 2*GRID_SIZE);
 
   ctx.restore();
 }

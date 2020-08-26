@@ -54,6 +54,7 @@ let group_Index = [
 ];
 
 let projectiles_Array = [];
+let particles_Array = [];
 
 //const COLOR_STACKED = '#795548';
 const COLOR_SHIFT = [

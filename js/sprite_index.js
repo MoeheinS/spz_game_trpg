@@ -49,11 +49,14 @@ var spriteList = [
     ['projectile_spinner', 160, 512, '1dir', 4],
     ['projectile_rapid', 80, 496, '1dir', 2],
 
-    ['projectile_unit_sling', 736, 448, '1dir', 1],
-    ['projectile_unit_melee', 752, 448, '1dir', 1],
+    ['projectile_unit_sling', 624, 432, '1dir', 1],
+    ['projectile_unit_melee', 640, 432, '1dir', 1],
     
-    ['tombstone', 256, 240, '1dir', 1],
-    ['rubble', 256, 192, '1dir', 1]
+    ['tombstone', 192, 192, '1dir', 1],
+    ['rubble', 224, 192, '1dir', 1],
+
+    ['flower_1', 528, 464, '1dir', 4],
+    ['flower_2', 528, 480, '1dir', 4]
 ];
 
 for( unit of spriteList ){
