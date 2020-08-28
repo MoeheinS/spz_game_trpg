@@ -1,7 +1,7 @@
 let unitList = [
   // name, rarity, spriteName, attackCD, moveSpeed, attackRange, damage, preferredTarget, hp
-  {name: 'Ratty', rarity: 'N', spriteName: 'ratty', attackCD: 126, movespeed: 140, moveType: 'ground', attackRange: 1, damage: 54, projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 180, amount: 15},
-  {name: 'Sling', rarity: 'N', spriteName: 'sling', attackCD: 144, movespeed: 110, moveType: 'ground', attackRange: 10, damage: 460/*26*/, projectileArt: 'projectile_unit_sling', preferredTarget: 'any', hp: 70, amount: 15}
+  {name: 'Ratty', rarity: 'N', spriteName: 'ratty', attackCD: 126, movespeed: 140, moveType: 'ground', attackRange: 1, damage: 54, attackArt: 'particle_atk_1', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 180, amount: 15},
+  {name: 'Sling', rarity: 'N', spriteName: 'sling', attackCD: 144, movespeed: 110, moveType: 'ground', attackRange: 10, damage: 26, attackArt: 'particle_atk_8',  projectileArt: 'projectile_unit_sling', preferredTarget: 'any', hp: 70, amount: 15}
 ];
 
 class UnitEnt {
@@ -38,6 +38,7 @@ class UnitEnt {
           target: false,
           targetsArray: false,
           //turret: {
+            attackArt: info.attackArt,
             projectileArt: info.projectileArt,
           //},
 
@@ -236,37 +237,55 @@ function unit_attackTarget(a){
     return;
   }
   // check if you're within range, in which case, attack and reset attack timer
-  // SOMEBODY TOUCHA MY SPAGHET
+  // if target building is larger than 32, or taller than 32
+  let target_points = a.custom.target.vertices;
+  var hurt_point = false;
   if( getDistance(a.position, a.custom.target.position) <= a.custom.attackRange*GRID_SIZE ){
     if( a.custom.attackCD <= 0 ){
       unit_applyPain(a, a.custom.target);
       a.custom.attackCD = a.custom.attackCD_base;
     }
-  }else if( getDistance(a.position, a.custom.target.bounds.min) <= a.custom.attackRange*GRID_SIZE ){
-    if( a.custom.attackCD <= 0 ){
-      unit_applyPain(a, a.custom.target);
-      a.custom.attackCD = a.custom.attackCD_base;
+  }else if( wbb(a.custom.target.bounds) > GRID_SIZE || hbb(a.custom.target.bounds) > GRID_SIZE ){
+    for( vert of target_points ){
+      if( getDistance(a.position, new Coordinate( vert.x, vert.y )) <= a.custom.attackRange*GRID_SIZE ){
+        if( a.custom.attackCD <= 0 ){
+          unit_applyPain(a, a.custom.target);
+          a.custom.attackCD = a.custom.attackCD_base;
+          hurt_point = true;
+        }
+      }
     }
-  }else if( getDistance(a.position, a.custom.target.bounds.max) <= a.custom.attackRange*GRID_SIZE ){
-    if( a.custom.attackCD <= 0 ){
-      unit_applyPain(a, a.custom.target);
-      a.custom.attackCD = a.custom.attackCD_base;
+    if( !hurt_point ){
+      unit_approachTarget(a);
     }
   }else{
+    unit_approachTarget(a);
+  }
+}
+
+function unit_approachTarget(a){
   // otherwise walk towards the closest waypoint, unless you're close, in which case,
   // shift if off the stack and repeat 
-    var waypoint_raw;  
-    if( a.custom.waypoint.length ){
-      waypoint_raw = {x: ( a.custom.waypoint[0].x*GRID_SIZE )+( 0.5*GRID_SIZE ), y: ( a.custom.waypoint[0].y*GRID_SIZE )+( 0.5*GRID_SIZE )};
+  var waypoint_raw = new Object;  
+  if( a.custom.waypoint.length ){
+    waypoint_raw = {x: ( a.custom.waypoint[0].x*GRID_SIZE )+( 0.5*GRID_SIZE ), y: ( a.custom.waypoint[0].y*GRID_SIZE )+( 0.5*GRID_SIZE )};
+  }else{
+    let target_points = a.custom.target.vertices;
+    if( wbb(a.custom.target.bounds) > GRID_SIZE || hbb(a.custom.target.bounds) > GRID_SIZE ){
+      for( vert of target_points ){
+        if( getDistance(a.position, new Coordinate( vert.x, vert.y )) <= a.custom.attackRange*GRID_SIZE ){
+          waypoint_raw = { x: vert.x, y: vert.y };
+        }
+      }
     }else{
-      waypoint_raw = a.custom.target.position;
+      waypoint_raw = { x: a.custom.target.position.x, y: a.custom.target.position.y };
     }
+  }
 
-    if( getDistance(a.position, waypoint_raw) <= GRID_SIZE ){
-      a.custom.waypoint.shift();
-    }else{
-      cycle_movement(unit, waypoint_raw);
-    }
+  if( getDistance(a.position, waypoint_raw) <= GRID_SIZE ){
+    a.custom.waypoint.shift();
+  }else{
+    cycle_movement(unit, waypoint_raw);
   }
 }
 
@@ -279,6 +298,9 @@ function unit_applyPain(a, t){
 
   projectiles_Array.push(
     new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, a.custom.damage, a.custom.projectileArt)
+  );
+  particles_Array.push(
+    new ParticleEnt({x: a.position.x+( 0.25*GRID_SIZE ), y: a.position.y-( 0.5*GRID_SIZE )}, 4, a.custom.attackArt, {x: 32, y: 16}, unitsImg.src)
   );
 }
 
