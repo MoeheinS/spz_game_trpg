@@ -12,13 +12,19 @@ class SpriteEnt {
                     this[v][1] = {x: start_x+(i*32)+16, y: start_y};
                 }
                 break;
-            case '1dir':
-            default:
+            case '1dir_32w':
                 this['idle'] = [];
                 for (let i = 0; i < steps; i++) {
-                    this['idle'][i] = {x: start_x+(i*16), y: start_y};
+                    this['idle'][i] = {x: start_x+(i*32), y: start_y};
                 }
                 break;
+            case '1dir':
+                default:
+                    this['idle'] = [];
+                    for (let i = 0; i < steps; i++) {
+                        this['idle'][i] = {x: start_x+(i*16), y: start_y};
+                    }
+                    break;
         }
         
     }
@@ -56,7 +62,18 @@ var spriteList = [
     ['rubble', 224, 192, '1dir', 1],
 
     ['flower_1', 528, 464, '1dir', 4],
-    ['flower_2', 528, 480, '1dir', 4]
+    ['flower_2', 528, 480, '1dir', 4],
+
+    ['particle_atk_1', 160, 272, '1dir_32w', 4], // dagger
+    ['particle_atk_2', 160, 368, '1dir_32w', 4], // sword
+    ['particle_atk_3', 160, 320, '1dir_32w', 4], // greatsword
+    ['particle_atk_4', 160, 336, '1dir_32w', 4], // saber
+    ['particle_atk_5', 160, 288, '1dir_32w', 4], // axe
+    ['particle_atk_6', 160, 304, '1dir_32w', 4], // spear
+    ['particle_atk_7', 160, 352, '1dir_32w', 4], // flail
+    ['particle_atk_8', 160, 256, '1dir_32w', 4], // staff
+    ['particle_atk_9', 160, 384, '1dir_32w', 4], // bow
+    ['particle_atk_10', 160, 400, '1dir_32w', 4], // spear STAB
 ];
 
 for( unit of spriteList ){
