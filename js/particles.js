@@ -3,7 +3,9 @@ class ParticleEnt {
     constructor(
         startCoords, 
         lifetimeMax,
-        particleArt
+        particleArt,
+        sprite_dim_override,
+        source_override
     ) {
         // startCoords is body.position values; object {x: 0, y: 0}
         this.position = new Object;
@@ -16,10 +18,10 @@ class ParticleEnt {
         
         this.graphics = {
             renderMode: 'sheet_animation',
-            sprite: buildingsImg.src,
+            sprite: ( source_override ? source_override : buildingsImg.src ),
             sprite_dim: {
-                x: 16,
-                y: 16
+                x: ( sprite_dim_override && sprite_dim_override.x ? sprite_dim_override.x : 16 ),
+                y: ( sprite_dim_override && sprite_dim_override.y ? sprite_dim_override.y : 16 )
             },
             sheet: getSprites(particleArt, 'idle')
         };
