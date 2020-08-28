@@ -296,11 +296,19 @@ function unit_applyPain(a, t){
 
   let lifetime_adjusted = ( a.custom.attackRange * 10 ) * distanceDiff; // used to be 90
 
-  projectiles_Array.push(
-    new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, a.custom.damage, a.custom.projectileArt)
-  );
+  if( a.custom.attackRange == 1 ){
+    // TODO: melee units don't need projectile art, fix someday
+    projectiles_Array.push(
+      new ProjectileEnt(a.position, t.position, true, 1, t, a.custom.damage, a.custom.projectileArt)
+    );
+  }else{
+    projectiles_Array.push(
+      new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, a.custom.damage, a.custom.projectileArt)
+    );
+  }
+  
   particles_Array.push(
-    new ParticleEnt({x: a.position.x+( 0.25*GRID_SIZE ), y: a.position.y-( 0.5*GRID_SIZE )}, 4, a.custom.attackArt, {x: 32, y: 16}, unitsImg.src)
+    new ParticleEnt({x: a.position.x+( 0.25*GRID_SIZE ), y: a.position.y-( 0.5*GRID_SIZE )}, 3, a.custom.attackArt, {x: 32, y: 16}, unitsImg.src)
   );
 }
 

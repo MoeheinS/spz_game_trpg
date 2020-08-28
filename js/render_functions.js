@@ -160,10 +160,11 @@ function draw_Graphics(a, mode){
         var sx = i.custom.graphics.sheet_idle[0].x;
         var sy = i.custom.graphics.sheet_idle[0].y;
 
-        if( i.label == 'building' ){
+        // used to be buildings only, but now works for doodads too
+        //if( i.label == 'building' ){
           //iy = i.position.y - iys;
-          iy = i.bounds.max.y - ( dy/2 ) - ( i.custom.graphics.sprite_offset.y ? i.custom.graphics.sprite_offset.y : 0 );
-        }
+          iy = i.bounds.max.y - ( dy/2 ) - ( i.custom.graphics.sprite_offset && i.custom.graphics.sprite_offset.y ? i.custom.graphics.sprite_offset.y : 0 );
+        //}
 
         dx = ixs*2;
         dy = iys*2;
@@ -236,7 +237,9 @@ function render_grass(){
 			for( let vi = 0; vi < 40; vi++ ){
 				if( game_debug_flags.grass[hi][vi] ){
           ctx.fillStyle = groundPattern;
-          ctx.fillRect( (vi*GRID_SIZE)-GRID_SIZE, (hi*GRID_SIZE)-GRID_SIZE, 3*GRID_SIZE, 3*GRID_SIZE);
+          ctx.beginPath();
+          ctx.arc((vi*GRID_SIZE)+0.5*GRID_SIZE, (hi*GRID_SIZE)+0.5*GRID_SIZE, 2*GRID_SIZE, 0, Math.PI * 2, true);
+          ctx.fill();
         }
 			}
 		}

@@ -167,7 +167,7 @@ function ripperoni_building(a){
   for( let hi = a.region.startCol; hi < a.region.endCol; hi++ ){
     for( let vi = a.region.startRow; vi < a.region.endRow; vi++ ){
       //let rubble = Bodies.rectangle(a.position.x, a.position.y+0.25*GRID_SIZE, GRID_SIZE, GRID_SIZE, {
-      let rubble = Bodies.rectangle(hi*GRID_SIZE+0.5*GRID_SIZE, vi*GRID_SIZE+0.75*GRID_SIZE, GRID_SIZE, GRID_SIZE, {
+      let rubble = Bodies.rectangle(hi*GRID_SIZE+0.5*GRID_SIZE, vi*GRID_SIZE+0.5*GRID_SIZE, GRID_SIZE, GRID_SIZE, {
         label: 'doodad',
         label2: 'rubble',
         collisionFilter: {
@@ -179,6 +179,7 @@ function ripperoni_building(a){
           graphics: {
             renderMode: 'sheet_static',
             sprite: buildingsImg.src,
+            sprite_offset: 0.25*GRID_SIZE,
             sprite_dim: {
                 x: 16,
                 y: 16

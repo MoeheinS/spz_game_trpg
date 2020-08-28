@@ -9,21 +9,24 @@ function render_ui(){
   let distanceCheck = true;
 
   for( bld of buildings_all_Array ){
-    for( b_vrt of bld.vertices ){
-      if( distanceCheck ){
-        distanceCheck = ( getDistance(mouse.position, b_vrt) <= 2*GRID_SIZE ? false : true );
-      }
-    }
+    // for( b_vrt of bld.vertices ){
+    //   if( distanceCheck ){
+    //     distanceCheck = ( getDistance(mouse.position, b_vrt) <= 2*GRID_SIZE ? false : true );
+    //   }
+    // }
     if( distanceCheck ){
       distanceCheck = ( getDistance(mouse.position, bld.position) <= 2*GRID_SIZE ? false : true );
     }
   }
   for( doo of doodads_Array ){
     if( doo.label2 == 'rubble' ){
-      for( d_vrt of doo.vertices ){
-        if( distanceCheck ){
-          distanceCheck = ( getDistance(mouse.position, d_vrt) <= 2*GRID_SIZE ? false : true );
-        }
+      // for( d_vrt of doo.vertices ){
+      //   if( distanceCheck ){
+      //     distanceCheck = ( getDistance(mouse.position, d_vrt) <= 2*GRID_SIZE ? false : true );
+      //   }
+      // }
+      if( distanceCheck ){
+        distanceCheck = ( getDistance(mouse.position, doo.position) <= 2*GRID_SIZE ? false : true );
       }
     }
   }
