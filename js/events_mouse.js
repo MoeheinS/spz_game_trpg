@@ -55,7 +55,7 @@ Events.on(mouseConstraint, "mousedown", function(event) {
 
   if( event.mouse.button === 0){
     if( game_debug_flags.mayDeploy ){
-      new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Sling' );
+      new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Ratty' );
     }
   }
 });
