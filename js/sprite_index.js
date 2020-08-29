@@ -76,6 +76,8 @@ var spriteList = [
     ['particle_atk_8', 160, 256, '1dir_32w', 4], // staff
     ['particle_atk_9', 160, 384, '1dir_32w', 4], // bow
     ['particle_atk_10', 160, 400, '1dir_32w', 4], // spear STAB
+
+    ['particle_explosion', 448, 464, '1dir', 4],
 ];
 
 for( unit of spriteList ){

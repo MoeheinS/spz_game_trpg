@@ -191,6 +191,18 @@ function ripperoni_building(a){
       World.add(world, rubble);
     }
   }
+
+  if( wbb(a.bounds) > GRID_SIZE || hbb(a.bounds) > GRID_SIZE ){
+    for( vert of a.vertices ){
+      particles_Array.push(
+        new ParticleEnt({x: a.bounds.min.x+( Math.random()*wbb(a.bounds) ), y: a.bounds.min.y+( Math.random()*hbb(a.bounds) )}, 3, 'particle_explosion')
+      );
+    }
+  }else{
+    particles_Array.push(
+      new ParticleEnt({x: a.position.x, y: a.position.y}, 3, 'particle_explosion')
+    );
+  }
 }
 
 var test_turret = new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7), (GRID_SIZE*20) ) );
