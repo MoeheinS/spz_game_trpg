@@ -184,7 +184,7 @@ function ripperoni_building(a){
                 x: 16,
                 y: 16
             },
-            sheet_idle: getSprites('rubble', 'idle') //placeholder
+            sheet_idle: getSprites('rubble_'+(Math.ceil(Math.random()*3)), 'idle') // place rubble_1 to rubble_3, randomly
           }
         }
       });

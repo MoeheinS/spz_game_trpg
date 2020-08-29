@@ -59,7 +59,9 @@ var spriteList = [
     ['projectile_unit_melee', 640, 432, '1dir', 1],
     
     ['tombstone', 192, 192, '1dir', 1],
-    ['rubble', 224, 192, '1dir', 1],
+    ['rubble_1', 224, 192, '1dir', 1],
+    ['rubble_2', 224, 160, '1dir', 1],
+    ['rubble_3', 256, 160, '1dir', 1],
 
     ['flower_1', 528, 464, '1dir', 4],
     ['flower_2', 528, 480, '1dir', 4],
