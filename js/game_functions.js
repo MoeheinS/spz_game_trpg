@@ -32,6 +32,10 @@ function group_Entities() {
       case 'building':
         buildings_all_Array.push(bod);
         switch (bod.custom.category) {
+          case 'terrain':
+            walls_Array.push(bod);  
+            render_Array.push(bod);
+            break;
           case 'wall':
             walls_Array.push(bod);
             render_Array.push(bod);
@@ -110,4 +114,21 @@ function landScape(){
 
   return astar_grid;
 
+}
+
+function level(command){
+  switch (command) {
+    case 'clear':
+      for( bod of Composite.allBodies(world) ){
+        if( bod.label != 'boundary' ){
+          World.remove(world, bod, true);
+        }
+      }
+      particles_Array = [];
+      projectiles_Array = [];
+      game_debug_flags.grass = new aStar_grid();
+      break;
+    default:
+      break;
+  }
 }

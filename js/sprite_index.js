@@ -62,6 +62,10 @@ var spriteList = [
     ['rubble_1', 224, 192, '1dir', 1],
     ['rubble_2', 224, 160, '1dir', 1],
     ['rubble_3', 256, 160, '1dir', 1],
+    ['terrain_rock_s', 352, 192, '1dir', 1],
+    ['terrain_rock_l', 384, 176, '1dir_32w', 1],
+    ['terrain_tree_s', 432, 192, '1dir', 2],
+    ['terrain_tree_l', 448, 224, '1dir_32w', 1],
 
     ['flower_1', 528, 464, '1dir', 4],
     ['flower_2', 528, 480, '1dir', 4],

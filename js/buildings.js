@@ -68,7 +68,43 @@ let buildingList = [
 
       { spriteName: 'core3', hp: 45000 }
     ]
-  }
+  },
+  {
+    name: 'rock_s',
+    category: 'terrain',
+    dim: {x: GRID_SIZE, y: GRID_SIZE},
+    sprite_dim: {x: 16, y: 16},
+    levels: [
+      { spriteName: 'terrain_rock_s', hp: 1125 }
+    ]
+  },
+  {
+    name: 'rock_l',
+    category: 'terrain',
+    dim: {x: 2*GRID_SIZE, y: 2*GRID_SIZE},
+    sprite_dim: {x: 32, y: 32},
+    levels: [
+      { spriteName: 'terrain_rock_l', hp: 1125 }
+    ]
+  },
+  {
+    name: 'tree_s',
+    category: 'terrain',
+    dim: {x: GRID_SIZE, y: GRID_SIZE},
+    sprite_dim: {x: 16, y: 16},
+    levels: [
+      { spriteName: 'terrain_tree_s', hp: 1125 }
+    ]
+  },
+  {
+    name: 'tree_l',
+    category: 'terrain',
+    dim: {x: 2*GRID_SIZE, y: 2*GRID_SIZE},
+    sprite_dim: {x: 32, y: 32},
+    levels: [
+      { spriteName: 'terrain_tree_l', hp: 1125 }
+    ]
+  },
 ];
 
 class BuildingEnt {
@@ -222,3 +258,5 @@ new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*22) ) );
 
 new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*21) ) );
 //new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*25), (GRID_SIZE*22) ) );
+
+new BuildingEnt( 'rock_l', 0, new Coordinate( (GRID_SIZE*2), (GRID_SIZE*18) ) );
