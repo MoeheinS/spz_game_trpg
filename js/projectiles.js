@@ -117,6 +117,3 @@ function draw_Projectile(i){
 
     ctx.restore();
 }
-
-// TODO: all of this is test placeholder
-//projectiles_Array.push(new ProjectileEnt(test_turret.position, test_allyGB2.position, true, 60, test_allyGB2, 40, 'projectile_basic'));
