@@ -6,9 +6,29 @@ function render_ui(){
     This is the layer where I want to render UI and static elements that don't scale
   */
 
+ render_cursor();
+
+  ctx.restore();
+}
+
+function render_cursor(){
+  ctx.save();
+
   let distanceCheck = true;
 
   for( bld of buildings_all_Array ){
+    if( wbb(bld.bounds) > GRID_SIZE || hbb(bld.bounds) > GRID_SIZE ){
+      for( b_vert of bld.vertices ){
+        if( distanceCheck ){
+          distanceCheck = ( getDistance(mouse.position, 
+            {
+              x: b_vert.x+(0.5*GRID_SIZE * ( b_vert.x > bld.position.x ? -1 : 1 ) ), 
+              y: b_vert.y+(0.5*GRID_SIZE * ( b_vert.y > bld.position.y ? -1 : 1 ))
+            }
+          ) <= 2*GRID_SIZE ? false : true );  
+        }
+      }
+    }
     // for( b_vrt of bld.vertices ){
     //   if( distanceCheck ){
     //     distanceCheck = ( getDistance(mouse.position, b_vrt) <= 2*GRID_SIZE ? false : true );
@@ -33,58 +53,7 @@ function render_ui(){
 
   game_debug_flags.mayDeploy = distanceCheck;
 
-  // ctx.strokeStyle = ( distanceCheck ? RENDER_UI_GREEN : RENDER_UI_RED );
-  // ctx.beginPath();
-  // ctx.arc(mouse.position.x, mouse.position.y, 7, 0, Math.PI * 2, true);
-  // ctx.stroke();
-
-  // ctx.fillStyle = ( distanceCheck ? RENDER_UI_GREEN : RENDER_UI_RED );
-  // ctx.fillRect(mouse.position.x - mouse.position.x % GRID_SIZE , mouse.position.y - mouse.position.y % GRID_SIZE, GRID_SIZE, GRID_SIZE);
-
   ctx.drawImage(unitsImg, 576, ( distanceCheck ? 80 : 32 ), 32, 32, mouse.position.x - mouse.position.x % GRID_SIZE , mouse.position.y - mouse.position.y % GRID_SIZE, 2*GRID_SIZE, 2*GRID_SIZE);
-
-  ctx.restore();
-}
-
-function render_cursor(){
-  ctx.save();
-
-  // beyond placeholder
-  /*
-    Context sensitive cursor, color and shape based on action
-  */
-  ctx.beginPath();
-  ctx.strokeStyle = RENDER_TERRAINCOLOR;
-  ctx.strokeRect(mouse.position.x, mouse.position.y, 7, 7);
-  ctx.arc(mouse.position.x+7, mouse.position.y+7, 7, 0, Math.PI * 2, true);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.strokeStyle = RENDER_FILLCOLOR;
-  ctx.arc(mouse.position.x+7, mouse.position.y+7, 5, 0, Math.PI * 2, true);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.strokeStyle = RENDER_SHADOWCOLOR;
-  ctx.arc(mouse.position.x+7, mouse.position.y+7, 3, 0, Math.PI * 2, true);
-  ctx.stroke();
-
-  switch (game_cursor) {
-    case 'invalid':
-      // draw an X
-      ctx.strokeStyle = RENDER_UI_RED;
-      ctx.lineWidth = 20;
-      // ugly as sin, and rotate() is a PITA. Just get a sprite or SVG...
-      ctx.translate(7, 7);
-      ctx.beginPath();
-      ctx.moveTo(mouse.position.x, mouse.position.y-2);
-      ctx.lineTo(mouse.position.x, mouse.position.y+2);
-      ctx.stroke();
-      break;
-    default:
-      // stub
-      break;
-  }
 
   ctx.restore();
 }
