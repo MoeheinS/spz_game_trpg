@@ -8,6 +8,7 @@ class ParticleEnt {
         source_override
     ) {
         // startCoords is body.position values; object {x: 0, y: 0}
+        // if it needs to track, use a referral
         this.position = new Object;
         this.position.x = startCoords.x;
         this.position.y = startCoords.y;
@@ -68,17 +69,18 @@ function draw_Particle(i){
     ctx.restore();
 }
 
-// TODO: all of this is test placeholder
-//particles_Array.push(new ParticleEnt({x: (3.5*GRID_SIZE), y: 3.5*GRID_SIZE}, -1, 'flower_1'));
-
-for( let hi = 0; hi < 40; hi++ ){
-    for( let vi = 0; vi < 40; vi++ ){
-        let randoo = Math.round(Math.random()*120);
-        if( randoo == 2 ){
-            particles_Array.push(new ParticleEnt({x: 0.5*GRID_SIZE+vi*GRID_SIZE, y: 0.5*GRID_SIZE+hi*GRID_SIZE}, -1, 'flower_1'));
-        }else if( randoo == 18 ){
-            particles_Array.push(new ParticleEnt({x: 0.5*GRID_SIZE+vi*GRID_SIZE, y: 0.5*GRID_SIZE+hi*GRID_SIZE}, -1, 'flower_2'));
+// TODO: move this to the level builder function
+function landScape_flowers(){
+    for( let hi = 0; hi < 40; hi++ ){
+        for( let vi = 0; vi < 40; vi++ ){
+            let randoo = Math.round(Math.random()*120);
+            if( randoo == 2 ){
+                particles_Array.push(new ParticleEnt({x: 0.5*GRID_SIZE+vi*GRID_SIZE, y: 0.5*GRID_SIZE+hi*GRID_SIZE}, -1, 'flower_1'));
+            }else if( randoo == 18 ){
+                particles_Array.push(new ParticleEnt({x: 0.5*GRID_SIZE+vi*GRID_SIZE, y: 0.5*GRID_SIZE+hi*GRID_SIZE}, -1, 'flower_2'));
+            }
+            
         }
-        
     }
 }
+landScape_flowers();
