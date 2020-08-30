@@ -207,6 +207,7 @@ function unit_pathfind(bod, exceptID, exceptBod){
 function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
   // for ranged units
   // TODO: IT APPEARS TO WORK? But needs more testing
+  // TODO: This doesn't consider vertices, expand later if necessary
   if( getDistance(unit.position, target.position) <= unit.custom.attackRange*GRID_SIZE ){
     unit.custom.target = target;
     unit.custom.waypoint = [target.position];
@@ -256,14 +257,22 @@ function unit_attackTarget(a){
           unit_applyPain(a, a.custom.target);
           a.custom.attackCD = a.custom.attackCD_base;
           hurt_point = true;
+          break;
         }
       }
     }
-    if( !hurt_point ){
-      unit_approachTarget(a);
+    if( !hurt_point && a.custom.attackCD <= 0 ){
+      // this prevents units walking into non-existence
+      //if( a.custom.waypoint.length ){
+        console.log('cant reach vertex');
+        unit_approachTarget(a);
+      //}
     }
   }else{
-    unit_approachTarget(a);
+    // this prevents units walking into non-existence
+    //if( a.custom.waypoint.length ){
+      unit_approachTarget(a);
+    //}
   }
 }
 
@@ -276,10 +285,18 @@ function unit_approachTarget(a){
   }else{
     let target_points = a.custom.target.vertices;
     if( wbb(a.custom.target.bounds) > GRID_SIZE || hbb(a.custom.target.bounds) > GRID_SIZE ){
+      var vert_bucket = [];
       for( vert of target_points ){
-        if( getDistance(a.position, new Coordinate( vert.x, vert.y )) <= a.custom.attackRange*GRID_SIZE ){
-          waypoint_raw = { x: vert.x, y: vert.y };
-        }
+        vert_bucket.push( {pos: new Coordinate( vert.x, vert.y ), dist: getDistance(a.position, vert)} );
+      }
+      vert_bucket = vert_bucket.sort(function(apple,orange){
+        return apple.dist-orange.dist;
+      });
+      if( vert_bucket.length ){
+        waypoint_raw = { x: vert_bucket[0].pos.x, y: vert_bucket[0].pos.y };
+      }else{
+        // TODO: cleanup later
+        console.error('fixme later!');
       }
     }else{
       waypoint_raw = { x: a.custom.target.position.x, y: a.custom.target.position.y };
@@ -316,11 +333,11 @@ function unit_applyPain(a, t){
   );
 }
 
-var test_allyGB2 = new UnitEnt( new Coordinate( GRID_SIZE*8, GRID_SIZE*2 ), 'Ratty' );
-new UnitEnt( new Coordinate( GRID_SIZE*20, GRID_SIZE*2 ), 'Sling' );
-new UnitEnt( new Coordinate( GRID_SIZE*21, GRID_SIZE*2 ), 'Sling' );
-new UnitEnt( new Coordinate( GRID_SIZE*22, GRID_SIZE*2 ), 'Sling' );
-new UnitEnt( new Coordinate( GRID_SIZE*23, GRID_SIZE*2 ), 'Sling' );
+// var test_allyGB2 = new UnitEnt( new Coordinate( GRID_SIZE*8, GRID_SIZE*2 ), 'Ratty' );
+// new UnitEnt( new Coordinate( GRID_SIZE*20, GRID_SIZE*2 ), 'Sling' );
+// new UnitEnt( new Coordinate( GRID_SIZE*21, GRID_SIZE*2 ), 'Sling' );
+// new UnitEnt( new Coordinate( GRID_SIZE*22, GRID_SIZE*2 ), 'Sling' );
+// new UnitEnt( new Coordinate( GRID_SIZE*23, GRID_SIZE*2 ), 'Sling' );
 
 // =======================[ DOODAD ]====================================
 function ripperoni_unit(a){
