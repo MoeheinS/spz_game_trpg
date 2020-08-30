@@ -170,10 +170,14 @@ Events.on(engine, 'afterUpdate', function(event) {
   }
 
   for( unit of units_Array ){
+    // wack bug, TODO: remove when it no longer occurs
+    if( isNaN(unit.angle) && isNaN(unit.position.x) ){
+      alert('A unit just escaped this reality');
+      World.remove(world, unit, true);
+    }
     unit.custom.attackCD--;
     switch (unit.custom.state) {
       case 'ready':
-        //cycle_movement(unit, unit.custom.target.position);
         unit_attackTarget(unit);
         break;
       default:
