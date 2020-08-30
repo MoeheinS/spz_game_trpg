@@ -218,18 +218,22 @@ function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
   easystar.setGrid(astar_grid);
   easystar.enableDiagonals();
   easystar.setAcceptableTiles([0]);
-  easystar.findPath(start_pos.x, start_pos.y, goal_pos.x, goal_pos.y, function( path ) {
-    //console.log(path);
-    if (path === null) {
-      console.error(`path for ${unit.id} NOT found`);
-    } else {
-      console.warn(`path for ${unit.id} found to ${target.id}`);
-      unit.custom.target = target;
-      unit.custom.waypoint = path;
-      unit.custom.state = 'ready';
-    }
-  });
-  easystar.calculate();
+  try {
+    easystar.findPath(start_pos.x, start_pos.y, goal_pos.x, goal_pos.y, function( path ) {
+      //console.log(path);
+      if (path === null) {
+        console.error(`path for ${unit.id} NOT found`);
+      } else {
+        console.warn(`path for ${unit.id} found to ${target.id}`);
+        unit.custom.target = target;
+        unit.custom.waypoint = path;
+        unit.custom.state = 'ready';
+      }
+    });
+    easystar.calculate();  
+  } catch (error) {
+    // try catch here because units that get pushed out of bounds crash the astar library
+  }
 }
 
 function unit_attackTarget(a){
