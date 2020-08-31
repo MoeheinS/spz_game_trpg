@@ -54,3 +54,86 @@ html {
 
 	/* cursor: none; */
 }
+/* everything after here is gameplay-related DOM elements; because they have less overhead and are easier to animate, style and maintain than canvas */
+.partyPicker {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+
+	display: flex;
+	/* justify-content: center; */
+
+	pointer-events: none;
+}
+.partyPicker.partyPicker_vert {
+	width: unset;
+	height: 100vh;
+	flex-direction: column;
+}
+.partyPicker .partyPicker-member {
+	width: 100px;
+	height: 100px;
+
+	margin: 8px;
+	margin: 8px 8px 2rem 1.5rem;
+
+	border: 3px dotted var(--col__grey__ff);
+	border-radius: 6px;
+	background-color: #28282ba3;
+
+	pointer-events: all;
+	cursor: pointer;
+
+	position: relative;
+
+	background-image: var(--background);
+	background-size: cover;
+}
+.partyPicker .partyPicker-member:before {
+	content: 'N';
+	color: var(--col__grey__ff);
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	position: absolute;
+	bottom: -1rem;
+	left: -0.5rem;
+
+	width: 3rem;
+	height: 2rem;
+	background-color: #28282bef;
+	border: 4px outset #28282bef;
+	border-radius: 30%;
+}
+.partyPicker input[type=radio]:not(:disabled) + .partyPicker-member:after {
+	content: attr(data-amount);
+	color: var(--col__grey__ff);
+	font-size: 1.25rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	position: absolute;
+	bottom: -1rem;
+	right: -0.5rem;
+
+	width: 3rem;
+	height: 2rem;
+	background-color: #28282bef;
+	border: 4px outset #28282bef;
+	border-radius: 30%;
+}
+.partyPicker input[type=radio]:not(:disabled) + .partyPicker-member:hover {
+	transform: scale(1.1);
+}
+
+input[type=radio] {
+	opacity: 0;
+}
+input[type=radio]:checked + .partyPicker-member {
+	border: 4px outset var(--col__blue__ff);
+	background-color: #ffffffdb;
+}
