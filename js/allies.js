@@ -171,6 +171,8 @@ function unit_acquireTarget(a){
       // empty out target if it's dead
       if( a.custom.target.custom.hp_current <= 0 ){
         a.custom.target = false;
+        // optional but probably unnecessary
+        //a.custom.targetsArray = [];
       }
     }else{
       // we shift the topmost off the stack of potentials, making the list shorter
@@ -217,7 +219,7 @@ function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
 
   var easystar = new EasyStar.js();
   easystar.setGrid(astar_grid);
-  easystar.enableDiagonals();
+  //easystar.enableDiagonals();
   easystar.setAcceptableTiles([0]);
   try {
     easystar.findPath(start_pos.x, start_pos.y, goal_pos.x, goal_pos.y, function( path ) {
