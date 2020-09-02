@@ -235,18 +235,28 @@ function render_grass(){
   if( game_debug_flags.grass.length ){
     for( let hi = 0; hi < 40; hi++ ){
 			for( let vi = 0; vi < 40; vi++ ){
+        // 0.5 for walls and terrain, 1 for everything else
 				if( game_debug_flags.grass[hi][vi] ){
           ctx.fillStyle = groundPattern;
           ctx.beginPath();
-          ctx.arc((vi*GRID_SIZE)+0.5*GRID_SIZE, (hi*GRID_SIZE)+0.5*GRID_SIZE, 2*GRID_SIZE, 0, Math.PI * 2, true);
+          ctx.arc((vi*GRID_SIZE)+(game_debug_flags.grass[hi][vi]*GRID_SIZE), (hi*GRID_SIZE)+(game_debug_flags.grass[hi][vi]*GRID_SIZE), 2*GRID_SIZE, 0, Math.PI * 2, true);
           ctx.fill();
         }
 			}
 		}
   }
-  // for( bld of buildings_all_Array ){
-  //   ctx.fillStyle = groundPattern;
-  //   ctx.fillRect(bld.bounds.min.x-GRID_SIZE, bld.bounds.min.y-GRID_SIZE, wbb(bld.bounds)+2*GRID_SIZE, hbb(bld.bounds)+2*GRID_SIZE);
-  //   ctx.fillStyle = RENDER_TERRAINCOLOR;
-  // }
+  /* This is the alternative method
+  for( building of buildings_all_Array ){
+    if ( building.region && building.region.startRow ){
+      for( let hi = building.region.startRow; hi < building.region.endRow; hi++ ){
+        for( let vi = building.region.startCol; vi < building.region.endCol; vi++ ){
+          ctx.fillStyle = groundPattern;
+          ctx.beginPath();
+          ctx.arc((vi*GRID_SIZE)+( building.custom.category == 'wall' || building.custom.category == 'terrain' ? 0.5*GRID_SIZE : 1*GRID_SIZE ), (hi*GRID_SIZE)+( building.custom.category == 'wall' || building.custom.category == 'terrain' ? 0.5*GRID_SIZE : 1*GRID_SIZE ), 2*GRID_SIZE, 0, Math.PI * 2, true);
+          ctx.fill();
+        }
+      }
+    }
+  }
+  */
 }

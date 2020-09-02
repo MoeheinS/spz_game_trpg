@@ -107,7 +107,7 @@ function landScape(){
 	for( building of buildings_all_Array ){
 		for( let hi = building.region.startRow; hi < building.region.endRow; hi++ ){
 			for( let vi = building.region.startCol; vi < building.region.endCol; vi++ ){
-				astar_grid[hi][vi] = 1;
+				astar_grid[hi][vi] = ( building.custom.category == 'wall' || building.custom.category == 'terrain' ? 0.5 : 1 );
 			}
 		}
 	}

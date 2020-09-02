@@ -203,7 +203,7 @@ function ripperoni_building(a){
   for( let hi = a.region.startCol; hi < a.region.endCol; hi++ ){
     for( let vi = a.region.startRow; vi < a.region.endRow; vi++ ){
       //let rubble = Bodies.rectangle(a.position.x, a.position.y+0.25*GRID_SIZE, GRID_SIZE, GRID_SIZE, {
-      let rubble = Bodies.rectangle(hi*GRID_SIZE+0.5*GRID_SIZE, vi*GRID_SIZE+0.5*GRID_SIZE, GRID_SIZE, GRID_SIZE, {
+      let rubble = Bodies.rectangle(hi*GRID_SIZE+( a.custom.category == 'wall' ? 0.5*GRID_SIZE : 1*GRID_SIZE ), vi*GRID_SIZE+( a.custom.category == 'wall' ? 0.5*GRID_SIZE : 1*GRID_SIZE ), GRID_SIZE, GRID_SIZE, {
         label: 'doodad',
         label2: 'rubble',
         collisionFilter: {
@@ -241,22 +241,27 @@ function ripperoni_building(a){
   }
 }
 
-var test_turret = new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7), (GRID_SIZE*20) ) );
+var test_turret = new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*20.5) ) );
 
-var building_CORE = new BuildingEnt( 'Core', 0, new Coordinate( (GRID_SIZE*25), (GRID_SIZE*23) ) );
+var building_CORE = new BuildingEnt( 'Core', 0, new Coordinate( (GRID_SIZE*25.5), (GRID_SIZE*23.5) ) );
 
 // a circle of walls
 new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*20) ) );
 new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*20) ) );
 new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*20) ) );
+new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*20) ) );
+
 new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*21) ) );
+new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*21) ) );
+new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*22) ) );
+new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*22) ) );
 
-new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*21) ) );
-new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*22) ) );
-new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*22) ) );
-new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*22) ) );
+new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*23) ) );
+new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*23) ) );
+new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*23) ) );
+new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*23) ) );
 
-new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*21) ) );
+new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*18.5), (GRID_SIZE*21.5) ) );
 //new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*25), (GRID_SIZE*22) ) );
 
 new BuildingEnt( 'rock_l', 0, new Coordinate( (GRID_SIZE*2), (GRID_SIZE*18) ) );
