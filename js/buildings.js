@@ -50,23 +50,23 @@ let buildingList = [
   {
     name: 'Core',
     category: 'economy',
-    dim: {x: 4*GRID_SIZE, y: 4*GRID_SIZE},
-    sprite_dim: {x: 4*16, y: 5*16},
-    sprite_offset: {x: 0, y: GRID_SIZE},
+    dim: {x: 5*GRID_SIZE, y: 4*GRID_SIZE},
+    sprite_dim: {x: 5*16, y: 5*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
     levels: [
-      { spriteName: 'core', hp: 6000 },
-      { spriteName: 'core', hp: 7500 },
-      { spriteName: 'core1', hp: 9500 },
+      { spriteName: 'core_e', hp: 6000 },
+      { spriteName: 'core_e', hp: 7500 },
+      { spriteName: 'core_e', hp: 9500 },
 
-      { spriteName: 'core1', hp: 12500 },
-      { spriteName: 'core1', hp: 16125 },
-      { spriteName: 'core2', hp: 20500 },
+      { spriteName: 'core_e', hp: 12500 },
+      { spriteName: 'core_e', hp: 16125 },
+      { spriteName: 'core_e', hp: 20500 },
 
-      { spriteName: 'core2', hp: 25500 },
-      { spriteName: 'core2', hp: 31250 },
-      { spriteName: 'core3', hp: 37750 },
+      { spriteName: 'core_e', hp: 25500 },
+      { spriteName: 'core_e', hp: 31250 },
+      { spriteName: 'core_e', hp: 37750 },
 
-      { spriteName: 'core3', hp: 45000 }
+      { spriteName: 'core_e', hp: 45000 }
     ]
   },
   {
@@ -203,7 +203,7 @@ function ripperoni_building(a){
   for( let hi = a.region.startCol; hi < a.region.endCol; hi++ ){
     for( let vi = a.region.startRow; vi < a.region.endRow; vi++ ){
       //let rubble = Bodies.rectangle(a.position.x, a.position.y+0.25*GRID_SIZE, GRID_SIZE, GRID_SIZE, {
-      let rubble = Bodies.rectangle(hi*GRID_SIZE+( a.custom.category == 'wall' ? 0.5*GRID_SIZE : 1*GRID_SIZE ), vi*GRID_SIZE+( a.custom.category == 'wall' ? 0.5*GRID_SIZE : 1*GRID_SIZE ), GRID_SIZE, GRID_SIZE, {
+      let rubble = Bodies.rectangle(hi*GRID_SIZE+( a.custom.category == 'wall' || a.custom.category == 'terrain' ? 0.5*GRID_SIZE : 1*GRID_SIZE ), vi*GRID_SIZE+( a.custom.category == 'wall' || a.custom.category == 'terrain' ? 0.5*GRID_SIZE : 1*GRID_SIZE ), GRID_SIZE, GRID_SIZE, {
         label: 'doodad',
         label2: 'rubble',
         collisionFilter: {

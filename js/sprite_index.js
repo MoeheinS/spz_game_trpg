@@ -45,11 +45,12 @@ var spriteList = [
     ['wall_03', 80, 416, '1dir', 1],
 
     // obviously not but eh
+    //['core_e', 352, 16, '1dir', 1],
+    ['core_e', 768, 176, '1dir', 1],
     ['core', 16, 0, '1dir', 1],
     ['core1', 96, 0, '1dir', 1],
     ['core2', 176, 0, '1dir', 1],
     ['core3', 256, 0, '1dir', 1],
-    //['core_evil', 352, 0, '1dir', 1],
 
     ['projectile_basic', 32, 480, '1dir', 1],
     ['projectile_spinner', 160, 512, '1dir', 4],
