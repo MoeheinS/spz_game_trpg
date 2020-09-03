@@ -122,9 +122,6 @@ document.addEventListener("keydown", function(e){
     //     game_shift = true;
     //   }
     //   break;
-    // case 'g':
-    //   game_debug_flags.grid = !game_debug_flags.grid;
-    //   break;
     default:
       console.log(e.key);
       break;
@@ -159,8 +156,8 @@ Events.on(engine, 'afterUpdate', function(event) {
   }
   // every time the ticker cycle resets
   if( ticker == 10 ){
-    if( !game_debug_flags.grass ){
-      game_debug_flags.grass = landScape();
+    if( !game_state.grass ){
+      game_state.grass = landScape();
     }
     for( unit of units_Array ){
       unit_sortTargets(unit);
@@ -269,15 +266,12 @@ Events.on(render, 'afterRender', function() {
 
     render_grass();
 
-    render_debug(game_debug, render.context);
+    render_debug();
 
     for( e of render_Array ){
       draw_Graphics([e]);
     }
     
-    //debug state rendering
-    //render_debug(game_debug, render.context);
-
     //if( ticker == 60 ){
       for( turret of defenses_Array ){
         turret.custom.turret.attackCD--;

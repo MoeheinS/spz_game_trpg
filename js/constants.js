@@ -1,19 +1,17 @@
 /*
 *   Constants and settings
 */
-let game_state = 'idle';
 let game_debug = true;
 let game_phase = 'player';
 let game_shift = false;
 let game_cursor = 'default';
 
-let game_debug_flags = { 
-  "grid": false,
-  "path": [],
-  "path_size": 1,
+let game_state = {
+  "initial_buildings": 3, // debug number, set on mission initialize
   "grass": false,
   "mayDeploy": true
 };
+
 /*
   default
   invalid

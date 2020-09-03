@@ -1,12 +1,12 @@
 // render arbitrary information to help me debug
-function render_debug(game_debug){
+function render_debug(){
   ctx.save();
   if(game_debug){
     ctx.font = '16px alber';
     ctx.textAlign = 'right';
     ctx.fillStyle = '#ffffff';
     ctx.fillText('v0.0.3', 100, -100);
-    ctx.fillText(game_state, 100, -80);
+
     ctx.fillText('hold rclick and move to pan camera', 100, -120);
     ctx.fillText('mousewheel to zoom', 100, -140);
     ctx.fillText('press f to toggle free-drag', 100, -160);
@@ -232,15 +232,15 @@ function heartbeat_animations(){
 }
 
 function render_grass(){
-  if( game_debug_flags.grass.length ){
+  if( game_state.grass.length ){
     // beginning of 'raised platform grass effect'
     for( let hi = 0; hi < 40; hi++ ){
 			for( let vi = 0; vi < 40; vi++ ){
         // 0.5 for walls and terrain, 1 for everything else
-				if( game_debug_flags.grass[hi][vi] ){
+				if( game_state.grass[hi][vi] ){
           ctx.beginPath();
           ctx.fillStyle = oobPattern;
-          ctx.arc((vi*GRID_SIZE)+(game_debug_flags.grass[hi][vi]*GRID_SIZE), 12+(hi*GRID_SIZE)+(game_debug_flags.grass[hi][vi]*GRID_SIZE), 2*GRID_SIZE, 0, Math.PI * 2, true);
+          ctx.arc((vi*GRID_SIZE)+(game_state.grass[hi][vi]*GRID_SIZE), 12+(hi*GRID_SIZE)+(game_state.grass[hi][vi]*GRID_SIZE), 2*GRID_SIZE, 0, Math.PI * 2, true);
           ctx.fill();
         }
 			}
@@ -249,10 +249,10 @@ function render_grass(){
     for( let hi = 0; hi < 40; hi++ ){
 			for( let vi = 0; vi < 40; vi++ ){
         // 0.5 for walls and terrain, 1 for everything else
-				if( game_debug_flags.grass[hi][vi] ){
+				if( game_state.grass[hi][vi] ){
           ctx.beginPath();
           ctx.fillStyle = groundPattern;
-          ctx.arc((vi*GRID_SIZE)+(game_debug_flags.grass[hi][vi]*GRID_SIZE), (hi*GRID_SIZE)+(game_debug_flags.grass[hi][vi]*GRID_SIZE), 2*GRID_SIZE, 0, Math.PI * 2, true);
+          ctx.arc((vi*GRID_SIZE)+(game_state.grass[hi][vi]*GRID_SIZE), (hi*GRID_SIZE)+(game_state.grass[hi][vi]*GRID_SIZE), 2*GRID_SIZE, 0, Math.PI * 2, true);
           ctx.fill();
         }
 			}

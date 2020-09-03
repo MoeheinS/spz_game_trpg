@@ -126,7 +126,7 @@ function level(command){
       }
       particles_Array = [];
       projectiles_Array = [];
-      game_debug_flags.grass = new aStar_grid();
+      game_state.grass = new aStar_grid();
       break;
     default:
       break;

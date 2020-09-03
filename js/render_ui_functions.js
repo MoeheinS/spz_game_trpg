@@ -6,9 +6,44 @@ function render_ui(){
     This is the layer where I want to render UI and static elements that don't scale
   */
 
- render_cursor();
+  render_cursor();
 
   ctx.restore();
+}
+
+function render_progress(){
+  ctx.fillStyle = RENDER_SHADOWCOLOR+'aa';
+
+  let ui_gradient = ctx.createLinearGradient( 1*GRID_SIZE,0, 4*GRID_SIZE,0);
+  ui_gradient.addColorStop(0, RENDER_SHADOWCOLOR);
+  ui_gradient.addColorStop(1, RENDER_SHADOWCOLOR+'55');
+  ctx.fillStyle = ui_gradient;
+
+  ctx.beginPath();
+  ctx.arc(1*GRID_SIZE, 1.25*GRID_SIZE, 0.375*GRID_SIZE, Math.PI * 1.5, Math.PI * 0.5, true);
+  ctx.fill();
+  
+  ctx.beginPath();
+  ctx.arc(3.75*GRID_SIZE, 1.25*GRID_SIZE, 0.375*GRID_SIZE, Math.PI * 0.5, Math.PI * 1.5, true);
+  ctx.fill();
+
+  ctx.fillRect( 1*GRID_SIZE, 0.875*GRID_SIZE, 2.75*GRID_SIZE, 0.75*GRID_SIZE );
+
+  ctx.font = '2rem alber';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = RENDER_TERRAINCOLOR;
+  ctx.strokeStyle = RENDER_SHADOWCOLOR;
+  ctx.strokeText(100-Math.floor( buildings_Array.length / game_state.initial_buildings * 100 )/*+'%'*/, 3*GRID_SIZE, 1.125*GRID_SIZE);
+  ctx.fillText(100-Math.floor( buildings_Array.length / game_state.initial_buildings * 100 )/*+'%'*/, 3*GRID_SIZE, 1.125*GRID_SIZE);
+
+  ctx.font = '1.25rem alber';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = RENDER_TERRAINCOLOR;
+  ctx.strokeStyle = RENDER_SHADOWCOLOR;
+  ctx.strokeText('%', 3.75*GRID_SIZE, 1.25*GRID_SIZE);
+  ctx.fillText('%', 3.75*GRID_SIZE, 1.25*GRID_SIZE);
 }
 
 function render_cursor(){
@@ -51,7 +86,7 @@ function render_cursor(){
     }
   }
 
-  game_debug_flags.mayDeploy = distanceCheck;
+  game_state.mayDeploy = distanceCheck;
 
   ctx.drawImage(unitsImg, 576, ( distanceCheck ? 80 : 32 ), 32, 32, mouse.position.x - mouse.position.x % GRID_SIZE , mouse.position.y - mouse.position.y % GRID_SIZE, 2*GRID_SIZE, 2*GRID_SIZE);
 
@@ -67,6 +102,8 @@ function draw_UI(a){
   ctx.textAlign = 'right';
   ctx.fillStyle = 'red';
   ctx.fillText('zoom:'+boundsScaleTarget.toFixed(2), reWi-20, 20);
+
+  render_progress();
 
   ctx.restore();
 }
