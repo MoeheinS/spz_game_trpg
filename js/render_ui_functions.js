@@ -12,8 +12,7 @@ function render_ui(){
 }
 
 function render_progress(){
-  ctx.fillStyle = RENDER_SHADOWCOLOR+'aa';
-
+  // star tracker
   let ui_gradient = ctx.createLinearGradient( 1*GRID_SIZE,0, 4*GRID_SIZE,0);
   ui_gradient.addColorStop(0, RENDER_SHADOWCOLOR);
   ui_gradient.addColorStop(1, RENDER_SHADOWCOLOR+'55');
@@ -29,21 +28,78 @@ function render_progress(){
 
   ctx.fillRect( 1*GRID_SIZE, 0.875*GRID_SIZE, 2.75*GRID_SIZE, 0.75*GRID_SIZE );
 
+  ctx.imageSmoothingEnabled = false;
+  ctx.strokeStyle = RENDER_SHADOWCOLOR;
+  ctx.beginPath();
+  ctx.arc(1*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
+  ctx.stroke();
+  ctx.drawImage(buildingsImg, 624, 384, 16, 16, 0.5*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+
+  ctx.strokeStyle = RENDER_SHADOWCOLOR;
+  ctx.beginPath();
+  ctx.arc(2.125*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
+  ctx.stroke();
+  ctx.drawImage(buildingsImg, 624, 384, 16, 16, 1.625*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+
+  ctx.strokeStyle = RENDER_SHADOWCOLOR;
+  ctx.beginPath();
+  ctx.arc(3.25*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
+  ctx.stroke();
+  ctx.drawImage(buildingsImg, 624, 384, 16, 16, 2.75*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+
+  // TODO: make these dependent on game_state
+  // bronze star for 50% destruction
+  // ctx.strokeStyle = '#9c4a00';
+  // ctx.strokeStyle = RENDER_TERRAINCOLOR;
+  // ctx.beginPath();
+  // ctx.arc(1*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
+  // ctx.stroke();
+  // ctx.drawImage(buildingsImg, 576, 384, 16, 16, 0.5*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+  
+  // silver star for core destruction
+  // ctx.strokeStyle = '#696969';
+  // ctx.strokeStyle = RENDER_TERRAINCOLOR;
+  // ctx.beginPath();
+  // ctx.arc(2.125*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
+  // ctx.stroke();
+  // ctx.drawImage(buildingsImg, 640, 384, 16, 16, 1.625*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+
+  // gold star for 100% destruction
+  // ctx.strokeStyle = '#cd7320';
+  // ctx.strokeStyle = RENDER_TERRAINCOLOR;
+  // ctx.beginPath();
+  // ctx.arc(3.25*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
+  // ctx.stroke();
+  // ctx.drawImage(buildingsImg, 560, 384, 16, 16, 2.75*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+
+  // percentage tracker
+  ctx.fillStyle = ui_gradient;
+
+  ctx.beginPath();
+  ctx.arc(1*GRID_SIZE, 2.75*GRID_SIZE, 0.375*GRID_SIZE, Math.PI * 1.5, Math.PI * 0.5, true);
+  ctx.fill();
+  
+  ctx.beginPath();
+  ctx.arc(3.75*GRID_SIZE, 2.75*GRID_SIZE, 0.375*GRID_SIZE, Math.PI * 0.5, Math.PI * 1.5, true);
+  ctx.fill();
+
+  ctx.fillRect( 1*GRID_SIZE, 2.375*GRID_SIZE, 2.75*GRID_SIZE, 0.75*GRID_SIZE );
+
   ctx.font = '2rem alber';
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = RENDER_TERRAINCOLOR;
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
-  ctx.strokeText(100-Math.floor( buildings_Array.length / game_state.initial_buildings * 100 )/*+'%'*/, 3*GRID_SIZE, 1.125*GRID_SIZE);
-  ctx.fillText(100-Math.floor( buildings_Array.length / game_state.initial_buildings * 100 )/*+'%'*/, 3*GRID_SIZE, 1.125*GRID_SIZE);
+  ctx.strokeText(100-Math.floor( buildings_Array.length / game_state.initial_buildings * 100 )/*+'%'*/, 3*GRID_SIZE, 2.625*GRID_SIZE);
+  ctx.fillText(100-Math.floor( buildings_Array.length / game_state.initial_buildings * 100 )/*+'%'*/, 3*GRID_SIZE, 2.625*GRID_SIZE);
 
   ctx.font = '1.25rem alber';
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = RENDER_TERRAINCOLOR;
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
-  ctx.strokeText('%', 3.75*GRID_SIZE, 1.25*GRID_SIZE);
-  ctx.fillText('%', 3.75*GRID_SIZE, 1.25*GRID_SIZE);
+  ctx.strokeText('%', 3.75*GRID_SIZE, 2.75*GRID_SIZE);
+  ctx.fillText('%', 3.75*GRID_SIZE, 2.75*GRID_SIZE);
 }
 
 function render_cursor(){
