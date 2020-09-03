@@ -190,14 +190,14 @@ function draw_Graphics(a, mode){
         break;
     }
     // specifically for the CORE
-    if( building_CORE ){
-      if( i.id == building_CORE.id ){
-        ctx.font = `${0.5*GRID_SIZE}px comic sans ms`;
-        ctx.textAlign = 'center';
-        ctx.fillStyle = '#1880f8';
-        ctx.fillText(i.custom.level+1, i.bounds.min.x+GRID_SIZE, i.bounds.min.y+1.1*GRID_SIZE);
-      }
-    }
+    // if( building_CORE ){
+    //   if( i.id == building_CORE.id ){
+    //     ctx.font = `${0.5*GRID_SIZE}px comic sans ms`;
+    //     ctx.textAlign = 'center';
+    //     ctx.fillStyle = '#1880f8';
+    //     ctx.fillText(i.custom.level+1, i.bounds.min.x+GRID_SIZE, i.bounds.min.y+1.1*GRID_SIZE);
+    //   }
+    // }
   }
 
   // ctx.fillStyle = '#ff000033';
@@ -233,12 +233,25 @@ function heartbeat_animations(){
 
 function render_grass(){
   if( game_debug_flags.grass.length ){
+    // beginning of 'raised platform grass effect'
     for( let hi = 0; hi < 40; hi++ ){
 			for( let vi = 0; vi < 40; vi++ ){
         // 0.5 for walls and terrain, 1 for everything else
 				if( game_debug_flags.grass[hi][vi] ){
-          ctx.fillStyle = groundPattern;
           ctx.beginPath();
+          ctx.fillStyle = oobPattern;
+          ctx.arc((vi*GRID_SIZE)+(game_debug_flags.grass[hi][vi]*GRID_SIZE), 12+(hi*GRID_SIZE)+(game_debug_flags.grass[hi][vi]*GRID_SIZE), 2*GRID_SIZE, 0, Math.PI * 2, true);
+          ctx.fill();
+        }
+			}
+    }
+    // end of experimental effect
+    for( let hi = 0; hi < 40; hi++ ){
+			for( let vi = 0; vi < 40; vi++ ){
+        // 0.5 for walls and terrain, 1 for everything else
+				if( game_debug_flags.grass[hi][vi] ){
+          ctx.beginPath();
+          ctx.fillStyle = groundPattern;
           ctx.arc((vi*GRID_SIZE)+(game_debug_flags.grass[hi][vi]*GRID_SIZE), (hi*GRID_SIZE)+(game_debug_flags.grass[hi][vi]*GRID_SIZE), 2*GRID_SIZE, 0, Math.PI * 2, true);
           ctx.fill();
         }
