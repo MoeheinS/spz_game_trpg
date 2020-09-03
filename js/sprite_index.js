@@ -83,6 +83,7 @@ var spriteList = [
     ['particle_atk_10', 160, 400, '1dir_32w', 4], // spear STAB
 
     ['particle_explosion', 448, 464, '1dir', 4],
+    ['particle_target', 640, 64, '1dir', 2],
 ];
 
 for( unit of spriteList ){

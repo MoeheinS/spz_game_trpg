@@ -231,6 +231,10 @@ function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
         unit.custom.target = target;
         unit.custom.waypoint = path;
         unit.custom.state = 'ready';
+
+        particles_Array.push(
+          new ParticleEnt({x: target.position.x, y: target.position.y}, 2, 'particle_target', {x: 16, y: 16}, unitsImg.src)
+        );
       }
     });
     easystar.calculate();  
