@@ -137,3 +137,18 @@ input[type=radio]:checked + .partyPicker-member {
 	border: 4px outset var(--col__blue__ff);
 	background-color: #ffffffdb;
 }
+
+.UI_container{
+	position: fixed;
+	top: 0;
+	left: -100vw;
+
+	height: 100vh;
+	width: 100vw;
+	background: #fefefede;
+
+	transition: all 0.3s ease-out;
+}
+.UI_container[data-show='true']{
+	left: 0;
+}

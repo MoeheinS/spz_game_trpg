@@ -87,6 +87,9 @@ document.addEventListener("keydown", function(e){
     case 'd':
       game_debug = !game_debug;
       break;
+    case 'q':
+      document.querySelector('.UI_container').dataset.show = !JSON.parse(document.querySelector('.UI_container').dataset.show);
+      break;
     case 'f':
       for( ally of units_Array ){
         if( ally.collisionFilter.category == draggable_false ){
