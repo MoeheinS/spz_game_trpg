@@ -57,7 +57,7 @@ Events.on(mouseConstraint, "mousedown", function(event) {
 
   if( event.mouse.button === 0){
     if( game_state.mayDeploy ){
-      new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Ratty' );
+      new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Debug Ratty' );
     }
   }
 });
