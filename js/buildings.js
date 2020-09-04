@@ -14,40 +14,69 @@ let buildingList = [
     name: 'Turret',
     category: 'defense',
     dim: {x: GRID_SIZE, y: GRID_SIZE},
-    sprite_dim: {x: 16, y: 2*16},
-    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    sprite_dim: {x: 16, y: 16},
+    sprite_offset: {x: 0, y: 0},
     levels: [
-      { spriteName: 'turret_basic', hp: 1500, attackCD: 90, attackRange: 10, damage: 200, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
-      { spriteName: 'turret_basic', hp: 1750, attackCD: 90, attackRange: 12, damage: 260, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
-      { spriteName: 'turret_basic', hp: 2200, attackCD: 90, attackRange: 14, damage: 349, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_basic', hp: 1500,  attackCD: 90, attackRange: 10, damage: 200,  element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_basic', hp: 1750,  attackCD: 90, attackRange: 12, damage: 260,  element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_basic', hp: 2200,  attackCD: 90, attackRange: 14, damage: 349,  element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
       
-      { spriteName: 'turret_basic', hp: 2750, attackCD: 90, attackRange: 17, damage: 468, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
-      { spriteName: 'turret_basic', hp: 3500, attackCD: 90, attackRange: 20, damage: 617, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
-      { spriteName: 'turret_basic', hp: 5000, attackCD: 90, attackRange: 23, damage: 795, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_basic', hp: 2750,  attackCD: 90, attackRange: 17, damage: 468,  element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_basic', hp: 3500,  attackCD: 90, attackRange: 20, damage: 617,  element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_basic', hp: 5000,  attackCD: 90, attackRange: 23, damage: 795,  element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
       
-      { spriteName: 'turret_basic', hp: 6250, attackCD: 90, attackRange: 24, damage: 1003, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
-      { spriteName: 'turret_basic', hp: 7500, attackCD: 90, attackRange: 24, damage: 1241, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
-      { spriteName: 'turret_basic', hp: 9000, attackCD: 90, attackRange: 24, damage: 1508, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_basic', hp: 6250,  attackCD: 90, attackRange: 24, damage: 1003, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_basic', hp: 7500,  attackCD: 90, attackRange: 24, damage: 1241, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_basic', hp: 9000,  attackCD: 90, attackRange: 24, damage: 1508, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
       
       { spriteName: 'turret_basic', hp: 10750, attackCD: 90, attackRange: 24, damage: 1800, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
       { spriteName: 'turret_basic', hp: 11000, attackCD: 90, attackRange: 27, damage: 2500, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' }
     ]
   },
   {
-    name: 'Rapid Turret',
+    name: 'Tower Turret',
     category: 'defense',
     dim: {x: GRID_SIZE, y: GRID_SIZE},
-    sprite_dim: {x: 16, y: 16},
+    sprite_dim: {x: 16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
     levels: [
-      { spriteName: 'turret_rapid', hp: 5250,  attackCD: 10, attackRange: 36, damage: 160, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
-      { spriteName: 'turret_rapid', hp: 6750,  attackCD: 10, attackRange: 36, damage: 163, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
-      { spriteName: 'turret_rapid', hp: 8750,  attackCD: 10, attackRange: 36, damage: 168, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
-      { spriteName: 'turret_rapid', hp: 11750, attackCD: 10, attackRange: 36, damage: 174, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
-      { spriteName: 'turret_rapid', hp: 15500, attackCD: 6,  attackRange: 36, damage: 200, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
-      { spriteName: 'turret_rapid', hp: 24000, attackCD: 6,  attackRange: 36, damage: 250, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
-      { spriteName: 'turret_rapid', hp: 29000, attackCD: 6,  attackRange: 36, damage: 280, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' }
+      { spriteName: 'turret_tower', hp: 1500, attackCD: 33, attackRange: 24, damage: 66,  element: false, target: 'any', attackType: 'closest', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_tower', hp: 1750, attackCD: 33, attackRange: 25, damage: 73,  element: false, target: 'any', attackType: 'closest', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_tower', hp: 2000, attackCD: 33, attackRange: 26, damage: 83,  element: false, target: 'any', attackType: 'closest', projectileArt: 'projectile_basic' },
+      
+      { spriteName: 'turret_tower', hp: 2500, attackCD: 33, attackRange: 27, damage: 96,  element: false, target: 'any', attackType: 'closest', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_tower', hp: 3000, attackCD: 33, attackRange: 28, damage: 113, element: false, target: 'any', attackType: 'closest', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_tower', hp: 4250, attackCD: 33, attackRange: 29, damage: 133, element: false, target: 'any', attackType: 'closest', projectileArt: 'projectile_basic' },
+      
+      { spriteName: 'turret_tower', hp: 5250, attackCD: 33, attackRange: 30, damage: 156, element: false, target: 'any', attackType: 'closest', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_tower', hp: 6250, attackCD: 33, attackRange: 30, damage: 182, element: false, target: 'any', attackType: 'closest', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_tower', hp: 7250, attackCD: 33, attackRange: 30, damage: 211, element: false, target: 'any', attackType: 'closest', projectileArt: 'projectile_basic' },
+      
+      { spriteName: 'turret_tower', hp: 8500, attackCD: 33, attackRange: 31, damage: 300, element: false, target: 'any', attackType: 'closest', projectileArt: 'projectile_basic' }
     ]
   },
+  // name: 'Cloud Mage',
+  {
+    name: 'Curse Box',
+    category: 'defense',
+    dim: {x: GRID_SIZE, y: GRID_SIZE},
+    sprite_dim: {x: 16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'turret_aoe', hp: 750,   attackCD: 120, attackRange: 9,  damage: 800,  element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_aoe' },
+      { spriteName: 'turret_aoe', hp: 1250,  attackCD: 120, attackRange: 10, damage: 878,  element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_aoe' },
+      { spriteName: 'turret_aoe', hp: 2000,  attackCD: 120, attackRange: 11, damage: 995,  element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_aoe' },
+      
+      { spriteName: 'turret_aoe', hp: 3000,  attackCD: 120, attackRange: 13, damage: 1151, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_aoe' },
+      { spriteName: 'turret_aoe', hp: 4000,  attackCD: 120, attackRange: 14, damage: 1346, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_aoe' },
+      { spriteName: 'turret_aoe', hp: 5500,  attackCD: 120, attackRange: 14, damage: 1580, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_aoe' },
+      
+      { spriteName: 'turret_aoe', hp: 7000,  attackCD: 120, attackRange: 14, damage: 1852, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_aoe' },
+      { spriteName: 'turret_aoe', hp: 9000,  attackCD: 120, attackRange: 14, damage: 2160, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_aoe' },
+      { spriteName: 'turret_aoe', hp: 11000, attackCD: 120, attackRange: 14, damage: 2470, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_aoe' }
+    ]
+  },
+  // name: 'Lobber Golem',
   {
     name: 'Hidden Turret', // attacks all units in range
     category: 'defense',
@@ -55,14 +84,34 @@ let buildingList = [
     sprite_dim: {x: 16, y: 2*16},
     sprite_offset: {x: 0, y: 1*GRID_SIZE},
     levels: [
-      { spriteName: 'turret_hidden', hp: 1500,  attackCD: 150, attackRange: 10, damage: 700, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_rapid' },
-      { spriteName: 'turret_hidden', hp: 2500,  attackCD: 150, attackRange: 10, damage: 927, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_rapid' },
-      { spriteName: 'turret_hidden', hp: 3750,  attackCD: 150, attackRange: 10, damage: 1110, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_rapid' },
+      { spriteName: 'turret_hidden', hp: 1500, attackCD: 150, attackRange: 10, damage: 700,  element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_hidden' },
+      { spriteName: 'turret_hidden', hp: 2500, attackCD: 150, attackRange: 10, damage: 927,  element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_hidden' },
+      { spriteName: 'turret_hidden', hp: 3750, attackCD: 150, attackRange: 10, damage: 1110, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_hidden' },
       
-      { spriteName: 'turret_hidden', hp: 5750, attackCD: 150, attackRange: 10, damage: 1354, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_rapid' },
-      { spriteName: 'turret_hidden', hp: 8100, attackCD: 150, attackRange: 10, damage: 1656, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_rapid' }
+      { spriteName: 'turret_hidden', hp: 5750, attackCD: 150, attackRange: 10, damage: 1354, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_hidden' },
+      { spriteName: 'turret_hidden', hp: 8100, attackCD: 150, attackRange: 10, damage: 1656, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_hidden' }
     ]
   },
+  {
+    name: 'Rapid Turret',
+    category: 'defense',
+    dim: {x: GRID_SIZE, y: GRID_SIZE},
+    sprite_dim: {x: 16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'turret_rapid', hp: 5250,  attackCD: 10, attackRange: 36, damage: 160, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
+      { spriteName: 'turret_rapid', hp: 6750,  attackCD: 10, attackRange: 36, damage: 163, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
+      { spriteName: 'turret_rapid', hp: 8750,  attackCD: 10, attackRange: 36, damage: 168, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
+
+      { spriteName: 'turret_rapid', hp: 11750, attackCD: 10, attackRange: 36, damage: 174, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
+      { spriteName: 'turret_rapid', hp: 15500, attackCD: 6,  attackRange: 36, damage: 200, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
+      { spriteName: 'turret_rapid', hp: 24000, attackCD: 6,  attackRange: 36, damage: 250, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
+      
+      { spriteName: 'turret_rapid', hp: 29000, attackCD: 6,  attackRange: 36, damage: 280, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' }
+    ]
+  },
+  // name: 'Campy Mage',
+  // name: 'Air Elemental',
   {
     name: 'Core',
     category: 'economy',
@@ -254,7 +303,8 @@ class BuildingEnt {
             // single, closest, area
             aType: (info.attackType ? info.attackType : false),
             ammo: ( unitID == 'Rapid Turret' ? 15000 : false ),
-            projectileArt: info.projectileArt
+            projectileArt: info.projectileArt,
+            targetID: false
           },
 
           graphics: {
@@ -289,8 +339,13 @@ function turret_acqTarget(a, range){
 
       switch (a.custom.turret.aType) { // aType == single, closest, area
         case 'single':
-          // TODO: change
-          turret_atkTarget(a, nearEnemies_byDist[0].target);
+          var chosenTarget = Composite.get(world, a.custom.turret.targetID, 'body');
+          // no target yet, target dead, or target out of range -> switch target
+          if( a.custom.turret.targetID == false || chosenTarget == null || getDistance(a.position, chosenTarget.position) > range ){
+            a.custom.turret.targetID = nearEnemies_byDist[0].target.id;
+          }
+          chosenTarget = Composite.get(world, a.custom.turret.targetID, 'body');
+          turret_atkTarget(a, chosenTarget);
           break;
         case 'closest':
           turret_atkTarget(a, nearEnemies_byDist[0].target);
@@ -399,12 +454,12 @@ new BuildingEnt( 'Mana Harvester', 0, new Coordinate( (GRID_SIZE*36.5), (GRID_SI
 new BuildingEnt( 'Mana Storage', 0, new Coordinate( (GRID_SIZE*36.5), (GRID_SIZE*36.5) ) );
 
 // turret testing range
-//new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*20.5) ) );
-      //new BuildingEnt( 'Tower Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*22.5) ) );
+new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*20.5) ) );
+new BuildingEnt( 'Tower Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*22.5) ) );
       //new BuildingEnt( 'Cloud Mage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*24.5) ) ); // AA tower
-      //new BuildingEnt( 'Curse Box', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*26.5) ) ); // AoE tower
+new BuildingEnt( 'Curse Box', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*26.5) ) ); // AoE tower
       //new BuildingEnt( 'Lobber Golem', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*28.5) ) ); // Artillery
-//new BuildingEnt( 'Hidden Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*30.5) ) );
-//new BuildingEnt( 'Rapid Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*32.5) ) );
+new BuildingEnt( 'Hidden Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*30.5) ) );
+new BuildingEnt( 'Rapid Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*32.5) ) );
       //new BuildingEnt( 'Campy Mage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*34.5) ) ); // Magic Eye
       //new BuildingEnt( 'Air Elemental', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*36.5) ) ); // Fan

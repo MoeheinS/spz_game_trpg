@@ -37,11 +37,11 @@ var spriteList = [
     ['ratty', 0, 0, '4dir'],
     ['sling', 0, 16, '4dir'],
 
-    // placeholders
-    ['turret_basic', 80, 464, '1dir', 3],
-    ['turret_rapid', 80, 464, '1dir', 3],
-
+    ['turret_basic', 880, 512, '1dir', 8],
+    ['turret_tower', 880, 560, '1dir', 8],
     ['turret_hidden', 272, 288, '1dir', 1],
+    ['turret_rapid', 880, 448, '1dir', 3],
+    ['turret_aoe', 880, 384, '1dir', 8],
 
     ['wall_01', 16, 416, '1dir', 1],
     ['wall_02', 48, 416, '1dir', 1],
@@ -60,9 +60,11 @@ var spriteList = [
     ['bld_gold_harvester', 288, 176, '1dir', 2],
     ['bld_gold_storage', 272, 224, '1dir', 1],
 
-    ['projectile_basic', 32, 480, '1dir', 1],
+    ['projectile_basic', 1024, 512, '1dir', 1],
     ['projectile_spinner', 160, 512, '1dir', 4],
-    ['projectile_rapid', 80, 496, '1dir', 2],
+    ['projectile_rapid', 944, 464, '1dir', 2],
+    ['projectile_hidden', 976, 464, '1dir', 2],
+    ['projectile_aoe', 1024, 400, '1dir', 4],
 
     ['projectile_unit_sling', 624, 432, '1dir', 1],
     ['projectile_unit_melee', 640, 432, '1dir', 1],
