@@ -65,7 +65,7 @@ mouseConstraint = MouseConstraint.create(engine, {
         }
     }
 });
-mouseConstraint.collisionFilter.mask = defaultCategory | draggable_true;
+mouseConstraint.collisionFilter.mask = defaultCategory;
 World.add(world, mouseConstraint);
 // keep the mouse in sync with rendering
 render.mouse = mouse;
@@ -89,22 +89,6 @@ document.addEventListener("keydown", function(e){
       break;
     case 'q':
       document.querySelector('.UI_container').dataset.show = !JSON.parse(document.querySelector('.UI_container').dataset.show);
-      break;
-    case 'f':
-      for( ally of units_Array ){
-        if( ally.collisionFilter.category == draggable_false ){
-          ally.collisionFilter.category = draggable_true;
-        }else{
-          ally.collisionFilter.category = draggable_false;
-        }
-      }
-      for( b of buildings_all_Array ){
-        if( b.collisionFilter.category == draggable_false ){
-          b.collisionFilter.category = draggable_true;
-        }else{
-          b.collisionFilter.category = draggable_false;
-        }
-      }
       break;
     // start of waypointing
     // case 'm':

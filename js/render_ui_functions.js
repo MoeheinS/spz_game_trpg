@@ -170,11 +170,11 @@ function render_hpBars(){
     if( bod.custom && bod.custom.hp_current && bod.custom.hp_current > 0 ){
       if( bod.custom.hp_current < bod.custom.hp_max ){
         ctx.fillStyle = RENDER_SHADOWCOLOR;
-        ctx.fillRect(bod.position.x - 0.5*GRID_SIZE, bod.bounds.min.y - 0.75*GRID_SIZE, GRID_SIZE, 5);
+        ctx.fillRect(bod.position.x - 0.5*GRID_SIZE, bod.bounds.min.y - 0.75*GRID_SIZE - ( bod.custom.moveType == 'air' ? UNIT_AIR_OFFSET : 0 ), GRID_SIZE, 5);
         
         ctx.fillStyle = ( bod.label == 'ally' ? UI_ALLY_HP : UI_ENEMY_HP );
         let barWidth = ( bod.custom.hp_current / bod.custom.hp_max ) * GRID_SIZE;
-        ctx.fillRect(bod.position.x - 0.5*GRID_SIZE +1, bod.bounds.min.y - 0.75*GRID_SIZE +1, barWidth, 3);        
+        ctx.fillRect(bod.position.x - 0.5*GRID_SIZE +1, bod.bounds.min.y - 0.75*GRID_SIZE +1 - ( bod.custom.moveType == 'air' ? UNIT_AIR_OFFSET : 0 ), barWidth, 3);        
       }
     }
   }

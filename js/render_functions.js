@@ -152,6 +152,14 @@ function draw_Graphics(a, mode){
           var sx = i.custom.graphics.sheet_idle[0].x;
           var sy = i.custom.graphics.sheet_idle[0].y;
         }
+
+        // shadows for air units
+        if( i.label == 'ally' && i.custom.moveType == 'air' ){
+          ctx.fillStyle = RENDER_SHADOWCOLOR;
+          ctx.fillRect(i.position.x - 0.25*GRID_SIZE, i.bounds.min.y, 0.5*dx, 0.5*dy);
+          iy = iy-UNIT_AIR_OFFSET;
+        }
+
         // source, source x, y, width, height, destination x, y, width x, y
         ctx.drawImage(img, sx, sy, ixs, iys, ix, iy, dx, dy);
         break;

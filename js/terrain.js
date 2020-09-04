@@ -2,28 +2,28 @@ var w_bot = buildRect(FIELD_SIZE*0.5, FIELD_SIZE+(GRID_SIZE*0.5), FIELD_SIZE, GR
   label: 'boundary',
   isStatic: true,
   collisionFilter: {
-    category: draggable_false
+    category: ground | air
   }
 });
 var w_top = buildRect(FIELD_SIZE*0.5, 0-(GRID_SIZE*0.5), FIELD_SIZE, GRID_SIZE, { 
   label: 'boundary',
   isStatic: true,
   collisionFilter: {
-    category: draggable_false
+    category: ground | air
   }
 });
 var w_right = buildRect(FIELD_SIZE+(GRID_SIZE*0.5), (FIELD_SIZE*0.5), GRID_SIZE, FIELD_SIZE, {
   label: "boundary",
   isStatic: true,
   collisionFilter: {
-    category: draggable_false
+    category: ground | air
   }
 });
 var w_left = buildRect(0-(GRID_SIZE*0.5), FIELD_SIZE*0.5, GRID_SIZE, FIELD_SIZE, {
   label: "boundary",
   isStatic: true,
   collisionFilter: {
-    category: draggable_false
+    category: ground | air
   }
 });
 

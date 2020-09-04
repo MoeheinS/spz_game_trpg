@@ -283,7 +283,7 @@ class BuildingEnt {
         frictionAir: 1, // magic numbers
         mass: 2,        // magic numbers
         collisionFilter: {
-          category: draggable_false
+          category: ( info.category == 'wall' ? ground : ground | air )
         },
         isStatic: true,
         custom: {
@@ -392,7 +392,7 @@ function ripperoni_building(a){
         label: 'doodad',
         label2: 'rubble',
         collisionFilter: {
-          category: draggable_false
+          category: ground
         },
         isStatic: true,
         isSensor: true,

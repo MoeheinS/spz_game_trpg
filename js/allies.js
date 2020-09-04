@@ -21,7 +21,8 @@ class UnitEnt {
         frictionAir: 1, // magic numbers
         mass: 2,        // magic numbers
         collisionFilter: {
-          category: draggable_false
+          category: ( info.moveType == 'air' ? ground | air : ground ),
+          mask: ( info.moveType == 'air' ? air : ground )
         },
         custom: {
           shape: 'circle',
@@ -349,11 +350,11 @@ function unit_applyPain(a, t){
 // =======================[ DOODAD ]====================================
 function ripperoni_unit(a){
   // exploding into hunks of manga meat or gears / bolts would be funny too, but let's stick with this for now
-  let tombstone = Bodies.rectangle(a.position.x, a.position.y, 8, 8, {
+  let tombstone = Bodies.rectangle(a.position.x, a.position.y-16, 8, 8, {
     label: 'doodad',
     label2: 'tombstone',
     collisionFilter: {
-      category: draggable_false
+      category: ground | defaultCategory
     },
     isStatic: true,
     isSensor: true,

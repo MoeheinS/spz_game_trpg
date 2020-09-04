@@ -79,11 +79,13 @@ const UI_ENEMY_HP = '#f3bb33';
 
 // define our categories (as bit fields, there are up to 32 available)
 var defaultCategory = 0x0001,
-    draggable_true = 0x0002,
-    draggable_false = 0x0004;
+    ground = 0x0002,
+    air = 0x0004;
 
 const GRID_SIZE = 32;
 const GRID_LIMIT = 40;
 const FIELD_SIZE = GRID_LIMIT * GRID_SIZE;
+
+const UNIT_AIR_OFFSET = 3*GRID_SIZE;
 
 var building_CORE;

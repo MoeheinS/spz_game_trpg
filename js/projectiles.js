@@ -109,7 +109,7 @@ function draw_Projectile(i){
         var dw = sw*2;
         var dh = sh*2;
         var dx = i.position.x - (dw/2);
-        var dy = i.position.y - (dh/2);
+        var dy = i.position.y - (dh/2) - ( i.target.custom.moveType == 'air' ? UNIT_AIR_OFFSET : 0 );
         
         // source, source x, y, source width, height, destination x, y, width x, y
         ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
