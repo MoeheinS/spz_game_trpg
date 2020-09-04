@@ -84,6 +84,8 @@ var spriteList = [
 
     ['particle_explosion', 448, 464, '1dir', 4],
     ['particle_target', 640, 64, '1dir', 2],
+
+    ['ui_airship', 672, 368, '1dir_32w', 2],
 ];
 
 for( unit of spriteList ){

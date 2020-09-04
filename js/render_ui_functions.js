@@ -74,7 +74,7 @@ function render_progress(){
 
   ctx.fillRect( 1*GRID_SIZE, 2.375*GRID_SIZE, 2.75*GRID_SIZE, 0.75*GRID_SIZE );
 
-  ctx.font = '2rem alber';
+  ctx.font = '2rem zelda';
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = RENDER_TERRAINCOLOR;
@@ -82,13 +82,23 @@ function render_progress(){
   ctx.strokeText( progress_pct/*+'%'*/, 3*GRID_SIZE, 2.625*GRID_SIZE);
   ctx.fillText( progress_pct/*+'%'*/, 3*GRID_SIZE, 2.625*GRID_SIZE);
 
-  ctx.font = '1.25rem alber';
+  ctx.font = '1.25rem zelda';
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = RENDER_TERRAINCOLOR;
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
   ctx.strokeText('%', 3.75*GRID_SIZE, 2.75*GRID_SIZE);
   ctx.fillText('%', 3.75*GRID_SIZE, 2.75*GRID_SIZE);
+
+  // airship retreat button
+  ctx.strokeStyle = ui_gradient;
+  ctx.fillStyle = 'lightblue';//RENDER_TERRAINCOLOR;
+  ctx.beginPath();
+  ctx.arc(2.25*GRID_SIZE, 5.125*GRID_SIZE, 1.25*GRID_SIZE, 0, Math.PI * 2, true);
+  ctx.fill();
+  ctx.stroke();
+  
+  ctx.drawImage(buildingsImg, ( ticker % 15 < 8 ? 672 : 704 ), 368, 32, 32, 1.25*GRID_SIZE, 3.75*GRID_SIZE, 2*GRID_SIZE, 2*GRID_SIZE);
 }
 
 function render_cursor(){
