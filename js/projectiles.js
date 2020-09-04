@@ -61,7 +61,10 @@ class ProjectileEnt {
             // console.table(this.origin);
 
             let diff_x = Math.abs( this.origin.x - this.goal.x ) * progress;
-            let diff_y = Math.abs( this.origin.y - this.goal.y ) * progress;
+            var diff_y = Math.abs( this.origin.y - this.goal.y ) * progress;
+            if( this.target.custom.moveType == 'air' ){
+                diff_y = Math.abs( this.origin.y - this.goal.y ) * progress - UNIT_AIR_OFFSET * ( 1 - progress );
+            }
 
             this.position.x = ( this.goal.x > this.origin.x ? this.goal.x - diff_x : this.goal.x + diff_x );
             this.position.y = ( this.goal.y > this.origin.y ? this.goal.y - diff_y : this.goal.y + diff_y );
@@ -109,7 +112,7 @@ function draw_Projectile(i){
         var dw = sw*2;
         var dh = sh*2;
         var dx = i.position.x - (dw/2);
-        var dy = i.position.y - (dh/2) - ( i.target.custom.moveType == 'air' ? UNIT_AIR_OFFSET : 0 );
+        var dy = i.position.y - (dh/2);
         
         // source, source x, y, source width, height, destination x, y, width x, y
         ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
