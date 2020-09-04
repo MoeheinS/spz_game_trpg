@@ -76,19 +76,19 @@ let buildingList = [
     sprite_dim: {x: 1*16, y: 2*16},
     sprite_offset: {x: 0, y: 1*GRID_SIZE},
     levels: [
-      { spriteName: 'bld_gold_harvester', hp: 1200 },
-      { spriteName: 'bld_gold_harvester', hp: 1500 },
-      { spriteName: 'bld_gold_harvester', hp: 1750 },
+      { spriteName: 'bld_gold_harvester', hp: 1200, storage: 500, ppm: 5 },
+      { spriteName: 'bld_gold_harvester', hp: 1500, storage: 1200, ppm: 8 },
+      { spriteName: 'bld_gold_harvester', hp: 1750, storage: 1800, ppm: 12 },
 
-      { spriteName: 'bld_gold_harvester', hp: 2250 },
-      { spriteName: 'bld_gold_harvester', hp: 2750 },
-      { spriteName: 'bld_gold_harvester', hp: 3500 },
+      { spriteName: 'bld_gold_harvester', hp: 2250, storage: 2900, ppm: 16 },
+      { spriteName: 'bld_gold_harvester', hp: 2750, storage: 10000, ppm: 20 },
+      { spriteName: 'bld_gold_harvester', hp: 3500, storage: 20000, ppm: 25 },
 
-      { spriteName: 'bld_gold_harvester', hp: 4250 },
-      { spriteName: 'bld_gold_harvester', hp: 5000 },
-      { spriteName: 'bld_gold_harvester', hp: 6000 },
+      { spriteName: 'bld_gold_harvester', hp: 4250, storage: 30000, ppm: 30 },
+      { spriteName: 'bld_gold_harvester', hp: 5000, storage: 60000, ppm: 35 },
+      { spriteName: 'bld_gold_harvester', hp: 6000, storage: 95000, ppm: 40 },
 
-      { spriteName: 'bld_gold_harvester', hp: 7200 }
+      { spriteName: 'bld_gold_harvester', hp: 7200, storage: 130000, ppm: 45 }
     ]
   },
   {
@@ -98,19 +98,19 @@ let buildingList = [
     sprite_dim: {x: 1*16, y: 2*16},
     sprite_offset: {x: 0, y: 1*GRID_SIZE},
     levels: [
-      { spriteName: 'bld_mana_harvester', hp: 1200 },
-      { spriteName: 'bld_mana_harvester', hp: 1500 },
-      { spriteName: 'bld_mana_harvester', hp: 1750 },
+      { spriteName: 'bld_mana_harvester', hp: 1200, storage: 500, ppm: 5 },
+      { spriteName: 'bld_mana_harvester', hp: 1500, storage: 1200, ppm: 8 },
+      { spriteName: 'bld_mana_harvester', hp: 1750, storage: 1800, ppm: 12 },
 
-      { spriteName: 'bld_mana_harvester', hp: 2250 },
-      { spriteName: 'bld_mana_harvester', hp: 2750 },
-      { spriteName: 'bld_mana_harvester', hp: 3500 },
+      { spriteName: 'bld_mana_harvester', hp: 2250, storage: 2900, ppm: 16 },
+      { spriteName: 'bld_mana_harvester', hp: 2750, storage: 10000, ppm: 20 },
+      { spriteName: 'bld_mana_harvester', hp: 3500, storage: 20000, ppm: 25 },
 
-      { spriteName: 'bld_mana_harvester', hp: 4250 },
-      { spriteName: 'bld_mana_harvester', hp: 5000 },
-      { spriteName: 'bld_mana_harvester', hp: 6000 },
+      { spriteName: 'bld_mana_harvester', hp: 4250, storage: 30000, ppm: 30 },
+      { spriteName: 'bld_mana_harvester', hp: 5000, storage: 60000, ppm: 35 },
+      { spriteName: 'bld_mana_harvester', hp: 6000, storage: 95000, ppm: 40 },
 
-      { spriteName: 'bld_mana_harvester', hp: 7200 }
+      { spriteName: 'bld_mana_harvester', hp: 7200, storage: 130000, ppm: 45 }
     ]
   },
   {
@@ -120,18 +120,19 @@ let buildingList = [
     sprite_dim: {x: 3*16, y: 3*16},
     sprite_offset: {x: 0, y: 1*GRID_SIZE},
     levels: [
-      { spriteName: 'bld_gold_storage', hp: 1200 },
-      { spriteName: 'bld_gold_storage', hp: 2000 },
-      { spriteName: 'bld_gold_storage', hp: 3250 },
+      { spriteName: 'bld_gold_storage', hp: 1200, storage: 1500 },
+      { spriteName: 'bld_gold_storage', hp: 2000, storage: 9000 },
+      { spriteName: 'bld_gold_storage', hp: 3250, storage: 36000 },
 
-      { spriteName: 'bld_gold_storage', hp: 5000 },
-      { spriteName: 'bld_gold_storage', hp: 7000 },
-      { spriteName: 'bld_gold_storage', hp: 9500 },
+      { spriteName: 'bld_gold_storage', hp: 5000, storage: 112500  },
+      { spriteName: 'bld_gold_storage', hp: 7000, storage: 360000  },
+      { spriteName: 'bld_gold_storage', hp: 9500, storage: 1000000 },
 
-      { spriteName: 'bld_gold_storage', hp: 12250 },
-      { spriteName: 'bld_gold_storage', hp: 15500 },
-      { spriteName: 'bld_gold_storage', hp: 19250 },
-      { spriteName: 'bld_gold_storage', hp: 23500 }
+      { spriteName: 'bld_gold_storage', hp: 12250, storage: 1500000 },
+      { spriteName: 'bld_gold_storage', hp: 15500, storage: 2100000 },
+      { spriteName: 'bld_gold_storage', hp: 19250, storage: 2300000 },
+
+      { spriteName: 'bld_gold_storage', hp: 23500, storage: 2500000 }
     ]
   },
   {
@@ -141,19 +142,19 @@ let buildingList = [
     sprite_dim: {x: 2*16, y: 3*16},
     sprite_offset: {x: 0, y: 1*GRID_SIZE},
     levels: [
-      { spriteName: 'bld_mana_storage', hp: 1200 },
-      { spriteName: 'bld_mana_storage', hp: 2000 },
-      { spriteName: 'bld_mana_storage', hp: 3250 },
+      { spriteName: 'bld_mana_storage', hp: 1200, storage: 1500 },
+      { spriteName: 'bld_mana_storage', hp: 2000, storage: 9000 },
+      { spriteName: 'bld_mana_storage', hp: 3250, storage: 36000 },
 
-      { spriteName: 'bld_mana_storage', hp: 5000 },
-      { spriteName: 'bld_mana_storage', hp: 7000 },
-      { spriteName: 'bld_mana_storage', hp: 9500 },
+      { spriteName: 'bld_mana_storage', hp: 5000, storage: 112500 },
+      { spriteName: 'bld_mana_storage', hp: 7000, storage: 360000 },
+      { spriteName: 'bld_mana_storage', hp: 9500, storage: 1000000 },
 
-      { spriteName: 'bld_mana_storage', hp: 12250 },
-      { spriteName: 'bld_mana_storage', hp: 15500 },
-      { spriteName: 'bld_mana_storage', hp: 19250 },
+      { spriteName: 'bld_mana_storage', hp: 12250, storage: 1500000 },
+      { spriteName: 'bld_mana_storage', hp: 15500, storage: 2100000 },
+      { spriteName: 'bld_mana_storage', hp: 19250, storage: 2300000 },
 
-      { spriteName: 'bld_mana_storage', hp: 23500 }
+      { spriteName: 'bld_mana_storage', hp: 23500, storage: 2500000 }
     ]
   },
   {
