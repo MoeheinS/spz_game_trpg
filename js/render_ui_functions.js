@@ -12,6 +12,12 @@ function render_ui(){
 }
 
 function render_progress(){
+  let progress_pct = 100 - Math.floor( buildings_Array.length / game_state.initial_buildings * 100 );
+
+  if( !building_CORE ){
+    return;
+  }
+
   // star tracker
   let ui_gradient = ctx.createLinearGradient( 1*GRID_SIZE,0, 4*GRID_SIZE,0);
   ui_gradient.addColorStop(0, RENDER_SHADOWCOLOR);
@@ -29,48 +35,31 @@ function render_progress(){
   ctx.fillRect( 1*GRID_SIZE, 0.875*GRID_SIZE, 2.75*GRID_SIZE, 0.75*GRID_SIZE );
 
   ctx.imageSmoothingEnabled = false;
-  ctx.strokeStyle = RENDER_SHADOWCOLOR;
+  // bronze star for 50% destruction
+  //ctx.strokeStyle = '#9c4a00';
+  ctx.strokeStyle = ( progress_pct >= 50 ? RENDER_TERRAINCOLOR : RENDER_SHADOWCOLOR );
   ctx.beginPath();
   ctx.arc(1*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
   ctx.stroke();
-  ctx.drawImage(buildingsImg, 624, 384, 16, 16, 0.5*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+  ctx.drawImage(buildingsImg, ( progress_pct >= 50 ? 576 : 624 ), 384, 16, 16, 0.5*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
 
-  ctx.strokeStyle = RENDER_SHADOWCOLOR;
+  //building_CORE
+  //Composite.get(world, building_CORE.id, 'body')
+  // silver star for core destruction
+  // ctx.strokeStyle = '#696969';
+  ctx.strokeStyle = ( building_CORE.custom.hp_current <= 0 ? RENDER_TERRAINCOLOR : RENDER_SHADOWCOLOR );
   ctx.beginPath();
   ctx.arc(2.125*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
   ctx.stroke();
-  ctx.drawImage(buildingsImg, 624, 384, 16, 16, 1.625*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
-
-  ctx.strokeStyle = RENDER_SHADOWCOLOR;
-  ctx.beginPath();
-  ctx.arc(3.25*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
-  ctx.stroke();
-  ctx.drawImage(buildingsImg, 624, 384, 16, 16, 2.75*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
-
-  // TODO: make these dependent on game_state
-  // bronze star for 50% destruction
-  // ctx.strokeStyle = '#9c4a00';
-  // ctx.strokeStyle = RENDER_TERRAINCOLOR;
-  // ctx.beginPath();
-  // ctx.arc(1*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
-  // ctx.stroke();
-  // ctx.drawImage(buildingsImg, 576, 384, 16, 16, 0.5*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
-  
-  // silver star for core destruction
-  // ctx.strokeStyle = '#696969';
-  // ctx.strokeStyle = RENDER_TERRAINCOLOR;
-  // ctx.beginPath();
-  // ctx.arc(2.125*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
-  // ctx.stroke();
-  // ctx.drawImage(buildingsImg, 640, 384, 16, 16, 1.625*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+  ctx.drawImage(buildingsImg, ( building_CORE.custom.hp_current <= 0 ? 640 : 624 ), 384, 16, 16, 1.625*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
 
   // gold star for 100% destruction
   // ctx.strokeStyle = '#cd7320';
-  // ctx.strokeStyle = RENDER_TERRAINCOLOR;
-  // ctx.beginPath();
-  // ctx.arc(3.25*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
-  // ctx.stroke();
-  // ctx.drawImage(buildingsImg, 560, 384, 16, 16, 2.75*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+  ctx.strokeStyle = ( progress_pct == 100 ? RENDER_TERRAINCOLOR : RENDER_SHADOWCOLOR );
+  ctx.beginPath();
+  ctx.arc(3.25*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
+  ctx.stroke();
+  ctx.drawImage(buildingsImg, ( progress_pct == 100 ? 560 : 624 ), 384, 16, 16, 2.75*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
 
   // percentage tracker
   ctx.fillStyle = ui_gradient;
@@ -90,8 +79,8 @@ function render_progress(){
   ctx.textBaseline = 'middle';
   ctx.fillStyle = RENDER_TERRAINCOLOR;
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
-  ctx.strokeText(100-Math.floor( buildings_Array.length / game_state.initial_buildings * 100 )/*+'%'*/, 3*GRID_SIZE, 2.625*GRID_SIZE);
-  ctx.fillText(100-Math.floor( buildings_Array.length / game_state.initial_buildings * 100 )/*+'%'*/, 3*GRID_SIZE, 2.625*GRID_SIZE);
+  ctx.strokeText( progress_pct/*+'%'*/, 3*GRID_SIZE, 2.625*GRID_SIZE);
+  ctx.fillText( progress_pct/*+'%'*/, 3*GRID_SIZE, 2.625*GRID_SIZE);
 
   ctx.font = '1.25rem alber';
   ctx.textAlign = 'right';
