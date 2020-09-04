@@ -326,9 +326,11 @@ function turret_acqTarget(a, range){
   var nearEnemies = new Array;
   for( e of units_Array ){
       let e_dist = getDistance(a.position, e.position);
-      // if a.custom.turret.preferredTarget == 'any' || e.custom.moveType == a.custom.turret.preferredTarget
+      
       if( e_dist <= range ){
+        if( a.custom.turret.preferredTarget == 'any' || e.custom.moveType == a.custom.turret.preferredTarget ){
           nearEnemies.push({"target": e, "distance": e_dist});
+        }
       }
   }
   if( nearEnemies.length ){

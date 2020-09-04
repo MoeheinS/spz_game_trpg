@@ -63,7 +63,8 @@ class ProjectileEnt {
             let diff_x = Math.abs( this.origin.x - this.goal.x ) * progress;
             var diff_y = Math.abs( this.origin.y - this.goal.y ) * progress;
             if( this.target.custom.moveType == 'air' ){
-                diff_y = Math.abs( this.origin.y - this.goal.y ) * progress - UNIT_AIR_OFFSET * ( 1 - progress );
+                let flipper = ( this.goal.y > this.origin.y ? 1 : -1 );
+                diff_y = Math.abs( this.origin.y - this.goal.y ) * progress + flipper * ( UNIT_AIR_OFFSET - ( UNIT_AIR_OFFSET * progress ) );
             }
 
             this.position.x = ( this.goal.x > this.origin.x ? this.goal.x - diff_x : this.goal.x + diff_x );
