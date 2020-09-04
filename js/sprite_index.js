@@ -37,8 +37,11 @@ var spriteList = [
     ['ratty', 0, 0, '4dir'],
     ['sling', 0, 16, '4dir'],
 
+    // placeholders
     ['turret_basic', 80, 464, '1dir', 3],
     ['turret_rapid', 80, 464, '1dir', 3],
+
+    ['turret_hidden', 272, 288, '1dir', 1],
 
     ['wall_01', 16, 416, '1dir', 1],
     ['wall_02', 48, 416, '1dir', 1],

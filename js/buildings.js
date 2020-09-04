@@ -14,9 +14,10 @@ let buildingList = [
     name: 'Turret',
     category: 'defense',
     dim: {x: GRID_SIZE, y: GRID_SIZE},
-    sprite_dim: {x: 16, y: 16},
+    sprite_dim: {x: 16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
     levels: [
-      { spriteName: 'turret_basic', hp: 1500, attackCD: 90, attackRange: 10, damage: 20/*200*/, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
+      { spriteName: 'turret_basic', hp: 1500, attackCD: 90, attackRange: 10, damage: 200, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
       { spriteName: 'turret_basic', hp: 1750, attackCD: 90, attackRange: 12, damage: 260, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
       { spriteName: 'turret_basic', hp: 2200, attackCD: 90, attackRange: 14, damage: 349, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_basic' },
       
@@ -45,6 +46,21 @@ let buildingList = [
       { spriteName: 'turret_rapid', hp: 15500, attackCD: 6,  attackRange: 36, damage: 200, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
       { spriteName: 'turret_rapid', hp: 24000, attackCD: 6,  attackRange: 36, damage: 250, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' },
       { spriteName: 'turret_rapid', hp: 29000, attackCD: 6,  attackRange: 36, damage: 280, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' }
+    ]
+  },
+  {
+    name: 'Hidden Turret', // attacks all units in range
+    category: 'defense',
+    dim: {x: GRID_SIZE, y: GRID_SIZE},
+    sprite_dim: {x: 16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'turret_hidden', hp: 1500,  attackCD: 150, attackRange: 10, damage: 700, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_rapid' },
+      { spriteName: 'turret_hidden', hp: 2500,  attackCD: 150, attackRange: 10, damage: 927, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_rapid' },
+      { spriteName: 'turret_hidden', hp: 3750,  attackCD: 150, attackRange: 10, damage: 1110, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_rapid' },
+      
+      { spriteName: 'turret_hidden', hp: 5750, attackCD: 150, attackRange: 10, damage: 1354, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_rapid' },
+      { spriteName: 'turret_hidden', hp: 8100, attackCD: 150, attackRange: 10, damage: 1656, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_rapid' }
     ]
   },
   {
@@ -233,7 +249,9 @@ class BuildingEnt {
             attackCD: (info.attackCD ? info.attackCD : false),
             attackCD_base: (info.attackCD ? info.attackCD : false),
             damage: (info.damage ? info.damage : false),
+            // any, ground, air
             preferredTarget: (info.target ? info.target : false),
+            // single, closest, area
             aType: (info.attackType ? info.attackType : false),
             ammo: ( unitID == 'Rapid Turret' ? 15000 : false ),
             projectileArt: info.projectileArt
@@ -258,6 +276,7 @@ function turret_acqTarget(a, range){
   var nearEnemies = new Array;
   for( e of units_Array ){
       let e_dist = getDistance(a.position, e.position);
+      // if a.custom.turret.preferredTarget == 'any' || e.custom.moveType == a.custom.turret.preferredTarget
       if( e_dist <= range ){
           nearEnemies.push({"target": e, "distance": e_dist});
       }
@@ -267,11 +286,34 @@ function turret_acqTarget(a, range){
       nearEnemies_byDist = nearEnemies.sort(function(a,b){
           return a.distance-b.distance;
       });
-      turret_atkTarget(a, nearEnemies_byDist[0].target);
+
+      switch (a.custom.turret.aType) { // aType == single, closest, area
+        case 'single':
+          // TODO: change
+          turret_atkTarget(a, nearEnemies_byDist[0].target);
+          break;
+        case 'closest':
+          turret_atkTarget(a, nearEnemies_byDist[0].target);
+          break;
+        case 'area':
+          for( ne of nearEnemies_byDist ){
+            turret_atkTarget(a, ne.target);
+          }
+          break;
+        default:
+          break;
+      }
   }
 }
 
 function turret_atkTarget(a, t){
+    if( a.custom.name == 'Rapid Turret' ){
+      if( a.custom.turret.ammo > 0 ){
+        a.custom.turret.ammo--;
+      }else{
+        return;
+      }
+    }
     console.log(`${a.id} attacking ${t.id}`);
 
     let distance = getDistance(a.position, t.position);
@@ -329,8 +371,6 @@ function ripperoni_building(a){
   }
 }
 
-var test_turret = new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*20.5) ) );
-
 building_CORE = new BuildingEnt( 'Core', 0, new Coordinate( (GRID_SIZE*25.5), (GRID_SIZE*23.5) ) );
 
 // a circle of walls
@@ -350,12 +390,21 @@ new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*23) ) );
 new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*23) ) );
 
 new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*18.5), (GRID_SIZE*21.5) ) );
-//new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*25), (GRID_SIZE*22) ) );
 
 new BuildingEnt( 'rock_l', 0, new Coordinate( (GRID_SIZE*2), (GRID_SIZE*18) ) );
-
 
 new BuildingEnt( 'Gold Harvester', 0, new Coordinate( (GRID_SIZE*2.5), (GRID_SIZE*2.5) ) );
 new BuildingEnt( 'Gold Storage', 0, new Coordinate( (GRID_SIZE*2.5), (GRID_SIZE*4.5) ) );
 new BuildingEnt( 'Mana Harvester', 0, new Coordinate( (GRID_SIZE*36.5), (GRID_SIZE*34.5) ) );
 new BuildingEnt( 'Mana Storage', 0, new Coordinate( (GRID_SIZE*36.5), (GRID_SIZE*36.5) ) );
+
+// turret testing range
+//new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*20.5) ) );
+      //new BuildingEnt( 'Tower Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*22.5) ) );
+      //new BuildingEnt( 'Cloud Mage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*24.5) ) ); // AA tower
+      //new BuildingEnt( 'Curse Box', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*26.5) ) ); // AoE tower
+      //new BuildingEnt( 'Lobber Golem', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*28.5) ) ); // Artillery
+//new BuildingEnt( 'Hidden Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*30.5) ) );
+//new BuildingEnt( 'Rapid Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*32.5) ) );
+      //new BuildingEnt( 'Campy Mage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+      //new BuildingEnt( 'Air Elemental', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*36.5) ) ); // Fan
