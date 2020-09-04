@@ -7,7 +7,7 @@ let game_shift = false;
 let game_cursor = 'default';
 
 let game_state = {
-  "initial_buildings": 3, // debug number, set on mission initialize
+  "initial_buildings": 7, // debug number, set on mission initialize
   "grass": false,
   "mayDeploy": true
 };

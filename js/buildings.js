@@ -70,6 +70,93 @@ let buildingList = [
     ]
   },
   {
+    name: 'Gold Harvester',
+    category: 'economy',
+    dim: {x: 1*GRID_SIZE, y: 1*GRID_SIZE},
+    sprite_dim: {x: 1*16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'bld_gold_harvester', hp: 1200 },
+      { spriteName: 'bld_gold_harvester', hp: 1500 },
+      { spriteName: 'bld_gold_harvester', hp: 1750 },
+
+      { spriteName: 'bld_gold_harvester', hp: 2250 },
+      { spriteName: 'bld_gold_harvester', hp: 2750 },
+      { spriteName: 'bld_gold_harvester', hp: 3500 },
+
+      { spriteName: 'bld_gold_harvester', hp: 4250 },
+      { spriteName: 'bld_gold_harvester', hp: 5000 },
+      { spriteName: 'bld_gold_harvester', hp: 6000 },
+
+      { spriteName: 'bld_gold_harvester', hp: 7200 }
+    ]
+  },
+  {
+    name: 'Mana Harvester',
+    category: 'economy',
+    dim: {x: 1*GRID_SIZE, y: 1*GRID_SIZE},
+    sprite_dim: {x: 1*16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'bld_mana_harvester', hp: 1200 },
+      { spriteName: 'bld_mana_harvester', hp: 1500 },
+      { spriteName: 'bld_mana_harvester', hp: 1750 },
+
+      { spriteName: 'bld_mana_harvester', hp: 2250 },
+      { spriteName: 'bld_mana_harvester', hp: 2750 },
+      { spriteName: 'bld_mana_harvester', hp: 3500 },
+
+      { spriteName: 'bld_mana_harvester', hp: 4250 },
+      { spriteName: 'bld_mana_harvester', hp: 5000 },
+      { spriteName: 'bld_mana_harvester', hp: 6000 },
+
+      { spriteName: 'bld_mana_harvester', hp: 7200 }
+    ]
+  },
+  {
+    name: 'Gold Storage',
+    category: 'economy',
+    dim: {x: 3*GRID_SIZE, y: 2*GRID_SIZE},
+    sprite_dim: {x: 3*16, y: 3*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'bld_gold_storage', hp: 1200 },
+      { spriteName: 'bld_gold_storage', hp: 2000 },
+      { spriteName: 'bld_gold_storage', hp: 3250 },
+
+      { spriteName: 'bld_gold_storage', hp: 5000 },
+      { spriteName: 'bld_gold_storage', hp: 7000 },
+      { spriteName: 'bld_gold_storage', hp: 9500 },
+
+      { spriteName: 'bld_gold_storage', hp: 12250 },
+      { spriteName: 'bld_gold_storage', hp: 15500 },
+      { spriteName: 'bld_gold_storage', hp: 19250 },
+      { spriteName: 'bld_gold_storage', hp: 23500 }
+    ]
+  },
+  {
+    name: 'Mana Storage',
+    category: 'economy',
+    dim: {x: 2*GRID_SIZE, y: 2*GRID_SIZE},
+    sprite_dim: {x: 2*16, y: 3*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'bld_mana_storage', hp: 1200 },
+      { spriteName: 'bld_mana_storage', hp: 2000 },
+      { spriteName: 'bld_mana_storage', hp: 3250 },
+
+      { spriteName: 'bld_mana_storage', hp: 5000 },
+      { spriteName: 'bld_mana_storage', hp: 7000 },
+      { spriteName: 'bld_mana_storage', hp: 9500 },
+
+      { spriteName: 'bld_mana_storage', hp: 12250 },
+      { spriteName: 'bld_mana_storage', hp: 15500 },
+      { spriteName: 'bld_mana_storage', hp: 19250 },
+
+      { spriteName: 'bld_mana_storage', hp: 23500 }
+    ]
+  },
+  {
     name: 'rock_s',
     category: 'terrain',
     dim: {x: GRID_SIZE, y: GRID_SIZE},
@@ -265,3 +352,9 @@ new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*18.5), (GRID_SIZE*21.5)
 //new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*25), (GRID_SIZE*22) ) );
 
 new BuildingEnt( 'rock_l', 0, new Coordinate( (GRID_SIZE*2), (GRID_SIZE*18) ) );
+
+
+new BuildingEnt( 'Gold Harvester', 0, new Coordinate( (GRID_SIZE*2.5), (GRID_SIZE*2.5) ) );
+new BuildingEnt( 'Gold Storage', 0, new Coordinate( (GRID_SIZE*2.5), (GRID_SIZE*4.5) ) );
+new BuildingEnt( 'Mana Harvester', 0, new Coordinate( (GRID_SIZE*36.5), (GRID_SIZE*34.5) ) );
+new BuildingEnt( 'Mana Storage', 0, new Coordinate( (GRID_SIZE*36.5), (GRID_SIZE*36.5) ) );

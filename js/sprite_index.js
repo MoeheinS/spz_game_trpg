@@ -52,6 +52,11 @@ var spriteList = [
     ['core2', 176, 0, '1dir', 1],
     ['core3', 256, 0, '1dir', 1],
 
+    ['bld_mana_harvester', 480, 176, '1dir', 4],
+    ['bld_mana_storage', 48, 336, '1dir', 1],
+    ['bld_gold_harvester', 288, 176, '1dir', 2],
+    ['bld_gold_storage', 272, 224, '1dir', 1],
+
     ['projectile_basic', 32, 480, '1dir', 1],
     ['projectile_spinner', 160, 512, '1dir', 4],
     ['projectile_rapid', 80, 496, '1dir', 2],
