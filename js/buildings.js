@@ -55,7 +55,32 @@ let buildingList = [
       { spriteName: 'turret_tower', hp: 8500, attackCD: 33, attackRange: 31, damage: 300, element: false, target: 'any', attackType: 'closest', projectileArt: 'projectile_basic' }
     ]
   },
-  // name: 'Cloud Mage',
+  {
+    name: 'Mermage',
+    category: 'defense',
+    // wizard
+    // dim: {x: GRID_SIZE, y: GRID_SIZE},
+    // sprite_dim: {x: 16, y: 2*16},
+    // sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    
+    // mermaid
+    dim: {x: GRID_SIZE, y: GRID_SIZE},
+    sprite_dim: {x: 16, y: 3*16},
+    sprite_offset: {x: 0, y: 2*GRID_SIZE},
+    levels: [
+      { spriteName: 'turret_aa', hp: 3000,  attackCD: 120, attackRange: 30, damage: 66,  element: false, target: 'air', attackType: 'area', projectileArt: 'projectile_aa' },
+      { spriteName: 'turret_aa', hp: 3500,  attackCD: 120, attackRange: 30, damage: 73,  element: false, target: 'air', attackType: 'area', projectileArt: 'projectile_aa' },
+      { spriteName: 'turret_aa', hp: 4000,  attackCD: 120, attackRange: 30, damage: 83,  element: false, target: 'air', attackType: 'area', projectileArt: 'projectile_aa' },
+      
+      { spriteName: 'turret_aa', hp: 4750,  attackCD: 120, attackRange: 30, damage: 96,  element: false, target: 'air', attackType: 'area', projectileArt: 'projectile_aa' },
+      { spriteName: 'turret_aa', hp: 7000,  attackCD: 120, attackRange: 30, damage: 113, element: false, target: 'air', attackType: 'area', projectileArt: 'projectile_aa' },
+      { spriteName: 'turret_aa', hp: 8250,  attackCD: 120, attackRange: 30, damage: 133, element: false, target: 'air', attackType: 'area', projectileArt: 'projectile_aa' },
+      
+      { spriteName: 'turret_aa', hp: 10000, attackCD: 120, attackRange: 30, damage: 156, element: false, target: 'air', attackType: 'area', projectileArt: 'projectile_aa' },
+      { spriteName: 'turret_aa', hp: 12000, attackCD: 120, attackRange: 31, damage: 182, element: false, target: 'air', attackType: 'area', projectileArt: 'projectile_aa' },
+      { spriteName: 'turret_aa', hp: 15000, attackCD: 105, attackRange: 33, damage: 211, element: false, target: 'air', attackType: 'area', projectileArt: 'projectile_aa' }
+    ]
+  },
   {
     name: 'Curse Box',
     category: 'defense',
@@ -371,6 +396,15 @@ function turret_atkTarget(a, t){
         return;
       }
     }
+    if( a.custom.name == 'Mermage' ){
+      particles_Array.push(
+        new ParticleEnt({x: t.position.x, y: t.position.y}, 3, 'projectile_aa_ground')
+      );
+      projectiles_Array.push(
+        new ProjectileEnt({x: t.position.x, y:t.position.y - UNIT_AIR_OFFSET}, t.position, true, 18, t, a.custom.turret.damage, a.custom.turret.projectileArt)
+      );
+      return;
+    }
     console.log(`${a.id} attacking ${t.id}`);
 
     let distance = getDistance(a.position, t.position);
@@ -458,7 +492,7 @@ new BuildingEnt( 'Mana Storage', 0, new Coordinate( (GRID_SIZE*36.5), (GRID_SIZE
 // turret testing range
 new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*20.5) ) );
 new BuildingEnt( 'Tower Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*22.5) ) );
-      //new BuildingEnt( 'Cloud Mage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*24.5) ) ); // AA tower
+new BuildingEnt( 'Mermage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*24.5) ) ); // AA tower
 new BuildingEnt( 'Curse Box', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*26.5) ) ); // AoE tower
       //new BuildingEnt( 'Lobber Golem', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*28.5) ) ); // Artillery
 new BuildingEnt( 'Hidden Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*30.5) ) );

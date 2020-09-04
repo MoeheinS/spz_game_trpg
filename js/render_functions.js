@@ -266,6 +266,19 @@ function render_grass(){
 			}
 		}
   }
+  for( bld of buildings_all_Array ){
+    if( bld.custom.name == 'Mermage' ){
+      ctx.beginPath();
+      ctx.fillStyle = oobPattern;
+      ctx.arc(bld.position.x, bld.position.y-3, 1*GRID_SIZE-3, 0, Math.PI * 2, true);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.fillStyle = '#415aff';
+      ctx.arc(bld.position.x, bld.position.y+3, 1*GRID_SIZE-3, 0, Math.PI * 2, true);
+      ctx.fill();
+    }
+  }
   /* This is the alternative method
   for( building of buildings_all_Array ){
     if ( building.region && building.region.startRow ){
