@@ -1,6 +1,7 @@
 let unitList = [
   // name, rarity, spriteName, attackCD, moveSpeed, attackRange, damage, preferredTarget, hp
-  {name: 'Debug Ratty', rarity: 'N', spriteName: 'ratty', attackCD: 126, movespeed: 140, moveType: 'air', attackRange: 1, damage: 254, attackArt: 'particle_atk_1', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 1800, amount: 15},
+  {name: 'Debug Ratty', rarity: 'N', spriteName: 'ratty', attackCD: 126, movespeed: 140, moveType: 'ground', attackRange: 1, damage: 254, attackArt: 'particle_atk_1', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 1800, amount: 15},
+  {name: 'Debug Air Ratty', rarity: 'N', spriteName: 'ratty', attackCD: 126, movespeed: 140, moveType: 'air', attackRange: 1, damage: 254, attackArt: 'particle_atk_1', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 1800, amount: 15},
   {name: 'Ratty', rarity: 'N', spriteName: 'ratty', attackCD: 126, movespeed: 140, moveType: 'ground', attackRange: 1, damage: 54, attackArt: 'particle_atk_1', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 180, amount: 15},
   {name: 'Sling', rarity: 'N', spriteName: 'sling', attackCD: 144, movespeed: 110, moveType: 'ground', attackRange: 10, damage: 26, attackArt: 'particle_atk_8',  projectileArt: 'projectile_unit_sling', preferredTarget: 'any', hp: 70, amount: 15}
 ];

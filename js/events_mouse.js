@@ -60,6 +60,11 @@ Events.on(mouseConstraint, "mousedown", function(event) {
       new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Debug Ratty' );
     }
   }
+  if( event.mouse.button === 2){
+    if( game_state.mayDeploy ){
+      new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Debug Air Ratty' );
+    }
+  }
 });
 
 Events.on(mouseConstraint, "mouseup", function(event) {
