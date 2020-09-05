@@ -94,7 +94,6 @@ class ProjectileEnt {
         }
 
         this.target.custom.hp_current = this.target.custom.hp_current - this.damage;
-        console.log(`${this.target.custom.hp_current} hp remaining of ${this.target.custom.hp_max}`);
 
         //console.warn( Composite.get(world, this.target.id, 'body') );
 

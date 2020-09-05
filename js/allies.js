@@ -226,11 +226,10 @@ function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
   easystar.setAcceptableTiles([0]);
   try {
     easystar.findPath(start_pos.x, start_pos.y, goal_pos.x, goal_pos.y, function( path ) {
-      //console.log(path);
       if (path === null) {
-        console.error(`path for ${unit.id} NOT found`);
+        //console.error(`path for ${unit.id} NOT found`);
       } else {
-        console.warn(`path for ${unit.id} found to ${target.id}`);
+        //console.warn(`path for ${unit.id} found to ${target.id}`);
         unit.custom.target = target;
         unit.custom.waypoint = path;
         unit.custom.state = 'ready';
@@ -273,7 +272,7 @@ function unit_attackTarget(a){
     if( !hurt_point && a.custom.attackCD <= 0 ){
       // this prevents units walking into non-existence
       //if( a.custom.waypoint.length ){
-        console.log('cant reach vertex');
+        //console.log('cant reach vertex');
         unit_approachTarget(a);
       //}
     }
@@ -320,7 +319,7 @@ function unit_approachTarget(a){
 }
 
 function unit_applyPain(a, t){
-  console.log(`unit ${a.id} attacking ${t.id}`);
+  //console.log(`unit ${a.id} attacking ${t.id}`);
   let distance = getDistance(a.position, t.position);
   let distanceDiff = ( distance/( a.custom.attackRange*GRID_SIZE ) ); // percentage of distance travelled already
 

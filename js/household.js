@@ -314,93 +314,93 @@ function moveToPoint(a, dv, force, uniform){
 
 // works off world bounds; performance is still good for now
 // grid size unit, feathering from edges
-function grid_pathfind(bod, gsu, feather, exceptID){
+// function grid_pathfind(bod, gsu, feather, exceptID){
 
-  var playfield = new Coordinate(FIELD_SIZE, FIELD_SIZE);
-  var max_rows = Math.ceil(playfield.y / gsu);
-  var max_cols = Math.ceil(playfield.x / gsu);
-  // console.warn(`rows: ${max_rows},cols: ${max_cols}`);
+//   var playfield = new Coordinate(FIELD_SIZE, FIELD_SIZE);
+//   var max_rows = Math.ceil(playfield.y / gsu);
+//   var max_cols = Math.ceil(playfield.x / gsu);
+//   // console.warn(`rows: ${max_rows},cols: ${max_cols}`);
 
-  var astar_grid = [];
+//   var astar_grid = [];
 
-  for (let g_v = 0; g_v < max_rows; g_v++) {
-    var astar_row = [];
+//   for (let g_v = 0; g_v < max_rows; g_v++) {
+//     var astar_row = [];
 
-    for (let g_h = 0; g_h < max_cols; g_h++) {
-      //console.log(g_v, g_h);
+//     for (let g_h = 0; g_h < max_cols; g_h++) {
+//       //console.log(g_v, g_h);
       
-      // region offset
-      let ros = new Coordinate((g_h*gsu), (g_v*gsu));
+//       // region offset
+//       let ros = new Coordinate((g_h*gsu), (g_v*gsu));
 
-      var region = new Object;
-          region.min = new Coordinate(ros.x+feather, ros.y+feather);
-          region.max = new Coordinate(ros.x+gsu-feather, ros.y+gsu-feather);
+//       var region = new Object;
+//           region.min = new Coordinate(ros.x+feather, ros.y+feather);
+//           region.max = new Coordinate(ros.x+gsu-feather, ros.y+gsu-feather);
 
-      var blockers_Array = new Array;
-      switch (bod.custom.moveType) {
-        case 'air':
-          blockers_Array = buildings_Array;
-          break;
-        case 'ground':
-        default:
-          blockers_Array = buildings_all_Array;
-          break;
-      }
+//       var blockers_Array = new Array;
+//       switch (bod.custom.moveType) {
+//         case 'air':
+//           blockers_Array = buildings_Array;
+//           break;
+//         case 'ground':
+//         default:
+//           blockers_Array = buildings_all_Array;
+//           break;
+//       }
 
-      //let detectedBodies = Query.region(Composite.allBodies(world), region);
-      let detectedBodies = Query.region(blockers_Array, region);
+//       //let detectedBodies = Query.region(Composite.allBodies(world), region);
+//       let detectedBodies = Query.region(blockers_Array, region);
       
-      //console.log(detectedBodies);
+//       //console.log(detectedBodies);
 
-      if( detectedBodies.length ){
-        var itsMe = false;
-        for( dbod of detectedBodies ){
-          if( dbod.id == exceptID ){
-            itsMe = true;
-          }
-        }
-        // if detecting self, push 0 so you don't block yourself from moving
-        astar_row.push((itsMe ? 0 : 1));
-      }else{
-        astar_row.push(0);
-      }
+//       if( detectedBodies.length ){
+//         var itsMe = false;
+//         for( dbod of detectedBodies ){
+//           if( dbod.id == exceptID ){
+//             itsMe = true;
+//           }
+//         }
+//         // if detecting self, push 0 so you don't block yourself from moving
+//         astar_row.push((itsMe ? 0 : 1));
+//       }else{
+//         astar_row.push(0);
+//       }
 
-    }
+//     }
 
-    astar_grid.push(astar_row);
-  }
-  var start_pos = new Coordinate(
-    Math.floor(bod.position.x / gsu), 
-    Math.floor(bod.position.y / gsu)
-  ); // find in grid. floor not ceil because array counting
-  var goal_pos = new Coordinate(
-    Math.floor(bod.custom.target.position.x / gsu), 
-    Math.floor(bod.custom.target.position.y / gsu)
-  );
-  grid_astar(astar_grid, start_pos, goal_pos, unit);
-}
+//     astar_grid.push(astar_row);
+//   }
+//   var start_pos = new Coordinate(
+//     Math.floor(bod.position.x / gsu), 
+//     Math.floor(bod.position.y / gsu)
+//   ); // find in grid. floor not ceil because array counting
+//   var goal_pos = new Coordinate(
+//     Math.floor(bod.custom.target.position.x / gsu), 
+//     Math.floor(bod.custom.target.position.y / gsu)
+//   );
+//   grid_astar(astar_grid, start_pos, goal_pos, unit);
+// }
 
 // TODO: it finds the path, but I can't draw it within this function. Because easystar is async?
 // so that leaves NOT drawing it, or pushing the points to a higher scoped array, which is drawn instead
-function grid_astar(astar_grid, start_pos, goal_pos, unit){
-  var easystar = new EasyStar.js();
-  easystar.setGrid(astar_grid);
-  easystar.enableDiagonals();
-  easystar.setAcceptableTiles([0]);
-  easystar.findPath(start_pos.x, start_pos.y, goal_pos.x, goal_pos.y, function( path ) {
-    //console.log(path);
-    if (path === null) {
-      //console.error("Path was not found.");
-      console.warn(`path for ${unit.id} NOT found`);
-      unit_acquireTarget_wall(unit);
-    } else {
-      //console.warn("Path was found. The first Point is " + path[0].x + " " + path[0].y);
-      console.warn(`path for ${unit.id} found`);
-      unit.custom.state = 'moving';
-    }
-  });
-  easystar.calculate();
-}
+// function grid_astar(astar_grid, start_pos, goal_pos, unit){
+//   var easystar = new EasyStar.js();
+//   easystar.setGrid(astar_grid);
+//   easystar.enableDiagonals();
+//   easystar.setAcceptableTiles([0]);
+//   easystar.findPath(start_pos.x, start_pos.y, goal_pos.x, goal_pos.y, function( path ) {
+//     //console.log(path);
+//     if (path === null) {
+//       //console.error("Path was not found.");
+//       console.warn(`path for ${unit.id} NOT found`);
+//       unit_acquireTarget_wall(unit);
+//     } else {
+//       //console.warn("Path was found. The first Point is " + path[0].x + " " + path[0].y);
+//       console.warn(`path for ${unit.id} found`);
+//       unit.custom.state = 'moving';
+//     }
+//   });
+//   easystar.calculate();
+// }
 
 function getDistance(a, b){
   let dx = a.x - b.x;
