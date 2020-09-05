@@ -155,7 +155,70 @@ let buildingList = [
       { spriteName: 'turret_rapid', hp: 29000, attackCD: 6,  attackRange: 36, damage: 280, element: false, target: 'any', attackType: 'single', projectileArt: 'projectile_rapid' }
     ]
   },
-  // name: 'Campy Mage',
+  {
+    name: 'Watchdragon (S)', // attacks all units in a straight cardinal line from itself
+    category: 'defense',
+    dim: {x: 2*GRID_SIZE, y: 1*GRID_SIZE},
+    sprite_dim: {x: 2*16, y: 2*16},
+    sprite_offset: {x: 0, y: 0.75*GRID_SIZE},
+    levels: [
+      { spriteName: 'turret_eye_s', hp: 9000,  attackCD: 75, attackRange: 48, damage: 4000, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_s', hp: 12000, attackCD: 75, attackRange: 48, damage: 4440, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_s', hp: 16500, attackCD: 75, attackRange: 48, damage: 5100, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      
+      { spriteName: 'turret_eye_s', hp: 22500, attackCD: 75, attackRange: 48, damage: 5980, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_s', hp: 30000, attackCD: 75, attackRange: 48, damage: 7080, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_s', hp: 40500, attackCD: 75, attackRange: 48, damage: 8400, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' }
+    ]
+  },
+  {
+    name: 'Watchdragon (E)', // attacks all units in a straight cardinal line from itself
+    category: 'defense',
+    dim: {x: 2*GRID_SIZE, y: 1*GRID_SIZE},
+    sprite_dim: {x: 2*16, y: 2*16},
+    sprite_offset: {x: 0, y: 0.75*GRID_SIZE},
+    levels: [
+      { spriteName: 'turret_eye_e', hp: 9000,  attackCD: 75, attackRange: 48, damage: 4000, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_e', hp: 12000, attackCD: 75, attackRange: 48, damage: 4440, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_e', hp: 16500, attackCD: 75, attackRange: 48, damage: 5100, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      
+      { spriteName: 'turret_eye_e', hp: 22500, attackCD: 75, attackRange: 48, damage: 5980, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_e', hp: 30000, attackCD: 75, attackRange: 48, damage: 7080, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_e', hp: 40500, attackCD: 75, attackRange: 48, damage: 8400, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' }
+    ]
+  },
+  {
+    name: 'Watchdragon (N)', // attacks all units in a straight cardinal line from itself
+    category: 'defense',
+    dim: {x: 2*GRID_SIZE, y: 1*GRID_SIZE},
+    sprite_dim: {x: 2*16, y: 2*16},
+    sprite_offset: {x: 0, y: 0.75*GRID_SIZE},
+    levels: [
+      { spriteName: 'turret_eye_n', hp: 9000,  attackCD: 75, attackRange: 48, damage: 4000, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_n', hp: 12000, attackCD: 75, attackRange: 48, damage: 4440, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_n', hp: 16500, attackCD: 75, attackRange: 48, damage: 5100, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      
+      { spriteName: 'turret_eye_n', hp: 22500, attackCD: 75, attackRange: 48, damage: 5980, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_n', hp: 30000, attackCD: 75, attackRange: 48, damage: 7080, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_n', hp: 40500, attackCD: 75, attackRange: 48, damage: 8400, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' }
+    ]
+  },
+  {
+    name: 'Watchdragon (W)', // attacks all units in a straight cardinal line from itself
+    category: 'defense',
+    dim: {x: 2*GRID_SIZE, y: 1*GRID_SIZE},
+    sprite_dim: {x: 2*16, y: 2*16},
+    sprite_offset: {x: 0, y: 0.75*GRID_SIZE},
+    levels: [
+      { spriteName: 'turret_eye_w', hp: 9000,  attackCD: 75, attackRange: 48, damage: 4000, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_w', hp: 12000, attackCD: 75, attackRange: 48, damage: 4440, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_w', hp: 16500, attackCD: 75, attackRange: 48, damage: 5100, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      
+      { spriteName: 'turret_eye_w', hp: 22500, attackCD: 75, attackRange: 48, damage: 5980, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_w', hp: 30000, attackCD: 75, attackRange: 48, damage: 7080, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' },
+      { spriteName: 'turret_eye_w', hp: 40500, attackCD: 75, attackRange: 48, damage: 8400, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_fireball' }
+    ]
+  },
   {
     name: 'Air Elemental', // attacks all units in range
     category: 'defense',
@@ -442,43 +505,89 @@ function turret_acqTarget(a, range){
 
 function turret_atkTarget(a, t){
     //console.log(`${a.id} attacking ${t.id}`);
-    if( a.custom.name == 'Rapid Turret' ){
-      if( a.custom.turret.ammo > 0 ){
-        a.custom.turret.ammo--;
-      }else{
-        return;
-      }
-    }
-    if( a.custom.name == 'Mermage' ){
-      particles_Array.push(
-        new ParticleEnt({x: t.position.x, y: t.position.y}, 3, 'projectile_aa_ground')
-      );
-      projectiles_Array.push(
-        new ProjectileEnt({x: t.position.x, y:t.position.y - UNIT_AIR_OFFSET}, t.position, true, 18, t, a.custom.turret.damage, a.custom.turret.projectileArt)
-      );
-      return;
+
+    switch (a.custom.name) {
+      case 'Rapid Turret':
+        if( a.custom.turret.ammo > 0 ){
+          a.custom.turret.ammo--;
+        }else{
+          break;
+        }
+        break;
+      case 'Mermage':
+        particles_Array.push(
+          new ParticleEnt({x: t.position.x, y: t.position.y}, 3, 'projectile_aa_ground')
+        );
+        projectiles_Array.push(
+          new ProjectileEnt({x: t.position.x, y:t.position.y - UNIT_AIR_OFFSET}, t.position, true, 18, t, a.custom.turret.damage, a.custom.turret.projectileArt)
+        );
+        break;
+      case 'Lobber Golem':
+        var distance = getDistance(a.position, t.position);
+        var distanceDiff = ( distance/( a.custom.turret.range*GRID_SIZE ) ); // percentage of distance travelled already
+
+        var lifetime_adjusted = 90 * distanceDiff;
+
+        // SLOW projectile, with an arc, also it should do a proximity scan on impact
+        // might be worthwhile to make it 0 damage here and have the child projectiles do the true damage
+        // also fires as second projectile as shadow for the first one
+        projectiles_Array.push(
+          new ProjectileEnt(a.position, t.position, true, 2*lifetime_adjusted, t, 0, 'projectile_artillery_shadow')
+        );
+        projectiles_Array.push(
+          new ProjectileEnt(a.position, t.position, true, 2*lifetime_adjusted, t, 0, a.custom.turret.projectileArt, true, {damage: a.custom.turret.damage, range: 2, targetType: 'ground'/* , affect: 'ally' */})
+        );
+        break;
+      default:
+        var distance = getDistance(a.position, t.position);
+        var distanceDiff = ( distance/( a.custom.turret.range*GRID_SIZE ) ); // percentage of distance travelled already
+
+        var lifetime_adjusted = 90 * distanceDiff;
+
+        projectiles_Array.push(
+          new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, a.custom.turret.damage, a.custom.turret.projectileArt)
+        );
+        break;
     }
 
-    let distance = getDistance(a.position, t.position);
-    let distanceDiff = ( distance/( a.custom.turret.range*GRID_SIZE ) ); // percentage of distance travelled already
+    // TODO: clean once watchdragon is final
+    // if( a.custom.name == 'Rapid Turret' ){
+    //   if( a.custom.turret.ammo > 0 ){
+    //     a.custom.turret.ammo--;
+    //   }else{
+    //     return;
+    //   }
+    // }
+    // if( a.custom.name == 'Mermage' ){
+    //   particles_Array.push(
+    //     new ParticleEnt({x: t.position.x, y: t.position.y}, 3, 'projectile_aa_ground')
+    //   );
+    //   projectiles_Array.push(
+    //     new ProjectileEnt({x: t.position.x, y:t.position.y - UNIT_AIR_OFFSET}, t.position, true, 18, t, a.custom.turret.damage, a.custom.turret.projectileArt)
+    //   );
+    //   return;
+    // }
+
+    // let distance = getDistance(a.position, t.position);
+    // let distanceDiff = ( distance/( a.custom.turret.range*GRID_SIZE ) ); // percentage of distance travelled already
     
-    let lifetime_adjusted = 90 * distanceDiff;
+    // let lifetime_adjusted = 90 * distanceDiff;
 
-    if( a.custom.name != 'Lobber Golem' ){
-      projectiles_Array.push(
-        new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, a.custom.turret.damage, a.custom.turret.projectileArt)
-      );
-    }else{
-      // SLOW projectile, with an arc, also it should do a proximity scan on impact
-      // might be worthwhile to make it 0 damage here and have the child projectiles do the true damage
-      // also fires as second projectile as shadow for the first one
-      projectiles_Array.push(
-        new ProjectileEnt(a.position, t.position, true, 2*lifetime_adjusted, t, 0, 'projectile_artillery_shadow')
-      );
-      projectiles_Array.push(
-        new ProjectileEnt(a.position, t.position, true, 2*lifetime_adjusted, t, 0, a.custom.turret.projectileArt, true, {damage: a.custom.turret.damage, range: 2, targetType: 'ground'/* , affect: 'ally' */})
-      );
-    }
+    // if( a.custom.name != 'Lobber Golem' ){
+    //   projectiles_Array.push(
+    //     new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, a.custom.turret.damage, a.custom.turret.projectileArt)
+    //   );
+    // }else{
+    //   // SLOW projectile, with an arc, also it should do a proximity scan on impact
+    //   // might be worthwhile to make it 0 damage here and have the child projectiles do the true damage
+    //   // also fires as second projectile as shadow for the first one
+    //   projectiles_Array.push(
+    //     new ProjectileEnt(a.position, t.position, true, 2*lifetime_adjusted, t, 0, 'projectile_artillery_shadow')
+    //   );
+    //   projectiles_Array.push(
+    //     new ProjectileEnt(a.position, t.position, true, 2*lifetime_adjusted, t, 0, a.custom.turret.projectileArt, true, {damage: a.custom.turret.damage, range: 2, targetType: 'ground'/* , affect: 'ally' */})
+    //   );
+    // }
     
 }
 
@@ -562,5 +671,8 @@ new BuildingEnt( 'Curse Box', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*26.
 new BuildingEnt( 'Lobber Golem', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*28.5) ) ); // Artillery
 new BuildingEnt( 'Hidden Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*30.5) ) );
 new BuildingEnt( 'Rapid Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*32.5) ) );
-      //new BuildingEnt( 'Campy Mage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+       new BuildingEnt( 'Watchdragon (S)', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+       new BuildingEnt( 'Watchdragon (E)', 0, new Coordinate( (GRID_SIZE*9.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+       new BuildingEnt( 'Watchdragon (N)', 0, new Coordinate( (GRID_SIZE*11.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+       new BuildingEnt( 'Watchdragon (W)', 0, new Coordinate( (GRID_SIZE*13.5), (GRID_SIZE*34.5) ) ); // Magic Eye
 new BuildingEnt( 'Air Elemental', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*36.5) ) ); // Fan

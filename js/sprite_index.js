@@ -47,6 +47,11 @@ var spriteList = [
     ['turret_artillery', 880, 208, '1dir_32w', 4],
     ['turret_fan', 880, 144, '1dir_32w', 8],
 
+    ['turret_eye_s', 16, 560, '1dir_32w', 4],
+    ['turret_eye_e', 144, 560, '1dir_32w', 4],
+    ['turret_eye_n', 272, 560, '1dir_32w', 4],
+    ['turret_eye_w', 400, 560, '1dir_32w', 4],
+
     ['wall_01', 16, 416, '1dir', 1],
     ['wall_02', 48, 416, '1dir', 1],
     ['wall_03', 80, 416, '1dir', 1],
@@ -77,6 +82,8 @@ var spriteList = [
     ['projectile_artillery_fragment', 1136, 224, '1dir', 2],
     ['projectile_air', 1008, 112, '1dir', 2],
     ['projectile_air_alt', 896, 112, '1dir', 6],
+    ['projectile_fireball', 544, 576, '1dir', 7],
+    
 
     ['projectile_unit_sling', 624, 432, '1dir', 1],
     ['projectile_unit_melee', 640, 432, '1dir', 1],
