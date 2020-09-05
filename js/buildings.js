@@ -505,7 +505,6 @@ function turret_acqTarget(a, range){
 
 function turret_atkTarget(a, t){
     //console.log(`${a.id} attacking ${t.id}`);
-
     switch (a.custom.name) {
       case 'Rapid Turret':
         if( a.custom.turret.ammo > 0 ){
@@ -538,6 +537,22 @@ function turret_atkTarget(a, t){
           new ProjectileEnt(a.position, t.position, true, 2*lifetime_adjusted, t, 0, a.custom.turret.projectileArt, true, {damage: a.custom.turret.damage, range: 2, targetType: 'ground'/* , affect: 'ally' */})
         );
         break;
+      case 'Watchdragon (S)':
+      case 'Watchdragon (E)':
+      case 'Watchdragon (N)':
+      case 'Watchdragon (W)':
+        var distance = getDistance(a.position, t.position);
+        
+        // SLOW projectile, with an arc
+        // also fires as second projectile as shadow for the first one
+        // projectile lifetime of 37 as roughly half the fire rate
+        projectiles_Array.push(
+          new ProjectileEnt(a.position, t.position, true, 37, t, 0, 'projectile_artillery_shadow')
+        );
+        projectiles_Array.push(
+          new ProjectileEnt(a.position, t.position, true, 37, t, a.custom.turret.damage, a.custom.turret.projectileArt, true)
+        );
+        break;
       default:
         var distance = getDistance(a.position, t.position);
         var distanceDiff = ( distance/( a.custom.turret.range*GRID_SIZE ) ); // percentage of distance travelled already
@@ -549,46 +564,6 @@ function turret_atkTarget(a, t){
         );
         break;
     }
-
-    // TODO: clean once watchdragon is final
-    // if( a.custom.name == 'Rapid Turret' ){
-    //   if( a.custom.turret.ammo > 0 ){
-    //     a.custom.turret.ammo--;
-    //   }else{
-    //     return;
-    //   }
-    // }
-    // if( a.custom.name == 'Mermage' ){
-    //   particles_Array.push(
-    //     new ParticleEnt({x: t.position.x, y: t.position.y}, 3, 'projectile_aa_ground')
-    //   );
-    //   projectiles_Array.push(
-    //     new ProjectileEnt({x: t.position.x, y:t.position.y - UNIT_AIR_OFFSET}, t.position, true, 18, t, a.custom.turret.damage, a.custom.turret.projectileArt)
-    //   );
-    //   return;
-    // }
-
-    // let distance = getDistance(a.position, t.position);
-    // let distanceDiff = ( distance/( a.custom.turret.range*GRID_SIZE ) ); // percentage of distance travelled already
-    
-    // let lifetime_adjusted = 90 * distanceDiff;
-
-    // if( a.custom.name != 'Lobber Golem' ){
-    //   projectiles_Array.push(
-    //     new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, a.custom.turret.damage, a.custom.turret.projectileArt)
-    //   );
-    // }else{
-    //   // SLOW projectile, with an arc, also it should do a proximity scan on impact
-    //   // might be worthwhile to make it 0 damage here and have the child projectiles do the true damage
-    //   // also fires as second projectile as shadow for the first one
-    //   projectiles_Array.push(
-    //     new ProjectileEnt(a.position, t.position, true, 2*lifetime_adjusted, t, 0, 'projectile_artillery_shadow')
-    //   );
-    //   projectiles_Array.push(
-    //     new ProjectileEnt(a.position, t.position, true, 2*lifetime_adjusted, t, 0, a.custom.turret.projectileArt, true, {damage: a.custom.turret.damage, range: 2, targetType: 'ground'/* , affect: 'ally' */})
-    //   );
-    // }
-    
 }
 
 // =======================[ DOODAD ]====================================
