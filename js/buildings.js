@@ -447,16 +447,16 @@ class BuildingEnt {
 }
 
 function turret_acqTarget(a, range){
-  var nearEnemies = new Array;
-  for( e of units_Array ){
-      let e_dist = getDistance(a.position, e.position);
-      
-      // line-of-sight mechanics re: walls -> only for Air Elemental so far
-      let e_los = true;
-      if( a.custom.name == 'Air Elemental' ){
+
+  switch (a.custom.name) {
+    case 'Air Elemental':
+      var nearEnemies = new Array;
+      for( e of units_Array ){
+        var e_dist = getDistance(a.position, e.position);
+        
         // ray, check for walls in ray, if none, valid target
-        // 1 because it catches itself in the ray
-        e_los = ( Query.ray(buildings_all_Array, a.position, e.position).length == 1 );
+        // length 1 because it catches itself in the ray
+        var e_los = ( Query.ray(buildings_all_Array, a.position, e.position).length == 1 );
 
         if( e_los && e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
           var deltaVector = Vector.sub(e.position, a.position);
@@ -464,55 +464,134 @@ function turret_acqTarget(a, range){
           var forceVector = Vector.mult(normalizedDelta, TURRET_FAN_FORCE);
           Body.applyForce( e, e.position, forceVector);
         }
-      }
 
-      if( e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum && e_los ){
-        if( a.custom.turret.preferredTarget == 'any' || e.custom.moveType == a.custom.turret.preferredTarget ){
-          nearEnemies.push({"target": e, "distance": e_dist});
+        if( e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum && e_los ){
+          if( a.custom.turret.preferredTarget == 'any' || e.custom.moveType == a.custom.turret.preferredTarget ){
+            nearEnemies.push({"target": e, "distance": e_dist});
+          }
         }
       }
-  }
-  if( nearEnemies.length ){
-      // closest target is [0]
-      nearEnemies_byDist = nearEnemies.sort(function(a,b){
-          return a.distance-b.distance;
-      });
-
-      switch (a.custom.turret.aType) { // aType == single, closest, area
-        case 'single':
-          var chosenTarget = Composite.get(world, a.custom.turret.targetID, 'body');
-          // no target yet, target dead, or target out of range -> switch target
-          // fourth parameter for turrets with minimum range, because they will otherwise keep attacking their original target if someone ELSE is in valid range
-          if( a.custom.turret.targetID == false || chosenTarget == null || getDistance(a.position, chosenTarget.position) > range  || getDistance(a.position, chosenTarget.position) < a.custom.turret.range_minimum*GRID_SIZE ){
-            a.custom.turret.targetID = nearEnemies_byDist[0].target.id;
+      break;
+    case 'Watchdragon (S)':
+      var nearEnemies = new Array;
+      
+      // ray, check for units in ray
+      var los_units_Array = Query.ray(units_Array, a.position, { x: a.position.x, y: w_bot.position.y }, 2*GRID_SIZE);
+      if( los_units_Array.length ){
+        console.log(los_units_Array);
+        for( e of los_units_Array ){
+          var e_dist = getDistance(a.position, e.body.position);
+          
+          if( e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
+            if( a.custom.turret.preferredTarget == 'any' || e.body.custom.moveType == a.custom.turret.preferredTarget ){
+              nearEnemies.push({"target": e.body, "distance": e_dist});
+            }
           }
-          chosenTarget = Composite.get(world, a.custom.turret.targetID, 'body');
-          turret_atkTarget(a, chosenTarget);
-          break;
-        case 'closest':
-          turret_atkTarget(a, nearEnemies_byDist[0].target);
-          break;
-        case 'area':
-          for( ne of nearEnemies_byDist ){
-            turret_atkTarget(a, ne.target);
-          }
-          break;
-        default:
-          break;
+        }
       }
+      break;
+    case 'Watchdragon (E)':
+      var nearEnemies = new Array;
+      
+      // ray, check for units in ray
+      var los_units_Array = Query.ray(units_Array, a.position, { x: w_right.position.x, y: a.position.y }, 2*GRID_SIZE);
+      if( los_units_Array.length ){
+        console.log(los_units_Array);
+        for( e of los_units_Array ){
+          var e_dist = getDistance(a.position, e.body.position);
+          
+          if( e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
+            if( a.custom.turret.preferredTarget == 'any' || e.body.custom.moveType == a.custom.turret.preferredTarget ){
+              nearEnemies.push({"target": e.body, "distance": e_dist});
+            }
+          }
+        }
+      }
+      break;
+    case 'Watchdragon (N)':
+      var nearEnemies = new Array;
+      
+      // ray, check for units in ray
+      var los_units_Array = Query.ray(units_Array, a.position, { x: a.position.x, y: w_top.position.y }, 2*GRID_SIZE);
+      if( los_units_Array.length ){
+        console.log(los_units_Array);
+        for( e of los_units_Array ){
+          var e_dist = getDistance(a.position, e.body.position);
+          
+          if( e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
+            if( a.custom.turret.preferredTarget == 'any' || e.body.custom.moveType == a.custom.turret.preferredTarget ){
+              nearEnemies.push({"target": e.body, "distance": e_dist});
+            }
+          }
+        }
+      }
+      break;
+    case 'Watchdragon (W)':
+      var nearEnemies = new Array;
+      
+      // ray, check for units in ray
+      var los_units_Array = Query.ray(units_Array, a.position, { x: w_left.position.x, y: a.position.y }, 2*GRID_SIZE);
+      if( los_units_Array.length ){
+        console.log(los_units_Array);
+        for( e of los_units_Array ){
+          var e_dist = getDistance(a.position, e.body.position);
+          
+          if( e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
+            if( a.custom.turret.preferredTarget == 'any' || e.body.custom.moveType == a.custom.turret.preferredTarget ){
+              nearEnemies.push({"target": e.body, "distance": e_dist});
+            }
+          }
+        }
+      }
+      break;
+    default:
+      var nearEnemies = new Array;
+      for( e of units_Array ){
+        var e_dist = getDistance(a.position, e.position);
+
+        if( e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
+          if( a.custom.turret.preferredTarget == 'any' || e.custom.moveType == a.custom.turret.preferredTarget ){
+            nearEnemies.push({"target": e, "distance": e_dist});
+          }
+        }
+      }
+      break;
+  }
+
+  if( nearEnemies.length ){
+    // closest target is [0]
+    nearEnemies_byDist = nearEnemies.sort(function(a,b){
+      return a.distance-b.distance;
+    });
+
+    switch (a.custom.turret.aType) { // aType == single, closest, area
+      case 'single':
+        var chosenTarget = Composite.get(world, a.custom.turret.targetID, 'body');
+        // no target yet, target dead, or target out of range -> switch target
+        // fourth parameter for turrets with minimum range, because they will otherwise keep attacking their original target if someone ELSE is in valid range
+        if( a.custom.turret.targetID == false || chosenTarget == null || getDistance(a.position, chosenTarget.position) > range  || getDistance(a.position, chosenTarget.position) < a.custom.turret.range_minimum*GRID_SIZE ){
+          a.custom.turret.targetID = nearEnemies_byDist[0].target.id;
+        }
+        chosenTarget = Composite.get(world, a.custom.turret.targetID, 'body');
+        turret_atkTarget(a, chosenTarget);
+        break;
+      case 'closest':
+        turret_atkTarget(a, nearEnemies_byDist[0].target);
+        break;
+      case 'area':
+        for( ne of nearEnemies_byDist ){
+          turret_atkTarget(a, ne.target);
+        }
+        break;
+      default:
+        break;
+    }
   }
 }
 
 function turret_atkTarget(a, t){
     //console.log(`${a.id} attacking ${t.id}`);
     switch (a.custom.name) {
-      case 'Rapid Turret':
-        if( a.custom.turret.ammo > 0 ){
-          a.custom.turret.ammo--;
-        }else{
-          break;
-        }
-        break;
       case 'Mermage':
         particles_Array.push(
           new ParticleEnt({x: t.position.x, y: t.position.y}, 3, 'projectile_aa_ground')
@@ -553,6 +632,12 @@ function turret_atkTarget(a, t){
           new ProjectileEnt(a.position, t.position, true, 37, t, a.custom.turret.damage, a.custom.turret.projectileArt, true)
         );
         break;
+      case 'Rapid Turret':
+        if( a.custom.turret.ammo > 0 ){
+          a.custom.turret.ammo--;
+        }else{
+          break;
+        }
       default:
         var distance = getDistance(a.position, t.position);
         var distanceDiff = ( distance/( a.custom.turret.range*GRID_SIZE ) ); // percentage of distance travelled already
@@ -646,8 +731,8 @@ new BuildingEnt( 'Curse Box', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*26.
 new BuildingEnt( 'Lobber Golem', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*28.5) ) ); // Artillery
 new BuildingEnt( 'Hidden Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*30.5) ) );
 new BuildingEnt( 'Rapid Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*32.5) ) );
-       new BuildingEnt( 'Watchdragon (S)', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*34.5) ) ); // Magic Eye
-       new BuildingEnt( 'Watchdragon (E)', 0, new Coordinate( (GRID_SIZE*9.5), (GRID_SIZE*34.5) ) ); // Magic Eye
-       new BuildingEnt( 'Watchdragon (N)', 0, new Coordinate( (GRID_SIZE*11.5), (GRID_SIZE*34.5) ) ); // Magic Eye
-       new BuildingEnt( 'Watchdragon (W)', 0, new Coordinate( (GRID_SIZE*13.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+new BuildingEnt( 'Watchdragon (S)', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+new BuildingEnt( 'Watchdragon (E)', 0, new Coordinate( (GRID_SIZE*9.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+new BuildingEnt( 'Watchdragon (N)', 0, new Coordinate( (GRID_SIZE*11.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+new BuildingEnt( 'Watchdragon (W)', 0, new Coordinate( (GRID_SIZE*13.5), (GRID_SIZE*34.5) ) ); // Magic Eye
 new BuildingEnt( 'Air Elemental', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*36.5) ) ); // Fan
