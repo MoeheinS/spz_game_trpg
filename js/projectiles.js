@@ -8,7 +8,8 @@ class ProjectileEnt {
         target,
         damage,
         projectileArt,
-        arcHeight
+        arcHeight,
+        scatter
     ) {
         // startCoords and goalCoords are body.position values; object {x: 0, y: 0}
         this.origin = new Object;
@@ -35,7 +36,8 @@ class ProjectileEnt {
         // just reference an entire Body
         this.target = target;
         this.damage = damage;
-        this.arcHeight = (arcHeight ? arcHeight : 0);
+        this.arcHeight = ( arcHeight ? arcHeight : false );
+        this.scatter = ( scatter ? scatter : false );
 
         this.graphics = {
             renderMode: 'sheet_animation',
@@ -67,13 +69,30 @@ class ProjectileEnt {
                 diff_y = Math.abs( this.origin.y - this.goal.y ) * progress + flipper * ( UNIT_AIR_OFFSET - ( UNIT_AIR_OFFSET * progress ) );
             }
 
+            // can't believe this actually works lol
+            let arcHeight = ( this.arcHeight ? Math.sin( Math.PI * ( progress - 0.00000001 ) ) * PROJECTILE_ARC_OFFSET : 0 );
+
             this.position.x = ( this.goal.x > this.origin.x ? this.goal.x - diff_x : this.goal.x + diff_x );
-            this.position.y = ( this.goal.y > this.origin.y ? this.goal.y - diff_y : this.goal.y + diff_y );
-            // TODO: this might be worthwhile, but the ends are too big?
-            //this.arcHeight = Math.sin( Math.PI * ( progress - 0.00000001 ) );
+            this.position.y = ( this.goal.y > this.origin.y ? this.goal.y - diff_y - arcHeight : this.goal.y + diff_y - arcHeight );
+            
         }
     }
     applyPain() {
+        // scatter ; { damage, targetType, range, affect }
+        // TODO: if I ever need an ally unit to do this, add switch based on affect ? allies : enemies
+        if( this.scatter ){
+            for( e of units_Array ){
+                let e_dist = getDistance(this.position, e.position);
+                
+                if( e_dist <= this.scatter.range * GRID_SIZE && e.custom.moveType == this.scatter.targetType ){
+                    projectiles_Array.push(
+                        new ProjectileEnt(this.position, e.position, true, 12, e, this.scatter.damage, 'particle_explosion')
+                    );
+                }
+            }
+            return;
+        }
+
         this.target.custom.hp_current = this.target.custom.hp_current - this.damage;
         console.log(`${this.target.custom.hp_current} hp remaining of ${this.target.custom.hp_max}`);
 

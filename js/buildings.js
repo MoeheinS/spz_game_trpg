@@ -101,7 +101,27 @@ let buildingList = [
       { spriteName: 'turret_aoe', hp: 11000, attackCD: 120, attackRange: 14, damage: 2470, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_aoe' }
     ]
   },
-  // name: 'Lobber Golem',
+  {
+    name: 'Lobber Golem',
+    category: 'defense',
+    dim: {x: 2*GRID_SIZE, y: GRID_SIZE},
+    sprite_dim: {x: 2*16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    // minimum range lockout is about 2 GRID_SIZE, aoe about 1 GRID_SIZE
+    levels: [
+      { spriteName: 'turret_artillery', hp: 3000,  attackCD: 300, attackRange: 33, damage: 100,  element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_artillery' },
+      { spriteName: 'turret_artillery', hp: 3500,  attackCD: 300, attackRange: 33, damage: 558,  element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_artillery' },
+      { spriteName: 'turret_artillery', hp: 4000,  attackCD: 300, attackRange: 33, damage: 944,  element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_artillery' },
+      
+      { spriteName: 'turret_artillery', hp: 5000,  attackCD: 300, attackRange: 33, damage: 1459, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_artillery' },
+      { spriteName: 'turret_artillery', hp: 8000,  attackCD: 300, attackRange: 33, damage: 2102, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_artillery' },
+      { spriteName: 'turret_artillery', hp: 10250, attackCD: 300, attackRange: 33, damage: 2874, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_artillery' },
+      
+      { spriteName: 'turret_artillery', hp: 13000, attackCD: 300, attackRange: 33, damage: 3774, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_artillery' },
+      { spriteName: 'turret_artillery', hp: 16250, attackCD: 300, attackRange: 33, damage: 4800, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_artillery' },
+      { spriteName: 'turret_artillery', hp: 24250, attackCD: 300, attackRange: 33, damage: 6000, element: false, target: 'ground', attackType: 'single', projectileArt: 'projectile_artillery' }
+    ]
+  },
   {
     name: 'Hidden Turret', // attacks all units in range
     category: 'defense',
@@ -320,6 +340,7 @@ class BuildingEnt {
 
           turret: {
             range: (info.attackRange ? info.attackRange : false),
+            range_minimum: ( unitID == 'Lobber Golem' ? 4 : 0 ),
             attackCD: (info.attackCD ? info.attackCD : false),
             attackCD_base: (info.attackCD ? info.attackCD : false),
             damage: (info.damage ? info.damage : false),
@@ -352,7 +373,7 @@ function turret_acqTarget(a, range){
   for( e of units_Array ){
       let e_dist = getDistance(a.position, e.position);
       
-      if( e_dist <= range ){
+      if( e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
         if( a.custom.turret.preferredTarget == 'any' || e.custom.moveType == a.custom.turret.preferredTarget ){
           nearEnemies.push({"target": e, "distance": e_dist});
         }
@@ -368,7 +389,8 @@ function turret_acqTarget(a, range){
         case 'single':
           var chosenTarget = Composite.get(world, a.custom.turret.targetID, 'body');
           // no target yet, target dead, or target out of range -> switch target
-          if( a.custom.turret.targetID == false || chosenTarget == null || getDistance(a.position, chosenTarget.position) > range ){
+          // fourth parameter for turrets with minimum range, because they will otherwise keep attacking their original target if someone ELSE is in valid range
+          if( a.custom.turret.targetID == false || chosenTarget == null || getDistance(a.position, chosenTarget.position) > range  || getDistance(a.position, chosenTarget.position) < a.custom.turret.range_minimum*GRID_SIZE ){
             a.custom.turret.targetID = nearEnemies_byDist[0].target.id;
           }
           chosenTarget = Composite.get(world, a.custom.turret.targetID, 'body');
@@ -412,9 +434,22 @@ function turret_atkTarget(a, t){
     
     let lifetime_adjusted = 90 * distanceDiff;
 
-    projectiles_Array.push(
+    if( a.custom.name != 'Lobber Golem' ){
+      projectiles_Array.push(
         new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, a.custom.turret.damage, a.custom.turret.projectileArt)
-    );
+      );
+    }else{
+      // SLOW projectile, with an arc, also it should do a proximity scan on impact
+      // might be worthwhile to make it 0 damage here and have the child projectiles do the true damage
+      // also fires as second projectile as shadow for the first one
+      projectiles_Array.push(
+        new ProjectileEnt(a.position, t.position, true, 2*lifetime_adjusted, t, 0, 'projectile_artillery_shadow')
+      );
+      projectiles_Array.push(
+        new ProjectileEnt(a.position, t.position, true, 2*lifetime_adjusted, t, 0, a.custom.turret.projectileArt, true, {damage: a.custom.turret.damage, range: 2, targetType: 'ground'/* , affect: 'ally' */})
+      );
+    }
+    
 }
 
 // =======================[ DOODAD ]====================================
@@ -494,7 +529,7 @@ new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*20.5) 
 new BuildingEnt( 'Tower Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*22.5) ) );
 new BuildingEnt( 'Mermage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*24.5) ) ); // AA tower
 new BuildingEnt( 'Curse Box', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*26.5) ) ); // AoE tower
-      //new BuildingEnt( 'Lobber Golem', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*28.5) ) ); // Artillery
+new BuildingEnt( 'Lobber Golem', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*28.5) ) ); // Artillery
 new BuildingEnt( 'Hidden Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*30.5) ) );
 new BuildingEnt( 'Rapid Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*32.5) ) );
       //new BuildingEnt( 'Campy Mage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*34.5) ) ); // Magic Eye
