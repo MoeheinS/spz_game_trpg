@@ -45,6 +45,7 @@ var spriteList = [
     //['turret_aa', 880, 320, '1dir', 4], // wizard
     ['turret_aa', 880, 256, '1dir', 2], // mermaid
     ['turret_artillery', 880, 208, '1dir_32w', 4],
+    ['turret_fan', 880, 144, '1dir_32w', 8],
 
     ['wall_01', 16, 416, '1dir', 1],
     ['wall_02', 48, 416, '1dir', 1],
@@ -74,6 +75,8 @@ var spriteList = [
     ['projectile_artillery', 1024, 224, '1dir', 5],
     ['projectile_artillery_shadow', 1104, 224, '1dir', 1],
     ['projectile_artillery_fragment', 1136, 224, '1dir', 2],
+    ['projectile_air', 1008, 112, '1dir', 2],
+    ['projectile_air_alt', 896, 112, '1dir', 6],
 
     ['projectile_unit_sling', 624, 432, '1dir', 1],
     ['projectile_unit_melee', 640, 432, '1dir', 1],

@@ -156,7 +156,22 @@ let buildingList = [
     ]
   },
   // name: 'Campy Mage',
-  // name: 'Air Elemental',
+  {
+    name: 'Air Elemental', // attacks all units in range
+    category: 'defense',
+    dim: {x: 2*GRID_SIZE, y: 2*GRID_SIZE},
+    sprite_dim: {x: 2*16, y: 3*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'turret_fan', hp: 10000, attackCD: 60, attackRange: 36, damage: 20,  element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_air' },
+      { spriteName: 'turret_fan', hp: 13500, attackCD: 60, attackRange: 36, damage: 36,  element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_air' },
+      { spriteName: 'turret_fan', hp: 19000, attackCD: 60, attackRange: 36, damage: 60,  element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_air' },
+      
+      { spriteName: 'turret_fan', hp: 26500, attackCD: 60, attackRange: 36, damage: 92,  element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_air' },
+      { spriteName: 'turret_fan', hp: 35750, attackCD: 60, attackRange: 36, damage: 132, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_air' },
+      { spriteName: 'turret_fan', hp: 48500, attackCD: 60, attackRange: 36, damage: 180, element: false, target: 'any', attackType: 'area', projectileArt: 'projectile_air' }
+    ]
+  },
   {
     name: 'Core',
     category: 'economy',
@@ -373,7 +388,22 @@ function turret_acqTarget(a, range){
   for( e of units_Array ){
       let e_dist = getDistance(a.position, e.position);
       
-      if( e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
+      // line-of-sight mechanics re: walls -> only for Air Elemental so far
+      let e_los = true;
+      if( a.custom.name == 'Air Elemental' ){
+        // ray, check for walls in ray, if none, valid target
+        // 1 because it catches itself in the ray
+        e_los = ( Query.ray(buildings_all_Array, a.position, e.position).length == 1 );
+
+        if( e_los && e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
+          var deltaVector = Vector.sub(e.position, a.position);
+          var normalizedDelta = Vector.normalise(deltaVector);
+          var forceVector = Vector.mult(normalizedDelta, TURRET_FAN_FORCE);
+          Body.applyForce( e, e.position, forceVector);
+        }
+      }
+
+      if( e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum && e_los ){
         if( a.custom.turret.preferredTarget == 'any' || e.custom.moveType == a.custom.turret.preferredTarget ){
           nearEnemies.push({"target": e, "distance": e_dist});
         }
@@ -411,6 +441,7 @@ function turret_acqTarget(a, range){
 }
 
 function turret_atkTarget(a, t){
+    //console.log(`${a.id} attacking ${t.id}`);
     if( a.custom.name == 'Rapid Turret' ){
       if( a.custom.turret.ammo > 0 ){
         a.custom.turret.ammo--;
@@ -427,7 +458,6 @@ function turret_atkTarget(a, t){
       );
       return;
     }
-    console.log(`${a.id} attacking ${t.id}`);
 
     let distance = getDistance(a.position, t.position);
     let distanceDiff = ( distance/( a.custom.turret.range*GRID_SIZE ) ); // percentage of distance travelled already
@@ -533,4 +563,4 @@ new BuildingEnt( 'Lobber Golem', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*
 new BuildingEnt( 'Hidden Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*30.5) ) );
 new BuildingEnt( 'Rapid Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*32.5) ) );
       //new BuildingEnt( 'Campy Mage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*34.5) ) ); // Magic Eye
-      //new BuildingEnt( 'Air Elemental', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*36.5) ) ); // Fan
+new BuildingEnt( 'Air Elemental', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*36.5) ) ); // Fan
