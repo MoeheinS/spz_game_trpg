@@ -56,6 +56,12 @@ function render_debug(){
 
           ctx.beginPath();
           ctx.moveTo( bod.vertices[0].x, bod.vertices[0].y);
+          if( bod.custom.waypoint.length ){
+            ctx.lineTo( bod.custom.waypoint[0].x*GRID_SIZE + 0.5*GRID_SIZE, bod.custom.waypoint[0].y*GRID_SIZE + 0.5*GRID_SIZE);
+            ctx.arc(bod.custom.waypoint[0].x*GRID_SIZE + 0.5*GRID_SIZE, bod.custom.waypoint[0].y*GRID_SIZE + 0.5*GRID_SIZE, 0.125*GRID_SIZE, 0, Math.PI * 2, true);
+          }
+          ctx.lineTo( bod.custom.target.position.x, bod.custom.target.position.y);
+
           ctx.lineTo( bod.custom.target.position.x, bod.custom.target.position.y);
           ctx.stroke();
           
