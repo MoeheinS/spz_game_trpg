@@ -73,51 +73,25 @@ function group_Entities() {
   render_Array = sortByY(render_Array);
 }
 
-function clearField() {
-  for( bod of Composite.allBodies(world) ){
-    if( bod.label != 'boundary' ){
-      World.remove(world, bod, true);
-    }
-  }
-}
+function landScape(){
+	var astar_grid = new aStar_grid();
 
-function populateField(i) {
-  // TODO: expound
-  for( mission of missionList ){
-    if( mission.id == i ){
-      for( e of mission.ents ){
-        switch ( e.spawnType ) {
-          case 'building':
-            console.warn(e.label);
-            break;
-          default:
-            break;
+  if( buildings_all_Array.length ){
+    for( building of buildings_all_Array ){
+      for( let hi = building.region.startRow; hi < building.region.endRow; hi++ ){
+        for( let vi = building.region.startCol; vi < building.region.endCol; vi++ ){
+          astar_grid[hi][vi] = ( building.custom.category == 'wall' || building.custom.category == 'terrain' ? 0.5 : 1 );
         }
       }
     }
-    // function to add ent to world at coords based on its label?  
-    // gonna need some more groundwork for this
   }
-}
-
-function landScape(){
-
-	var astar_grid = new aStar_grid();
-
-	for( building of buildings_all_Array ){
-		for( let hi = building.region.startRow; hi < building.region.endRow; hi++ ){
-			for( let vi = building.region.startCol; vi < building.region.endCol; vi++ ){
-				astar_grid[hi][vi] = ( building.custom.category == 'wall' || building.custom.category == 'terrain' ? 0.5 : 1 );
-			}
-		}
-	}
-
+	
   return astar_grid;
-
 }
 
-function level(command){
+function flowControl(command, p){
   switch (command) {
+    // clear the board
     case 'clear':
       for( bod of Composite.allBodies(world) ){
         if( bod.label != 'boundary' ){
@@ -126,7 +100,33 @@ function level(command){
       }
       particles_Array = [];
       projectiles_Array = [];
-      game_state.grass = new aStar_grid();
+      game_state.grass = false; //new aStar_grid();
+      game_state.initial_buildings = 0;
+      break;
+    case 'load':
+      flowControl('clear');
+      // use p from missionList
+      for( mission of missionList ){
+        // mission.id is int
+        if( p == mission.id ){
+          building_CORE = new BuildingEnt( 'Core', mission.core.level, mission.core.position );
+          for( ent of mission.ents ){
+            new BuildingEnt( ent.name, ent.level, ent.position );
+          }
+          break;
+        }
+      }
+      group_Entities();
+      window.setTimeout(function(){
+        game_state.grass = landScape();
+        landScape_flowers();
+      }, 100);
+      game_state.initial_buildings = mission.ents.length + 1;
+    case 'survey':
+      // look at the map, assemble your squad, maybe pick a different level
+      break;
+    case 'embark':
+      // 3, 2, 1, GO! Deploy and destroy!
       break;
     default:
       break;
