@@ -398,6 +398,7 @@ class BuildingEnt {
           info.height = building.dim.y;
           info.sprite_dim = building.sprite_dim;
           info.sprite_offset = (building.sprite_offset ? building.sprite_offset : false);
+          break;
         }
       }
       //this.body = Bodies.rectangle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), info.width, info.height, {

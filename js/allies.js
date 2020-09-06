@@ -15,6 +15,7 @@ class UnitEnt {
       for( unit of unitList ){
         if( unit.name == unitID ){
           info = unit;
+          break;
         }
       }
       this.body = Bodies.circle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), 8, {

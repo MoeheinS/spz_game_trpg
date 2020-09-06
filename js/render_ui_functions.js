@@ -12,7 +12,7 @@ function render_ui(){
 }
 
 function render_progress(){
-  let progress_pct = 100 - Math.floor( buildings_Array.length / game_state.initial_buildings * 100 );
+  let progress_pct = ( game_state.initial_buildings ? 100 - Math.floor( buildings_Array.length / game_state.initial_buildings * 100 ) : 0 );
 
   if( !building_CORE ){
     return;
@@ -116,6 +116,8 @@ function render_cursor(){
               y: b_vert.y+(0.5*GRID_SIZE * ( b_vert.y > bld.position.y ? -1 : 1 ))
             }
           ) <= 2*GRID_SIZE ? false : true );  
+        }else{
+          break;
         }
       }
     }
@@ -126,6 +128,8 @@ function render_cursor(){
     // }
     if( distanceCheck ){
       distanceCheck = ( getDistance(mouse.position, bld.position) <= 2*GRID_SIZE ? false : true );
+    }else{
+      break;
     }
   }
   for( doo of doodads_Array ){
