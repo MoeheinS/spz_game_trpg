@@ -214,12 +214,19 @@ Events.on(render, 'afterRender', function() {
       break;
     case ( ticker % ANIM_TIMING == 0 ):
       heartbeat_animations();
+      if( particles_Array.length ){
+        for( pa of particles_Array ){
+          if( pa.lifetimeMax == -1 ){
+            pa.advance_immortal();
+          }else{
+            pa.advance_decay();
+          }
+        }
+      }
     default:
       break;
   }
-  //heartbeat_animations();
   group_Entities();
-  //var ctx = render.context;
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
   ctx.fillStyle = RENDER_TERRAINCOLOR;
   ctx.lineWidth = 2;
@@ -243,9 +250,6 @@ Events.on(render, 'afterRender', function() {
     // particles under everything else (static terrain)
     if( particles_Array.length ){
       for( pa of particles_Array ){
-        if( ticker % 15 == 0 ){
-          pa.advance();
-        }
         if( pa.lifetimeMax == -1 ){
           draw_Particle(pa);
         }
@@ -260,15 +264,14 @@ Events.on(render, 'afterRender', function() {
       draw_Graphics([e]);
     }
     
-    //if( ticker == 60 ){
-      for( turret of defenses_Array ){
-        turret.custom.turret.attackCD--;
-        if( turret.custom.turret.attackCD <= 0 ){
-          turret.custom.turret.attackCD = turret.custom.turret.attackCD_base;
-          turret_acqTarget(turret, (turret.custom.turret.range*GRID_SIZE));
-        }
+    for( turret of defenses_Array ){
+      turret.custom.turret.attackCD--;
+      if( turret.custom.turret.attackCD <= 0 ){
+        //turret.custom.turret.attackCD = turret.custom.turret.attackCD_base;
+        // moved this to within the function for firing an attack
+        turret_acqTarget(turret, (turret.custom.turret.range*GRID_SIZE));
       }
-    //}
+    }
 
     // particles on top of everything else (explosions etc)
     if( particles_Array.length ){

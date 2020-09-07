@@ -184,8 +184,8 @@ function unit_acquireTarget(a){
       //console.warn(`searching path from ${a.id} to ${tryTarget.target.id}`);
       unit_pathfind(a, tryTarget.target.id, tryTarget.target);
     }
-  }else{
-    console.warn(`${a.id} ran out of targets`);
+  //}else{
+    //console.warn(`${a.id} ran out of targets`);
   }
 }
 

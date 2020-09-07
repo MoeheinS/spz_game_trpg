@@ -592,6 +592,9 @@ function turret_acqTarget(a, range){
 
 function turret_atkTarget(a, t){
     //console.log(`${a.id} attacking ${t.id}`);
+    // experimental
+    a.custom.turret.attackCD = a.custom.turret.attackCD_base;
+
     switch (a.custom.name) {
       case 'Mermage':
         particles_Array.push(
