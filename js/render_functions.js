@@ -221,25 +221,21 @@ function draw_Graphics(a, mode){
 }
 
 function heartbeat_animations(){
-  anim_tick++;
-  if( anim_tick >= anim_timing ){
-    anim_tick = 0;
-    console.log('tick');
-    for( bod of Composite.allBodies(world) ){
-      // bruh. Is there a better way other than try catch?
-      if( bod.custom && bod.custom.graphics && bod.custom.graphics.renderMode ){
-        if( bod.custom.graphics.sheet_idle ){
-          bod.custom.graphics.sheet_idle = cycleArray(bod.custom.graphics.sheet_idle);
-        }
-        if( bod.custom.graphics.sheet_right ){
-          bod.custom.graphics.sheet_right = cycleArray(bod.custom.graphics.sheet_right);
-        }
-        if( bod.custom.graphics.sheet_left ){
-          bod.custom.graphics.sheet_left = cycleArray(bod.custom.graphics.sheet_left);
-        }
-        if( bod.custom.graphics.sheet_up ){
-          bod.custom.graphics.sheet_up = cycleArray(bod.custom.graphics.sheet_up);
-        }
+  console.log('tick');
+  for( bod of Composite.allBodies(world) ){
+    // bruh. Is there a better way other than try catch?
+    if( bod.custom && bod.custom.graphics && bod.custom.graphics.renderMode ){
+      if( bod.custom.graphics.sheet_idle ){
+        bod.custom.graphics.sheet_idle = cycleArray(bod.custom.graphics.sheet_idle);
+      }
+      if( bod.custom.graphics.sheet_right ){
+        bod.custom.graphics.sheet_right = cycleArray(bod.custom.graphics.sheet_right);
+      }
+      if( bod.custom.graphics.sheet_left ){
+        bod.custom.graphics.sheet_left = cycleArray(bod.custom.graphics.sheet_left);
+      }
+      if( bod.custom.graphics.sheet_up ){
+        bod.custom.graphics.sheet_up = cycleArray(bod.custom.graphics.sheet_up);
       }
     }
   }

@@ -207,13 +207,17 @@ buildingsImg.src = './assets/buildings.png';
 
 Events.on(render, 'afterRender', function() {
 
-  // FIXME: clean up someday
   ticker++;
-  if( ticker > 119 ){
-    ticker = 0;
+  switch (true) {
+    case ( ticker > 199 ):
+      ticker = 0;
+      break;
+    case ( ticker % ANIM_TIMING == 0 ):
+      heartbeat_animations();
+    default:
+      break;
   }
-
-  heartbeat_animations();
+  //heartbeat_animations();
   group_Entities();
   //var ctx = render.context;
   ctx.strokeStyle = RENDER_SHADOWCOLOR;

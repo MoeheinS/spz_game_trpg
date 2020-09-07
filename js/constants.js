@@ -20,9 +20,6 @@ let game_state = {
 let game_selection = [];
 let game_waypoints = [];
 
-let anim_timing = 25;
-let anim_tick = 0;
-
 let mouse_selectArea = {};
 
 let units_Array = [];
@@ -85,6 +82,8 @@ var defaultCategory = 0x0001,
 const GRID_SIZE = 32;
 const GRID_LIMIT = 40;
 const FIELD_SIZE = GRID_LIMIT * GRID_SIZE;
+
+const ANIM_TIMING = 25;
 
 const UNIT_AIR_OFFSET = 3*GRID_SIZE;
 const PROJECTILE_ARC_OFFSET = 8*GRID_SIZE;
