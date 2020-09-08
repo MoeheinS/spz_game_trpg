@@ -408,6 +408,11 @@ function getDistance(a, b){
   return Math.hypot(dx, dy);
 }
 
+function mathClamp(x, min, max){
+  return Math.max(min, Math.min(x, max));
+  //return x <= min ? min : x >= max ? max : x;
+}
+
 class aStar_grid {
   constructor() {
     var aStar_baseGrid = [];
@@ -428,19 +433,3 @@ class Coordinate {
     this.y = y;
   }
 }
-
-// class Enemy {
-//   constructor(o) {
-//     this.info = o;
-//   }
-//   // ie Enemy.distance(obj1, obj2)
-//   // is there a benefit here over household functions?
-//   static distance(a, b) { 
-//     let dx = a.x - b.x;
-//     let dy = a.y - b.y;
-//     return Math.hypot(dx, dy);
-//   }
-//   inspect() { // works on the chosen enemy
-//     console.log(this);
-//   }
-// }
