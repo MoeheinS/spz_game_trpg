@@ -59,6 +59,14 @@ html {
 
 	/* cursor: none; */
 }
+
+.mode--greyscale {
+	filter: grayscale(1);
+}
+.mode--gameboy {
+	filter: sepia(100%) hue-rotate(90deg);
+}
+
 /* everything after here is gameplay-related DOM elements; because they have less overhead and are easier to animate, style and maintain than canvas */
 .retreatButton {
     position: fixed;
