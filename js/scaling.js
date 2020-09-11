@@ -14,7 +14,7 @@ Events.on(engine, 'beforeTick', function() {
   render.context.imageSmoothingEnabled = (boundsScaleTarget >= 1.1) ? true : false;
 
   // if scale has changed
-  if (Math.abs(boundsScale.x - boundsScaleTarget) > 0.01) {
+  if( Math.abs(boundsScale.x - boundsScaleTarget) > 0.01 ){
       // smoothly tween scale factor
       scaleFactor = (boundsScaleTarget - boundsScale.x) * 0.2;
       boundsScale.x += scaleFactor;
@@ -43,7 +43,7 @@ Events.on(engine, 'beforeTick', function() {
 
   // translate the view if mouse has moved over 50px from the centre of viewport
   var thresh = 50; //reHi / 6;
-  if (centreDist > thresh && mouseConstraint.mouse.button === 2 && game_shift == false) {
+  if( centreDist > thresh && mouseConstraint.mouse.button === 2 ){
       // create a vector to translate the view, allowing the user to control view speed
       var direction = Vector.normalise(deltaCentre),
           speed = Math.min(10, Math.pow(centreDist - thresh, 2) * 0.0002);
@@ -69,27 +69,5 @@ Events.on(engine, 'beforeTick', function() {
 
       // we must update the mouse too
       Mouse.setOffset(mouse, render.bounds.min);
-  }
-
-  // unsure if basing it on viewport centre is smart, but it works :D
-  if (centreDist > thresh && mouseConstraint.mouse.button === 2 && game_shift == true) {
-    // speed of rotation based on distance from center of viewport
-    var speed = Math.min(0.03, Math.pow(centreDist - thresh, 2) * 0.0000002);
-    // control direction of rotation based on what side the mouse is on
-    if(mouseConstraint.mouse.position.x < viewportCentre.x ){
-      speed = speed*-1;
-    }
-
-    Composite.rotate(world, speed, viewportCentre);
-
-    // we must update the mouse too
-    Mouse.setOffset(mouse, render.bounds.min);
-
-    // NOTE
-    /*
-      This exposes several flaws;
-      - whle body positions are updated, body-position-based custom coordinates are NOT
-      - sprite rendering is based on body dimensions and rectangular -> fix by using circles or rendering sprites independant of body dimensions
-    */
   }
 });

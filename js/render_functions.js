@@ -1,80 +1,78 @@
 // render arbitrary information to help me debug
 function render_debug(){
   ctx.save();
-  if(game_debug){
-    ctx.font = '16px alber';
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText('v0.0.3', 100, -100);
 
-    ctx.fillText('hold rclick and move to pan camera', 100, -120);
-    ctx.fillText('mousewheel to zoom', 100, -140);
-    ctx.fillText('press f to toggle free-drag', 100, -160);
-    ctx.fillText('press r to reset allowed movement range', 100, -180);
-    ctx.fillText('press d to toggle debug info', 100, -200);
-    ctx.fillText('hold shift and rclick to rotate the screen', 100, -220);
+  ctx.font = '16px alber';
+  ctx.textAlign = 'right';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('v0.0.3', 100, -100);
 
-    ctx.strokeStyle = RENDER_FILLCOLOR;
-    var gimmeGrid = FIELD_SIZE/GRID_SIZE;
-    for( let hi = 0; hi < gimmeGrid; hi++ ){
-      for( let vi = 0; vi < gimmeGrid; vi++ ){
-      ctx.strokeRect(hi*GRID_SIZE, vi*GRID_SIZE, GRID_SIZE, GRID_SIZE);
-      }
+  ctx.fillText('hold rclick and move to pan camera', 100, -120);
+  ctx.fillText('mousewheel to zoom', 100, -140);
+  ctx.fillText('press f to toggle free-drag', 100, -160);
+  ctx.fillText('press r to reset allowed movement range', 100, -180);
+  ctx.fillText('press d to toggle debug info', 100, -200);
+
+  ctx.strokeStyle = RENDER_FILLCOLOR;
+  var gimmeGrid = FIELD_SIZE/GRID_SIZE;
+  for( let hi = 0; hi < gimmeGrid; hi++ ){
+    for( let vi = 0; vi < gimmeGrid; vi++ ){
+    ctx.strokeRect(hi*GRID_SIZE, vi*GRID_SIZE, GRID_SIZE, GRID_SIZE);
     }
-
-    // 1 GRID_SIZE square
-    ctx.save();
-    ctx.strokeStyle = RENDER_TERRAINCOLOR;
-    ctx.setLineDash([]);
-    ctx.strokeRect(110, -230, GRID_SIZE, GRID_SIZE);
-    ctx.restore();
-
-    ctx.font = '10px alber';
-    ctx.fillStyle = RENDER_SHADOWCOLOR;
-    var bods = Composite.allBodies(world);
-    for( bod of bods ){
-      ctx.fillText(`id:${bod.id}`, bod.bounds.min.x-10, bod.bounds.min.y+12);
-      ctx.fillText(bod.label, bod.bounds.min.x-10, bod.bounds.min.y+24);
-
-      if( bod.custom && ( bod.label == 'ally' )){
-        // for when autonomous movement is added
-        // This works if moveToPoint() sets body angle
-        //ctx.fillText('angle:'+((180*bod.angle/Math.PI)+180).toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+60);
-
-        ctx.fillText('hp:'+bod.custom.hp_current, bod.bounds.min.x-10, bod.bounds.min.y+0);
-        ctx.fillText('target:'+bod.custom.target.id, bod.bounds.min.x-10, bod.bounds.min.y+36);
-        ctx.fillText('state:'+bod.custom.state, bod.bounds.min.x-10, bod.bounds.min.y+48);
-        ctx.fillText('angle:'+Math.floor(((180*bod.angle/Math.PI)+180)/45), bod.bounds.min.x-10, bod.bounds.min.y+60);
-        ctx.fillText('speed:'+bod.speed.toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+72);
-        if(bod.region){
-          ctx.fillText(`gridPos: ${bod.region.startRow},${bod.region.startCol}`, bod.bounds.min.x-10, bod.bounds.min.y+84);
-        }
-        ctx.fillText('mass:'+bod.mass.toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+96);
-
-        if( bod.custom.target ){
-          ctx.save();
-          ctx.strokeStyle = RENDER_SHADOWCOLOR;
-
-          ctx.beginPath();
-          ctx.moveTo( bod.vertices[0].x, bod.vertices[0].y);
-          if( bod.custom.waypoint.length ){
-            ctx.lineTo( bod.custom.waypoint[0].x*GRID_SIZE + 0.5*GRID_SIZE, bod.custom.waypoint[0].y*GRID_SIZE + 0.5*GRID_SIZE);
-            ctx.arc(bod.custom.waypoint[0].x*GRID_SIZE + 0.5*GRID_SIZE, bod.custom.waypoint[0].y*GRID_SIZE + 0.5*GRID_SIZE, 0.125*GRID_SIZE, 0, Math.PI * 2, true);
-          }
-          ctx.lineTo( bod.custom.target.position.x, bod.custom.target.position.y);
-
-          ctx.lineTo( bod.custom.target.position.x, bod.custom.target.position.y);
-          ctx.stroke();
-          
-          ctx.restore();
-        }
-      }
-      ctx.fillStyle = RENDER_UI_RED;
-      ctx.fillRect(bod.bounds.min.x, bod.bounds.min.y, wbb(bod.bounds), hbb(bod.bounds));
-      ctx.fillStyle = RENDER_SHADOWCOLOR;
-    }
-
   }
+
+  // 1 GRID_SIZE square
+  ctx.save();
+  ctx.strokeStyle = RENDER_TERRAINCOLOR;
+  ctx.setLineDash([]);
+  ctx.strokeRect(110, -230, GRID_SIZE, GRID_SIZE);
+  ctx.restore();
+
+  ctx.font = '10px alber';
+  ctx.fillStyle = RENDER_SHADOWCOLOR;
+  var bods = Composite.allBodies(world);
+  for( bod of bods ){
+    ctx.fillText(`id:${bod.id}`, bod.bounds.min.x-10, bod.bounds.min.y+12);
+    ctx.fillText(bod.label, bod.bounds.min.x-10, bod.bounds.min.y+24);
+
+    if( bod.custom && ( bod.label == 'ally' )){
+      // for when autonomous movement is added
+      // This works if moveToPoint() sets body angle
+      //ctx.fillText('angle:'+((180*bod.angle/Math.PI)+180).toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+60);
+
+      ctx.fillText('hp:'+bod.custom.hp_current, bod.bounds.min.x-10, bod.bounds.min.y+0);
+      ctx.fillText('target:'+bod.custom.target.id, bod.bounds.min.x-10, bod.bounds.min.y+36);
+      ctx.fillText('state:'+bod.custom.state, bod.bounds.min.x-10, bod.bounds.min.y+48);
+      ctx.fillText('angle:'+Math.floor(((180*bod.angle/Math.PI)+180)/45), bod.bounds.min.x-10, bod.bounds.min.y+60);
+      ctx.fillText('speed:'+bod.speed.toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+72);
+      if(bod.region){
+        ctx.fillText(`gridPos: ${bod.region.startRow},${bod.region.startCol}`, bod.bounds.min.x-10, bod.bounds.min.y+84);
+      }
+      ctx.fillText('mass:'+bod.mass.toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+96);
+
+      if( bod.custom.target ){
+        ctx.save();
+        ctx.strokeStyle = RENDER_SHADOWCOLOR;
+
+        ctx.beginPath();
+        ctx.moveTo( bod.vertices[0].x, bod.vertices[0].y);
+        if( bod.custom.waypoint.length ){
+          ctx.lineTo( bod.custom.waypoint[0].x*GRID_SIZE + 0.5*GRID_SIZE, bod.custom.waypoint[0].y*GRID_SIZE + 0.5*GRID_SIZE);
+          ctx.arc(bod.custom.waypoint[0].x*GRID_SIZE + 0.5*GRID_SIZE, bod.custom.waypoint[0].y*GRID_SIZE + 0.5*GRID_SIZE, 0.125*GRID_SIZE, 0, Math.PI * 2, true);
+        }
+        ctx.lineTo( bod.custom.target.position.x, bod.custom.target.position.y);
+
+        ctx.lineTo( bod.custom.target.position.x, bod.custom.target.position.y);
+        ctx.stroke();
+        
+        ctx.restore();
+      }
+    }
+    ctx.fillStyle = RENDER_UI_RED;
+    ctx.fillRect(bod.bounds.min.x, bod.bounds.min.y, wbb(bod.bounds), hbb(bod.bounds));
+    ctx.fillStyle = RENDER_SHADOWCOLOR;
+  }
+
   ctx.restore();
 }
 

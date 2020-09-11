@@ -85,27 +85,11 @@ engine.enableSleeping = false;
 document.addEventListener("keydown", function(e){
   switch (e.key) {
     case 'd':
-      game_debug = !game_debug;
+      game_state.debug_overlay = !game_state.debug_overlay;
       break;
     case 'q':
       document.querySelector('.UI_container').dataset.show = !JSON.parse(document.querySelector('.UI_container').dataset.show);
       break;
-    // start of waypointing
-    // case 'm':
-    //   console.log(mouseConstraint);
-    //   game_waypoints = [];
-    //   let coord = {x: mouseConstraint.mouse.position.x, y: mouseConstraint.mouse.position.y};
-    //   game_waypoints.push(coord);
-    //   break;
-    // case 's':
-    // clear waypoints
-    //   game_waypoints = [];
-    //   break;
-    // case 'Shift':
-    //   if( !game_shift ){
-    //     game_shift = true;
-    //   }
-    //   break;
     default:
       console.log(e.key);
       break;
@@ -113,9 +97,6 @@ document.addEventListener("keydown", function(e){
 });
 // document.addEventListener("keyup", function(e){
 //   switch (e.key) {
-//     case 'Shift':
-//       game_shift = false;
-//       break;
 //     default:
 //       break;
 //   }
@@ -133,11 +114,6 @@ let ticker = 0;
 
 // Fired after engine update and all collision events
 Events.on(engine, 'afterUpdate', function(event) {
-  if( game_waypoints.length ){
-    for( selected of game_selection ){
-      cycle_movement(selected, game_waypoints[0]);
-    }
-  }
   // every time the ticker cycle resets
   if( ticker == 10 ){
     if( !game_state.grass ){
@@ -258,7 +234,9 @@ Events.on(render, 'afterRender', function() {
 
     render_grass();
 
-    render_debug();
+    if( game_state.debug_overlay ){
+      render_debug();
+    }
 
     for( e of render_Array ){
       draw_Graphics([e]);

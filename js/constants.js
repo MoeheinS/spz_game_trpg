@@ -1,15 +1,12 @@
 /*
 *   Constants and settings
 */
-let game_debug = true;
-let game_phase = 'player';
-let game_shift = false;
-let game_cursor = 'default';
-
 let game_state = {
+  "debug_overlay": true,
+
   "initial_buildings": 7, // debug number, set on mission initialize
   "grass": false,
-  "mayDeploy": true
+  "mayDeploy": true,
 };
 
 /*
@@ -17,11 +14,6 @@ let game_state = {
   invalid
   select
 */
-let game_selection = [];
-let game_waypoints = [];
-
-let mouse_selectArea = {};
-
 let units_Array = [];
 let units_ground_Array = [];
 let units_air_Array = [];
@@ -35,18 +27,6 @@ let economy_Array = [];
 let doodads_Array = [];
 
 let render_Array = [];
-
-let group_Index = [
-  units_Array,
-  units_ground_Array,
-  units_air_Array,
-  walls_Array,
-  buildings_Array,
-  buildings_all_Array,
-  defenses_Array,
-  economy_Array,
-  doodads_Array
-];
 
 let projectiles_Array = [];
 let particles_Array = [];

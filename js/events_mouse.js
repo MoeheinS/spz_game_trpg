@@ -40,22 +40,6 @@
 Events.on(mouseConstraint, "mousedown", function(event) {
   console.log(event);
   if( event.mouse.button === 0){
-    if(game_shift){
-      console.warn('start drag selection area');
-      game_cursor = 'select';
-      mouse_selectArea = {};
-      mouse_selectArea.min = {x: mouseConstraint.mouse.mousedownPosition.x, y: mouseConstraint.mouse.mousedownPosition.y};
-    }else{
-      // check to see if mouse is on an ally actor at mousedown start
-      if( Query.point(units_Array, mouseConstraint.mouse.position).length ){
-        game_cursor = 'select';
-        mouse_selectArea = {};
-        mouse_selectArea.min = {x: mouseConstraint.mouse.mousedownPosition.x, y: mouseConstraint.mouse.mousedownPosition.y};
-      }
-    }
-  }
-
-  if( event.mouse.button === 0){
     if( game_state.mayDeploy ){
       new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Debug Ratty' );
     }
@@ -64,35 +48,5 @@ Events.on(mouseConstraint, "mousedown", function(event) {
     if( game_state.mayDeploy ){
       new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Debug Air Ratty' );
     }
-  }
-});
-
-Events.on(mouseConstraint, "mouseup", function(event) {
-  if( event.mouse.button === -1 && game_cursor == 'select' ){
-    console.warn('end drag selection area');
-    game_cursor = 'default';
-    mouse_selectArea.max = {x: mouseConstraint.mouse.mouseupPosition.x, y: mouseConstraint.mouse.mouseupPosition.y};
-    console.table(mouse_selectArea);
-
-    var region = {
-      min: {
-        x: 0,
-        y: 0
-      },
-      max: {
-        x: 0,
-        y: 0
-      }
-    };
-    var bound_a = mouse_selectArea.min;
-    var bound_b = mouse_selectArea.max;
-    region.min.x = (bound_a.x <= bound_b.x ? bound_a.x : bound_b.x);
-    region.max.x = (bound_a.x > bound_b.x ? bound_a.x : bound_b.x);
-    region.min.y = (bound_a.y <= bound_b.y ? bound_a.y : bound_b.y);
-    region.max.y = (bound_a.y > bound_b.y ? bound_a.y : bound_b.y);
-
-    var selectedBodies = Query.region(units_Array, region);
-    game_selection = selectedBodies;
-    console.log(game_selection);
   }
 });
