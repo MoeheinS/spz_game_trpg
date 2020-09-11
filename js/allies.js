@@ -391,3 +391,13 @@ function ripperoni_unit(a){
   });
   World.add(world, tombstone);
 }
+
+// =======================[ DOM Functions ]====================================
+function dom_listUnits(){
+  for( unit of unitList ){
+    // STUB: append to DOM element
+  }
+}
+function dom_selectUnits(el){
+  // STUB on choosing from DOM, update game_state.squad
+}
