@@ -157,9 +157,10 @@ function render_cursor(){
 function draw_UI(a){
   ctx.save();
   
-  ctx.font = '12px alber';
+  ctx.font = 'bold 16px alber';
   ctx.textAlign = 'right';
-  ctx.fillStyle = 'red';
+  ctx.fillStyle = '#ffffff';
+  ctx.strokeText('zoom:'+boundsScaleTarget.toFixed(2), reWi-20, 20);
   ctx.fillText('zoom:'+boundsScaleTarget.toFixed(2), reWi-20, 20);
 
   render_progress();

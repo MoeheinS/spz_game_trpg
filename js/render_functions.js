@@ -2,16 +2,15 @@
 function render_debug(){
   ctx.save();
 
+  ctx.fillStyle = RENDER_SHADOWCOLOR;
+  ctx.fillRect( 120, -80, -300, -100 );
+
   ctx.font = '16px alber';
   ctx.textAlign = 'right';
-  ctx.fillStyle = '#ffffff';
-  ctx.fillText('v0.0.3', 100, -100);
-
+  ctx.fillStyle = 'cyan';
   ctx.fillText('hold rclick and move to pan camera', 100, -120);
   ctx.fillText('mousewheel to zoom', 100, -140);
-  ctx.fillText('press f to toggle free-drag', 100, -160);
-  ctx.fillText('press r to reset allowed movement range', 100, -180);
-  ctx.fillText('press d to toggle debug info', 100, -200);
+  ctx.fillText('press d to toggle debug info', 100, -160);
 
   ctx.strokeStyle = RENDER_FILLCOLOR;
   var gimmeGrid = FIELD_SIZE/GRID_SIZE;
@@ -20,20 +19,18 @@ function render_debug(){
     ctx.strokeRect(hi*GRID_SIZE, vi*GRID_SIZE, GRID_SIZE, GRID_SIZE);
     }
   }
-
-  // 1 GRID_SIZE square
-  ctx.save();
-  ctx.strokeStyle = RENDER_TERRAINCOLOR;
-  ctx.setLineDash([]);
-  ctx.strokeRect(110, -230, GRID_SIZE, GRID_SIZE);
-  ctx.restore();
+  ctx.strokeStyle = '#656565';
+  for( var hi = 0; hi < gimmeGrid; hi = hi+5 ){
+    for( var vi = 0; vi < gimmeGrid; vi = vi+5 ){
+    ctx.strokeRect(hi*GRID_SIZE, vi*GRID_SIZE, GRID_SIZE*5, GRID_SIZE*5);
+    }
+  }
 
   ctx.font = '10px alber';
   ctx.fillStyle = RENDER_SHADOWCOLOR;
   var bods = Composite.allBodies(world);
   for( bod of bods ){
     ctx.fillText(`id:${bod.id}`, bod.bounds.min.x-10, bod.bounds.min.y+12);
-    ctx.fillText(bod.label, bod.bounds.min.x-10, bod.bounds.min.y+24);
 
     if( bod.custom && ( bod.label == 'ally' )){
       // for when autonomous movement is added
