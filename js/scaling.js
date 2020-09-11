@@ -5,7 +5,7 @@ Events.on(engine, 'beforeTick', function() {
   // mouse wheel controls zoom
   var scaleFactor = mouse.wheelDelta * -0.1;
   if (scaleFactor !== 0) {
-      if ((scaleFactor < 0 && boundsScale.x >= 0.6) || (scaleFactor > 0 && boundsScale.x <= 1.2)) {
+      if ((scaleFactor < 0 && boundsScale.x >= 0.6) || (scaleFactor > 0 && boundsScale.x <= 2.2)) {
           boundsScaleTarget += scaleFactor;
       }
   }
