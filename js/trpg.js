@@ -90,6 +90,12 @@ document.addEventListener("keydown", function(e){
     case 'q':
       document.querySelector('.UI_container').dataset.show = !JSON.parse(document.querySelector('.UI_container').dataset.show);
       break;
+    case 's':
+      game_state.game_phase = 'survey';
+      break;
+    case 'e':
+      game_state.game_phase = 'engage';
+      break;
     default:
       console.log(e.key);
       break;

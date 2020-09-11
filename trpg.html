@@ -17,7 +17,7 @@
   <body>
     <section class='container__Matter'></section>
 
-    <section class='UI_container' data-show='false'></section>
+    <section class='UI_container' data-show='true'></section>
 
     <section class='partyPicker'>
       <label>
@@ -52,6 +52,30 @@
     </section>
 
     <div class='retreatButton' onclick="document.querySelector('.UI_container').dataset.show = !JSON.parse(document.querySelector('.UI_container').dataset.show);"></div>
+
+    <template id='missionSelect'>
+      <article class='UI_wrapper UI_wrapper--missionSelect'>
+        <article class='UI_difficultySlider' data-difficulty="0">
+          <p>Select your difficulty:</p>
+          <input class='input_difficultySlider' list='diffs' type='range' value="0" min="0" max="9" step="1" oninput="document.querySelector('[data-difficulty]').dataset.difficulty = this.value">
+          <datalist id='diffs'>
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+          </datalist>
+        </article>
+        <p>Choose a mission to embark on:</p>
+        <article class='UI_missionList'></article>
+      </article>
+    </template>
+
   </body>
   <script src='js/trpg.js'></script>
   <script src='js/scaling.js'></script>
@@ -63,4 +87,5 @@
 
   <script src='js/projectiles.js'></script>
   <script src='js/particles.js'></script>
+  <script src='js/dom_functions.js'></script>
 </html>

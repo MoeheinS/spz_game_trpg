@@ -392,7 +392,11 @@ class BuildingEnt {
       let info = new Object;
       for( let building of buildingList ){
         if( building.name == unitID ){
-          info = building.levels[level];
+
+          // level override over missionList from dom_listMissions()
+          let modified_level = mathClamp( level, 0, building.levels.length-1 );
+
+          info = building.levels[modified_level];
           info.category = building.category;
           info.width = building.dim.x;
           info.height = building.dim.y;
@@ -758,3 +762,5 @@ function ripperoni_building(a){
 // new BuildingEnt( 'Air Elemental', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*36.5) ) ); // Fan
 
 flowControl('load', 'center_core');
+
+// TODO: buildings need to track minimum core level; if core level < minimum, don't spawn the building

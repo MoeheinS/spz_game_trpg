@@ -190,3 +190,48 @@ input[type=radio]:checked + .partyPicker-member {
 .UI_container[data-show='true']{
 	left: 0;
 }
+
+.UI_wrapper {
+	padding: 2rem;
+}
+
+.UI_wrapper--missionSelect {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+
+	height: 100%;
+}
+.UI_wrapper--missionSelect > *+* {
+	margin-bottom: 1rem;
+}
+.UI_difficultySlider[data-difficulty] {
+	position: relative;
+
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+
+	padding-bottom: 2rem;
+}
+.UI_difficultySlider[data-difficulty]:after {
+	position: absolute;
+
+	content: attr(data-difficulty);
+	bottom: 1rem;
+}
+.UI_missionList {
+	display: flex;
+	flex-direction: column;
+	flex-basis: 100%;
+
+	overflow-y: auto;
+
+	padding: 0 1rem;
+}
+.UI_missionButton {
+	padding: 1rem 3rem;
+	margin-bottom: 1rem;
+}
