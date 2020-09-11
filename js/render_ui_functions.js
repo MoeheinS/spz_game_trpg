@@ -92,6 +92,16 @@ function render_progress(){
 }
 
 function render_cursor(){
+
+  switch (game_state.game_phase) {
+    case 'survey':
+      return game_state.mayDeploy = false;
+    case 'engage':
+      break;
+    default:
+      break;
+  }
+
   ctx.save();
 
   let distanceCheck = true;
