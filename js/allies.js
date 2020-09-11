@@ -64,6 +64,10 @@ class UnitEnt {
       }, 10);
       World.add(world, this.body);
       //console.log(this.body.position);
+
+      // pick a target once spawned
+      unit_sortTargets(this.body);
+
       return this.body;
   }
   // adding niche properties to bodies?
