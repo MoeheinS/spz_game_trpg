@@ -23,9 +23,9 @@ var render = Render.create({
         width: reWi,
         height: reHi,
         wireframes: false,
-        showAngleIndicator: true,
-        showCollisions: true,
-        showVelocity: true,
+        // showAngleIndicator: true,
+        // showCollisions: true,
+        // showVelocity: true,
         hasBounds: true,
         background: RENDER_SHADOWCOLOR
     }
@@ -145,6 +145,9 @@ Events.on(engine, 'afterUpdate', function(event) {
         break;
     }
   }
+
+  // experimental last-ditch speed hack?
+  //Matter.Engine.clear(engine);
 });
 
 /*
@@ -185,7 +188,7 @@ Events.on(render, 'afterRender', function() {
 
   ticker++;
   switch (true) {
-    case ( ticker > 199 ):
+    case ( ticker > TIMING_RESET ):
       ticker = 0;
       break;
     case ( ticker % ANIM_TIMING == 0 ):
