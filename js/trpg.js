@@ -114,19 +114,19 @@ let ticker = 0;
 
 // Fired after engine update and all collision events
 Events.on(engine, 'afterUpdate', function(event) {
-  // every time the ticker cycle resets
-  if( ticker == 10 ){
-    if( !game_state.grass ){
-      game_state.grass = landScape();
-    }
-    for( unit of units_Array ){
-      unit_sortTargets(unit);
-    }
-  }
-  if( ticker % 15 == 0 ){
-    for( unit of units_Array ){
-      unit_acquireTarget(unit);
-    }
+  switch (true) {
+    // every time the ticker cycle resets
+    case ( ticker == 10 ):
+      for( unit of units_Array ){
+        unit_sortTargets(unit);
+      }
+      break;
+    case ( ticker % 15 == 0 ):
+      for( unit of units_Array ){
+        unit_acquireTarget(unit);
+      }
+    default:
+      break;
   }
 
   for( unit of units_Array ){
