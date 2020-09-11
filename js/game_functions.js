@@ -110,8 +110,12 @@ function flowControl(command, p){
         // mission.id is int
         if( p == mission.id ){
           building_CORE = new BuildingEnt( 'Core', mission.core.level, mission.core.position );
+          game_state.initial_buildings = 1;
           for( ent of mission.ents ){
             new BuildingEnt( ent.name, ent.level, ent.position );
+            if( ent.name != 'Wall' ){// also exclude terrain props
+              game_state.initial_buildings++;
+            }
           }
           break;
         }
@@ -121,7 +125,7 @@ function flowControl(command, p){
         game_state.grass = landScape();
         landScape_flowers();
       }, 100);
-      game_state.initial_buildings = mission.ents.length + 1;
+      //game_state.initial_buildings = mission.ents.length + 1;
     case 'survey':
       // look at the map, assemble your squad, maybe pick a different level
       break;
