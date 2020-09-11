@@ -49,6 +49,7 @@ function render_debug(){
         if(bod.region){
           ctx.fillText(`gridPos: ${bod.region.startRow},${bod.region.startCol}`, bod.bounds.min.x-10, bod.bounds.min.y+84);
         }
+        ctx.fillText('mass:'+bod.mass.toFixed(2), bod.bounds.min.x-10, bod.bounds.min.y+96);
 
         if( bod.custom.target ){
           ctx.save();
