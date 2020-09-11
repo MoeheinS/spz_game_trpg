@@ -65,6 +65,17 @@ function render_debug(){
         ctx.restore();
       }
     }
+
+    if( bod.custom && bod.custom.category == 'defense' ){
+      ctx.beginPath();
+      ctx.arc(bod.position.x, bod.position.y, bod.custom.turret.range_minimum*GRID_SIZE, 0, Math.PI * 2, true);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(bod.position.x, bod.position.y, bod.custom.turret.range*GRID_SIZE, 0, Math.PI * 2, true);
+      ctx.stroke();
+    }
+
     ctx.fillStyle = RENDER_UI_RED;
     ctx.fillRect(bod.bounds.min.x, bod.bounds.min.y, wbb(bod.bounds), hbb(bod.bounds));
     ctx.fillStyle = RENDER_SHADOWCOLOR;
