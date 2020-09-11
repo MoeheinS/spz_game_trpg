@@ -155,10 +155,10 @@ Events.on(engine, 'afterUpdate', function(event) {
 
   for( unit of units_Array ){
     // wack bug, TODO: remove when it no longer occurs
-    if( isNaN(unit.angle) && isNaN(unit.position.x) ){
-      alert('A unit just escaped this reality');
-      World.remove(world, unit, true);
-    }
+    // if( isNaN(unit.angle) && isNaN(unit.position.x) ){
+    //   alert('A unit just escaped this reality');
+    //   World.remove(world, unit, true);
+    // }
     unit.custom.attackCD--;
     switch (unit.custom.state) {
       case 'ready':
@@ -266,6 +266,9 @@ Events.on(render, 'afterRender', function() {
     
     for( turret of defenses_Array ){
       turret.custom.turret.attackCD--;
+      if( turret.custom.name == 'Air Elemental' ){
+        turret_airPush(turret, (turret.custom.turret.range*GRID_SIZE));
+      }
       if( turret.custom.turret.attackCD <= 0 ){
         //turret.custom.turret.attackCD = turret.custom.turret.attackCD_base;
         // moved this to within the function for firing an attack

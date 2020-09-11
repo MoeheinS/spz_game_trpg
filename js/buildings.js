@@ -447,6 +447,22 @@ class BuildingEnt {
   }
 }
 
+function turret_airPush(a, range){
+      for( e of units_Array ){
+        var e_dist = getDistance(a.position, e.position);
+        // ray, check for walls in ray, if none, valid target
+        // length 1 because it catches itself in the ray
+        var e_los = ( Query.ray(buildings_all_Array, a.position, e.position).length == 1 );
+
+        if( e_los && e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
+          var deltaVector = Vector.sub(e.position, a.position);
+          var normalizedDelta = Vector.normalise(deltaVector);
+          var forceVector = Vector.mult(normalizedDelta, 0.02*TURRET_FAN_FORCE);
+          Body.applyForce( e, e.position, forceVector);
+        }
+      }
+}
+
 function turret_acqTarget(a, range){
 
   switch (a.custom.name) {
@@ -459,12 +475,12 @@ function turret_acqTarget(a, range){
         // length 1 because it catches itself in the ray
         var e_los = ( Query.ray(buildings_all_Array, a.position, e.position).length == 1 );
 
-        if( e_los && e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
-          var deltaVector = Vector.sub(e.position, a.position);
-          var normalizedDelta = Vector.normalise(deltaVector);
-          var forceVector = Vector.mult(normalizedDelta, TURRET_FAN_FORCE);
-          Body.applyForce( e, e.position, forceVector);
-        }
+        // if( e_los && e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum ){
+        //   var deltaVector = Vector.sub(e.position, a.position);
+        //   var normalizedDelta = Vector.normalise(deltaVector);
+        //   var forceVector = Vector.mult(normalizedDelta, TURRET_FAN_FORCE);
+        //   Body.applyForce( e, e.position, forceVector);
+        // }
 
         if( e_dist <= range && e_dist > GRID_SIZE*a.custom.turret.range_minimum && e_los ){
           if( a.custom.turret.preferredTarget == 'any' || e.custom.moveType == a.custom.turret.preferredTarget ){
