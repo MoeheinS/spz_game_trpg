@@ -91,6 +91,21 @@ function landScape(){
 
 function flowControl(command, p){
   switch (command) {
+    // see if you've won or lost
+    case 'check':
+      let progress_pct = ( game_state.initial_buildings ? 100 - Math.floor( buildings_Array.length / game_state.initial_buildings * 100 ) : 0 );
+      if( progress_pct == 100 ){
+        // declare victory
+        game_state.game_phase == 'victory';
+        // STUB; function for DOM control
+      }
+      let deployable_unitCount = 1; // placeholder
+      if( game_state.game_phase == 'engage' && deployable_unitCount == 0 && units_Array.length == 0 ){
+        // declare defeat
+        game_state.game_phase == 'defeat';
+        // STUB; function for DOM control
+      }
+      break;
     // clear the board
     case 'clear':
       for( bod of Composite.allBodies(world) ){

@@ -4,9 +4,20 @@
 let game_state = {
   "debug_overlay": true,
 
-  "initial_buildings": 7, // debug number, set on mission initialize
+  "game_phase": "survey", // survey, engage, aftermath?
+
+  "initial_buildings": 0, // debug number, set on mission initialize
   "grass": false,
   "mayDeploy": true,
+
+  "squad": {
+    "slot_1": null,
+    "slot_2": null,
+    "slot_3": null,
+    "slot_4": null,
+    "slot_5": null,
+    "slot_6": null
+  }
 };
 
 /*

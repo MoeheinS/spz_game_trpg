@@ -89,16 +89,6 @@ function render_progress(){
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
   ctx.strokeText('%', 3.75*GRID_SIZE, 2.75*GRID_SIZE);
   ctx.fillText('%', 3.75*GRID_SIZE, 2.75*GRID_SIZE);
-
-  // airship retreat button
-  ctx.strokeStyle = ui_gradient;
-  ctx.fillStyle = 'lightblue';//RENDER_TERRAINCOLOR;
-  ctx.beginPath();
-  ctx.arc(2.25*GRID_SIZE, 5.125*GRID_SIZE, 1.25*GRID_SIZE, 0, Math.PI * 2, true);
-  ctx.fill();
-  ctx.stroke();
-  
-  ctx.drawImage(buildingsImg, ( ticker % 15 < 8 ? 672 : 704 ), 368, 32, 32, 1.25*GRID_SIZE, 3.75*GRID_SIZE, 2*GRID_SIZE, 2*GRID_SIZE);
 }
 
 function render_cursor(){
@@ -145,6 +135,17 @@ function render_cursor(){
     }
   }
 
+  switch (distanceCheck) {
+    case (mouse.position.x < 0):
+    case (mouse.position.x > FIELD_SIZE):
+    case (mouse.position.y > FIELD_SIZE):
+    case (mouse.position.y < 0):
+      distanceCheck = false;
+      break;
+    default:
+      break;
+  }
+
   game_state.mayDeploy = distanceCheck;
 
   ctx.drawImage(unitsImg, 576, ( distanceCheck ? 80 : 32 ), 32, 32, mouse.position.x - mouse.position.x % GRID_SIZE , mouse.position.y - mouse.position.y % GRID_SIZE, 2*GRID_SIZE, 2*GRID_SIZE);
@@ -163,9 +164,56 @@ function draw_UI(a){
   ctx.strokeText('zoom:'+boundsScaleTarget.toFixed(2), reWi-20, 20);
   ctx.fillText('zoom:'+boundsScaleTarget.toFixed(2), reWi-20, 20);
 
-  render_progress();
+  switch (game_state.game_phase) {
+    case 'survey':
+      render_menuButton(game_state.game_phase);
+      render_survey();
+      break;
+    case 'engage':
+      render_menuButton(game_state.game_phase);
+      render_progress();
+      break;
+    default:
+      break;
+  }
 
   ctx.restore();
+}
+
+function render_menuButton(phase){
+  ctx.save();
+
+  ctx.imageSmoothingEnabled = false;
+
+  let ui_gradient = ctx.createLinearGradient( 1*GRID_SIZE,0, 4*GRID_SIZE,0);
+  ui_gradient.addColorStop(0, RENDER_SHADOWCOLOR);
+  ui_gradient.addColorStop(1, RENDER_SHADOWCOLOR+'55');
+
+  // airship retreat button
+  ctx.strokeStyle = ui_gradient;
+  ctx.fillStyle = 'lightblue';//RENDER_TERRAINCOLOR;
+  ctx.beginPath();
+  ctx.arc(2.25*GRID_SIZE, 5.125*GRID_SIZE, 1.25*GRID_SIZE, 0, Math.PI * 2, true);
+  ctx.fill();
+  ctx.stroke();
+
+  switch (phase) {
+    case 'survey':
+      ctx.drawImage(buildingsImg, 864, 16, 48, 48, 0.375*GRID_SIZE, 2.875*GRID_SIZE, 3*GRID_SIZE, 3*GRID_SIZE);
+      ctx.drawImage(buildingsImg, 976, 64, 32, 32, 0.125*GRID_SIZE, 3.25*GRID_SIZE, 3*GRID_SIZE, 3*GRID_SIZE);
+      break;
+    case 'engage':
+      ctx.drawImage(buildingsImg, ( ticker % 15 < 8 ? 672 : 704 ), 368, 32, 32, 1.25*GRID_SIZE, 3.75*GRID_SIZE, 2*GRID_SIZE, 2*GRID_SIZE);
+      break;
+    default:
+      break;
+  }
+
+  ctx.restore();
+}
+
+function render_survey(){
+  // stub
 }
 
 function render_hpBars(){

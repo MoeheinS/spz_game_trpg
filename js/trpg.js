@@ -146,6 +146,8 @@ Events.on(engine, 'afterUpdate', function(event) {
     }
   }
 
+  flowControl('check');
+
   // experimental last-ditch speed hack?
   //Matter.Engine.clear(engine);
 });
