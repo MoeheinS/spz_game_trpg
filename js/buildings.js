@@ -716,43 +716,45 @@ function ripperoni_building(a){
   }
 }
 
-building_CORE = new BuildingEnt( 'Core', 0, new Coordinate( (GRID_SIZE*25.5), (GRID_SIZE*23.5) ) );
+// building_CORE = new BuildingEnt( 'Core', 0, new Coordinate( (GRID_SIZE*25.5), (GRID_SIZE*23.5) ) );
 
 // a circle of walls
-new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*20) ) );
-new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*20) ) );
-new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*20) ) );
-new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*20) ) );
+// new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*20) ) );
+// new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*20) ) );
+// new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*20) ) );
+// new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*20) ) );
 
-new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*21) ) );
-new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*21) ) );
-new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*22) ) );
-new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*22) ) );
+// new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*21) ) );
+// new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*21) ) );
+// new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*22) ) );
+// new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*22) ) );
 
-new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*23) ) );
-new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*23) ) );
-new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*23) ) );
-new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*23) ) );
+// new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*17), (GRID_SIZE*23) ) );
+// new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*18), (GRID_SIZE*23) ) );
+// new BuildingEnt( 'Wall', 1, new Coordinate( (GRID_SIZE*19), (GRID_SIZE*23) ) );
+// new BuildingEnt( 'Wall', 0, new Coordinate( (GRID_SIZE*20), (GRID_SIZE*23) ) );
 
-new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*18.5), (GRID_SIZE*21.5) ) );
+// new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*18.5), (GRID_SIZE*21.5) ) );
 
-new BuildingEnt( 'rock_l', 0, new Coordinate( (GRID_SIZE*2), (GRID_SIZE*18) ) );
+// new BuildingEnt( 'rock_l', 0, new Coordinate( (GRID_SIZE*2), (GRID_SIZE*18) ) );
 
-new BuildingEnt( 'Gold Harvester', 0, new Coordinate( (GRID_SIZE*2.5), (GRID_SIZE*2.5) ) );
-new BuildingEnt( 'Gold Storage', 0, new Coordinate( (GRID_SIZE*2.5), (GRID_SIZE*4.5) ) );
-new BuildingEnt( 'Mana Harvester', 0, new Coordinate( (GRID_SIZE*36.5), (GRID_SIZE*34.5) ) );
-new BuildingEnt( 'Mana Storage', 0, new Coordinate( (GRID_SIZE*36.5), (GRID_SIZE*36.5) ) );
+// new BuildingEnt( 'Gold Harvester', 0, new Coordinate( (GRID_SIZE*2.5), (GRID_SIZE*2.5) ) );
+// new BuildingEnt( 'Gold Storage', 0, new Coordinate( (GRID_SIZE*2.5), (GRID_SIZE*4.5) ) );
+// new BuildingEnt( 'Mana Harvester', 0, new Coordinate( (GRID_SIZE*36.5), (GRID_SIZE*34.5) ) );
+// new BuildingEnt( 'Mana Storage', 0, new Coordinate( (GRID_SIZE*36.5), (GRID_SIZE*36.5) ) );
 
 // turret testing range
-new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*20.5) ) );
-new BuildingEnt( 'Tower Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*22.5) ) );
-new BuildingEnt( 'Mermage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*24.5) ) ); // AA tower
-new BuildingEnt( 'Curse Box', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*26.5) ) ); // AoE tower
-new BuildingEnt( 'Lobber Golem', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*28.5) ) ); // Artillery
-new BuildingEnt( 'Hidden Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*30.5) ) );
-new BuildingEnt( 'Rapid Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*32.5) ) );
-new BuildingEnt( 'Watchdragon (S)', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*34.5) ) ); // Magic Eye
-new BuildingEnt( 'Watchdragon (E)', 0, new Coordinate( (GRID_SIZE*9.5), (GRID_SIZE*34.5) ) ); // Magic Eye
-new BuildingEnt( 'Watchdragon (N)', 0, new Coordinate( (GRID_SIZE*11.5), (GRID_SIZE*34.5) ) ); // Magic Eye
-new BuildingEnt( 'Watchdragon (W)', 0, new Coordinate( (GRID_SIZE*13.5), (GRID_SIZE*34.5) ) ); // Magic Eye
-new BuildingEnt( 'Air Elemental', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*36.5) ) ); // Fan
+// new BuildingEnt( 'Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*20.5) ) );
+// new BuildingEnt( 'Tower Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*22.5) ) );
+// new BuildingEnt( 'Mermage', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*24.5) ) ); // AA tower
+// new BuildingEnt( 'Curse Box', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*26.5) ) ); // AoE tower
+// new BuildingEnt( 'Lobber Golem', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*28.5) ) ); // Artillery
+// new BuildingEnt( 'Hidden Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*30.5) ) );
+// new BuildingEnt( 'Rapid Turret', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*32.5) ) );
+// new BuildingEnt( 'Watchdragon (S)', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+// new BuildingEnt( 'Watchdragon (E)', 0, new Coordinate( (GRID_SIZE*9.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+// new BuildingEnt( 'Watchdragon (N)', 0, new Coordinate( (GRID_SIZE*11.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+// new BuildingEnt( 'Watchdragon (W)', 0, new Coordinate( (GRID_SIZE*13.5), (GRID_SIZE*34.5) ) ); // Magic Eye
+// new BuildingEnt( 'Air Elemental', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*36.5) ) ); // Fan
+
+flowControl('load', 'center_core');
