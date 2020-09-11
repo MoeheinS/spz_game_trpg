@@ -1,6 +1,6 @@
 function dom_listMissions(){
   // set HTML to template
-  document.querySelector('.UI_container').innerHTML = document.querySelector('#missionSelect').innerHTML;
+  //document.querySelector('.UI_container').innerHTML = document.querySelector('#missionSelect').innerHTML;
 
   // populate mission list
   for( mission of missionList ){

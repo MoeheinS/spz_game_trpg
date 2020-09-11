@@ -186,6 +186,11 @@ input[type=radio]:checked + .partyPicker-member {
 	background: #fefefede;
 
 	transition: all 0.3s ease-out;
+
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	overflow: auto;
 }
 .UI_container[data-show='true']{
 	left: 0;
@@ -193,6 +198,8 @@ input[type=radio]:checked + .partyPicker-member {
 
 .UI_wrapper {
 	padding: 2rem;
+	min-width: 400px;
+	flex-basis: 33%;
 }
 
 .UI_wrapper--missionSelect {
@@ -234,4 +241,8 @@ input[type=radio]:checked + .partyPicker-member {
 .UI_missionButton {
 	padding: 1rem 3rem;
 	margin-bottom: 1rem;
+}
+
+* {
+	outline: 1px dotted red;
 }
