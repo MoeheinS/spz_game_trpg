@@ -112,8 +112,8 @@ function flowControl(command, p){
           building_CORE = new BuildingEnt( 'Core', mission.core.level, mission.core.position );
           game_state.initial_buildings = 1;
           for( ent of mission.ents ){
-            new BuildingEnt( ent.name, ent.level, ent.position );
-            if( ent.name != 'Wall' ){// also exclude terrain props
+            let newBuilding = new BuildingEnt( ent.name, ent.level, ent.position );
+            if( newBuilding.custom.category != 'wall' && newBuilding.custom.category != 'terrain' ){// also exclude terrain props
               game_state.initial_buildings++;
             }
           }
