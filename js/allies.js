@@ -82,6 +82,17 @@ class UnitEnt {
   }
 }
 
+/*
+  Flow:
+  unit_sortTargets        : list targets by distance and preference
+  unit_acquireTarget      : if there's a target list 
+  unit_pathfind           : attempt to path to target, consuming a target from the list
+  unit_astar              : pathfinding, sets unit state to 'ready' if succesful
+  unit_attackTarget       : if target, attack or approach
+  unit_approachTarget     : move closer
+*/
+
+/** list targets by distance and preference */
 function unit_sortTargets(a){
   var nearTargets_byDist_byCategory = new Array;
   /*
@@ -172,7 +183,7 @@ function unit_sortTargets(a){
 
 }
 
-// target the closest building, according to preference
+/** target the closest building, according to preference if there's a target list */
 function unit_acquireTarget(a){
   if( a.custom.targetsArray && a.custom.targetsArray.length ){
     if( a.custom.target ){
@@ -193,8 +204,7 @@ function unit_acquireTarget(a){
   }
 }
 
-// works off world bounds; performance is still good for now
-// grid size unit, feathering from edges
+/** attempt to path to target, consuming a target from the list */
 function unit_pathfind(bod, exceptID, exceptBod){
 
   var astar_grid = new aStar_grid();
@@ -214,6 +224,7 @@ function unit_pathfind(bod, exceptID, exceptBod){
   unit_astar( astar_grid, new Coordinate( bod.region.startCol, bod.region.startRow ), new Coordinate( exceptBod.region.startCol, exceptBod.region.startRow ), bod, exceptBod );
 }
 
+/** pathfinding, sets unit state to 'ready' if succesful */
 function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
   // for ranged units
   // TODO: IT APPEARS TO WORK? But needs more testing
@@ -250,6 +261,7 @@ function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
   }
 }
 
+/** if target, attack or approach */
 function unit_attackTarget(a){
   if( !a.custom.target || Composite.get(world, a.custom.target.id, 'body') == null || Composite.get(world, a.id, 'body') == null ){
     return;
@@ -289,6 +301,7 @@ function unit_attackTarget(a){
   }
 }
 
+/** move actor closer */
 function unit_approachTarget(a){
   // otherwise walk towards the closest waypoint, unless you're close, in which case,
   // shift if off the stack and repeat 
@@ -323,6 +336,7 @@ function unit_approachTarget(a){
   }
 }
 
+/** create a harmful projectile */
 function unit_applyPain(a, t){
   //console.log(`unit ${a.id} attacking ${t.id}`);
   let distance = getDistance(a.position, t.position);
