@@ -31,7 +31,7 @@ class UnitEnt {
 
           hp_max: info.hp,
           hp_current: info.hp,
-          attackRange: info.attackRange,
+          attackRange: ( info.attackRange === 1 ? 1 : info.attackRange/2 ),
           attackCD: info.attackCD,
           attackCD_base: info.attackCD,
           moveType: info.moveType,

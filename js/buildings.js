@@ -422,7 +422,7 @@ class BuildingEnt {
           name: unitID,
 
           turret: {
-            range: (info.attackRange ? info.attackRange : false),
+            range: (info.attackRange ? info.attackRange/2 : false),
             range_minimum: ( unitID == 'Lobber Golem' || unitID == 'Tower Turret' ? 3 : 0 ),
             attackCD: (info.attackCD ? info.attackCD : false),
             attackCD_base: (info.attackCD ? info.attackCD : false),
