@@ -22,7 +22,7 @@
       <article class='UI_wrapper UI_wrapper--missionSelect'>
         <article class='UI_difficultySlider' data-difficulty="0">
           <p>Select your difficulty:</p>
-          <input class='input_difficultySlider' list='diffs' type='range' value="0" min="0" max="9" step="1" oninput="document.querySelector('[data-difficulty]').dataset.difficulty = this.value; document.querySelector('.UI_missionButton--embark').disabled = true;">
+          <input class='input_difficultySlider' list='diffs' type='range' value="0" min="0" max="9" step="1" oninput="document.querySelector('[data-difficulty]').dataset.difficulty = this.value; dom_flowControl('unready');">
           <datalist id='diffs'>
             <option>0</option>
             <option>1</option>
@@ -38,7 +38,8 @@
         </article>
         <p>Choose a mission to embark on:</p>
         <article class='UI_missionList'></article>
-        <button class='UI_missionButton UI_missionButton--embark' onclick="document.querySelector('.UI_container').dataset.show = false; flowControl('countdown');" disabled='true'>Embark!</button>
+        <button class='UI_missionButton UI_missionButton--survey' onclick="dom_flowControl('survey')" disabled='true'>Survey!</button>
+        <button class='UI_missionButton UI_missionButton--embark' onclick="dom_flowControl('ready')" disabled='true'>Embark!</button>
       </article>
 
       <article class='UI_wrapper'>
@@ -105,30 +106,7 @@
       </label>
     </section>
 
-    <div class='retreatButton' onclick="document.querySelector('.UI_container').dataset.show = !JSON.parse(document.querySelector('.UI_container').dataset.show); game_state.game_phase = 'survey';"></div>
-
-    <template id='missionSelect'>
-      <article class='UI_wrapper UI_wrapper--missionSelect'>
-        <article class='UI_difficultySlider' data-difficulty="0">
-          <p>Select your difficulty:</p>
-          <input class='input_difficultySlider' list='diffs' type='range' value="0" min="0" max="9" step="1" oninput="document.querySelector('[data-difficulty]').dataset.difficulty = this.value">
-          <datalist id='diffs'>
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-          </datalist>
-        </article>
-        <p>Choose a mission to embark on:</p>
-        <article class='UI_missionList'></article>
-      </article>
-    </template>
+    <div class='retreatButton' onclick="dom_flowControl('toMenu')"></div>
 
   </body>
   <script src='js/trpg.js'></script>
