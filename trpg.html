@@ -49,6 +49,8 @@
           How to play?
           <br>
           Building FAQ
+          <br>
+          (re)play tutorial button
         </section>
       </article>
 
@@ -64,10 +66,79 @@
             <button class="UI_unitButton">Empty</button>
           </article>
           <article class='UI_unitList'>
-            <button class="UI_unitButton">Remove</button>
+            <button class="UI_unitButton" onclick="dom_updateInspector()">Remove</button>
           </article>
-          <hr style="width: -webkit-fill-available; margin: 1rem;">
-          <img src='assets/noah/raw/lnss03.jpg' style="width:100%;">
+
+          <article class='UI_inspector'>
+            <section class='UI_inspector--header' data-rarity="">&nbsp;</section>
+            <section class='UI_inspector--art'></section>
+            <section class='UI_inspector--stats'>
+              
+              <div>
+                <span>
+                  Available
+                </span>
+                <span class='dom_unit--count'>
+                  --
+                </span>
+              </div>
+
+              <div>
+                <span>
+                  Health
+                </span>
+                <span class='dom_unit--hpMax'>
+                  --
+                </span>
+              </div>
+
+              <div>
+                <span>
+                  Damage
+                </span>
+                <span class='dom_unit--damage'>
+                  --
+                </span>
+              </div>
+
+              <div>
+                <span>
+                  Attack Rate
+                </span>
+                <span class='dom_unit--aspeed'>
+                  --
+                </span>
+              </div>
+
+              <div>
+                <span>
+                  Range
+                </span>
+                <span class='dom_unit--range'>
+                  --
+                </span>
+              </div>
+
+              <div>
+                <span>
+                  Targets
+                </span>
+                <span class='dom_unit--target'>
+                  --
+                </span>
+              </div>
+
+              <div>
+                <span>
+                  Notes
+                </span>
+                <span class='dom_unit--notes'>
+                  --
+                </span>
+              </div>
+
+            </section>
+          </article>
         </section>
       </article>
 

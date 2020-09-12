@@ -25,10 +25,40 @@ function dom_listUnits(){
     let button = document.createElement("button");
     button.innerHTML = unit.name;
     button.className = 'UI_unitButton';
-    button.onclick = function(){};
+    button.onclick = function(){
+      dom_updateInspector(this.innerHTML);
+    };
 
     document.querySelector('.UI_unitList').appendChild(button);
   }
+}
+
+function dom_updateInspector(unitID){
+  for( unit of unitList ){
+    if( unit.name == unitID ){
+      document.querySelector('.UI_inspector--header').innerHTML = unit.name;
+      document.querySelector('.UI_inspector--header').dataset.rarity = unit.rarity;
+      document.querySelector('.UI_inspector--art').style.setProperty('--bgimage', `url(../assets/noah/${unit.artName}.png)`);
+      document.querySelector('.dom_unit--count').innerHTML = unit.amount;
+      document.querySelector('.dom_unit--hpMax').innerHTML = unit.hp;
+      document.querySelector('.dom_unit--damage').innerHTML = unit.damage;
+      document.querySelector('.dom_unit--aspeed').innerHTML = `${(unit.attackCD/60).toFixed(2)}s/atk`;
+      document.querySelector('.dom_unit--range').innerHTML = unit.attackRange;
+      document.querySelector('.dom_unit--target').innerHTML = unit.preferredTarget;
+      document.querySelector('.dom_unit--notes').innerHTML = ( unit.notes ? unit.notes : '--');
+      return;
+    }
+  }
+  document.querySelector('.UI_inspector--header').innerHTML = '&nbsp;';
+  document.querySelector('.UI_inspector--header').dataset.rarity = '';
+  document.querySelector('.UI_inspector--art').style.setProperty('--bgimage', `url(../assets/noah/nada.png)`);
+  document.querySelector('.dom_unit--count').innerHTML = '--';
+  document.querySelector('.dom_unit--hpMax').innerHTML = '--';
+  document.querySelector('.dom_unit--damage').innerHTML = '--';
+  document.querySelector('.dom_unit--aspeed').innerHTML = '--';
+  document.querySelector('.dom_unit--range').innerHTML = '--';
+  document.querySelector('.dom_unit--target').innerHTML = '--';
+  document.querySelector('.dom_unit--notes').innerHTML = '--';
 }
 
 function dom_flowControl(command){

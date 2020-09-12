@@ -125,7 +125,7 @@ html {
 	background-image: var(--background);
 	background-size: cover;
 }
-.partyPicker .partyPicker-member:before {
+/* .partyPicker .partyPicker-member:before {
 	content: 'N';
 	color: var(--col__grey__ff);
 	
@@ -142,7 +142,7 @@ html {
 	background-color: #28282bef;
 	border: 4px outset #28282bef;
 	border-radius: 30%;
-}
+} */
 .partyPicker input[type=radio]:not(:disabled) + .partyPicker-member:after {
 	content: attr(data-amount);
 	color: var(--col__grey__ff);
@@ -326,6 +326,60 @@ button {
 	margin-right: 1rem;
 }
 
-* {
-	outline: 1px dotted red;
+.UI_inspector {
+	border: 4px solid #e6e1dd;
+	border-radius: 25px;
+	display: flex;
+	flex-wrap: wrap;
+	/* flex-grow: 1; */
+	margin-top: 1rem;
+	overflow: hidden;
 }
+.UI_inspector--header {
+	background: #e6e1dd;
+	font-size: 2rem;
+	flex-basis: 100%;
+	padding: 1rem;
+	text-align: center;
+
+	position: relative;
+}
+.UI_inspector--header[data-rarity]:after {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	content: attr(data-rarity);
+}
+
+.UI_inspector--art {
+	flex-basis: 50%;
+	background-image: var(--bgimage);
+	background-size: 50%;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.UI_inspector--stats {
+	flex-basis: 50%;
+
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+}
+.UI_inspector--stats > div {
+	margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.UI_inspector--stats > div > span:first-child {
+	padding: 0.5rem;
+	background: #e6e1dd;
+}
+.UI_inspector--stats > div:last-child {
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+/* * {
+	outline: 1px dotted red;
+} */
