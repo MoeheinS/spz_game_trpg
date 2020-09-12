@@ -20,56 +20,55 @@
     <section class='UI_container' data-show='true'>
 
       <article class='UI_wrapper UI_wrapper--missionSelect'>
-        <article class='UI_difficultySlider' data-difficulty="0">
-          <p>Select your difficulty:</p>
-          <input class='input_difficultySlider' list='diffs' type='range' value="0" min="0" max="9" step="1" oninput="document.querySelector('[data-difficulty]').dataset.difficulty = this.value; dom_flowControl('unready');">
-          <datalist id='diffs'>
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-          </datalist>
-        </article>
-        <p>Choose a mission to embark on:</p>
-        <article class='UI_missionList'></article>
-        <button class='UI_missionButton UI_missionButton--survey' onclick="dom_flowControl('survey')" disabled='true'>Survey!</button>
-        <button class='UI_missionButton UI_missionButton--embark' onclick="dom_flowControl('ready')" disabled='true'>Embark!</button>
+        <section>
+          <article class='UI_difficultySlider' data-difficulty="0">
+            <p style='margin-bottom: 1rem;'>Select your difficulty:</p>
+            <input class='input_difficultySlider' list='diffs' type='range' value="0" min="0" max="9" step="1" oninput="document.querySelector('[data-difficulty]').dataset.difficulty = this.value; dom_flowControl('unready');">
+            <datalist id='diffs'>
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+            </datalist>
+          </article>
+          <p>Choose a mission to embark on:</p>
+          <article class='UI_missionList'></article>
+          <button class='UI_missionButton UI_missionButton--survey' onclick="dom_flowControl('survey')" disabled='true'>Survey!</button>
+          <button class='UI_missionButton UI_missionButton--embark' onclick="dom_flowControl('ready')" disabled='true'>Embark!</button>
+        </section>
       </article>
 
-      <article class='UI_wrapper'>
-        How to play?
-        <br>
-        Building FAQ
+      <article class='UI_wrapper UI_wrapper--FAQ'>
+        <section>
+          How to play?
+          <br>
+          Building FAQ
+        </section>
       </article>
 
-      <article class='UI_wrapper'>
-        Party builder
-        <br>
-        List of units, grouped by Rarity
-        <br>
-        Overview window? Or on hover?
-        <br>
-        Graph / chart of squad strengths / weaknesses?
-        <p>Assemble your squad:</p>
-        <article class='UI_unitList--squad'>
-          <button class="UI_unitButton">Empty</button>
-          <button class="UI_unitButton">Empty</button>
-          <button class="UI_unitButton">Empty</button>
-          <button class="UI_unitButton">Empty</button>
-          <button class="UI_unitButton">Empty</button>
-          <button class="UI_unitButton">Empty</button>
-        </article>
-        <article class='UI_unitList'>
-          <button class="UI_unitButton">Remove</button>
-        </article>
-        <hr style="width: -webkit-fill-available; margin: 1rem;">
-        <img src='assets/noah/raw/lnss03.jpg' style="width:100%;">
+      <article class='UI_wrapper UI_wrapper--unitSelect'>
+        <section>
+          <p>Assemble your squad:</p>
+          <article class='UI_unitList--squad'>
+            <button class="UI_unitButton">Empty</button>
+            <button class="UI_unitButton">Empty</button>
+            <button class="UI_unitButton">Empty</button>
+            <button class="UI_unitButton">Empty</button>
+            <button class="UI_unitButton">Empty</button>
+            <button class="UI_unitButton">Empty</button>
+          </article>
+          <article class='UI_unitList'>
+            <button class="UI_unitButton">Remove</button>
+          </article>
+          <hr style="width: -webkit-fill-available; margin: 1rem;">
+          <img src='assets/noah/raw/lnss03.jpg' style="width:100%;">
+        </section>
       </article>
 
     </section>

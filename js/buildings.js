@@ -761,6 +761,6 @@ function ripperoni_building(a){
 // new BuildingEnt( 'Watchdragon (W)', 0, new Coordinate( (GRID_SIZE*13.5), (GRID_SIZE*34.5) ) ); // Magic Eye
 // new BuildingEnt( 'Air Elemental', 0, new Coordinate( (GRID_SIZE*7.5), (GRID_SIZE*36.5) ) ); // Fan
 
-flowControl('load', 'center_core');
+//flowControl('load', 'center_core');
 
 // TODO: buildings need to track minimum core level; if core level < minimum, don't spawn the building

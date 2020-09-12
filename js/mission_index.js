@@ -2,7 +2,7 @@ missionList = [];
 
 var missionList = [
   {
-    id: "turret_test",
+    id: "Turret Playground",
     core: {
       level: 0,
       position: new Coordinate( 25.5*GRID_SIZE, 23.5*GRID_SIZE )
@@ -158,7 +158,7 @@ var missionList = [
     ]
   },
   {
-    id: "center_core",// for testing the game loop
+    id: "Just a Core and Turret",// for testing the game loop
     core: {
       level: 0,
       position: new Coordinate( 17.5*GRID_SIZE, 17.5*GRID_SIZE ) // 34 - 6 
@@ -172,7 +172,7 @@ var missionList = [
     ]
   },
   {
-    id: 1,
+    id: 'Simple approach',
     core: {
       level: 0,
       position: new Coordinate( 13.5*GRID_SIZE, 13.5*GRID_SIZE )

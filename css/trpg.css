@@ -183,7 +183,7 @@ input[type=radio]:checked + .partyPicker-member {
 
 	height: 100vh;
 	width: 100vw;
-	background: #fefefede;
+	background: #ddd2cb;
 
 	transition: all 0.3s ease-out;
 
@@ -197,9 +197,31 @@ input[type=radio]:checked + .partyPicker-member {
 }
 
 .UI_wrapper {
-	padding: 2rem;
+	padding: 1rem;
 	min-width: 200px;
-	flex-basis: calc( 50% - 100px );
+	flex-basis: 33%;
+	display: flex;
+}
+.UI_wrapper > section {
+	background: #fef8ff;
+
+	display: flex;
+	/* justify-content: center; */
+	flex-direction: column;
+	/* align-items: center; */
+
+	width: 100%;
+	flex-basis: 100%;
+
+	padding: 1rem;
+	border-radius: 25px;
+	box-shadow: 0px 1px 2px 2px rgba(0,0,0,0.25);
+}
+
+@media screen and (max-width: 640px){
+	article.UI_wrapper {
+		flex-basis: 100%;
+	}	
 }
 
 .UI_wrapper--missionSelect {
@@ -209,8 +231,7 @@ input[type=radio]:checked + .partyPicker-member {
 	align-items: center;
 
 	height: 100%;
-
-	max-width: 200px;
+	flex-basis: 25%;
 }
 .UI_wrapper--missionSelect > *+* {
 	margin-bottom: 1rem;
@@ -239,10 +260,41 @@ input[type=radio]:checked + .partyPicker-member {
 	overflow-y: auto;
 
 	padding: 0 1rem;
+
+	border: 4px solid #e6e1dd;
+	margin: 1rem 0;
+	border-radius: 25px;
+	padding: 1rem;
 }
+
+button {
+	font: inherit;
+	outline: none;
+	border: none;
+}
+
 .UI_missionButton {
 	padding: 1rem 3rem;
 	margin-bottom: 1rem;
+	border-radius: 50px;
+
+	background: linear-gradient(to bottom, #ffb973, #ff9922);
+}
+.UI_missionButton:hover {
+	background: linear-gradient(to bottom, #ffdea4, #ffca60);
+}
+.UI_missionButton:disabled {
+	background: linear-gradient(to bottom, #d1d1d1, #b0b0b0);
+}
+
+.UI_wrapper--FAQ {
+	flex-basis: 25%;
+}
+
+.UI_wrapper--unitSelect {
+	flex-basis: 50%;
+	display: flex;
+	flex-direction: column;
 }
 
 .UI_unitList,
@@ -251,11 +303,27 @@ input[type=radio]:checked + .partyPicker-member {
 	flex-wrap: wrap;
 	justify-content: space-evenly;
 
+	border: 4px solid #e6e1dd;
+	
+	border-radius: 25px;
 	padding: 1rem;
 }
+.UI_unitList--squad {
+	margin: 1rem 0;
+}
+.UI_unitList {
+	overflow-x: scroll;
+	flex-wrap: wrap;
+	flex-direction: column;
+	max-height: 8rem;
+}
+
 .UI_unitButton {
 	width: 6rem;
 	height: 6rem;
+}
+.UI_unitList > .UI_unitButton {
+	margin-right: 1rem;
 }
 
 * {
