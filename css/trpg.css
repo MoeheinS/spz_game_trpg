@@ -198,8 +198,8 @@ input[type=radio]:checked + .partyPicker-member {
 
 .UI_wrapper {
 	padding: 2rem;
-	min-width: 400px;
-	flex-basis: 33%;
+	min-width: 200px;
+	flex-basis: calc( 50% - 100px );
 }
 
 .UI_wrapper--missionSelect {
@@ -209,6 +209,8 @@ input[type=radio]:checked + .partyPicker-member {
 	align-items: center;
 
 	height: 100%;
+
+	max-width: 200px;
 }
 .UI_wrapper--missionSelect > *+* {
 	margin-bottom: 1rem;
