@@ -5,6 +5,7 @@ let game_state = {
   "debug_overlay": true,
 
   "game_phase": "survey", // survey, engage, aftermath?
+  "timer_deploy": false,
 
   "initial_buildings": 0, // debug number, set on mission initialize
   "grass": false,

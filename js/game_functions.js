@@ -141,6 +141,23 @@ function flowControl(command, p, p2){
         landScape_flowers();
       }, 100);
       //game_state.initial_buildings = mission.ents.length + 1;
+      break;
+    case 'countdown':
+      switch (true) {
+        case ( game_state.timer_deploy === false ):
+          game_state.timer_deploy = 3;
+          break;
+        case ( game_state.timer_deploy < 1 ):
+          game_state.game_phase = 'engage';
+          game_state.timer_deploy = false;
+          break;
+        case ( ticker % ANIM_TIMING == 0 ):
+          game_state.timer_deploy--;
+          break;
+        default:
+          break;
+      }
+      break;
     case 'survey':
       // look at the map, assemble your squad, maybe pick a different level
       break;

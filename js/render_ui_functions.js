@@ -178,6 +178,9 @@ function draw_UI(a){
     case 'survey':
       render_menuButton(game_state.game_phase);
       render_survey();
+      if( game_state.timer_deploy !== false ){
+        render_countdown();
+      }
       break;
     case 'engage':
       render_menuButton(game_state.game_phase);
@@ -186,6 +189,47 @@ function draw_UI(a){
     default:
       break;
   }
+
+  ctx.restore();
+}
+
+function render_countdown(){
+
+  if( game_state.timer_deploy === false ){
+    return;
+  }
+  flowControl('countdown');
+
+  ctx.save();
+
+  let bg_gradient = ctx.createRadialGradient( // x0, y0, r0, x1, y1, r1
+    reWi*0.5, reHi*0.5, reHi*0.125,
+    reWi*0.5, reHi*0.5, reHi*0.25
+  );
+  bg_gradient.addColorStop(0, '#ffffffdd');
+  bg_gradient.addColorStop(0.75, '#ffdf8c77');
+  bg_gradient.addColorStop(1, '#ffb43422');
+
+  ctx.fillStyle = bg_gradient;
+  ctx.moveTo(reWi*0.5, reHi*0.5);
+  ctx.arc(reWi*0.5, reHi*0.5, reHi*0.25, 0, Math.PI*2, true);
+  ctx.fill();
+
+  let text_gradient = ctx.createLinearGradient( // x0, y0, x1, y1
+    0, reHi*0.35, 
+    0, reHi*0.65
+  );
+  text_gradient.addColorStop(0, '#ffffff');
+  text_gradient.addColorStop(0.5, '#ffdf8c');
+  text_gradient.addColorStop(1, '#ffb434');
+  
+  ctx.fillStyle = text_gradient;
+  ctx.font = 'bold '+(reHi/2)+'px zelda';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.lineWidth = reHi*0.0375;
+  ctx.strokeText(( game_state.timer_deploy ? game_state.timer_deploy : '' ), reWi/2, reHi/2);
+  ctx.fillText(( game_state.timer_deploy ? game_state.timer_deploy : '' ), reWi/2, reHi/2);
 
   ctx.restore();
 }

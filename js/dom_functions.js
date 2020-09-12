@@ -9,7 +9,8 @@ function dom_listMissions(){
     button.innerHTML = mission.id;
     button.className = 'UI_missionButton';
     button.onclick = function(){
-      flowControl('load', this.innerText, document.querySelector('.input_difficultySlider').value)
+      flowControl('load', this.innerText, document.querySelector('.input_difficultySlider').value);
+      document.querySelector('.UI_missionButton--embark').disabled = false;
     };
 
     document.querySelector('.UI_missionList').appendChild(button);

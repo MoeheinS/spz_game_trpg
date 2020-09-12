@@ -44,7 +44,7 @@ world.bounds.min.y = FIELD_SIZE * -0.5;
 world.bounds.max.y = FIELD_SIZE * 1.5;
 
 // keep track of current bounds scale (view zoom)
-var boundsScaleTarget = 1;
+var boundsScaleTarget = 1.5;
 var boundsScale = {
     x: 1,
     y: 1
