@@ -18,3 +18,18 @@ function dom_listMissions(){
 }
 
 dom_listMissions();
+
+function dom_listUnits(){
+  // populate unit list
+  for( unit of unitList ){
+
+    let button = document.createElement("button");
+    button.innerHTML = unit.name;
+    button.className = 'UI_unitButton';
+    button.onclick = function(){};
+
+    document.querySelector('.UI_unitList').appendChild(button);
+  }
+}
+
+dom_listUnits();

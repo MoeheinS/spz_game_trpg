@@ -245,6 +245,19 @@ input[type=radio]:checked + .partyPicker-member {
 	margin-bottom: 1rem;
 }
 
+.UI_unitList,
+.UI_unitList--squad {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+
+	padding: 1rem;
+}
+.UI_unitButton {
+	width: 6rem;
+	height: 6rem;
+}
+
 * {
 	outline: 1px dotted red;
 }

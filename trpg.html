@@ -18,6 +18,7 @@
     <section class='container__Matter'></section>
 
     <section class='UI_container' data-show='true'>
+
       <article class='UI_wrapper UI_wrapper--missionSelect'>
         <article class='UI_difficultySlider' data-difficulty="0">
           <p>Select your difficulty:</p>
@@ -39,11 +40,13 @@
         <article class='UI_missionList'></article>
         <button class='UI_missionButton UI_missionButton--embark' onclick="document.querySelector('.UI_container').dataset.show = false; flowControl('countdown');" disabled='true'>Embark!</button>
       </article>
+
       <article class='UI_wrapper'>
         How to play?
         <br>
         Building FAQ
       </article>
+
       <article class='UI_wrapper'>
         Party builder
         <br>
@@ -52,7 +55,22 @@
         Overview window? Or on hover?
         <br>
         Graph / chart of squad strengths / weaknesses?
+        <p>Assemble your squad:</p>
+        <article class='UI_unitList--squad'>
+          <button class="UI_unitButton">Empty</button>
+          <button class="UI_unitButton">Empty</button>
+          <button class="UI_unitButton">Empty</button>
+          <button class="UI_unitButton">Empty</button>
+          <button class="UI_unitButton">Empty</button>
+          <button class="UI_unitButton">Empty</button>
+        </article>
+        <article class='UI_unitList'>
+          <button class="UI_unitButton">Remove</button>
+        </article>
+        <hr style="width: -webkit-fill-available; margin: 1rem;">
+        <img src='assets/noah/raw/lnss03.jpg' style="width:100%;">
       </article>
+
     </section>
 
     <section class='partyPicker'>
