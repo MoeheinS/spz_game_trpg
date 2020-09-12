@@ -171,8 +171,13 @@ function draw_UI(a){
   ctx.font = 'bold 16px alber';
   ctx.textAlign = 'right';
   ctx.fillStyle = '#ffffff';
+  ctx.lineWidth = 4;
   ctx.strokeText('zoom:'+boundsScaleTarget.toFixed(2), reWi-20, 20);
   ctx.fillText('zoom:'+boundsScaleTarget.toFixed(2), reWi-20, 20);
+  ctx.strokeText('fps:'+Math.floor(runner.fps), reWi-20, 36);
+  ctx.fillText('fps:'+Math.floor(runner.fps), reWi-20, 36);
+
+  ctx.restore();
 
   switch (game_state.game_phase) {
     case 'survey':
@@ -189,8 +194,6 @@ function draw_UI(a){
     default:
       break;
   }
-
-  ctx.restore();
 }
 
 function render_countdown(){
