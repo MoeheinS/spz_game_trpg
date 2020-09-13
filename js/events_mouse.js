@@ -39,14 +39,31 @@
 
 Events.on(mouseConstraint, "mousedown", function(event) {
   console.log(event);
+  // if( event.mouse.button === 0){
+  //   if( game_state.mayDeploy ){
+  //     new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Debug Ratty' );
+  //   }
+  // }
+  // if( event.mouse.button === 2){
+  //   if( game_state.mayDeploy ){
+  //     new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Debug Air Ratty' );
+  //   }
+  // }
+
   if( event.mouse.button === 0){
     if( game_state.mayDeploy ){
-      new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Debug Ratty' );
-    }
-  }
-  if( event.mouse.button === 2){
-    if( game_state.mayDeploy ){
-      new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), 'Debug Air Ratty' );
+
+      var deployAble = document.querySelector('[name=partyPicker-deployer]:checked');
+      if( deployAble ){
+        var deploy_DOM = document.querySelector('[name=partyPicker-deployer]:checked+.partyPicker-member');
+        if( deploy_DOM.dataset.amount < 1 ){
+          return; //deployAble.disabled = true;
+        }else{
+          deploy_DOM.dataset.amount--;
+          new UnitEnt( new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE, mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE ), deployAble.value );
+        }
+      }
+
     }
   }
 });

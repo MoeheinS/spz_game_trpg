@@ -141,6 +141,7 @@ function dom_refreshSquadpicker(){
     let inputItem = document.createElement("input");
         inputItem.type = 'radio';
         inputItem.name = 'partyPicker-deployer';
+        inputItem.value = squaddie.unitID;
         rootItem.appendChild(inputItem);
     let articleItem = document.createElement("article");
         articleItem.className = 'partyPicker-member';
@@ -181,6 +182,7 @@ function dom_flowControl(command){
       break;
     case 'ready':
       document.querySelector('.UI_container').dataset.show = false; 
+      dom_refreshSquadpicker();
       flowControl('countdown');
       break;
     case 'survey':
