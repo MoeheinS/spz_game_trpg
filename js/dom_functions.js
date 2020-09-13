@@ -28,7 +28,7 @@ function dom_listUnits(){
     button.className = 'UI_unitButton';
     button.onclick = function(){
       dom_updateInspector(this.innerHTML);
-      dom_squadUp(this.innerHTML, this.dataset.amount);
+      dom_squadUp(this.innerHTML, this.dataset.amount, this.dataset.artname);
     };
     button.style.setProperty('--bgimage', `url(../assets/noah/${unit.artName}.png)`);
     button.dataset.artname = unit.artName;
@@ -66,14 +66,14 @@ function dom_updateInspector(unitID){
   document.querySelector('.dom_unit--notes').innerHTML = '--';
 }
 
-function dom_squadUp(unitID, unitAmount){
+function dom_squadUp(unitID, unitAmount, unitArtname){
   if( game_state.squad.length < 6 ){
     for( squaddie of game_state.squad ){
       if( squaddie.unitID == unitID ){
         return;
       }
     }
-    game_state.squad.push({ unitID: unitID, amount: unitAmount, amount_base: unitAmount });
+    game_state.squad.push({ unitID: unitID, amount: unitAmount, amount_base: unitAmount, artName: unitArtname });
     dom_refreshSquadlist();
   }
 }
@@ -129,7 +129,26 @@ function dom_refreshSquadlist(){
       document.querySelector('.UI_unitList--squad').appendChild(button);
     }
   }
-  
+
+  dom_refreshSquadpicker();
+}
+
+function dom_refreshSquadpicker(){
+  document.querySelector('.partyPicker').innerHTML = '';
+
+  for( squaddie of game_state.squad ){
+    let rootItem = document.createElement("label");
+    let inputItem = document.createElement("input");
+        inputItem.type = 'radio';
+        inputItem.name = 'partyPicker-deployer';
+        rootItem.appendChild(inputItem);
+    let articleItem = document.createElement("article");
+        articleItem.className = 'partyPicker-member';
+        articleItem.dataset.amount = squaddie.amount;
+        articleItem.style.setProperty('--background', `url(../assets/noah/${squaddie.artName}.png)`);
+        rootItem.appendChild(articleItem);
+    document.querySelector('.partyPicker').appendChild(rootItem);
+  }
 }
 
 function dom_flowControl(command){

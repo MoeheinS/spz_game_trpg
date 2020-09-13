@@ -106,16 +106,16 @@ html {
 	flex-direction: column;
 }
 .partyPicker .partyPicker-member {
-	width: 100px;
-	height: 100px;
+	width: 6rem;
+	height: 6rem;
 
 	margin: 8px;
 	margin: 8px 1rem 2rem 1rem;
 	margin: 0.5rem 0.5rem 1rem 1rem;
 
-	border: 3px dotted var(--col__grey__ff);
+	border: 3px dotted #5d5d5d;
 	border-radius: 6px;
-	background-color: #28282ba3;
+	background-color: #ffffffad;
 
 	pointer-events: all;
 	cursor: pointer;
@@ -123,7 +123,9 @@ html {
 	position: relative;
 
 	background-image: var(--background);
-	background-size: cover;
+	background-size: auto 10rem;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 /* .partyPicker .partyPicker-member:before {
 	content: 'N';
@@ -161,9 +163,9 @@ html {
 	border: 4px outset #28282bef;
 	border-radius: 30%;
 }
-.partyPicker input[type=radio]:not(:disabled) + .partyPicker-member:hover {
+/* .partyPicker input[type=radio]:not(:disabled) + .partyPicker-member:hover {
 	transform: scale(1.1);
-}
+} */
 
 input[type=radio] {
 	opacity: 0;
