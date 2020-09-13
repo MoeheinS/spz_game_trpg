@@ -206,7 +206,7 @@ input[type=radio]:checked + .partyPicker-member {
 	background: #fef8ff;
 
 	display: flex;
-	/* justify-content: center; */
+	justify-content: space-between;
 	flex-direction: column;
 	/* align-items: center; */
 
@@ -286,6 +286,9 @@ button {
 .UI_missionButton:disabled {
 	background: linear-gradient(to bottom, #d1d1d1, #b0b0b0);
 }
+.UI_missionButton--embark {
+	margin-bottom: 0;
+}
 
 .UI_wrapper--FAQ {
 	flex-basis: 25%;
@@ -312,18 +315,55 @@ button {
 	margin: 1rem 0;
 }
 .UI_unitList {
-	overflow-x: scroll;
+	/* overflow-x: scroll; */
+	overflow-y: scroll;
 	flex-wrap: wrap;
-	flex-direction: column;
-	max-height: 8rem;
+	flex-direction: row;
+	/* max-height: 8rem; */
+
+	flex-basis: 23rem;
+    justify-content: flex-start;
 }
 
 .UI_unitButton {
-	width: 6rem;
-	height: 6rem;
+	width: 5rem;
+	height: 5rem;
+	border: 3px solid #9e8c7e;
+	border-radius: 12px;
+
+	font-size: 0;
+
+	background-color: #ffffff;
+	background-image: var(--bgimage);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+
+	position: relative;
+}
+.UI_unitButton[data-empty=true] {
+	background-image: url(../assets/fbbg.jpg);
 }
 .UI_unitList > .UI_unitButton {
 	margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+.UI_unitButton:after {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+
+	background: #9e8c7e;
+	border-radius: 12px;
+
+	content: attr(data-artname);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 1rem;
+
+	font-size: 0.75rem;
 }
 
 .UI_inspector {

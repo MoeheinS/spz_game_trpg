@@ -11,14 +11,9 @@ let game_state = {
   "grass": false,
   "mayDeploy": true,
 
-  "squad": {
-    "slot_1": null,
-    "slot_2": null,
-    "slot_3": null,
-    "slot_4": null,
-    "slot_5": null,
-    "slot_6": null
-  }
+  "squad": [
+    
+  ]
 };
 
 /*
