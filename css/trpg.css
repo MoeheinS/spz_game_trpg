@@ -422,6 +422,10 @@ button {
 	align-items: flex-start;
 }
 
+.UI_wrapper.UI_wrapper--FAQ p {
+	margin-bottom: 0.5rem;
+}
+
 /* * {
 	outline: 1px dotted red;
 } */
