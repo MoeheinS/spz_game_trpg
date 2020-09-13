@@ -152,7 +152,7 @@ Events.on(engine, 'afterUpdate', function(event) {
     }
   }
 
-  flowControl('check');
+  //flowControl('check');
 
   // experimental last-ditch speed hack?
   //Matter.Engine.clear(engine);
@@ -197,6 +197,8 @@ Events.on(render, 'afterRender', function() {
   ticker++;
   switch (true) {
     case ( ticker > TIMING_RESET ):
+      // added here in order to make it check less often
+      flowControl('check');
       ticker = 0;
       break;
     case ( ticker % ANIM_TIMING == 0 ):
@@ -210,10 +212,14 @@ Events.on(render, 'afterRender', function() {
           }
         }
       }
+      break;
+    case ( ticker % 3 == 0 ):
+      group_Entities();
+      break;
     default:
       break;
   }
-  group_Entities();
+  //group_Entities();
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
   ctx.fillStyle = RENDER_TERRAINCOLOR;
   ctx.lineWidth = 2;

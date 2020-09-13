@@ -96,14 +96,17 @@ function flowControl(command, p, p2){
       let progress_pct = ( game_state.initial_buildings ? 100 - Math.floor( buildings_Array.length / game_state.initial_buildings * 100 ) : 0 );
       if( progress_pct == 100 ){
         // declare victory
-        game_state.game_phase == 'victory';
+        game_state.game_phase = 'victory'; // = 'aftermath'?
         // STUB; function for DOM control
+        alert(game_state.game_phase);
       }
-      let deployable_unitCount = 1; // placeholder
+      let deployable_unitCount = document.querySelectorAll('.partyPicker-member:not([data-amount="0"])').length;
       if( game_state.game_phase == 'engage' && deployable_unitCount == 0 && units_Array.length == 0 ){
+        // TODO: units_Array.length == 0 fires too fast, so it's now in the ticker reset part
         // declare defeat
-        game_state.game_phase == 'defeat';
+        game_state.game_phase = 'defeat'; // = 'aftermath'?
         // STUB; function for DOM control
+        alert(game_state.game_phase);
       }
       break;
     // clear the board
