@@ -138,32 +138,27 @@ function draw_Graphics(a, mode){
         // wiggle wiggle
         //Body.rotate(i, 0.02);
 
-        //which direction? as the clock goes, 1 2, 3 4, 5 6, 7 0
-        var bod_angle = Math.floor(((180*i.angle/Math.PI)+180)/45);
-        switch (bod_angle) {
-          case 1:
-          case 2:
-            var sx = i.custom.graphics.sheet_up[0].x;
-            var sy = i.custom.graphics.sheet_up[0].y;
-            break;
-          case 3:
-          case 4:
-            var sx = i.custom.graphics.sheet_right[0].x;
-            var sy = i.custom.graphics.sheet_right[0].y;
-            break;
-          case 7:
-          case 0:
-            var sx = i.custom.graphics.sheet_left[0].x;
-            var sy = i.custom.graphics.sheet_left[0].y;
-            break;
-          default: // 5, 6
-            var sx = i.custom.graphics.sheet_idle[0].x;
-            var sy = i.custom.graphics.sheet_idle[0].y;
-            break;
+        var sx = i.custom.graphics.sheet_idle[0].x;
+        var sy = i.custom.graphics.sheet_idle[0].y;
+
+        if( i.velocity.x == 0 && i.velocity.y == 0 ){
+          i.custom.graphics.sheet_idle = i.custom.graphics.sheet_down;
         }
-        if( !Math.floor(i.speed) ){
-          var sx = i.custom.graphics.sheet_idle[0].x;
-          var sy = i.custom.graphics.sheet_idle[0].y;
+        // sideways velocity greater than lateral
+        else if( Math.abs(i.velocity.x) > Math.abs(i.velocity.y) ){
+          // going right?
+          if( i.velocity.x > 0 ){
+            i.custom.graphics.sheet_idle = i.custom.graphics.sheet_right;
+          }else{
+            i.custom.graphics.sheet_idle = i.custom.graphics.sheet_left;
+          }
+        }else{
+          // going down?
+          if( i.velocity.y > 0 ){
+            i.custom.graphics.sheet_idle = i.custom.graphics.sheet_down;
+          }else{
+            i.custom.graphics.sheet_idle = i.custom.graphics.sheet_up;
+          }
         }
 
         // shadows for air units
@@ -230,20 +225,8 @@ function draw_Graphics(a, mode){
 function heartbeat_animations(){
   console.log('tick');
   for( bod of Composite.allBodies(world) ){
-    // bruh. Is there a better way other than try catch?
     if( bod.custom && bod.custom.graphics && bod.custom.graphics.renderMode ){
-      if( bod.custom.graphics.sheet_idle ){
-        bod.custom.graphics.sheet_idle = cycleArray(bod.custom.graphics.sheet_idle);
-      }
-      if( bod.custom.graphics.sheet_right ){
-        bod.custom.graphics.sheet_right = cycleArray(bod.custom.graphics.sheet_right);
-      }
-      if( bod.custom.graphics.sheet_left ){
-        bod.custom.graphics.sheet_left = cycleArray(bod.custom.graphics.sheet_left);
-      }
-      if( bod.custom.graphics.sheet_up ){
-        bod.custom.graphics.sheet_up = cycleArray(bod.custom.graphics.sheet_up);
-      }
+      bod.custom.graphics.sheet_idle = cycleArray(bod.custom.graphics.sheet_idle);
     }
   }
 }

@@ -297,19 +297,11 @@ function sortByDim(bods) {
 // move an actor with position.x/y to vector v.x/v.y, at a speed dependent on its mass or not
 // 0.01 forceI is okay for mass 1-4 objects
 function moveToPoint(a, dv, force, uniform){
-  if(!uniform){
-    force = force * a.mass;
-  }
+  force = ( !uniform ? force * a.mass : force );
   let deltaVector = Vector.sub(dv, a.position);
   let normalizedDelta = Vector.normalise(deltaVector);
   let forceVector = Vector.mult(normalizedDelta, force);
   Body.applyForce(a, a.position, forceVector);
-  
-  // This rotates the body, which is a problem for non-square, non-round bodies.
-  // FIXME: alternative is to get the movement vector; then you can use non-round bodies...
-  if( a.custom && a.custom.shape ){
-    Body.setAngle( a, Vector.angle( a.position, dv));
-  }
 }
 
 // works off world bounds; performance is still good for now

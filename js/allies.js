@@ -18,7 +18,8 @@ class UnitEnt {
           break;
         }
       }
-      this.body = Bodies.circle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), 8, {
+      //this.body = Bodies.circle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), 8, {
+      this.body = Bodies.rectangle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), 16, 16, {
         label: 'ally',
         frictionAir: 1, // magic numbers
         mass: 2,        // magic numbers
@@ -56,12 +57,14 @@ class UnitEnt {
               y: 16
             },
             sheet_idle: getSprites(info.spriteName, 'idle'),
+            sheet_down: getSprites(info.spriteName, 'idle'),
             sheet_left: getSprites(info.spriteName, 'left'),
             sheet_right: getSprites(info.spriteName, 'right'),
             sheet_up: getSprites(info.spriteName, 'up')
           }
         }
-      }, 10);
+      //}, 10);
+      });
       World.add(world, this.body);
       //console.log(this.body.position);
 
