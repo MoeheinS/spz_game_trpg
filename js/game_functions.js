@@ -64,13 +64,13 @@ function group_Entities() {
     }
   }
 
-  units_Array = sortByY(units_Array);
+  sortByY(units_Array);
 
-  buildings_all_Array = sortByY(buildings_all_Array);
+  sortByY(buildings_all_Array);
 
-  doodads_Array = sortByY(doodads_Array);
+  sortByY(doodads_Array);
 
-  render_Array = sortByY(render_Array);
+  sortByY(render_Array);
 }
 
 function landScape(){

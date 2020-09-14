@@ -260,7 +260,7 @@ function cycleArray(a, lofi) {
 
 // Sort bodies by y-position
 function sortByY(bods) {
-	bods = bods.sort(function(a,b){
+  bods.sort(function(a,b){
     try{
       // return by bounds (lower edge) rather than center point
       // return a.position.y-b.position.y;
@@ -270,7 +270,6 @@ function sortByY(bods) {
       return 0;
     }
   });
-  return bods;
 }
 
 // get the lesser dimension of the largest from amongst the selection's x and y's
