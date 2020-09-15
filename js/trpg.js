@@ -27,7 +27,7 @@ var render = Render.create({
         // showCollisions: true,
         // showVelocity: true,
         hasBounds: true,
-        background: RENDER_SHADOWCOLOR
+        background: RENDER_GRASSCOLOR
     }
 });
 Render.run(render);
@@ -180,13 +180,6 @@ groundImg.onload = function(){
     // create pattern
     groundPattern = ctx.createPattern(groundImg, 'repeat'); // Create a pattern with this image, and set it to "repeat".
 }
-var wastePattern = new Object;
-wasteImg = new Image();
-wasteImg.src = './assets/gnd01.png';
-wasteImg.onload = function(){
-    // create pattern
-    wastePattern = ctx.createPattern(wasteImg, 'repeat'); // Create a pattern with this image, and set it to "repeat".
-}
 unitsImg = new Image();
 unitsImg.src = './assets/units.png';
 buildingsImg = new Image();
@@ -224,21 +217,8 @@ Events.on(render, 'afterRender', function() {
   ctx.fillStyle = RENDER_TERRAINCOLOR;
   ctx.lineWidth = 2;
   ctx.clearRect(0, 0, reWi, reHi);
-  
-  ctx.fillStyle = oobPattern;
-  ctx.fillRect(0, 0, reWi, reHi);
-  ctx.fillStyle = RENDER_TERRAINCOLOR;
 
   Render.startViewTransform(render);
-
-    // background pattern
-    ctx.fillStyle = oobPattern;
-    ctx.fillRect(-2*reWi, -2*reHi, 5*reWi, 5*reHi);
-    ctx.fillStyle = RENDER_TERRAINCOLOR;
-
-    ctx.fillStyle = wastePattern;
-    ctx.fillRect(0, 0, FIELD_SIZE, FIELD_SIZE);
-    ctx.fillStyle = RENDER_TERRAINCOLOR;
 
     // particles under everything else (static terrain)
     if( particles_Array.length ){

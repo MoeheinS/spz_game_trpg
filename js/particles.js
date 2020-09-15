@@ -84,7 +84,7 @@ function draw_Particle(i){
 function landScape_flowers(){
     for( let hi = 0; hi < 40; hi++ ){
         for( let vi = 0; vi < 40; vi++ ){
-            let randoo = Math.round(Math.random()*200);
+            let randoo = Math.round(Math.random()*100);
             if( randoo == 2 ){
                 particles_Array.push(new ParticleEnt({x: 0.5*GRID_SIZE+vi*GRID_SIZE, y: 0.5*GRID_SIZE+hi*GRID_SIZE}, -1, 'flower_1'));
             }else if( randoo == 18 ){

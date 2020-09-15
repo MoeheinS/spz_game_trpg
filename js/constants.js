@@ -54,6 +54,8 @@ const RENDER_FILLCOLOR = '#bebec0';//'#dee1e6';
 const RENDER_ACTIVE_FILLCOLOR = '#dd3838cc';
 const RENDER_SHADOWCOLOR = '#202124';
 const RENDER_TERRAINCOLOR = '#ffffff';
+const RENDER_GRASSCOLOR = '#62bd20';
+
 const RENDER_UI_GREEN = '#319d59';
 const RENDER_UI_RED = '#f85f4a';
 const RENDER_UI_BLUE = '#00b9fb';
