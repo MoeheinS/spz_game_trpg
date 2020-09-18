@@ -32,6 +32,7 @@ function dom_listUnits(){
     };
     button.style.setProperty('--bgimage', `url(../assets/noah/${unit.artName}.png)`);
     button.dataset.artname = unit.artName;
+    button.dataset.showname = ( unit.shortName ? unit.shortName : unit.name );
     button.dataset.amount = unit.amount;
 
     document.querySelector('.UI_unitList').appendChild(button);
@@ -109,6 +110,7 @@ function dom_refreshSquadlist(){
           };
           button.style.setProperty('--bgimage', `url(../assets/noah/${unit.artName}.png)`);
           button.dataset.artname = unit.artName;
+          button.dataset.showname = ( unit.shortName ? unit.shortName : unit.name );
           button.dataset.amount = unit.amount;
       
           document.querySelector('.UI_unitList--squad').appendChild(button);
@@ -123,8 +125,6 @@ function dom_refreshSquadlist(){
         dom_updateInspector(this.innerHTML);
       };
       button.style.setProperty('--bgimage', `url(../assets/fbbg.jpg)`);
-      //button.dataset.artname = unit.artName;
-      //button.dataset.amount = unit.amount;
   
       document.querySelector('.UI_unitList--squad').appendChild(button);
     }
