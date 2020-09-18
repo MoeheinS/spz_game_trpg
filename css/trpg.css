@@ -359,7 +359,7 @@ button {
 	background: #9e8c7e;
 	border-radius: 12px;
 
-	content: attr(data-artname);
+	content: attr(data-showname);
 	display: flex;
 	justify-content: center;
 	align-items: center;
