@@ -6,8 +6,20 @@ let buildingList = [
     sprite_dim: {x: 16, y: 16},
     levels: [
       { spriteName: 'wall_01', hp: 1125 },
-      { spriteName: 'wall_02', hp: 2800 },
-      { spriteName: 'wall_03', hp: 5805 }
+      { spriteName: 'wall_02', hp: 2750 },
+      { spriteName: 'wall_03', hp: 5750 },
+
+      { spriteName: 'wall_04', hp: 10500 },
+      { spriteName: 'wall_05', hp: 17500 },
+      { spriteName: 'wall_06', hp: 26500 },
+
+      { spriteName: 'wall_07', hp: 38250 },
+      { spriteName: 'wall_08', hp: 53500 },
+      { spriteName: 'wall_09', hp: 78000 },
+
+      { spriteName: 'wall_10', hp: 110000 },
+      { spriteName: 'wall_11', hp: 150000 },
+      { spriteName: 'wall_12', hp: 200000 }
     ]
   },
   {
@@ -242,19 +254,19 @@ let buildingList = [
     sprite_dim: {x: 5*16, y: 5*16},
     sprite_offset: {x: 0, y: 1*GRID_SIZE},
     levels: [
-      { spriteName: 'core_e', hp: 6000 },
-      { spriteName: 'core_e', hp: 7500 },
-      { spriteName: 'core_e', hp: 9500 },
+      { spriteName: 'core_1', hp: 6000 },
+      { spriteName: 'core_1', hp: 7500 },
+      { spriteName: 'core_1', hp: 9500 },
 
-      { spriteName: 'core_e', hp: 12500 },
-      { spriteName: 'core_e', hp: 16125 },
-      { spriteName: 'core_e', hp: 20500 },
+      { spriteName: 'core_2', hp: 12500 },
+      { spriteName: 'core_2', hp: 16125 },
+      { spriteName: 'core_2', hp: 20500 },
 
-      { spriteName: 'core_e', hp: 25500 },
-      { spriteName: 'core_e', hp: 31250 },
-      { spriteName: 'core_e', hp: 37750 },
+      { spriteName: 'core_3', hp: 25500 },
+      { spriteName: 'core_3', hp: 31250 },
+      { spriteName: 'core_3', hp: 37750 },
 
-      { spriteName: 'core_e', hp: 45000 }
+      { spriteName: 'core_4', hp: 45000 }
     ]
   },
   {

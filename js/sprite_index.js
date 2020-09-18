@@ -55,14 +55,28 @@ var spriteList = [
     ['wall_01', 16, 416, '1dir', 1],
     ['wall_02', 48, 416, '1dir', 1],
     ['wall_03', 80, 416, '1dir', 1],
+    ['wall_04', 112, 416, '1dir', 1],
+    ['wall_05', 144, 416, '1dir', 1],
+    ['wall_06', 176, 416, '1dir', 1],
+    ['wall_07', 208, 416, '1dir', 1],
+    ['wall_08', 240, 416, '1dir', 1],
+    ['wall_09', 272, 416, '1dir', 1],
+    // ['wall_10', 304, 416, '1dir', 1], // gold
+    // ['wall_11', 336, 416, '1dir', 1], // gold
+    // ['wall_12', 368, 416, '1dir', 1], // gold
+    ['wall_10', 320, 400, '1dir', 1], // fuchsium
+    ['wall_11', 352, 400, '1dir', 1], // fuchsium
+    ['wall_12', 384, 400, '1dir', 1], // fuchsium
 
     // obviously not but eh
     //['core_e', 352, 16, '1dir', 1],
     ['core_e', 768, 176, '1dir', 1],
     ['core', 16, 0, '1dir', 1],
-    ['core1', 96, 0, '1dir', 1],
-    ['core2', 176, 0, '1dir', 1],
-    ['core3', 256, 0, '1dir', 1],
+    ['core_1', 672, 272, '1dir', 1], // plant
+    ['core_2', 768, 176, '1dir', 1], // stone
+    ['core_3', 572, 272, '1dir', 1], // jade
+    //['core_4', 672, 176, '1dir', 1], // gold
+    ['core_4', 768, 272, '1dir', 1], // fuchsium
 
     ['bld_mana_harvester', 480, 176, '1dir', 4],
     ['bld_mana_storage', 48, 336, '1dir', 1],
@@ -99,6 +113,9 @@ var spriteList = [
 
     ['flower_1', 528, 464, '1dir', 4],
     ['flower_2', 528, 480, '1dir', 4],
+    ['grass_1', 544, 448, '1dir', 1],
+    ['grass_2', 560, 448, '1dir', 1],
+    ['grass_3', 576, 448, '1dir', 1],
 
     ['particle_atk_1', 160, 272, '1dir_32w', 4], // dagger
     ['particle_atk_2', 160, 368, '1dir_32w', 4], // sword

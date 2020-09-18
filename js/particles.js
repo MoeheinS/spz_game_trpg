@@ -85,12 +85,30 @@ function landScape_flowers(){
     for( let hi = 0; hi < 40; hi++ ){
         for( let vi = 0; vi < 40; vi++ ){
             let randoo = Math.round(Math.random()*100);
-            if( randoo == 2 ){
-                particles_Array.push(new ParticleEnt({x: 0.5*GRID_SIZE+vi*GRID_SIZE, y: 0.5*GRID_SIZE+hi*GRID_SIZE}, -1, 'flower_1'));
-            }else if( randoo == 18 ){
-                particles_Array.push(new ParticleEnt({x: 0.5*GRID_SIZE+vi*GRID_SIZE, y: 0.5*GRID_SIZE+hi*GRID_SIZE}, -1, 'flower_2'));
+            let flowerType = 'flower_1';
+            switch (randoo) {
+                case 2:
+                    flowerType = 'flower_1';
+                    break;
+                case 4:
+                    flowerType = 'flower_2';
+                    break;
+                case 6:
+                    flowerType = 'grass_1';
+                    break;
+                case 8:
+                    flowerType = 'grass_2';
+                    break;
+                case 10:
+                    flowerType = 'grass_3';
+                    break;
+                default:
+                    flowerType = false;
+                    break;
             }
-            
+            if( flowerType ){
+                particles_Array.push(new ParticleEnt({x: 0.5*GRID_SIZE+vi*GRID_SIZE, y: 0.5*GRID_SIZE+hi*GRID_SIZE}, -1, flowerType));
+            }
         }
     }
 }

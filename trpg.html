@@ -23,7 +23,7 @@
         <section>
           <article class='UI_difficultySlider' data-difficulty="0">
             <p style='margin-bottom: 1rem;'>Select your difficulty:</p>
-            <input class='input_difficultySlider' list='diffs' type='range' value="0" min="0" max="9" step="1" oninput="document.querySelector('[data-difficulty]').dataset.difficulty = this.value; dom_flowControl('unready');">
+            <input class='input_difficultySlider' list='diffs' type='range' value="0" min="0" max="11" step="1" oninput="document.querySelector('[data-difficulty]').dataset.difficulty = this.value; dom_flowControl('unready');">
             <datalist id='diffs'>
               <option>0</option>
               <option>1</option>
@@ -35,6 +35,8 @@
               <option>7</option>
               <option>8</option>
               <option>9</option>
+              <option>10</option>
+              <option>11</option>
             </datalist>
           </article>
           <p>Choose a mission to embark on:</p>
