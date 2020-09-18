@@ -37,6 +37,15 @@ var spriteList = [
     ['ratty', 0, 0, '4dir'],
     ['sling', 0, 16, '4dir'],
     ['thievel', 0, 32, '4dir'],
+    ['brownie', 0, 48, '4dir'],
+    ['huey', 0, 64, '4dir'],
+    ['missile', 0, 80, '4dir'],
+    ['vogel', 0, 96, '4dir'],
+    ['triptrap', 0, 112, '4dir'],
+    ['doomflap', 0, 128, '4dir'],
+    ['blossom', 0, 144, '4dir'],
+
+    ['ratty_2', 0, 176, '4dir'],
 
     ['turret_basic', 880, 512, '1dir', 8],
     ['turret_tower', 880, 560, '1dir', 8],
@@ -75,7 +84,7 @@ var spriteList = [
     ['core', 16, 0, '1dir', 1],
     ['core_1', 672, 272, '1dir', 1], // plant
     ['core_2', 768, 176, '1dir', 1], // stone
-    ['core_3', 572, 272, '1dir', 1], // jade
+    ['core_3', 576, 272, '1dir', 1], // jade
     //['core_4', 672, 176, '1dir', 1], // gold
     ['core_4', 768, 272, '1dir', 1], // fuchsium
 
