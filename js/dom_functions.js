@@ -169,8 +169,9 @@ function dom_flowControl(command){
           dom_flowControl('unready');
           break;
         case 'engage':
-          document.querySelector('.UI_container').dataset.show = true;
-          game_state.game_phase = 'survey';
+          //document.querySelector('.UI_container').dataset.show = true;
+          //game_state.game_phase = 'survey';
+          dom_aftermath(); // sets state to survey, acts like a retreat function
           game_state.timer_deploy = false;
           flowControl('clear');
           dom_flowControl('unready');
@@ -207,9 +208,10 @@ function dom_textAnimation(text, persist){
 }
 
 function dom_aftermath(){
-  if( document.querySelector('.UI_container--animationLayer').dataset.active ){
+  if( document.querySelector('.UI_container--animationLayer').dataset.active == 'true' ){
     return; // to prevent message spam?
   }
+  game_state.game_phase = 'survey';
   document.querySelector('.UI_container--animationLayer').dataset.active = true;
   var progress_pct = ( game_state.initial_buildings ? 100 - Math.floor( buildings_Array.length / game_state.initial_buildings * 100 ) : 0 );
   var winConditions = 0;
