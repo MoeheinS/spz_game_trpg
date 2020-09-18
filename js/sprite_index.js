@@ -36,6 +36,7 @@ var spriteList = [
     //['warrior_human', 0, 0, '4dir'],
     ['ratty', 0, 0, '4dir'],
     ['sling', 0, 16, '4dir'],
+    ['thievel', 0, 32, '4dir'],
 
     ['turret_basic', 880, 512, '1dir', 8],
     ['turret_tower', 880, 560, '1dir', 8],
@@ -127,6 +128,8 @@ var spriteList = [
     ['particle_atk_8', 160, 256, '1dir_32w', 4], // staff
     ['particle_atk_9', 160, 384, '1dir_32w', 4], // bow
     ['particle_atk_10', 160, 400, '1dir_32w', 4], // spear STAB
+    ['particle_atk_11', 160, 432, '1dir_32w', 4], // sling
+    ['particle_atk_12', 160, 448, '1dir_32w', 1], // melee, empty
 
     ['particle_explosion', 448, 464, '1dir', 4],
     ['particle_target', 640, 64, '1dir', 2],
