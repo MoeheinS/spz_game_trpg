@@ -35,31 +35,34 @@ function render_progress(){
   ctx.fillRect( 1*GRID_SIZE, 0.875*GRID_SIZE, 2.75*GRID_SIZE, 0.75*GRID_SIZE );
 
   ctx.imageSmoothingEnabled = false;
+
   // bronze star for 50% destruction
-  //ctx.strokeStyle = '#9c4a00';
-  ctx.strokeStyle = ( progress_pct >= 50 ? RENDER_TERRAINCOLOR : RENDER_SHADOWCOLOR );
+  ctx.fillStyle = ( progress_pct >= 50 ? '#9c4a00' : RENDER_SHADOWCOLOR );
   ctx.beginPath();
   ctx.arc(1*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
-  ctx.stroke();
-  ctx.drawImage(buildingsImg, ( progress_pct >= 50 ? 576 : 624 ), 384, 16, 16, 0.5*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+  ctx.fill();
+  if( progress_pct >= 50 ){
+    ctx.drawImage(buildingsImg, 560, 416, 16, 16, 0.5*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+  }
 
-  //building_CORE
-  //Composite.get(world, building_CORE.id, 'body')
+  //building_CORE aka Composite.get(world, building_CORE.id, 'body')
   // silver star for core destruction
-  // ctx.strokeStyle = '#696969';
-  ctx.strokeStyle = ( building_CORE.custom.hp_current <= 0 ? RENDER_TERRAINCOLOR : RENDER_SHADOWCOLOR );
+  ctx.fillStyle = ( building_CORE.custom.hp_current <= 0 ? '#9395ab' : RENDER_SHADOWCOLOR );
   ctx.beginPath();
   ctx.arc(2.125*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
-  ctx.stroke();
-  ctx.drawImage(buildingsImg, ( building_CORE.custom.hp_current <= 0 ? 640 : 624 ), 384, 16, 16, 1.625*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+  ctx.fill();
+  if( building_CORE.custom.hp_current <= 0 ){
+    ctx.drawImage(buildingsImg, 576, 416, 16, 16, 1.625*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+  }
 
   // gold star for 100% destruction
-  // ctx.strokeStyle = '#cd7320';
-  ctx.strokeStyle = ( progress_pct == 100 ? RENDER_TERRAINCOLOR : RENDER_SHADOWCOLOR );
+  ctx.fillStyle = ( progress_pct == 100 ? '#ffa347' : RENDER_SHADOWCOLOR );
   ctx.beginPath();
   ctx.arc(3.25*GRID_SIZE, 1.25*GRID_SIZE, 0.5*GRID_SIZE, 0, Math.PI * 2, true);
-  ctx.stroke();
-  ctx.drawImage(buildingsImg, ( progress_pct == 100 ? 560 : 624 ), 384, 16, 16, 2.75*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+  ctx.fill();
+  if( progress_pct == 100 ){
+    ctx.drawImage(buildingsImg, 592, 416, 16, 16, 2.75*GRID_SIZE, 0.7*GRID_SIZE, GRID_SIZE, GRID_SIZE);
+  }
 
   // percentage tracker
   ctx.fillStyle = ui_gradient;
@@ -81,12 +84,7 @@ function render_progress(){
   ctx.strokeStyle = RENDER_SHADOWCOLOR;
   ctx.strokeText( progress_pct/*+'%'*/, 3*GRID_SIZE, 2.625*GRID_SIZE);
   ctx.fillText( progress_pct/*+'%'*/, 3*GRID_SIZE, 2.625*GRID_SIZE);
-
   ctx.font = '1.25rem zelda';
-  ctx.textAlign = 'right';
-  ctx.textBaseline = 'middle';
-  ctx.fillStyle = RENDER_TERRAINCOLOR;
-  ctx.strokeStyle = RENDER_SHADOWCOLOR;
   ctx.strokeText('%', 3.75*GRID_SIZE, 2.75*GRID_SIZE);
   ctx.fillText('%', 3.75*GRID_SIZE, 2.75*GRID_SIZE);
 }

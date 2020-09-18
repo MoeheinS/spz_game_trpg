@@ -430,3 +430,45 @@ button {
 /* * {
 	outline: 1px dotted red;
 } */
+
+.UI_container--animationLayer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+	outline: 10px solid red;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	transition: background 2s ease-in;
+}
+.UI_container--animationLayer[data-active=true]{
+	background: #0000009e;
+}
+
+.textAnim {
+    color: #ffffff;
+    padding: 6px;
+    border-radius: 6px;
+	font-size: 3rem;
+	max-width: 80vw;
+
+	animation: text-pop-up-top 2.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+@keyframes text-pop-up-top {
+	0% {
+	  transform: translateY(0);
+	  transform-origin: 50% 50%;
+	  text-shadow: none;
+	}
+	100% {
+	  transform: translateY(-50px);
+	  transform-origin: 50% 50%;
+	  text-shadow: 0 1px 0 #28282b, 0 2px 0 #28282b, 0 3px 0 #28282b, 0 4px 0 #28282b, 0 5px 0 #28282b, 0 6px 0 #28282b, 0 7px 0 #28282b, 0 8px 0 #28282b, 0 9px 0 #28282b, 0 50px 30px rgba(0, 0, 0, 0.3);
+	}
+  }

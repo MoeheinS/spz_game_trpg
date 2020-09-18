@@ -155,6 +155,9 @@ function dom_refreshSquadpicker(){
 function dom_flowControl(command){
   switch (command) {
     case 'toMenu':
+      // quick and dirty
+      document.querySelector('.UI_container--animationLayer').dataset.active = false;
+      document.querySelector('.UI_container--animationLayer').innerHTML = '';
       // back to menu when surveying
       // tally results, declare win/loss, back to menu when engage
       switch (game_state.game_phase) {
@@ -191,6 +194,80 @@ function dom_flowControl(command){
     default:
       break;
   }
+}
+
+function dom_textAnimation(text, persist){
+  let bubble = document.createElement("div");
+      bubble.className = 'textAnim';
+      bubble.innerText = text;
+      if( !persist ){
+        bubble.addEventListener("animationend", function(){ this.remove() });
+      }
+  document.querySelector('.UI_container--animationLayer').appendChild(bubble);
+}
+
+function dom_aftermath(){
+  if( document.querySelector('.UI_container--animationLayer').dataset.active ){
+    return; // to prevent message spam?
+  }
+  document.querySelector('.UI_container--animationLayer').dataset.active = true;
+  var progress_pct = ( game_state.initial_buildings ? 100 - Math.floor( buildings_Array.length / game_state.initial_buildings * 100 ) : 0 );
+  var winConditions = 0;
+  if( progress_pct >= 50 ){
+    winConditions++;
+    var bronzeText = [
+      'Halfway there...',
+      "Almost got 'em",
+      `${progress_pct}% destruction rate`,
+      'Over half?!'
+    ];
+    dom_textAnimation(bronzeText[Math.floor(Math.random() * bronzeText.length)], true);
+  }
+  if( building_CORE && building_CORE.custom.hp_current <= 0 ){
+    winConditions++;
+    var silverText = [
+      'Headquarters down',
+      'Core destroyed',
+      'Core building demolished'
+    ];
+    dom_textAnimation(silverText[Math.floor(Math.random() * silverText.length)], true);
+  }
+  if( progress_pct >= 100 ){
+    winConditions++;
+    var goldText = [
+      '100% destruction',
+      'Core destroyed',
+      'Core building demolished',
+      'Brutal',
+      'Obliterated',
+      'No Mercy'
+    ];
+    dom_textAnimation(goldText[Math.floor(Math.random() * goldText.length)], true);
+  }
+  if( winConditions == 0 ){
+    var lossText = [
+      "Mission Failed. We'll get 'em next time",
+      "Can I get an F in chat?",
+      "Come back with a stronger team",
+      "Try a different team composition"
+    ];
+    dom_textAnimation(lossText[Math.floor(Math.random() * lossText.length)], true);
+  }else{
+    var winText = [
+      'WINNER IS YOU',
+      'VICTOLY',
+      'You are victorious',
+    ];
+    if( winConditions < 3 ){
+      winText.push('Try going for all medals');
+    }else{
+      winText.push('Try going for a faster time');
+      winText.push('Try using a weaker team');
+      winText.push('Try a higher difficulty'); // TODO: I could check what difficulty was attempted, but that's for future me
+    }
+    dom_textAnimation(winText[Math.floor(Math.random() * winText.length)], true);
+  }
+  
 }
 
 /*
