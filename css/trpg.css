@@ -123,8 +123,8 @@ html {
 	position: relative;
 
 	background-image: var(--background);
-	background-size: auto 10rem;
-    background-position: center;
+	background-size: cover; /*auto 10rem;*/
+    background-position: center top;
     background-repeat: no-repeat;
 }
 /* .partyPicker .partyPicker-member:before {
@@ -323,7 +323,8 @@ button {
 	flex-direction: row;
 	/* max-height: 8rem; */
 
-	flex-basis: 23rem;
+	flex-basis: 8rem;
+	flex-grow: 1;
     justify-content: flex-start;
 }
 
@@ -339,7 +340,7 @@ button {
 	background-image: var(--bgimage);
 	background-size: cover;
 	background-repeat: no-repeat;
-	background-position: center;
+	background-position: center top;
 
 	position: relative;
 }
