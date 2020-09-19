@@ -229,8 +229,8 @@ function render_countdown(){
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.lineWidth = reHi*0.0375;
-  ctx.strokeText(( game_state.timer_deploy ? game_state.timer_deploy : '' ), reWi/2, reHi/2);
-  ctx.fillText(( game_state.timer_deploy ? game_state.timer_deploy : '' ), reWi/2, reHi/2);
+  ctx.strokeText(( game_state.timer_deploy ? Math.floor(game_state.timer_deploy) : '' ), reWi/2, reHi/2);
+  ctx.fillText(( game_state.timer_deploy ? Math.floor(game_state.timer_deploy) : '' ), reWi/2, reHi/2);
 
   ctx.restore();
 }

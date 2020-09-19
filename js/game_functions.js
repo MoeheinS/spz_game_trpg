@@ -148,14 +148,14 @@ function flowControl(command, p, p2){
     case 'countdown':
       switch (true) {
         case ( game_state.timer_deploy === false ):
-          game_state.timer_deploy = 3;
+          game_state.timer_deploy = 3.5;
           break;
         case ( game_state.timer_deploy < 1 ):
           game_state.game_phase = 'engage';
           game_state.timer_deploy = false;
           break;
         case ( ticker % ANIM_TIMING == 0 ):
-          game_state.timer_deploy--;
+          game_state.timer_deploy = game_state.timer_deploy-0.5;
           break;
         default:
           break;
