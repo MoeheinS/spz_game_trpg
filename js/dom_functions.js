@@ -213,6 +213,9 @@ function dom_aftermath(){
   }
   game_state.game_phase = 'survey';
   document.querySelector('.UI_container--animationLayer').dataset.active = true;
+
+  dom_textAnimation('Mission time: '+game_state.timer_missionTime_renderText, true);
+
   var progress_pct = ( game_state.initial_buildings ? 100 - Math.floor( buildings_Array.length / game_state.initial_buildings * 100 ) : 0 );
   var winConditions = 0;
   if( progress_pct >= 50 ){

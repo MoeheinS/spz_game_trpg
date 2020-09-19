@@ -188,6 +188,7 @@ function draw_UI(a){
     case 'engage':
       render_menuButton(game_state.game_phase);
       render_progress();
+      render_battleTime();
       break;
     default:
       break;
@@ -288,4 +289,19 @@ function render_hpBars(){
   }
   
   ctx.restore();
+}
+
+function render_battleTime(){
+  if( game_state.timer_missionTime ){
+    ctx.save();
+  
+    ctx.font = 'bold 2rem zelda';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#ffffff';
+    ctx.lineWidth = 4;
+    ctx.strokeText(game_state.timer_missionTime_renderText, reWi/2, 20);
+    ctx.fillText(game_state.timer_missionTime_renderText, reWi/2, 20);
+  
+    ctx.restore();
+  }
 }

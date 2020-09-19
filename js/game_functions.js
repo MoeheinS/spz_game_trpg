@@ -94,19 +94,17 @@ function flowControl(command, p, p2){
     // see if you've won or lost
     case 'check':
       let progress_pct = ( game_state.initial_buildings ? 100 - Math.floor( buildings_Array.length / game_state.initial_buildings * 100 ) : 0 );
-      if( progress_pct == 100 ){
-        // declare victory
-        game_state.game_phase = 'survey'; // = 'aftermath'?
-        // STUB; function for DOM control
-        dom_aftermath();
-      }
       let deployable_unitCount = document.querySelectorAll('.partyPicker-member:not([data-amount="0"])').length;
-      if( game_state.game_phase == 'engage' && deployable_unitCount == 0 && units_Array.length == 0 ){
-        // TODO: units_Array.length == 0 fires too fast, so it's now in the ticker reset part
-        // declare defeat
-        game_state.game_phase = 'survey'; // = 'aftermath'?
-        // STUB; function for DOM control
-        dom_aftermath();
+      switch (true) {
+        case ( progress_pct == 100 ):
+        case ( game_state.game_phase == 'engage' && deployable_unitCount == 0 && units_Array.length == 0 ):
+        case ( game_state.timer_missionTime && game_state.timer_missionTime_remaining <= 0 ):
+          battle_countdown('stop');  
+          game_state.game_phase = 'survey';
+          dom_aftermath();
+          break;
+        default:
+          break;
       }
       break;
     // clear the board
@@ -153,6 +151,7 @@ function flowControl(command, p, p2){
         case ( game_state.timer_deploy < 1 ):
           game_state.game_phase = 'engage';
           game_state.timer_deploy = false;
+          battle_countdown('start');
           break;
         case ( ticker % ANIM_TIMING == 0 ):
           game_state.timer_deploy = game_state.timer_deploy-0.5;
@@ -166,6 +165,35 @@ function flowControl(command, p, p2){
       break;
     case 'embark':
       // 3, 2, 1, GO! Deploy and destroy!
+      break;
+    default:
+      break;
+  }
+}
+
+function battle_countdown(command) {
+  switch (command) {
+    case 'start':
+      game_state.timer_missionTime_remaining = 180;
+      game_state.timer_missionTime = setInterval(function() {
+        if(game_state.timer_missionTime_remaining <= 0) {
+          setTimeout(function() {
+            game_state.timer_missionTime_renderText = "0:00";
+          }, 10);
+          clearInterval(game_state.timer_missionTime);
+        }
+        var minutes = Math.floor( game_state.timer_missionTime_remaining / 60 );
+        var seconds = game_state.timer_missionTime_remaining % 60;
+        if( seconds < 10 ){
+          seconds = "0" + seconds;
+        }
+        game_state.timer_missionTime_renderText = `${minutes}:${seconds}`;
+        game_state.timer_missionTime_remaining--;
+      }, 1000);
+      break;
+    case 'stop':
+      clearInterval(game_state.timer_missionTime);
+      game_state.timer_missionTime = false;
       break;
     default:
       break;

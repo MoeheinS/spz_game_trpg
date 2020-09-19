@@ -6,6 +6,9 @@ let game_state = {
 
   "game_phase": "survey", // survey, engage, aftermath?
   "timer_deploy": false,
+  "timer_missionTime": false,
+  "timer_missionTime_remaining": 180,
+  "timer_missionTime_renderText": "--:--",
 
   "initial_buildings": 0, // debug number, set on mission initialize
   "grass": false,
