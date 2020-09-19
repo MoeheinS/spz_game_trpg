@@ -218,11 +218,13 @@ function dom_aftermath(){
   if( progress_pct >= 50 ){
     winConditions++;
     var bronzeText = [
-      'Halfway there...',
-      "Almost got 'em",
       `${progress_pct}% destruction rate`,
       'Over half?!'
     ];
+    if( progress_pct < 100 ){
+      bronzeText.push('Halfway there...');
+      bronzeText.push("Almost got 'em");
+    }
     dom_textAnimation(bronzeText[Math.floor(Math.random() * bronzeText.length)], true);
   }
   if( building_CORE && building_CORE.custom.hp_current <= 0 ){
@@ -241,7 +243,7 @@ function dom_aftermath(){
       'Core destroyed',
       'Core building demolished',
       'Brutal',
-      'Obliterated',
+      'Enemy Obliterated',
       'No Mercy'
     ];
     dom_textAnimation(goldText[Math.floor(Math.random() * goldText.length)], true);
