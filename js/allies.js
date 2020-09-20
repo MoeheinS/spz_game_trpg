@@ -9,7 +9,8 @@ let unitList = [
   {name: 'Huey', rarity: 'N', spriteName: 'huey', attackCD: 90, movespeed: 98, moveType: 'ground', attackRange: 1, damage: 75, attackArt: 'particle_atk_2', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 492, amount: 9, artName: 'Huey', notes:'--'},
   {name: 'Missile', rarity: 'N', spriteName: 'missile', attackCD: 60, movespeed: 175, moveType: 'ground', attackRange: 1, damage: 153, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'wall', hp: 201, amount: 4, artName: 'Missile', notes:'TODO: Missile moves in a straight line towards the closest wall, dealing x93 damage to walls. Explodes on impact.'},
   {name: 'Vogel', rarity: 'N', spriteName: 'vogel', attackCD: 72, movespeed: 143, moveType: 'ground', attackRange: 1, damage: 72, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'core', hp: 831, amount: 8, artName: 'Vogel', notes:'TODO: Vogel charges at the enemy core in a straight line, recklessly attacking anything in its path.'},
-  {name: 'Triptrap', rarity: 'N', spriteName: 'triptrap', attackCD: 66, movespeed: 195, moveType: 'ground', attackRange: 1, damage: 11, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'traps', hp: 852, amount: 28, artName: 'Triptrap', notes:'TODO: Triptrap loves to trip traps! Traps will be triggered!'},
+  // TODO: pointless if there's no traps to trigger
+  //{name: 'Triptrap', rarity: 'N', spriteName: 'triptrap', attackCD: 66, movespeed: 195, moveType: 'ground', attackRange: 1, damage: 11, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'traps', hp: 852, amount: 28, artName: 'Triptrap', notes:'TODO: Triptrap loves to trip traps! Traps will be triggered!'},
   {name: 'Doomflap', rarity: 'N', spriteName: 'doomflap', attackCD: 90, movespeed: 114, moveType: 'air', attackRange: 1, damage: 57, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 399, amount: 8, artName: 'Doomflap', notes:'--'},
   {name: 'Blossom', rarity: 'N', spriteName: 'blossom', attackCD: 192, movespeed: 80, moveType: 'ground', attackRange: 12, damage: 34, attackArt: 'particle_atk_9', projectileArt: 'projectile_unit_sling', preferredTarget: 'any', hp: 105, amount: 30, artName: 'Blossom', notes:'--'},
 
@@ -39,6 +40,11 @@ class UnitEnt {
         },
         custom: {
           shape: 'circle',
+
+          unitName: info.name,
+          charger: false, // set to true seperately
+          damageMultiplier: false,
+          kamikaze: false,
 
           hp_max: info.hp,
           hp_current: info.hp,
@@ -75,6 +81,22 @@ class UnitEnt {
         }
       //}, 10);
       });
+      // special stats and settings
+      switch (this.body.custom.unitName) {
+        case 'Thievel':
+          this.body.custom.damageMultiplier  = { "type": "economy", "factor": 5 };
+          break;
+        case 'Vogel':
+          this.body.custom.charger = true;
+          break;
+        case 'Missile':
+          this.body.custom.damageMultiplier  = { "type": "wall", "factor": 93 };
+          this.body.custom.charger = true;
+          this.body.custom.kamikaze = true;
+          break;
+        default:
+          break;
+      }
       World.add(world, this.body);
       //console.log(this.body.position);
 
@@ -179,8 +201,12 @@ function unit_sortTargets(a){
         nearTargets_byDist_byCategory = target_defenses.concat(target_economy).concat(target_walls);
         break;
       case 'economy':
-      // case 'core':
         nearTargets_byDist_byCategory = target_economy.concat(target_defenses).concat(target_walls);
+        break;
+      case 'core':
+        // only push the core? 
+        nearTargets_byDist_byCategory.push({"target": building_CORE, "distance": getDistance(a.position, building_CORE.position), "category": building_CORE.custom.category});
+        nearTargets_byDist_byCategory.concat(target_walls);
         break;
       case 'any':
       default:
@@ -219,6 +245,18 @@ function unit_acquireTarget(a){
 
 /** attempt to path to target, consuming a target from the list */
 function unit_pathfind(bod, exceptID, exceptBod){
+
+  // charger logic
+  if( bod.custom.charger ){
+    bod.custom.target = exceptBod;
+    bod.custom.waypoint = exceptBod.position;
+    bod.custom.state = 'ready';
+
+    particles_Array.push(
+      new ParticleEnt({x: exceptBod.position.x, y: exceptBod.position.y}, 2, 'particle_target', {x: 16, y: 16}, unitsImg.src)
+    );
+    return;
+  }
 
   var astar_grid = new aStar_grid();
 
@@ -278,6 +316,17 @@ function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
 function unit_attackTarget(a){
   if( !a.custom.target || Composite.get(world, a.custom.target.id, 'body') == null || Composite.get(world, a.id, 'body') == null ){
     return;
+  }
+  if( a.custom.charger && a.custom.attackCD <= 0 ){
+    // TODO: run this entire function for EVERY building that's within attack range...
+    // seems expensive. Maybe only the 1-grid building part
+    let charger_collisions = Query.collides(a, buildings_all_Array);
+    if( charger_collisions.length ){
+      let notMyself = ( charger_collisions[0].bodyA.label == 'ally' ? charger_collisions[0].bodyB : charger_collisions[0].bodyA );
+      unit_applyPain(a, notMyself);
+      a.custom.attackCD = a.custom.attackCD_base;
+      return;
+    }
   }
   // check if you're within range, in which case, attack and reset attack timer
   // if target building is larger than 32, or taller than 32
@@ -357,20 +406,34 @@ function unit_applyPain(a, t){
 
   let lifetime_adjusted = ( a.custom.attackRange * 10 ) * distanceDiff; // used to be 90
 
+  var damagePending = a.custom.damage;
+  // if the unit has a damage multiplier, check if the target matches the type
+  // I only support 1 type for bonus damage; if units exist with multiple TODO: make a.custom.damageMultiplier an array
+  if( a.custom.damageMultiplier && a.custom.damageMultiplier.type == t.custom.category ){
+    damagePending = damagePending * a.custom.damageMultiplier.factor;
+  }
+
   if( a.custom.attackRange == 1 ){
     // TODO: melee units don't need projectile art, fix someday
     projectiles_Array.push(
-      new ProjectileEnt(a.position, t.position, true, 1, t, a.custom.damage, a.custom.projectileArt)
+      new ProjectileEnt(a.position, t.position, true, 1, t, damagePending, a.custom.projectileArt)
     );
   }else{
     projectiles_Array.push(
-      new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, a.custom.damage, a.custom.projectileArt)
+      new ProjectileEnt(a.position, t.position, true, lifetime_adjusted, t, damagePending, a.custom.projectileArt)
     );
   }
   
   particles_Array.push(
     new ParticleEnt({x: a.position.x+( 0.25*GRID_SIZE ), y: a.position.y-( 0.5*GRID_SIZE ) - ( unit.custom.moveType == 'air' ? UNIT_AIR_OFFSET : 0 )}, 3, a.custom.attackArt, {x: 32, y: 16}, unitsImg.src)
   );
+
+  // if you're a kamikaze unit, die
+  if( a.custom.kamikaze ){
+    ripperoni_unit(a);
+    a.custom.hp_current = 0;
+    World.remove(world, a, true);
+  }
 }
 
 // var test_allyGB2 = new UnitEnt( new Coordinate( GRID_SIZE*8, GRID_SIZE*2 ), 'Ratty' );
