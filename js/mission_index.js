@@ -233,6 +233,410 @@ var missionList_JSON = [
       }
     ],
     "id": "Test JSON"
+  },
+  {
+    "core": {
+      "level": "4",
+      "position": "new Coordinate( 14.5*GRID_SIZE, 19.5*GRID_SIZE )"
+    },
+    "ents": [
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 16*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 17*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 18*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 15*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 18*GRID_SIZE, 13*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 15*GRID_SIZE, 13*GRID_SIZE )"
+      },
+      {
+        "name": "Turret",
+        "level": "5",
+        "position": "new Coordinate( 16.5*GRID_SIZE, 13.5*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 23*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 22*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 21*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 20*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 19*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 18*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 15*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 14*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 13*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "5",
+        "position": "new Coordinate( 12*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 23*GRID_SIZE, 15*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 12*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 13*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 14*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 15*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 18*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 19*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 20*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 21*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 23*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 12*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 15*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 16*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 17*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 18*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 21*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 23*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Turret",
+        "level": "4",
+        "position": "new Coordinate( 19.5*GRID_SIZE, 17.5*GRID_SIZE )"
+      },
+      {
+        "name": "Turret",
+        "level": "4",
+        "position": "new Coordinate( 13.5*GRID_SIZE, 17.5*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 12*GRID_SIZE, 18*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 21*GRID_SIZE, 18*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 23*GRID_SIZE, 18*GRID_SIZE )"
+      },
+      {
+        "name": "Turret",
+        "level": "4",
+        "position": "new Coordinate( 13.5*GRID_SIZE, 18.5*GRID_SIZE )"
+      },
+      {
+        "name": "Turret",
+        "level": "4",
+        "position": "new Coordinate( 19.5*GRID_SIZE, 18.5*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 12*GRID_SIZE, 19*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 21*GRID_SIZE, 19*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 23*GRID_SIZE, 19*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 12*GRID_SIZE, 20*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 13*GRID_SIZE, 20*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 20*GRID_SIZE, 20*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 21*GRID_SIZE, 20*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 23*GRID_SIZE, 20*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 13*GRID_SIZE, 21*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 20*GRID_SIZE, 21*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 23*GRID_SIZE, 21*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 13*GRID_SIZE, 22*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 20*GRID_SIZE, 22*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 22*GRID_SIZE, 22*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 23*GRID_SIZE, 22*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 13*GRID_SIZE, 23*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 20*GRID_SIZE, 23*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 22*GRID_SIZE, 23*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 13*GRID_SIZE, 24*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 14*GRID_SIZE, 24*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 15*GRID_SIZE, 24*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 18*GRID_SIZE, 24*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 19*GRID_SIZE, 24*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 20*GRID_SIZE, 24*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 22*GRID_SIZE, 24*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 15*GRID_SIZE, 25*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "4",
+        "position": "new Coordinate( 18*GRID_SIZE, 25*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 22*GRID_SIZE, 25*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 15*GRID_SIZE, 26*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 20*GRID_SIZE, 26*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 21*GRID_SIZE, 26*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 22*GRID_SIZE, 26*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 15*GRID_SIZE, 27*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 16*GRID_SIZE, 27*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 17*GRID_SIZE, 27*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 18*GRID_SIZE, 27*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 19*GRID_SIZE, 27*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "3",
+        "position": "new Coordinate( 20*GRID_SIZE, 27*GRID_SIZE )"
+      }
+    ],
+    "id": "Pathfinding"
   }
 ];
 // undo the hard storage JSON imposes
