@@ -7,14 +7,21 @@ let unitList = [
   {name: 'Thievel', rarity: 'N', spriteName: 'thievel', attackCD: 45, movespeed: 156, moveType: 'ground', attackRange: 1, damage: 12, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'economy', hp: 672, amount: 10, artName: 'Thievel', notes:'Thievel prefers to attack economy buildings, doing x5 damage.'},
   {name: 'Brownie', rarity: 'N', spriteName: 'brownie', attackCD: 168, movespeed: 65, moveType: 'ground', attackRange: 1, damage: 138, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'defense', hp: 2555, amount: 3, artName: 'Brownie', notes:'Brownie prefers to attack defensive buildings.'},
   {name: 'Huey', rarity: 'N', spriteName: 'huey', attackCD: 90, movespeed: 98, moveType: 'ground', attackRange: 1, damage: 75, attackArt: 'particle_atk_2', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 492, amount: 9, artName: 'Huey', notes:'--'},
-  {name: 'Missile', rarity: 'N', spriteName: 'missile', attackCD: 60, movespeed: 175, moveType: 'ground', attackRange: 1, damage: 153, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'wall', hp: 201, amount: 4, artName: 'Missile', notes:'Missile moves in a straight line towards the closest wall, dealing x93 damage to walls. Explodes on impact.'},
-  {name: 'Vogel', rarity: 'N', spriteName: 'vogel', attackCD: 72, movespeed: 143, moveType: 'ground', attackRange: 1, damage: 72, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'core', hp: 831, amount: 8, artName: 'Vogel', notes:'Vogel charges at the enemy core in a straight line, recklessly attacking anything in its path.'},
+  {name: 'Missile', rarity: 'N', spriteName: 'missile', attackCD: 60, movespeed: 175, moveType: 'ground', attackRange: 2, damage: 153, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'wall', hp: 201, amount: 4, artName: 'Missile', notes:'Missile moves in a straight line towards the closest wall, dealing x93 damage to walls. Explodes on impact.'},
+  {name: 'Vogel', rarity: 'N', spriteName: 'vogel', attackCD: 72, movespeed: 143, moveType: 'ground', attackRange: 1, damage: 72, attackArt: 'particle_atk_6', projectileArt: 'projectile_unit_melee', preferredTarget: 'core', hp: 831, amount: 8, artName: 'Vogel', notes:'Vogel charges at the enemy core in a straight line, recklessly attacking anything in its path.'},
   // TODO: pointless if there's no traps to trigger
   //{name: 'Triptrap', rarity: 'N', spriteName: 'triptrap', attackCD: 66, movespeed: 195, moveType: 'ground', attackRange: 1, damage: 11, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'traps', hp: 852, amount: 28, artName: 'Triptrap', notes:'TODO: Triptrap loves to trip traps! Traps will be triggered!'},
   {name: 'Doomflap', rarity: 'N', spriteName: 'doomflap', attackCD: 90, movespeed: 114, moveType: 'air', attackRange: 1, damage: 57, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 399, amount: 8, artName: 'Doomflap', notes:'--'},
   {name: 'Blossom', rarity: 'N', spriteName: 'blossom', attackCD: 192, movespeed: 80, moveType: 'ground', attackRange: 12, damage: 34, attackArt: 'particle_atk_9', projectileArt: 'projectile_unit_sling', preferredTarget: 'any', hp: 105, amount: 30, artName: 'Blossom', notes:'--'},
 
   {name: 'Swordsman Ratty', rarity: 'R', spriteName: 'ratty_2', attackCD: 120, movespeed: 150, moveType: 'ground', attackRange: 1, damage: 166, attackArt: 'particle_atk_3', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 590, amount: 15, artName: 'Ratty_2', shortName: 'Ratty(R)'},
+  {name: 'Sniper Sling', rarity: 'R', spriteName: 'sling_2', attackCD: 132, movespeed: 120, moveType: 'ground', attackRange: 11, damage: 83, attackArt: 'particle_atk_11',  projectileArt: 'projectile_unit_sling', preferredTarget: 'any', hp: 431, amount: 15, artName: 'Sling_2', shortName: 'Sling(R)'},
+  {name: 'Phantom Thievel', rarity: 'R', spriteName: 'thievel_2', attackCD: 39, movespeed: 176, moveType: 'ground', attackRange: 1, damage: 20, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'economy', hp: 1448, amount: 10, artName: 'Thievel_2', notes:'Phantom Thief Thievel prefers to attack economy buildings, doing x5 damage.'},
+  {name: 'Hardened Brownie', rarity: 'R', spriteName: 'brownie_2', attackCD: 162, movespeed: 70, moveType: 'ground', attackRange: 1, damage: 265, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'defense', hp: 8500, amount: 3, artName: 'Brownie_2', notes:'Hardened Brownie prefers to attack defensive buildings.'},
+  {name: 'Rush Missile', rarity: 'R', spriteName: 'missile_2', attackCD: 60, movespeed: 183, moveType: 'ground', attackRange: 2, damage: 353, attackArt: 'particle_atk_12', projectileArt: 'projectile_unit_melee', preferredTarget: 'wall', hp: 451, amount: 4, artName: 'Missile_2', notes:'Rush Missile moves in a straight line towards the closest wall, dealing x93 damage to walls. Explodes on impact.'},
+  {name: 'Swordsman Huey', rarity: 'R', spriteName: 'huey_2', attackCD: 75, movespeed: 102, moveType: 'ground', attackRange: 1, damage: 146, attackArt: 'particle_atk_3', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 1155, amount: 9, artName: 'Huey_2', shortName: 'Huey(R)', notes:'--'},
+  {name: 'Drake', rarity: 'R', spriteName: 'drake', attackCD: 75, movespeed: 102, moveType: 'ground', attackRange: 1, damage: 207, attackArt: 'particle_atk_4', projectileArt: 'projectile_unit_melee', preferredTarget: 'any', hp: 807, amount: 10, artName: 'Drake', notes:'Drake does x1.5 damage to defensive buildings.'},
+  {name: 'Assault Soldier Vogel', rarity: 'R', spriteName: 'vogel_2', attackCD: 66, movespeed: 156, moveType: 'ground', attackRange: 1, damage: 126, attackArt: 'particle_atk_6', projectileArt: 'projectile_unit_melee', preferredTarget: 'core', hp: 1806, amount: 8, artName: 'Vogel_2', shortName: 'Vogel(R)', notes:'Assault Soldier Vogel charges at the enemy core in a straight line, recklessly attacking anything in its path.'},
 ];
 
 class UnitEnt {
@@ -85,12 +92,18 @@ class UnitEnt {
       // special stats and settings
       switch (this.body.custom.unitName) {
         case 'Thievel':
+        case 'Phantom Thievel':
           this.body.custom.damageMultiplier  = { "type": "economy", "factor": 5 };
           break;
+        case 'Drake':
+          this.body.custom.damageMultiplier  = { "type": "defense", "factor": 1.5 };
+          break;
         case 'Vogel':
+        case 'Assault Soldier Vogel':
           this.body.custom.charger = true;
           break;
         case 'Missile':
+        case 'Rush Missile':
           this.body.custom.damageMultiplier  = { "type": "wall", "factor": 93 };
           this.body.custom.charger = true;
           this.body.custom.kamikaze = true;

@@ -46,6 +46,13 @@ var spriteList = [
     ['blossom', 0, 144, '4dir'],
 
     ['ratty_2', 0, 176, '4dir'],
+    ['sling_2', 0, 192, '4dir'],
+    ['thievel_2', 0, 208, '4dir'],
+    ['brownie_2', 0, 224, '4dir'],
+    ['missile_2', 0, 240, '4dir'],
+    ['huey_2', 0, 256, '4dir'],
+    ['vogel_2', 0, 272, '4dir'],
+    ['drake', 0, 288, '4dir'],
 
     ['turret_basic', 880, 512, '1dir', 8],
     ['turret_tower', 880, 560, '1dir', 8],
