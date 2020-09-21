@@ -300,7 +300,8 @@ function moveToPoint(a, dv, force, uniform){
   let deltaVector = Vector.sub(dv, a.position);
   let normalizedDelta = Vector.normalise(deltaVector);
   let forceVector = Vector.mult(normalizedDelta, force);
-  Body.applyForce(a, a.position, forceVector);
+  let divVector = ( a.label == 'ally' ? Vector.div(forceVector, a.custom.moveSpeed) : forceVector );
+  Body.applyForce(a, a.position, divVector);
 }
 
 // works off world bounds; performance is still good for now

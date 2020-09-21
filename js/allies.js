@@ -52,6 +52,7 @@ class UnitEnt {
           attackCD: info.attackCD,
           attackCD_base: info.attackCD,
           moveType: info.moveType,
+          moveSpeed: ( 100 / info.movespeed ), // say it with me, MAGIC NUMBERS, used for vector division
           damage: info.damage,
           preferredTarget: info.preferredTarget,
 
@@ -278,9 +279,18 @@ function unit_pathfind(bod, exceptID, exceptBod){
 /** pathfinding, sets unit state to 'ready' if succesful */
 function unit_astar(astar_grid, start_pos, goal_pos, unit, target){
   // for ranged units
-  // TODO: IT APPEARS TO WORK? But needs more testing
-  // TODO: This doesn't consider vertices, expand later if necessary
-  if( getDistance(unit.position, target.position) <= unit.custom.attackRange*GRID_SIZE ){
+  // TODO: Experimental new addon, considers vertices
+  if( wbb(target.bounds) > GRID_SIZE || hbb(target.bounds) > GRID_SIZE ){
+    for( vert of target.vertices ){
+      if( getDistance(unit.position, new Coordinate( vert.x, vert.y )) <= unit.custom.attackRange*GRID_SIZE ){
+        unit.custom.target = target;
+        unit.custom.waypoint = [new Coordinate( vert.x, vert.y )];
+        unit.custom.state = 'ready';
+        return;
+      }
+    }
+  // TODO: End of experimental new addon, considers vertices
+  }else if( getDistance(unit.position, target.position) <= unit.custom.attackRange*GRID_SIZE ){
     unit.custom.target = target;
     unit.custom.waypoint = [target.position];
     unit.custom.state = 'ready';
@@ -466,14 +476,4 @@ function ripperoni_unit(a){
     }
   });
   World.add(world, tombstone);
-}
-
-// =======================[ DOM Functions ]====================================
-function dom_listUnits(){
-  for( unit of unitList ){
-    // STUB: append to DOM element
-  }
-}
-function dom_selectUnits(el){
-  // STUB on choosing from DOM, update game_state.squad
 }
