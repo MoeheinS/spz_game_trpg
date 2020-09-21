@@ -420,12 +420,11 @@ class BuildingEnt {
       //this.body = Bodies.rectangle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), info.width, info.height, {
       this.body = Bodies.rectangle(spawnCoord.x+(info.width*0.5), spawnCoord.y+(info.height*0.5), info.width, info.height, {
         label: 'building',
-        frictionAir: 1, // magic numbers
-        mass: 2,        // magic numbers
         collisionFilter: {
           category: ( info.category == 'wall' ? ground : ground | air )
         },
         isStatic: true,
+        //chamfer: 20,
         custom: {
           hp_max: info.hp,
           hp_current: info.hp,
