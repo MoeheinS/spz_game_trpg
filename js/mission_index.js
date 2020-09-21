@@ -201,3 +201,50 @@ var missionList = [
     ]
   }
 ];
+
+// missions created with export_level() are JSON
+// TODO: I can put in a fetch function here, for grabbing missions off the internet, someday
+var missionList_JSON = [
+  {
+    "core": {
+      "level": "0",
+      "position": "new Coordinate( 13.5*GRID_SIZE, 13.5*GRID_SIZE )"
+    },
+    "ents": [
+      {
+        "name": "Turret",
+        "level": "0",
+        "position": "new Coordinate( 12.5*GRID_SIZE, 12.5*GRID_SIZE )"
+      },
+      {
+        "name": "Turret",
+        "level": "0",
+        "position": "new Coordinate( 18.5*GRID_SIZE, 12.5*GRID_SIZE )"
+      },
+      {
+        "name": "Turret",
+        "level": "0",
+        "position": "new Coordinate( 18.5*GRID_SIZE, 17.5*GRID_SIZE )"
+      },
+      {
+        "name": "Turret",
+        "level": "0",
+        "position": "new Coordinate( 12.5*GRID_SIZE, 17.5*GRID_SIZE )"
+      }
+    ],
+    "id": "Test JSON"
+  }
+];
+// undo the hard storage JSON imposes
+if( missionList_JSON.length ){
+  for( json_mission of missionList_JSON ){
+    var newMission = json_mission;
+    newMission.core.position = eval(newMission.core.position);
+    //newMission.core.level = parseInt(newMission.core.level);
+    for( ent of json_mission.ents ){
+      ent.position = eval(ent.position);
+      //ent.level = parseInt(ent.level);
+    }
+    missionList.push(newMission);
+  }
+}

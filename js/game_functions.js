@@ -199,3 +199,27 @@ function battle_countdown(command) {
       break;
   }
 }
+
+// DEV function
+function export_level(url) {
+  let level_JSON = new Object;
+      level_JSON.core = new Object;
+      level_JSON.ents = new Array;
+  for( bld of buildings_all_Array ){
+    if( bld.custom.name == 'Core' ){
+      level_JSON.core.level = bld.custom.level;
+      level_JSON.core.position = `new Coordinate( ${bld.bounds.min.x / GRID_SIZE}*GRID_SIZE, ${bld.bounds.min.y / GRID_SIZE}*GRID_SIZE )`;
+    }else{
+      level_JSON.ents.push({
+        name: bld.custom.name,
+        level: bld.custom.level,
+        position: `new Coordinate( ${bld.bounds.min.x / GRID_SIZE}*GRID_SIZE, ${bld.bounds.min.y / GRID_SIZE}*GRID_SIZE )`
+      });
+    }
+  }
+  level_JSON.id = prompt('Name this level');
+  fetch(url, {
+    method: 'post',
+    body: String(level_JSON)
+  });
+}
