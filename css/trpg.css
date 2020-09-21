@@ -342,6 +342,7 @@ button {
 }
 .UI_unitList--squad {
 	margin: 1rem 0;
+	flex-wrap: nowrap;
 }
 .UI_unitList {
 	/* overflow-x: scroll; */
