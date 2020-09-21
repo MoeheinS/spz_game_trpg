@@ -183,6 +183,7 @@ function dom_flowControl(command){
     case 'unready':
       document.querySelector('.UI_missionButton--embark').disabled = true;
       document.querySelector('.UI_missionButton--survey').disabled = true;
+      document.querySelector('.UI_container--animationLayer').innerHTML = '';
       break;
     case 'ready':
       document.querySelector('.UI_container').dataset.show = false; 
