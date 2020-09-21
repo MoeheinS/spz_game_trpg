@@ -219,7 +219,7 @@ function export_level(url) {
   }
   level_JSON.id = prompt('Name this level');
   fetch(url, {
-    method: 'post',
-    body: String(level_JSON)
+    method: 'POST',
+    body: JSON.stringify(level_JSON)
   });
 }
