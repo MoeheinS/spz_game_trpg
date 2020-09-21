@@ -197,14 +197,17 @@ function dom_flowControl(command){
   }
 }
 
-function dom_textAnimation(text, persist){
+function dom_textAnimation(text, persist, wait){
   let bubble = document.createElement("div");
       bubble.className = 'textAnim';
       bubble.innerText = text;
       if( !persist ){
         bubble.addEventListener("animationend", function(){ this.remove() });
       }
-  document.querySelector('.UI_container--animationLayer').appendChild(bubble);
+  window.setTimeout(function(){
+    document.querySelector('.UI_container--animationLayer').appendChild(bubble)
+  }, ( wait ? wait : 0 ));
+  
 }
 
 function dom_aftermath(){
@@ -228,7 +231,7 @@ function dom_aftermath(){
       bronzeText.push('Halfway there...');
       bronzeText.push("Almost got 'em");
     }
-    dom_textAnimation(bronzeText[Math.floor(Math.random() * bronzeText.length)], true);
+    dom_textAnimation(bronzeText[Math.floor(Math.random() * bronzeText.length)], true, winConditions*2000);
   }
   if( building_CORE && building_CORE.custom.hp_current <= 0 ){
     winConditions++;
@@ -237,7 +240,7 @@ function dom_aftermath(){
       'Core destroyed',
       'Core building demolished'
     ];
-    dom_textAnimation(silverText[Math.floor(Math.random() * silverText.length)], true);
+    dom_textAnimation(silverText[Math.floor(Math.random() * silverText.length)], true, winConditions*2000);
   }
   if( progress_pct >= 100 ){
     winConditions++;
@@ -249,7 +252,7 @@ function dom_aftermath(){
       'Enemy Obliterated',
       'No Mercy'
     ];
-    dom_textAnimation(goldText[Math.floor(Math.random() * goldText.length)], true);
+    dom_textAnimation(goldText[Math.floor(Math.random() * goldText.length)], true, winConditions*2000);
   }
   if( winConditions == 0 ){
     var lossText = [
@@ -258,7 +261,7 @@ function dom_aftermath(){
       "Come back with a stronger team",
       "Try a different team composition"
     ];
-    dom_textAnimation(lossText[Math.floor(Math.random() * lossText.length)], true);
+    dom_textAnimation(lossText[Math.floor(Math.random() * lossText.length)], true, ( ( winConditions*2000 )+2000 ));
   }else{
     var winText = [
       'WINNER IS YOU',
@@ -272,7 +275,7 @@ function dom_aftermath(){
       winText.push('Try using a weaker team');
       winText.push('Try a higher difficulty'); // TODO: I could check what difficulty was attempted, but that's for future me
     }
-    dom_textAnimation(winText[Math.floor(Math.random() * winText.length)], true);
+    dom_textAnimation(winText[Math.floor(Math.random() * winText.length)], true, ( ( winConditions*2000 )+2000 ));
   }
   
 }
