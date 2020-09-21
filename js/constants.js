@@ -3,6 +3,8 @@
 */
 let game_state = {
   "debug_overlay": true,
+  "debug_buildmode": false,
+  "debug_buildmode_lastAdded": [],
 
   "game_phase": "survey", // survey, engage, aftermath?
   "timer_deploy": false,

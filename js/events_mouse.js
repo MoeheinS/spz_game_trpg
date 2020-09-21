@@ -51,6 +51,16 @@ Events.on(mouseConstraint, "mousedown", function(event) {
   // }
 
   if( event.mouse.button === 0){
+    if( game_state.debug_buildmode ){
+      let bldi = document.querySelector('[name=devBuilder--buildingType]').value;
+      let lvl = document.querySelector('[name=devBuilder--buildingLevel]').value;
+      
+      let undoState = game_state.debug_buildmode_lastAdded;
+      undoState.push( new BuildingEnt( 
+        buildingList[bldi].name, lvl, 
+        new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE + ( buildingList[bldi].category == 'wall' || buildingList[bldi].category == 'terrain' ? 0*GRID_SIZE : 0.5*GRID_SIZE ), mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE + ( buildingList[bldi].category == 'wall' || buildingList[bldi].category == 'terrain' ? 0*GRID_SIZE : 0.5*GRID_SIZE ) )
+      ));
+    }
     if( game_state.mayDeploy ){
 
       var deployAble = document.querySelector('[name=partyPicker-deployer]:checked');

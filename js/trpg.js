@@ -96,6 +96,9 @@ document.addEventListener("keydown", function(e){
     case 'e':
       game_state.game_phase = 'engage';
       break;
+    case 'b':
+      dev_buildMode();
+      break;
     default:
       console.log(e.key);
       break;
