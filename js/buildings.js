@@ -358,6 +358,100 @@ let buildingList = [
     ]
   },
   {
+    name: 'Rental Facility',
+    category: 'terrain', // cheeky
+    dim: {x: 3*GRID_SIZE, y: 3*GRID_SIZE},
+    sprite_dim: {x: 3*16, y: 3*16},
+    sprite_offset: {x: 0, y: 0*GRID_SIZE},
+    levels: [
+      { spriteName: 'bld_rental', hp: 900 },
+      { spriteName: 'bld_rental', hp: 1800 }
+    ]
+  },
+  {
+    name: 'Anima Research Lab',
+    category: 'terrain', // cheeky
+    dim: {x: 3*GRID_SIZE, y: 2*GRID_SIZE},
+    sprite_dim: {x: 3*16, y: 2*16},
+    sprite_offset: {x: 0, y: 0*GRID_SIZE},
+    levels: [
+      { spriteName: 'bld_animalab', hp: 1800 },
+      { spriteName: 'bld_animalab', hp: 2350 },
+      { spriteName: 'bld_animalab', hp: 3000 },
+      { spriteName: 'bld_animalab', hp: 4125 },
+      { spriteName: 'bld_animalab', hp: 5400 }
+    ]
+  },
+  {
+    name: 'Crafting Station',
+    category: 'terrain', // cheeky
+    dim: {x: 4*GRID_SIZE, y: 2*GRID_SIZE},
+    sprite_dim: {x: 4*16, y: 3*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'bld_summon_1', hp: 1650 },
+      { spriteName: 'bld_summon_1', hp: 1825 },
+      { spriteName: 'bld_summon_2', hp: 2075 },
+      { spriteName: 'bld_summon_3', hp: 2500 },
+      { spriteName: 'bld_summon_4', hp: 2800 },
+
+      { spriteName: 'bld_summon_5', hp: 3250 },
+      { spriteName: 'bld_summon_6', hp: 4000 },
+      { spriteName: 'bld_summon_7', hp: 4500 },
+      { spriteName: 'bld_summon_8', hp: 5500 },
+      { spriteName: 'bld_summon_9', hp: 6300 },
+    ]
+  },
+  {
+    name: 'Guild Hall',
+    category: 'terrain', // cheeky
+    dim: {x: 3*GRID_SIZE, y: 3*GRID_SIZE},
+    sprite_dim: {x: 3*16, y: 4*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'bld_guild', hp: 2700 },
+      { spriteName: 'bld_guild', hp: 2700 },
+      { spriteName: 'bld_guild', hp: 3800 },
+      { spriteName: 'bld_guild', hp: 5250 },
+      { spriteName: 'bld_guild', hp: 7200 }
+    ]
+  },
+  {
+    name: 'Friend Hall',
+    category: 'terrain', // cheeky
+    dim: {x: 3*GRID_SIZE, y: 3*GRID_SIZE},
+    sprite_dim: {x: 3*16, y: 3*16},
+    sprite_offset: {x: 0, y: 0*GRID_SIZE},
+    levels: [
+      { spriteName: 'bld_friends', hp: 1950 },
+      { spriteName: 'bld_friends', hp: 2700 },
+      { spriteName: 'bld_friends', hp: 3800 },
+      { spriteName: 'bld_friends', hp: 5250 },
+      { spriteName: 'bld_friends', hp: 7200 }
+    ]
+  },
+  {
+    name: 'Temple of Guidance',
+    category: 'terrain', // cheeky
+    dim: {x: 3*GRID_SIZE, y: 4*GRID_SIZE},
+    sprite_dim: {x: 3*16, y: 4*16},
+    sprite_offset: {x: 0, y: 0*GRID_SIZE},
+    levels: [
+      { spriteName: 'bld_temple', hp: 13500 },
+      { spriteName: 'bld_temple', hp: 16000 }
+    ]
+  },
+  {
+    name: 'Builder Hut',
+    category: 'terrain', // cheeky
+    dim: {x: 2*GRID_SIZE, y: 1*GRID_SIZE},
+    sprite_dim: {x: 2*16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'bld_builderhut', hp: 1125 }
+    ]
+  },
+  {
     name: 'rock_s',
     category: 'terrain',
     dim: {x: GRID_SIZE, y: GRID_SIZE},
@@ -391,6 +485,36 @@ let buildingList = [
     sprite_dim: {x: 32, y: 32},
     levels: [
       { spriteName: 'terrain_tree_l', hp: 1125 }
+    ]
+  },
+  {
+    name: 'statue_1',
+    category: 'terrain',
+    dim: {x: GRID_SIZE, y: GRID_SIZE},
+    sprite_dim: {x: 16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'terrain_statue_1', hp: 1125 }
+    ]
+  },
+  {
+    name: 'statue_2',
+    category: 'terrain',
+    dim: {x: GRID_SIZE, y: GRID_SIZE},
+    sprite_dim: {x: 16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'terrain_statue_2', hp: 1125 }
+    ]
+  },
+  {
+    name: 'statue_3',
+    category: 'terrain',
+    dim: {x: GRID_SIZE, y: GRID_SIZE},
+    sprite_dim: {x: 16, y: 2*16},
+    sprite_offset: {x: 0, y: 1*GRID_SIZE},
+    levels: [
+      { spriteName: 'terrain_statue_3', hp: 1125 }
     ]
   },
 ];
