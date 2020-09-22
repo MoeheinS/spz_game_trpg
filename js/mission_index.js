@@ -637,6 +637,490 @@ var missionList_JSON = [
       }
     ],
     "id": "Pathfinding"
+  },
+  {
+    "core": {
+      "level": "0",
+      "position": "new Coordinate( 17.5*GRID_SIZE, 18.5*GRID_SIZE )"
+    },
+    "ents": [
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 21*GRID_SIZE, 4*GRID_SIZE )"
+      },
+      {
+        "name": "Builder Hut",
+        "level": "0",
+        "position": "new Coordinate( 19*GRID_SIZE, 5*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 21*GRID_SIZE, 5*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 10*GRID_SIZE )"
+      },
+      {
+        "name": "rock_s",
+        "level": "0",
+        "position": "new Coordinate( 21*GRID_SIZE, 7*GRID_SIZE )"
+      },
+      {
+        "name": "Guild Hall",
+        "level": "0",
+        "position": "new Coordinate( 18*GRID_SIZE, 8*GRID_SIZE )"
+      },
+      {
+        "name": "statue_1",
+        "level": "0",
+        "position": "new Coordinate( 13*GRID_SIZE, 7*GRID_SIZE )"
+      },
+      {
+        "name": "statue_1",
+        "level": "0",
+        "position": "new Coordinate( 26*GRID_SIZE, 7*GRID_SIZE )"
+      },
+      {
+        "name": "rock_s",
+        "level": "0",
+        "position": "new Coordinate( 21*GRID_SIZE, 8*GRID_SIZE )"
+      },
+      {
+        "name": "rock_s",
+        "level": "0",
+        "position": "new Coordinate( 21*GRID_SIZE, 9*GRID_SIZE )"
+      },
+      {
+        "name": "rock_s",
+        "level": "0",
+        "position": "new Coordinate( 21*GRID_SIZE, 10*GRID_SIZE )"
+      },
+      {
+        "name": "Builder Hut",
+        "level": "0",
+        "position": "new Coordinate( 25*GRID_SIZE, 10*GRID_SIZE )"
+      },
+      {
+        "name": "Builder Hut",
+        "level": "0",
+        "position": "new Coordinate( 13*GRID_SIZE, 10*GRID_SIZE )"
+      },
+      {
+        "name": "Builder Hut",
+        "level": "0",
+        "position": "new Coordinate( 10*GRID_SIZE, 10*GRID_SIZE )"
+      },
+      {
+        "name": "Builder Hut",
+        "level": "0",
+        "position": "new Coordinate( 28*GRID_SIZE, 10*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 10*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 17*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 18*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 19*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 20*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 21*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 22*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 12*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 13*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 13*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 14*GRID_SIZE )"
+      },
+      {
+        "name": "Anima Research Lab",
+        "level": "0",
+        "position": "new Coordinate( 19*GRID_SIZE, 15*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 15*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 15*GRID_SIZE )"
+      },
+      {
+        "name": "statue_3",
+        "level": "0",
+        "position": "new Coordinate( 10*GRID_SIZE, 15*GRID_SIZE )"
+      },
+      {
+        "name": "Turret",
+        "level": "0",
+        "position": "new Coordinate( 24.5*GRID_SIZE, 15.5*GRID_SIZE )"
+      },
+      {
+        "name": "Tower Turret",
+        "level": "0",
+        "position": "new Coordinate( 14.5*GRID_SIZE, 15.5*GRID_SIZE )"
+      },
+      {
+        "name": "Mana Harvester",
+        "level": "0",
+        "position": "new Coordinate( 12.5*GRID_SIZE, 15.5*GRID_SIZE )"
+      },
+      {
+        "name": "Gold Harvester",
+        "level": "0",
+        "position": "new Coordinate( 26.5*GRID_SIZE, 15.5*GRID_SIZE )"
+      },
+      {
+        "name": "Gold Harvester",
+        "level": "0",
+        "position": "new Coordinate( 28.5*GRID_SIZE, 15.5*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "statue_2",
+        "level": "0",
+        "position": "new Coordinate( 31*GRID_SIZE, 16*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 24*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 25*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 26*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 27*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 28*GRID_SIZE, 17*GRID_SIZE )"
+      },
+      {
+        "name": "Mana Harvester",
+        "level": "0",
+        "position": "new Coordinate( 12.5*GRID_SIZE, 17.5*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 18*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 18*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 28*GRID_SIZE, 18*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 19*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 19*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 28*GRID_SIZE, 19*GRID_SIZE )"
+      },
+      {
+        "name": "Lobber Golem",
+        "level": "0",
+        "position": "new Coordinate( 24.5*GRID_SIZE, 19.5*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 20*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 20*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 28*GRID_SIZE, 20*GRID_SIZE )"
+      },
+      {
+        "name": "Friend Hall",
+        "level": "0",
+        "position": "new Coordinate( 12*GRID_SIZE, 20*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 21*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 21*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 28*GRID_SIZE, 21*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 22*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 22*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 24*GRID_SIZE, 22*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 25*GRID_SIZE, 22*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 26*GRID_SIZE, 22*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 27*GRID_SIZE, 22*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 28*GRID_SIZE, 22*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 23*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 23*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 24*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 24*GRID_SIZE )"
+      },
+      {
+        "name": "Turret",
+        "level": "0",
+        "position": "new Coordinate( 14.5*GRID_SIZE, 24.5*GRID_SIZE )"
+      },
+      {
+        "name": "Tower Turret",
+        "level": "0",
+        "position": "new Coordinate( 24.5*GRID_SIZE, 24.5*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 25*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 25*GRID_SIZE )"
+      },
+      {
+        "name": "Gold Storage",
+        "level": "0",
+        "position": "new Coordinate( 26.5*GRID_SIZE, 24.5*GRID_SIZE )"
+      },
+      {
+        "name": "Gold Storage",
+        "level": "0",
+        "position": "new Coordinate( 30.5*GRID_SIZE, 24.5*GRID_SIZE )"
+      },
+      {
+        "name": "Mana Storage",
+        "level": "0",
+        "position": "new Coordinate( 10.5*GRID_SIZE, 24.5*GRID_SIZE )"
+      },
+      {
+        "name": "Mana Storage",
+        "level": "0",
+        "position": "new Coordinate( 6.5*GRID_SIZE, 24.5*GRID_SIZE )"
+      },
+      {
+        "name": "Crafting Station",
+        "level": "0",
+        "position": "new Coordinate( 18*GRID_SIZE, 25*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 26*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 26*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 27*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 27*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 28*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 17*GRID_SIZE, 28*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 19*GRID_SIZE, 28*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 18*GRID_SIZE, 28*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 20*GRID_SIZE, 28*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 21*GRID_SIZE, 28*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 22*GRID_SIZE, 28*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 23*GRID_SIZE, 28*GRID_SIZE )"
+      },
+      {
+        "name": "Rental Facility",
+        "level": "0",
+        "position": "new Coordinate( 18*GRID_SIZE, 30*GRID_SIZE )"
+      }
+    ],
+    "id": "Training Forest 1"
   }
 ];
 // undo the hard storage JSON imposes
