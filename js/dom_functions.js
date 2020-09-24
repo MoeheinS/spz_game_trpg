@@ -290,3 +290,137 @@ function dom_aftermath(){
 dom_refreshSquadlist();
 dom_listMissions();
 dom_listUnits();
+
+const tutorial_Messages = [ // newline per 5
+  'Ahoy!',
+
+  'Welcome to this low-res kinda-sorta spiritual homage to Battle Champs / Little Noah, a mobile game launched in 2015<br>And shut down in Januari 2019...',
+  "It was Cygames' attempt to compete with Clash of Clans by making the genre more appealing to the Japanese userbase on top of some innovations to the formula; such as boss fights against huge monsters, which you could attempt solo or with 3 other players",
+  "They also got Akihiko Yoshida as an art director, and I'm a huge fan of his work (Final Fantasy, Bravely Default, Vagrant Story)",
+  'So it made me really sad when the game got shut down. Being an always-online mobile game, this really reminds one how the same fate awaits all games-as-a-service<br>Here today, gone tomorrow... Whoops, you clicked [tutorial], not [existential crisis]',
+  'EH-HEM',
+
+  `The core goal of the game is simple; you assemble a squad of up to 6 puppets and send them out to pillage enemy bases, bringing back sweet sweet resources
+  <br>Enemies will attempt to stop you by defending their resources with walls and turrets. It's your job to pick the right puppets for the job`,
+  `Because I just wanted to preserve some of the art, practice my coding and see how far I can get with html/canvas/javascript, not all features of Little Noah are here.
+  <br>No social aspects, no PVP, no boss fights, no base building, no player base raiding, no Avatars...
+  <br>Some of these might get added later, but for now, try to enjoy what's there`,
+  `Step by step! The right hand side of the screen lets you review units and assemble a squad`,
+  `Add a unit from your lineup to the squad now`,
+  `Clicking a unit in your lineup shows its information, which I'm now blocking with A R T. My UX skills are peerless`,
+
+  `Clicking the unit in your squad lineup removes it.
+  <br>Buildings are separated into [walls], [economy] and [defensive]. Some units prefer to attack one of these types. Some units can fly. Some units deal extra damage.
+  <br>Taking out buildings that can attack fliers is an easy win
+  <br>Some buildings don't switch targets until the puppet they're attacking dies, so throw a high HP blocker at them
+  <br>And sometimes it's just best to blow a hole in the walls...`,
+  `Once you have a squad, you can adjust the difficulty to your liking. Some maps are faithfully based on the level layouts from Little Noah, but as you might expect from a mobile game that lasted 3 years,
+  the amount of data available online is not complete. So you get to choose your difficulty. Buildings level up to the difficulty or their own maximum level.
+  <br>Picking -1 difficulty uses the levels from the game data.
+  <br>You should go up a rank in puppet rarity for roughly every 2 difficulty levels, I guess?`,
+  `Then you must pick a level. If I can find a place to host JSON I could host the levels online, but for now they're all included with the game files`,
+  `Squad, difficulty, level. Then you can choose between [Survey] to scout the level, and [Embark] to go forth and pillage!`,
+  `Once you embark, the UI shows you how many objectives you've met, what percentage of buildings you've destroyed and how much time you have left.`,
+
+  `There's three objectives you can meet within 3 minutes. Getting any one means it counts as a victory for you.
+  <br>&bull;Destroying over 50% of the enemy's buildings
+  <br>&bull;Destroying the enemy's core building
+  <br>&bull;Destroying all the enemy's buildings, except for walls`,
+  `Your squad is also shown on this screen, along with the number of units you can still deploy. Click a puppet to make that your active unit`,
+  `After selecting a unit to deploy, click on the playfield to place it. You're not allowed to deploy near enemy buildings`,
+  `When in doubt, just look at your cursor
+  <br>&bull;Scroll to zoom in or out
+  <br>&bull;Hold down right click and move the mouse to pan the camera`,
+  `The mission ends when all your units are dead, when you reach 100% destruction rate, when you run out of time, or when you press the airship button`,
+
+  `And that's my poor explanation of how to play the game! Give it a shot and you'll get the hang of it!`
+];
+
+function dom_Tutorial(el) {
+  console.log( parseInt(el.dataset.tut) );
+  //el.dataset.tut = parseInt(el.dataset.tut)+1;
+
+  if( parseInt(el.dataset.tut) == tutorial_Messages.length ){
+    document.querySelector('.UI_container--tutorial').dataset.show = false;
+  }else{
+    el.innerHTML = tutorial_Messages[parseInt(el.dataset.tut)];
+    document.querySelector('.UI_container--tutorial').style.background = '#0000009e';
+    document.querySelector('.UI_container--tutorial').style.pointerEvents = 'all';
+    switch (parseInt(el.dataset.tut)) {
+      case 4:
+        console.warn('SAD');
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+      case 8:
+        document.querySelector('.UI_wrapper--unitSelect > section').classList.add('tutFocus');
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+      case 9:
+        document.querySelector('.UI_container--tutorial').style.background = '#00000026';
+        document.querySelector('.UI_container--tutorial').style.pointerEvents = 'none';
+        document.querySelector('.tutFocus').classList.remove('tutFocus');
+        document.querySelector('.UI_unitList').classList.add('tutFocus');
+        if( game_state.squad.length ){
+          el.dataset.tut = parseInt(el.dataset.tut)+1;
+          el.innerHTML = tutorial_Messages[parseInt(el.dataset.tut)];
+          break;
+        }else{
+          break;
+        }
+      case 10:
+        document.querySelector('.tutFocus').classList.remove('tutFocus');
+        document.querySelector('.UI_inspector').classList.add('tutFocus');
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+      case 11:
+        document.querySelector('.tutFocus').classList.remove('tutFocus');
+        document.querySelector('.UI_unitList--squad').classList.add('tutFocus');
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+      case 12:
+        document.querySelector('.tutFocus').classList.remove('tutFocus');
+        document.querySelector('.input_difficultySlider').classList.add('tutFocus');
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+      case 13:
+        document.querySelector('.tutFocus').classList.remove('tutFocus');
+        document.querySelector('.UI_missionList').classList.add('tutFocus');
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+      case 14:
+        document.querySelector('.tutFocus').classList.remove('tutFocus');
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+      case 15:
+      case 16:
+        document.querySelector('.tutEx').style.opacity = 1;
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+      case 17:
+        document.querySelector('.tutEx').style.opacity = 1;
+        document.querySelector('.tutEx').src = './assets/art/tut_02.jpg';
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+      case 18:
+        document.querySelector('.tutEx').style.opacity = 1;
+        document.querySelector('.tutEx').src = './assets/art/tut_03.jpg';
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+      case 19:
+        document.querySelector('.tutEx').style.opacity = 1;
+        document.querySelector('.tutEx').src = './assets/art/tut_04.jpg';
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+      default:
+        document.querySelector('.tutEx').style.opacity = 0;
+        document.querySelector('.tutEx').src = './assets/art/tut_01.jpg';
+        el.dataset.tut = parseInt(el.dataset.tut)+1;
+        break;
+    }
+  }
+}
+function dom_Tutorial_start() {
+  document.querySelector('.UI_container--tutorial').dataset.show = true;
+  document.querySelector('.tutBox').dataset.tut = 0;
+  dom_Tutorial(document.querySelector('.tutBox'));
+}

@@ -99,6 +99,9 @@ document.addEventListener("keydown", function(e){
     case 'b':
       dev_buildMode();
       break;
+    case 't':
+      dom_Tutorial_start();
+      break;
     default:
       console.log(e.key);
       break;
