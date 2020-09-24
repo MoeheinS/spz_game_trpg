@@ -2,7 +2,7 @@
 *   Constants and settings
 */
 let game_state = {
-  "debug_overlay": true,
+  "debug_overlay": false,
   "debug_buildmode": false,
   "debug_buildmode_lastAdded": [],
 
