@@ -503,3 +503,31 @@ button {
 	  text-shadow: 0 1px 0 #28282b, 0 2px 0 #28282b, 0 3px 0 #28282b, 0 4px 0 #28282b, 0 5px 0 #28282b, 0 6px 0 #28282b, 0 7px 0 #28282b, 0 8px 0 #28282b, 0 9px 0 #28282b, 0 50px 30px rgba(0, 0, 0, 0.3);
 	}
 }
+
+.UI_container--splash {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: linear-gradient(180deg, #ffffff, #ffffff, #dedede);
+
+	width: 100vw;
+	height: 100vh;
+
+	z-index: 2;
+	display: none;
+}
+.UI_container--splash[data-show='true'] {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.UI_container--splash img {
+	height: 100vh;
+	max-height: 100vh;
+}
+.UI_container--splash .UI_missionButton--splash {
+	position: absolute;
+	bottom: 6vh;
+	font-family: alber;
+}
