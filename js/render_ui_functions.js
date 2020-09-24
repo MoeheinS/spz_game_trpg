@@ -180,6 +180,7 @@ function draw_UI(a){
   switch (game_state.game_phase) {
     case 'survey':
       render_menuButton(game_state.game_phase);
+      render_progress();
       render_survey();
       if( game_state.timer_deploy !== false ){
         render_countdown();
