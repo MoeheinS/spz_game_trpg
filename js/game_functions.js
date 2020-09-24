@@ -125,10 +125,10 @@ function flowControl(command, p, p2){
       for( mission of missionList ){
         // mission.id is int
         if( p == mission.id ){
-          building_CORE = new BuildingEnt( 'Core', ( p2 ? p2 : mission.core.level ), mission.core.position );
+          building_CORE = new BuildingEnt( 'Core', ( p2 == -1 ? mission.core.level : p2 ? p2 : mission.core.level ), mission.core.position );
           game_state.initial_buildings = 1;
           for( ent of mission.ents ){
-            let newBuilding = new BuildingEnt( ent.name, ( p2 ? p2 : ent.level ), ent.position );
+            let newBuilding = new BuildingEnt( ent.name, ( p2 == -1 ? ent.level : p2 ? p2 : ent.level ), ent.position );
             if( newBuilding.custom.category != 'wall' && newBuilding.custom.category != 'terrain' ){// also exclude terrain props
               game_state.initial_buildings++;
             }
