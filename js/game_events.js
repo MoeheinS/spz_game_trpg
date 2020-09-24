@@ -69,4 +69,7 @@ function dev_buildMode(){
 function dev_buildMode_undo(){
     World.remove(world, game_state.debug_buildmode_lastAdded[game_state.debug_buildmode_lastAdded.length-1], true);
     game_state.debug_buildmode_lastAdded.pop();
+    window.setTimeout(function(){
+        game_state.grass = landScape();
+    },100);
 }

@@ -60,6 +60,9 @@ Events.on(mouseConstraint, "mousedown", function(event) {
         buildingList[bldi].name, lvl, 
         new Coordinate( mouseConstraint.mouse.mousedownPosition.x - mouseConstraint.mouse.mousedownPosition.x % GRID_SIZE + ( buildingList[bldi].category == 'wall' || buildingList[bldi].category == 'terrain' ? 0*GRID_SIZE : 0.5*GRID_SIZE ), mouseConstraint.mouse.mousedownPosition.y - mouseConstraint.mouse.mousedownPosition.y % GRID_SIZE + ( buildingList[bldi].category == 'wall' || buildingList[bldi].category == 'terrain' ? 0*GRID_SIZE : 0.5*GRID_SIZE ) )
       ));
+      window.setTimeout(function(){
+        game_state.grass = landScape();
+      },100);
     }
     if( game_state.mayDeploy ){
 
