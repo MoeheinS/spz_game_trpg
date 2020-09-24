@@ -359,7 +359,7 @@ let buildingList = [
   },
   {
     name: 'Rental Facility',
-    category: 'terrain', // cheeky
+    category: 'economy', // cheeky
     dim: {x: 3*GRID_SIZE, y: 3*GRID_SIZE},
     sprite_dim: {x: 3*16, y: 3*16},
     sprite_offset: {x: 0, y: 0*GRID_SIZE},
@@ -370,7 +370,7 @@ let buildingList = [
   },
   {
     name: 'Anima Research Lab',
-    category: 'terrain', // cheeky
+    category: 'economy', // cheeky
     dim: {x: 3*GRID_SIZE, y: 2*GRID_SIZE},
     sprite_dim: {x: 3*16, y: 2*16},
     sprite_offset: {x: 0, y: 0*GRID_SIZE},
@@ -384,7 +384,7 @@ let buildingList = [
   },
   {
     name: 'Crafting Station',
-    category: 'terrain', // cheeky
+    category: 'economy', // cheeky
     dim: {x: 4*GRID_SIZE, y: 2*GRID_SIZE},
     sprite_dim: {x: 4*16, y: 3*16},
     sprite_offset: {x: 0, y: 1*GRID_SIZE},
@@ -404,7 +404,7 @@ let buildingList = [
   },
   {
     name: 'Guild Hall',
-    category: 'terrain', // cheeky
+    category: 'economy', // cheeky
     dim: {x: 3*GRID_SIZE, y: 3*GRID_SIZE},
     sprite_dim: {x: 3*16, y: 4*16},
     sprite_offset: {x: 0, y: 1*GRID_SIZE},
@@ -418,7 +418,7 @@ let buildingList = [
   },
   {
     name: 'Friend Hall',
-    category: 'terrain', // cheeky
+    category: 'economy', // cheeky
     dim: {x: 3*GRID_SIZE, y: 3*GRID_SIZE},
     sprite_dim: {x: 3*16, y: 3*16},
     sprite_offset: {x: 0, y: 0*GRID_SIZE},
@@ -432,7 +432,7 @@ let buildingList = [
   },
   {
     name: 'Temple of Guidance',
-    category: 'terrain', // cheeky
+    category: 'economy', // cheeky
     dim: {x: 3*GRID_SIZE, y: 4*GRID_SIZE},
     sprite_dim: {x: 3*16, y: 4*16},
     sprite_offset: {x: 0, y: 0*GRID_SIZE},
@@ -443,7 +443,7 @@ let buildingList = [
   },
   {
     name: 'Builder Hut',
-    category: 'terrain', // cheeky
+    category: 'economy', // cheeky
     dim: {x: 2*GRID_SIZE, y: 1*GRID_SIZE},
     sprite_dim: {x: 2*16, y: 2*16},
     sprite_offset: {x: 0, y: 1*GRID_SIZE},
