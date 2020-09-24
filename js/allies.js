@@ -414,10 +414,14 @@ function unit_approachTarget(a){
     }
   }
 
-  if( getDistance(a.position, waypoint_raw) <= GRID_SIZE ){
-    a.custom.waypoint.shift();
+  if( a.custom.charger ){ // this fixed chargers seeking out vertices
+    cycle_movement(unit, a.custom.target.position);
   }else{
-    cycle_movement(unit, waypoint_raw);
+    if( getDistance(a.position, waypoint_raw) <= GRID_SIZE ){
+      a.custom.waypoint.shift();
+    }else{
+      cycle_movement(unit, waypoint_raw);
+    }
   }
 }
 
