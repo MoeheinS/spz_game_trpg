@@ -284,7 +284,8 @@ input[type=radio]:checked + .partyPicker-member {
 .UI_missionList {
 	display: flex;
 	flex-direction: column;
-	flex-basis: 100%;
+	flex-grow: 1;
+	max-height: 60vh;
 
 	overflow-y: auto;
 
@@ -346,7 +347,7 @@ button {
 }
 .UI_unitList {
 	/* overflow-x: scroll; */
-	overflow-y: scroll;
+	overflow-y: auto;
 	flex-wrap: wrap;
 	flex-direction: row;
 	/* max-height: 8rem; */
@@ -395,6 +396,25 @@ button {
 	height: 1rem;
 
 	font-size: 0.75rem;
+}
+.UI_unitButton:before {
+	position: absolute;
+    top: -6px;
+    left: -6px;
+    background: #9e8c7e;
+    border-radius: 12px;
+    content: '\2726 'attr(data-rarity);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1rem;
+    font-size: 1rem;
+    line-height: 1rem;
+    color: #ffffff;
+    width: 80%;
+}
+.UI_unitButton[data-rarity='-']:before {
+	content: unset;
 }
 
 .UI_inspector {
@@ -530,4 +550,8 @@ button {
 	position: absolute;
 	bottom: 6vh;
 	font-family: alber;
+}
+button,
+input {
+	cursor: pointer;
 }

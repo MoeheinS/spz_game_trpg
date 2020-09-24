@@ -34,6 +34,7 @@ function dom_listUnits(){
     button.dataset.artname = unit.artName;
     button.dataset.showname = ( unit.shortName ? unit.shortName : unit.name );
     button.dataset.amount = unit.amount;
+    button.dataset.rarity = unit.rarity;
 
     document.querySelector('.UI_unitList').appendChild(button);
   }
@@ -112,6 +113,7 @@ function dom_refreshSquadlist(){
           button.dataset.artname = unit.artName;
           button.dataset.showname = ( unit.shortName ? unit.shortName : unit.name );
           button.dataset.amount = unit.amount;
+          button.dataset.rarity = unit.rarity;
       
           document.querySelector('.UI_unitList--squad').appendChild(button);
           break;
@@ -125,6 +127,7 @@ function dom_refreshSquadlist(){
         dom_updateInspector(this.innerHTML);
       };
       button.style.setProperty('--bgimage', `url(../assets/fbbg.jpg)`);
+      button.dataset.rarity = '-';
   
       document.querySelector('.UI_unitList--squad').appendChild(button);
     }
@@ -173,7 +176,7 @@ function dom_flowControl(command){
           //game_state.game_phase = 'survey';
           dom_aftermath(); // sets state to survey, acts like a retreat function
           game_state.timer_deploy = false;
-          flowControl('clear');
+          //flowControl('clear');
           dom_flowControl('unready');
           break;
         default:
