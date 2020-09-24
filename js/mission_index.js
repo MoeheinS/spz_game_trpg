@@ -660,19 +660,9 @@ var missionList_JSON = [
         "position": "new Coordinate( 21*GRID_SIZE, 5*GRID_SIZE )"
       },
       {
-        "name": "Wall",
-        "level": "0",
-        "position": "new Coordinate( 16*GRID_SIZE, 10*GRID_SIZE )"
-      },
-      {
         "name": "rock_s",
         "level": "0",
         "position": "new Coordinate( 21*GRID_SIZE, 7*GRID_SIZE )"
-      },
-      {
-        "name": "Guild Hall",
-        "level": "0",
-        "position": "new Coordinate( 18*GRID_SIZE, 8*GRID_SIZE )"
       },
       {
         "name": "statue_1",
@@ -693,6 +683,16 @@ var missionList_JSON = [
         "name": "rock_s",
         "level": "0",
         "position": "new Coordinate( 21*GRID_SIZE, 9*GRID_SIZE )"
+      },
+      {
+        "name": "Wall",
+        "level": "0",
+        "position": "new Coordinate( 16*GRID_SIZE, 10*GRID_SIZE )"
+      },
+      {
+        "name": "Guild Hall",
+        "level": "0",
+        "position": "new Coordinate( 18*GRID_SIZE, 8*GRID_SIZE )"
       },
       {
         "name": "rock_s",
@@ -775,6 +775,11 @@ var missionList_JSON = [
         "position": "new Coordinate( 16*GRID_SIZE, 13*GRID_SIZE )"
       },
       {
+        "name": "tree_s",
+        "level": "0",
+        "position": "new Coordinate( 17*GRID_SIZE, 13*GRID_SIZE )"
+      },
+      {
         "name": "Wall",
         "level": "0",
         "position": "new Coordinate( 23*GRID_SIZE, 14*GRID_SIZE )"
@@ -783,11 +788,6 @@ var missionList_JSON = [
         "name": "Wall",
         "level": "0",
         "position": "new Coordinate( 16*GRID_SIZE, 14*GRID_SIZE )"
-      },
-      {
-        "name": "Anima Research Lab",
-        "level": "0",
-        "position": "new Coordinate( 19*GRID_SIZE, 15*GRID_SIZE )"
       },
       {
         "name": "Wall",
@@ -828,6 +828,11 @@ var missionList_JSON = [
         "name": "Gold Harvester",
         "level": "0",
         "position": "new Coordinate( 28.5*GRID_SIZE, 15.5*GRID_SIZE )"
+      },
+      {
+        "name": "Anima Research Lab",
+        "level": "0",
+        "position": "new Coordinate( 19*GRID_SIZE, 15*GRID_SIZE )"
       },
       {
         "name": "Wall",
@@ -935,11 +940,6 @@ var missionList_JSON = [
         "position": "new Coordinate( 28*GRID_SIZE, 20*GRID_SIZE )"
       },
       {
-        "name": "Friend Hall",
-        "level": "0",
-        "position": "new Coordinate( 12*GRID_SIZE, 20*GRID_SIZE )"
-      },
-      {
         "name": "Wall",
         "level": "0",
         "position": "new Coordinate( 16*GRID_SIZE, 21*GRID_SIZE )"
@@ -953,6 +953,11 @@ var missionList_JSON = [
         "name": "Wall",
         "level": "0",
         "position": "new Coordinate( 28*GRID_SIZE, 21*GRID_SIZE )"
+      },
+      {
+        "name": "Friend Hall",
+        "level": "0",
+        "position": "new Coordinate( 12*GRID_SIZE, 20*GRID_SIZE )"
       },
       {
         "name": "Wall",
@@ -998,6 +1003,16 @@ var missionList_JSON = [
         "name": "Wall",
         "level": "0",
         "position": "new Coordinate( 23*GRID_SIZE, 23*GRID_SIZE )"
+      },
+      {
+        "name": "tree_s",
+        "level": "0",
+        "position": "new Coordinate( 18*GRID_SIZE, 23*GRID_SIZE )"
+      },
+      {
+        "name": "tree_s",
+        "level": "0",
+        "position": "new Coordinate( 21*GRID_SIZE, 23*GRID_SIZE )"
       },
       {
         "name": "Wall",
