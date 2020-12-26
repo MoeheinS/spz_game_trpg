@@ -198,7 +198,7 @@ Events.on(render, 'afterRender', function() {
     case ( ticker > TIMING_RESET ):
       // added here in order to make it check less often
       flowControl('check');
-      ticker = 0;
+      ticker %= TIMING_RESET; //set to remainder of modulo
       break;
     case ( ticker % ANIM_TIMING == 0 ):
       heartbeat_animations();
