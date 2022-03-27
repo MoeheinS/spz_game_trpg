@@ -124,39 +124,60 @@ document.addEventListener("keydown", function(e){
 
 let ticker = 0;
 
-// Fired after engine update and all collision events
 Events.on(engine, 'afterUpdate', function(event) {
   switch (true) {
     // every time the ticker cycle resets
     case ( ticker == 10 ):
-      for( unit of units_Array ){
-        unit_sortTargets(unit);
+      for( constraint of constraints_Array ){
+        for( unit of units_Array ){
+          var dist = getDistance(
+            {x: unit.position.x, y: unit.position.y}, 
+            constraint.pointB
+          );
+          console.log(dist);
+          // constraint.length = ( dist < 10 ? dist-10 : 20 );
+          constraint.length = constraint.length-10;
+        }
       }
       break;
-    case ( ticker % 15 == 0 ):
-      for( unit of units_Array ){
-        unit_acquireTarget(unit);
-      }
     default:
       break;
   }
+});
 
-  for( unit of units_Array ){
-    // wack bug, TODO: remove when it no longer occurs
-    // if( isNaN(unit.angle) && isNaN(unit.position.x) ){
-    //   alert('A unit just escaped this reality');
-    //   World.remove(world, unit, true);
-    // }
-    unit.custom.attackCD--;
-    switch (unit.custom.state) {
-      case 'ready':
-        unit_attackTarget(unit);
-        break;
-      default:
-        // mildly deprecated
-        break;
-    }
-  }
+// Fired after engine update and all collision events
+Events.on(engine, 'afterUpdate', function(event) {
+  // switch (true) {
+  //   // every time the ticker cycle resets
+  //   case ( ticker == 10 ):
+  //     for( unit of units_Array ){
+  //       unit_sortTargets(unit);
+  //     }
+  //     break;
+  //   case ( ticker % 15 == 0 ):
+  //     for( unit of units_Array ){
+  //       unit_acquireTarget(unit);
+  //     }
+  //   default:
+  //     break;
+  // }
+
+  // for( unit of units_Array ){
+  //   // wack bug, TODO: remove when it no longer occurs
+  //   // if( isNaN(unit.angle) && isNaN(unit.position.x) ){
+  //   //   alert('A unit just escaped this reality');
+  //   //   World.remove(world, unit, true);
+  //   // }
+  //   unit.custom.attackCD--;
+  //   switch (unit.custom.state) {
+  //     case 'ready':
+  //       unit_attackTarget(unit);
+  //       break;
+  //     default:
+  //       // mildly deprecated
+  //       break;
+  //   }
+  // }
 
   //flowControl('check');
 

@@ -2,7 +2,7 @@
 *   Constants and settings
 */
 let game_state = {
-  "debug_overlay": false,
+  "debug_overlay": true,
   "debug_buildmode": false,
   "debug_buildmode_lastAdded": [],
 
@@ -42,6 +42,8 @@ let render_Array = [];
 
 let projectiles_Array = [];
 let particles_Array = [];
+
+let constraints_Array = [];
 
 //const COLOR_STACKED = '#795548';
 const COLOR_SHIFT = [

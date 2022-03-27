@@ -39,8 +39,8 @@ class UnitEnt {
       //this.body = Bodies.circle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), 8, {
       this.body = Bodies.rectangle(spawnCoord.x+(GRID_SIZE*0.5), spawnCoord.y+(GRID_SIZE*0.5), 16, 16, {
         label: 'ally',
-        frictionAir: 1, // magic numbers
-        mass: 2,        // magic numbers
+        // frictionAir: 1, // magic numbers
+        // mass: 2,        // magic numbers
         collisionFilter: {
           category: ( info.moveType == 'air' ? ground | air : ground ),
           mask: ( info.moveType == 'air' ? air : ground )
@@ -115,7 +115,7 @@ class UnitEnt {
       //console.log(this.body.position);
 
       // pick a target once spawned
-      unit_sortTargets(this.body);
+      //unit_sortTargets(this.body);
 
       return this.body;
   }

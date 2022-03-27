@@ -1,239 +1,75 @@
 <html>
   <head>
     <script src='js/easystar-0.4.3.min.js'></script>
-    <script src='js/matter.js'></script>
-    <script src='js/household.js'></script>
-    <script src='js/constants.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.51.0/dist/phaser.min.js"></script>
+    <!-- <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBU3bpv8UYFvsKOJxAenztMienN1nLyqFA",
+        authDomain: "trpg-b03af.firebaseapp.com",
+        projectId: "trpg-b03af",
+        storageBucket: "trpg-b03af.appspot.com",
+        messagingSenderId: "500663022078",
+        appId: "1:500663022078:web:8fd7ce988bdcbe078110af"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+    </script> -->
+    <!-- <script src='js/matter.js'></script> -->
+    <!-- <script src='js/household.js'></script> -->
+    <!-- <script src='js/constants.js'></script> -->
 
-    <script src='js/render_functions.js'></script>
-    <script src='js/render_ui_functions.js'></script>
-    <script src='js/game_functions.js'></script>
-    <script src='js/game_events.js'></script>
+    <!-- <script src='js/render_functions.js'></script> -->
+    <!-- <script src='js/render_ui_functions.js'></script> -->
+    <!-- <script src='js/game_functions.js'></script> -->
+    <!-- <script src='js/game_events.js'></script> -->
 
-    <script src='js/sprite_index.js'></script>
-    <script src='js/mission_index.js'></script>
+    <!-- <script src='js/sprite_index.js'></script> -->
+    <!-- <script src='js/mission_index.js'></script> -->
+    <script src='js/phaser_units.js'></script>
+    <script src='js/phaser_buildings.js'></script>
+    <script src='js/cardan.js'></script>
+    
     <link rel="stylesheet" type="text/css" href="css/trpg.css">
+    <style>
+      #container__Phaser {
+        position: relative;
+      }
+      #meters {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+      }
+    </style>
   </head>
   <body>
-    <section class='container__Matter'></section>
 
-    <section class='UI_container--animationLayer'></section>
-
-    <section class='UI_container--splash' data-show='true'>
-      <img src='./assets/art/little-noah.jpg'>
-      <button class='UI_missionButton UI_missionButton--splash' onclick="this.parentNode.dataset.show = false">Play</button>
+    <section id='container__Phaser'>
+      <div id=meters>
+        <meter id=fps min=0 max=60 low=50 high=60 optimum=60 title=FPS></meter>
+        <meter id=delta min=0 max=100 optimum=17 title='Frame delta'></meter>
+      </div>
+      <!-- UI control dom items here -->
     </section>
-
-    <section class='UI_container--tutorial' data-show='false'>
-      <img src='./assets/noah/Noah_1.png' class='tutAv'>
-      <img src='./assets/art/tut_01.jpg' class='tutEx'>
-      <article class='tutBox' onclick='dom_Tutorial(this)' data-tut='-1'></article>
-    </section>
-
-    <section class='UI_container' data-show='true'>
-
-      <article class='UI_wrapper UI_wrapper--missionSelect'>
-        <section>
-          <article class='UI_difficultySlider' data-difficulty="0">
-            <p style='margin-bottom: 1rem;'>Select your difficulty:</p>
-            <input class='input_difficultySlider' list='diffs' type='range' value="0" min="-1" max="11" step="1" oninput="document.querySelector('[data-difficulty]').dataset.difficulty = this.value; dom_flowControl('unready');">
-            <datalist id='diffs'>
-              <option>-1</option>
-              <option>0</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>10</option>
-              <option>11</option>
-            </datalist>
-          </article>
-          <p>Choose a mission to embark on:</p>
-          <article class='UI_missionList'></article>
-          <button class='UI_missionButton UI_missionButton--survey' onclick="dom_flowControl('survey')" disabled='true'>Survey!</button>
-          <button class='UI_missionButton UI_missionButton--embark' onclick="dom_flowControl('ready')" disabled='true'>Embark!</button>
-          <button class='UI_missionButton UI_missionButton--tutorial' onclick="dom_Tutorial_start()">How to play</button>
-        </section>
-      </article>
-
-      <article class='UI_wrapper UI_wrapper--FAQ'>
-        <section>
-          <article>
-          <p>Roadmap</p>
-          
-          <hr><br>
-
-          <p><u>Necessary:</u></p>
-          <p>&bull;Improve Aftermath screen</p>
-          <p>&bull;Building catalogue</p>
-          <p>&bull;The rest of the units</p>
-          <p>&bull;Traps</p>
-          <p>&bull;Trap seekers</p>
-          <p>&bull;The rest of the missions</p>
-
-          <br><hr><br>
-
-          <p><u>Nice to have:</u></p>
-          <p>&bull;Melee attacker large building pathfinding refinements</p>
-          <p>&bull;BOSS battles</p>
-          <p>&bull;Animas</p>
-          <p>&bull;Anima skills</p>
-          <p>&bull;Score tracking and saving -> Medals, time, rarity</p>
-          <p>&bull;Map creation GUI, because hand-writing...</p>
-
-          <br><hr><br>
-
-          <p><u>A man may dream:</u></p>
-          <p>&bull;Base building</p>
-          <p>&bull;PvP battles</p>
-          <p>&bull;Resource tracking</p>
-          <p>&bull;Defensive units</p>
-
-          <p>&bull;Get ready for the shitshow</p>
-
-          </article>
-        </section>
-      </article>
-
-      <article class='UI_wrapper UI_wrapper--unitSelect'>
-        <section>
-          <p>Assemble your squad:</p>
-          <article class='UI_unitList--squad'>
-            <button class="UI_unitButton">Empty</button>
-            <button class="UI_unitButton">Empty</button>
-            <button class="UI_unitButton">Empty</button>
-            <button class="UI_unitButton">Empty</button>
-            <button class="UI_unitButton">Empty</button>
-            <button class="UI_unitButton">Empty</button>
-          </article>
-          <article class='UI_unitList'>
-            <!-- <button class="UI_unitButton" onclick="dom_updateInspector()" data-artname="Remove" data-empty="true">Remove</button> -->
-          </article>
-
-          <article class='UI_inspector'>
-            <section class='UI_inspector--header' data-rarity="">&nbsp;</section>
-            <section class='UI_inspector--art' style="--bgimage: url('../assets/fbbg.jpg')"></section>
-            <section class='UI_inspector--stats'>
-              
-              <div>
-                <span>
-                  Available
-                </span>
-                <span class='dom_unit--count'>
-                  --
-                </span>
-              </div>
-
-              <div>
-                <span>
-                  Health
-                </span>
-                <span class='dom_unit--hpMax'>
-                  --
-                </span>
-              </div>
-
-              <div>
-                <span>
-                  Damage
-                </span>
-                <span class='dom_unit--damage'>
-                  --
-                </span>
-              </div>
-
-              <div>
-                <span>
-                  Attack Rate
-                </span>
-                <span class='dom_unit--aspeed'>
-                  --
-                </span>
-              </div>
-
-              <div>
-                <span>
-                  Range
-                </span>
-                <span class='dom_unit--range'>
-                  --
-                </span>
-              </div>
-
-              <div>
-                <span>
-                  Targets
-                </span>
-                <span class='dom_unit--target'>
-                  --
-                </span>
-              </div>
-
-              <div>
-                <span>
-                  Notes
-                </span>
-                <span class='dom_unit--notes'>
-                  --
-                </span>
-              </div>
-
-            </section>
-          </article>
-        </section>
-      </article>
-
-    </section>
-
-    <section class='partyPicker'>
-      <label>
-        <input type='radio' name='partyPicker-deployer'>
-        <article class='partyPicker-member' data-amount='15' style="--background: url('../assets/noah/Ratty.png')"></article>
-      </label>
-
-      <label>
-        <input type='radio' name='partyPicker-deployer'>
-        <article class='partyPicker-member' data-amount='10' style="--background: url('../assets/noah/Sling.png')"></article>
-      </label>
-
-      <label>
-        <input type='radio' name='partyPicker-deployer'>
-        <article class='partyPicker-member'></article>
-      </label>
-
-      <label>
-        <input type='radio' name='partyPicker-deployer' disabled>
-        <article class='partyPicker-member'></article>
-      </label>
-
-      <label>
-        <input type='radio' name='partyPicker-deployer'>
-        <article class='partyPicker-member'></article>
-      </label>
-
-      <label>
-        <input type='radio' name='partyPicker-deployer'>
-        <article class='partyPicker-member'></article>
-      </label>
-    </section>
-
-    <div class='retreatButton' onclick="dom_flowControl('toMenu')"></div>
 
   </body>
-  <script src='js/trpg.js'></script>
-  <script src='js/scaling.js'></script>
-  <script src='js/events_mouse.js'></script>
-  <script src='js/terrain.js'></script>
+  <script src='js/phaser_trpg.js'></script>
+  <!-- <script src='js/trpg.js'></script> -->
+  <!-- <script src='js/scaling.js'></script> -->
+  <!-- <script src='js/events_mouse.js'></script> -->
+  <!-- <script src='js/terrain.js'></script> -->
   
-  <script src='js/allies.js'></script>
-  <script src='js/buildings.js'></script>
+  <!-- <script src='js/allies.js'></script> -->
+  <!-- <script src='js/buildings.js'></script> -->
 
-  <script src='js/projectiles.js'></script>
-  <script src='js/particles.js'></script>
-  <script src='js/dom_functions.js'></script>
+  <!-- <script src='js/projectiles.js'></script> -->
+  <!-- <script src='js/particles.js'></script> -->
+  <!-- <script src='js/dom_functions.js'></script> -->
 </html>
