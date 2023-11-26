@@ -179,7 +179,7 @@ Events.on(engine, 'afterUpdate', function(event) {
 
 // moved ctx outside of the render loop provided by Matter.js
 var canvas = document.querySelector('canvas');
-var ctx = canvas.getContext('2d');
+var ctx = canvas.getContext('2d', {alpha: false});
 
 var oobPattern = new Object;
 oobImg = new Image();
