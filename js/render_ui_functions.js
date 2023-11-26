@@ -181,7 +181,6 @@ function draw_UI(a){
     case 'survey':
       render_menuButton(game_state.game_phase);
       render_progress();
-      render_survey();
       if( game_state.timer_deploy !== false ){
         render_countdown();
       }
@@ -267,10 +266,6 @@ function render_menuButton(phase){
   }
 
   ctx.restore();
-}
-
-function render_survey(){
-  // stub
 }
 
 function render_hpBars(){

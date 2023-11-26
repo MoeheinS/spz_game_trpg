@@ -31,12 +31,10 @@ class ParticleEnt {
         if( this.lifetime >= this.lifetimeMax && this.lifetimeMax != -1 ){
             particles_Array.splice(particles_Array.indexOf(this), 1);
         }else{
-            //if( ticker % 15 == 0 ){
-                this.graphics.sheet = cycleArray(this.graphics.sheet);
-                if( this.lifetimeMax != -1 ){
-                    this.lifetime++;
-                }
-            //}
+            this.graphics.sheet = cycleArray(this.graphics.sheet);
+            if( this.lifetimeMax != -1 ){
+                this.lifetime++;
+            }
         }
     }
     advance_decay() { // this.lifetimeMax != -1
