@@ -37,16 +37,15 @@ class ParticleEnt {
             }
         }
     }
-    advance_decay() { // this.lifetimeMax != -1
-        if( this.lifetime >= this.lifetimeMax ){
+    advance_decay() { 
+        if( this.lifetimeMax == -1 ){
+            this.graphics.sheet = cycleArray(this.graphics.sheet);
+        }else if( this.lifetime >= this.lifetimeMax ){
             particles_Array.splice(particles_Array.indexOf(this), 1);
         }else{
             this.graphics.sheet = cycleArray(this.graphics.sheet);
             this.lifetime++;
         }
-    }
-    advance_immortal() { /// this.lifetimeMax == -1
-        this.graphics.sheet = cycleArray(this.graphics.sheet);
     }
 }
 

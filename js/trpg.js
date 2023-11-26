@@ -213,11 +213,7 @@ Events.on(render, 'afterRender', function() {
       heartbeat_animations();
       if( particles_Array.length ){
         for( pa of particles_Array ){
-          if( pa.lifetimeMax == -1 ){
-            pa.advance_immortal();
-          }else{
-            pa.advance_decay();
-          }
+          pa.advance_decay();
         }
       }
       break;
