@@ -44,7 +44,7 @@ world.bounds.min.y = FIELD_SIZE * -0.5;
 world.bounds.max.y = FIELD_SIZE * 1.5;
 
 // keep track of current bounds scale (view zoom)
-var boundsScaleTarget = 1.5;
+var boundsScaleTarget = 1;
 var boundsScale = {
     x: 1,
     y: 1
@@ -101,6 +101,15 @@ document.addEventListener("keydown", function(e){
       break;
     case 't':
       dom_Tutorial_start();
+      break;
+    case '1':
+      boundsScaleTarget = 1;
+      break;
+    case 'c':
+      Render.lookAt(render, {
+        min: { x: FIELD_SIZE*0.25, y: FIELD_SIZE*0.25 },
+        max: { x: FIELD_SIZE*0.75, y: FIELD_SIZE*0.75 }
+      }, null, true);
       break;
     default:
       console.log(e.key);

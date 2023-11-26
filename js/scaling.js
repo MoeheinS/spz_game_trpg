@@ -3,10 +3,10 @@ Events.on(engine, 'beforeTick', function() {
   var translate;
 
   // mouse wheel controls zoom
-  var scaleFactor = mouse.wheelDelta * -0.1;
+  var scaleFactor = mouse.wheelDelta * -0.075;
   if (scaleFactor !== 0) {
-      if ((scaleFactor < 0 && boundsScale.x >= 0.6) || (scaleFactor > 0 && boundsScale.x <= 2.2)) {
-          boundsScaleTarget += scaleFactor;
+      if ((scaleFactor < 0 && boundsScale.x >= 0.5) || (scaleFactor > 0 && boundsScale.x <= 2)) {
+          boundsScaleTarget = Math.max(Math.min(boundsScaleTarget+scaleFactor, 2), 0.5);
       }
   }
 
